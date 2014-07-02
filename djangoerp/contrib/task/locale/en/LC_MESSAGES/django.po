@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:30 models.py:108 templates/djangoerp_task/goal_erpindex.html:12
+msgid "Summary"
+msgstr ""
+
+#: models.py:31 models.py:109
+msgid "Description"
+msgstr ""
+
+#: models.py:33
+msgid "Is billable"
+msgstr ""
+
+#: models.py:34 workflows.py:19
+msgid "Completed"
+msgstr ""
+
+#: models.py:37
+msgid "Goal"
+msgstr ""
+
+#: models.py:38
+msgid "Goals"
+msgstr ""
+
+#: models.py:111
+msgid "Due date"
+msgstr ""
+
+#: models.py:118
+msgid "Task"
+msgstr ""
+
+#: models.py:119
+msgid "Tasks"
+msgstr ""
+
+#: templates/djangoerp_task/goal_erpdetail.html:26
+msgid "Open tasks"
+msgstr ""
+
+#: templates/djangoerp_task/goal_erpdetail.html:27
+msgid "Tasks on hold"
+msgstr ""
+
+#: templates/djangoerp_task/goal_erpdetail.html:28
+msgid "Accomplished Tasks"
+msgstr ""
+
+#: templates/djangoerp_task/goal_erpindex.html:8
+msgid "Project"
+msgstr ""
+
+#: templates/djangoerp_task/goal_erpindex.html:13
+msgid "Current State"
+msgstr ""
+
+#: templates/djangoerp_task/goal_erpindex.html:29
+msgid "completed"
+msgstr ""
+
+#: templates/djangoerp_task/task_inctable.html:6
+msgid "Employee"
+msgstr ""
+
+#: templates/djangoerp_task/task_inctable.html:7
+msgid "State"
+msgstr ""
+
+#: templates/djangoerp_task/task_inctable.html:29
+msgid "review"
+msgstr ""
+
+#: templates/djangoerp_task/task_inctable.html:30
+msgid "started"
+msgstr ""
+
+#: templates/djangoerp_task/task_inctable.html:31
+msgid "hold"
+msgstr ""
+
+#: templates/djangoerp_task/task_inctable.html:41
+msgid "None"
+msgstr ""
+
+#: workflows.py:18 workflows.py:37
+msgid "Open"
+msgstr ""
+
+#: workflows.py:22
+msgid "Complete this Goal"
+msgstr ""
+
+#: workflows.py:23
+msgid "Reopen this Goal"
+msgstr ""
+
+#: workflows.py:36
+msgid "New"
+msgstr ""
+
+#: workflows.py:38
+msgid "Started"
+msgstr ""
+
+#: workflows.py:39
+msgid "Hold"
+msgstr ""
+
+#: workflows.py:40
+msgid "Review"
+msgstr ""
+
+#: workflows.py:41
+msgid "Finished"
+msgstr ""
+
+#: workflows.py:42
+msgid "Cancelled"
+msgstr ""
+
+#: workflows.py:45
+msgid "Work on this task"
+msgstr ""
+
+#: workflows.py:46
+msgid "Set this task on hold"
+msgstr ""
+
+#: workflows.py:47
+msgid "Stop working on this task"
+msgstr ""
+
+#: workflows.py:48
+msgid "Finish this task"
+msgstr ""
+
+#: workflows.py:49 workflows.py:50
+msgid "Reopen this task"
+msgstr ""
+
+#: workflows.py:51
+msgid "Cancel this task"
+msgstr ""
+
+#: workflows.py:88
+msgid "Your need to be a referee to this goal to change the state"
+msgstr ""
+
+#: workflows.py:94
+msgid "The employee's user-account needs a default product"
+msgstr ""

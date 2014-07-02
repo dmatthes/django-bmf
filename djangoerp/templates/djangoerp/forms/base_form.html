@@ -1,0 +1,28 @@
+{% load djangoerp_forms %}
+{% load i18n %}
+<form id="djangoerpform" class="form-horizontal" role="form" method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+  {% if form.non_field_errors %}
+  <div class="alert alert-danger">
+    <a class="close" data-dismiss="alert">&times;</a>
+    {% for non_field_error in form.non_field_errors %}
+      {{ non_field_error }}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% csrf_token %}
+  {% for field in form %}
+    {% if field.is_hidden %}
+      <div class="hidden">{{ field }}</div>
+    {% elif field.field.inlineformset %}
+      {% erpformset field %}
+    {% else %}
+      {% erplayout field %}
+    {% endif %}
+  {% endfor %}
+  <div class="form-group">
+    <div class="col-md-offset-3 col-lg-offset-2 col-md-9 col-lg-10">
+      <button type="reset" class="btn btn-default">{% trans "Reset" %}</button>
+      <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    </div>
+  </div>
+</form>

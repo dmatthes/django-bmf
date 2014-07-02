@@ -1,0 +1,42 @@
+[
+{
+ "pk": 1, 
+ "model": "auth.user", 
+ "fields": {
+  "username": "admin", 
+  "first_name": "Admin", 
+  "last_name": "User", 
+  "is_active": true, 
+  "is_superuser": true, 
+  "is_staff": true, 
+  "groups": [], 
+  "user_permissions": [], 
+  "password": "pbkdf2_sha256$10000$k1NQrouLkRhg$CxVBxnI6NGBYo1OdhB71laKxpRFWQOjsFU89U4hXSPE=", 
+  "email": "admin@demo.django-erp.com"
+ }
+},
+{
+ "pk": 2, 
+ "model": "auth.user", 
+ "fields": {
+  "username": "demo", 
+  "first_name": "Demo", 
+  "last_name": "User", 
+  "is_active": true, 
+  "is_superuser": false, 
+  "is_staff": false, 
+  "groups": [], 
+  "user_permissions": [], 
+  "password": "pbkdf2_sha256$10000$GXmQqpbVn7Se$YE57G4aUByk5kdKWP3r+rwjFaZXDmJee7yiE7z+JSr4=", 
+  "email": "demo@demo.django-erp.com"
+ }
+},
+{
+ "pk": 1, 
+ "model": "sites.site", 
+ "fields": {
+  "domain": "demo.djangoerp.com", 
+  "name": "djangoERP demo"
+ }
+}
+]

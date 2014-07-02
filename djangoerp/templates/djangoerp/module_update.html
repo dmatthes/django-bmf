@@ -1,0 +1,9 @@
+{% extends "djangoerp/module_base.html" %}
+
+{% block breadcrumb %}
+{{ block.super }}<li><a href="{{ object.erpmodule_detail }}">{{ object }}</a></li>
+{% endblock %}
+
+{% block base_buttons %}
+<a class="btn btn-default btn-xs" href="{{ object.erpmodule_detail }}">view</a>
+{% endblock %}

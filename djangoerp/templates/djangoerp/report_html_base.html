@@ -1,0 +1,137 @@
+{% load i18n %}
+<html>
+  <head>
+  <title>{% block title %}Empty PDF-Template{% endblock %}</title>
+    <style type="text/css">
+
+      @page {
+{% if options.letter %}
+        size: {{ options.size }};
+        margin-top: 105mm;
+        margin-left: 25mm;
+        margin-right: 10mm;
+        margin-bottom: 10mm;
+        {% if options.template_letter %}background-image: url('data:application/pdf;base64,{{ options.template_letter }}');{% endif %}
+
+        @frame address {
+          top: 45mm;
+          left: 20mm;
+          height: 40mm;
+          width: 85mm;
+          -pdf-frame-content: addressContent;
+        }
+
+        @frame extra {
+          top: 35mm;
+          right: 10mm;
+          width: 75mm;
+          -pdf-frame-content: extraContent;
+        }
+        
+        @frame footer {
+          right: 10mm;
+          bottom: 0;
+          height: 10mm;
+          width: 50mm;
+          -pdf-frame-content: footerContent;
+          text-align: right;
+        }
+      }
+      @page laterPages {
+{% endif %}
+        size: {{ options.size }};
+        margin-top: 10mm;
+        margin-left: 25mm;
+        margin-right: 10mm;
+        margin-bottom: 10mm;
+        {% if options.template_pages %}background-image: url('data:application/pdf;base64,{{ options.template_pages }}');{% endif %}
+
+        @frame footer {
+          right: 10mm;
+          bottom: 0;
+          height: 10mm;
+          width: 50mm;
+          -pdf-frame-content: footerContent;
+        }
+      }
+
+      body {
+        font-size: 10pt;
+      }
+
+      th {
+        padding-top: 1mm;
+        padding-bottom: 0;
+        padding-left: 1mm;
+        padding-right: 1mm;
+        color: #fff;
+        background: #99f;
+        font-weight: bold;
+      }
+
+      td {
+        padding-top: 1mm;
+        padding-left: 1mm;
+        padding-right: 1mm;
+      }
+
+      p {
+        line-height: 1.3;
+        margin-bottom: 0.5em;
+      }
+
+      #addressContent {
+        line-height: 1.3;
+        padding-top: 7mm;
+        padding-left: 5mm;
+        font-size: 10pt;
+      }
+
+    </style>
+  </head>
+  <body>
+    {% if options.letter %}
+    <div id="addressContent">
+      {% block address %}
+      Address 1<br />
+      Address 2<br />
+      Address 3<br />
+      Address 4<br />
+      Address 5<br />
+      Address 6<br />
+      Address 7
+      {% endblock %}
+    </div>
+    {% if options.extra %}
+    <div id="extraContent">
+        {% block extra %}
+        {% if object.employee %}
+            <strong>{{ object.employee.name }}</strong>
+            {% if object.employee.email %}<br>{% trans "Email" %}: {{ object.employee.email }}{% endif %}
+            {% if object.employee.phone_office %}<br>{% trans "Phone" %}: {{ object.employee.phone_office }}{% endif %}
+            {% if object.employee.fax %}<br>{% trans "Fax" %}: {{ object.employee.fax }}{% endif %}
+        {% else %}
+            {% trans "You may add extra content in this placeholder" %}
+        {% endif %}
+        {% endblock %}
+    </div>
+    {% endif %}
+    <div>
+      <pdf:nexttemplate name="laterPages"/>
+    </div>
+    {% endif %}
+
+    {% block document %}
+    <table width="100%">
+      <tr>
+        <td style="padding:0;"><strong>Empty PDF-Template</strong></td>
+        <td style="padding:0;" align="right">generated: {% now "DATETIME_FORMAT" %}</td>
+      </tr>
+    </table>
+    {% endblock %}
+
+    <div id="footerContent" align="right">
+      {% blocktrans with current="<pdf:pagenumber />" all="<pdf:pagecount />" %}Page {{ current }} of {{ all }}{% endblocktrans %}
+    </div>
+  </body>
+</html>

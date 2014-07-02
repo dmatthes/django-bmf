@@ -1,0 +1,87 @@
+{% extends "djangoerp/module_base.html" %}
+
+{% load djangoerp_core %}
+{% load djangoerp_forms %}
+{% load i18n %}
+
+{% block breadcrumb %}
+{{ block.super }}<li><a href="{{ object.erpmodule_detail }}">{{ object }}</a></li>
+{% endblock %}
+
+{% block base_buttons %}
+<div class="btn-toolbar pull-left" role="toolbar">
+{% if files %} 
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span> {% trans "Files" %} {{ files.count }}</button>
+    <ul class="dropdown-menu" role="menu">
+      {% for file in files %}
+      <li><a href="{{ file.file.url }}">{{ file }}<br /><small>{{ file.size|filesizeformat }}</small></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+</div>
+<div class="btn-toolbar pull-right" role="toolbar">
+{% if erpworkflow.enabled %}
+  {% if erpworkflow.transitions %}
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ erpworkflow.state }} <span class="caret"></span></button>
+      <ul class="dropdown-menu" role="menu">
+        {% for transition in erpworkflow.transitions %}
+        <li><a href="{% get_erp_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="btn-group">
+      <button type="button" class="btn btn-default disabled">{{ erpworkflow.state }} <span class="caret"></span></button>
+    </div>
+  {% endif %}
+{% endif %}
+{% if erpmodule.has_report %}
+  <div class="btn-group">
+  <a class="btn btn-default btn-success" href="{% get_erp_url object "report" %}">
+    <span class="glyphicon glyphicon-print"></span> {% trans "Print" %} 
+  </a>
+  </div>
+{% endif %}
+{% if erpworkflow.state.update %}
+  <div class="btn-group">
+  <a class="btn btn-default btn-warning" href="{% get_erp_url object "update" %}">
+    <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
+  </a>
+  </div>
+{% else %}
+  <div class="btn-group">
+  <a class="btn btn-default btn-default disabled" href="#">
+    <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
+  </a>
+  </div>
+{% endif %}
+{% if erpworkflow.state.delete %}
+  <div class="btn-group">
+  <a class="btn btn-default btn-danger" href="{% get_erp_url object "delete" %}">
+    <span class="glyphicon glyphicon-trash"></span>
+  </a>
+  </div>
+{% else %}
+  <div class="btn-group">
+  <a class="btn btn-default btn-default disabled" href="#">
+    <span class="glyphicon glyphicon-trash"></span>
+  </a>
+  </div>
+{% endif %}
+<div class="btn-group">
+{% if erpactivity.watch %}
+<a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-default following">
+  <span class="glyphicon glyphicon-star"></span>
+</a>
+{% else %}
+<a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-default">
+  <span class="glyphicon glyphicon-star-empty"></span>
+</a>
+{% endif %}
+  </div>
+</div>
+<div class="clearfix"></div>
+{% endblock %}

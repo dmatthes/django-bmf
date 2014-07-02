@@ -1,0 +1,10 @@
+{% load i18n %}
+<div>
+  <p>
+  <strong>{% trans "Append"%} {{ item.get_text.name }}</strong> ({{ item.get_text.size|filesizeformat }})<br />
+    <small class="text-muted">
+      {{ item.user.get_full_name|default:_("Unknown") }} {% trans "before" %} {{ item.modified|timesince }}
+    </small>
+  </p>
+  <hr />
+</div>

@@ -1,0 +1,14 @@
+{% extends "djangoerp/module_base.html" %}
+
+{% load djangoerp_core %}
+{% load i18n %}
+
+{% block base_content %}
+<h1>{% trans "State could not be changed" %}</h1>
+<p>{% trans "This object is not valid. You need to edit it in order to change it's state."%}</p>
+<p>{{ error }}</p>
+<p>
+    <a href="{% get_erp_url object "detail" %}" class="btn btn-default">{% trans "Back" %}</a>
+    <a href="{% get_erp_url object "update" %}" class="btn btn-primary">{% trans "Edit" %}</a>
+</p>
+{% endblock %}

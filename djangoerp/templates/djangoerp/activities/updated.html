@@ -1,0 +1,19 @@
+{% load i18n %}
+<div>
+  <p>
+    <a data-toggle="collapse" href="#erp_message_{{ item.pk }}"><strong>{% trans "Item changed"%}</strong></a>
+    <br />
+    <small class="text-muted">
+      {{ item.user.get_full_name|default:_("Unknown") }} {% trans "before" %} {{ item.modified|timesince }}
+    </small>
+  </p>
+  <div id="erp_message_{{ item.pk }}" class="collapse">
+    <p>{% trans "The following attributes were changed" %}:</p>
+    <ul>
+      {% for name, old, new in item.changes %}
+      <li><strong>{{ name }}</strong>: {{ old }} &rarr; {{ new }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <hr />
+</div>

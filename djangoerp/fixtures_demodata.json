@@ -1,0 +1,583 @@
+[
+{
+ "pk": 1, 
+ "model": "djangoerp.configuration", 
+ "fields": {
+  "app_label": "djangoerp", 
+  "field_name": "currency", 
+  "value": "\"EUR\""
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": null, 
+  "number": "0", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 50, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "My Company"
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": true, 
+  "parent": null, 
+  "number": "10", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 30, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Asset"
+ }
+},
+{
+ "pk": 3, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": true, 
+  "parent": null, 
+  "number": "20", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 40, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Liability"
+ }
+},
+{
+ "pk": 4, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": true, 
+  "parent": null, 
+  "number": "30", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 10, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Income"
+ }
+},
+{
+ "pk": 5, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "uuid": "", 
+  "parent": null, 
+  "number": "40", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 20, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Expense"
+ }
+},
+{
+ "pk": 6, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": 2, 
+  "number": "11", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 30, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Cash"
+ }
+},
+{
+ "pk": 7, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": 2, 
+  "number": "12", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 30, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Bank-Account"
+ }
+},
+{
+ "pk": 8, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "uuid": null, 
+  "parent": 3, 
+  "number": "21", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 40, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Open positions"
+ }
+},
+{
+ "pk": 9, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": 3, 
+  "number": "22", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 40, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Tax 7%"
+ }
+},
+{
+ "pk": 10, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": 3, 
+  "number": "23", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 40, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Tax 19%"
+ }
+},
+{
+ "pk": 11, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": 4, 
+  "number": "31", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 10, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Product sales"
+ }
+},
+{
+ "pk": 12, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "parent": 4, 
+  "number": "32", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 10, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Services"
+ }
+},
+{
+ "pk": 13, 
+ "model": "djangoerp_accounting.account", 
+ "fields": {
+  "read_only": false, 
+  "uuid": null, 
+  "parent": 2, 
+  "number": "13", 
+  "balance_currency": "EUR", 
+  "balance": "0.00", 
+  "type": 30, 
+  "comment": "", 
+  "lft": 0,
+  "rght": 0,
+  "tree_id": 1,
+  "level": 0,
+  "name": "Open positions"
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_employee.employee", 
+ "fields": {
+  "product": 1, 
+  "phone_mobile": "", 
+  "phone_office": "", 
+  "fax": "", 
+  "contact": null, 
+  "user": [
+   "admin"
+  ], 
+  "supervisor": null, 
+  "email": "admin@django-erp.org", 
+  "name": "Administrator"
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_employee.employee", 
+ "fields": {
+  "product": 1, 
+  "phone_mobile": "+49 177 789654", 
+  "phone_office": "+49 201 1234-78", 
+  "fax": "+49 201 1234-77", 
+  "contact": null, 
+  "user": [
+   "demo"
+  ], 
+  "supervisor": 1, 
+  "email": "demo@django-erp.com", 
+  "name": "Demouser"
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_taxing.tax", 
+ "fields": {
+  "account": 10,
+  "is_active": true, 
+  "rate": "19", 
+  "name": "19% Tax"
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_taxing.tax", 
+ "fields": {
+  "account": 9, 
+  "is_active": true, 
+  "rate": "7", 
+  "name": "7% Tax"
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_product.product", 
+ "fields": {
+  "can_purchased": false, 
+  "code": "", 
+  "name": "Service", 
+  "description": "One service of my company", 
+  "income_account": 12, 
+  "expense_account": 5, 
+  "type": 1, 
+  "can_sold": true,
+  "price": "69.0"
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_product.product", 
+ "fields": {
+  "can_purchased": false, 
+  "code": "", 
+  "name": "Printer", 
+  "description": "", 
+  "income_account": 11, 
+  "expense_account": 5, 
+  "type": 1, 
+  "can_sold": true,
+  "price": "69.0"
+ }
+},
+{
+ "pk": 1, 
+ "model": "djangoerp_product.producttax", 
+ "fields": {
+  "included": true, 
+  "product": 1, 
+  "tax": 1
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_product.producttax", 
+ "fields": {
+  "included": false, 
+  "product": 1, 
+  "tax": 2
+ }
+},
+{
+ "pk": 3, 
+ "model": "djangoerp_product.producttax", 
+ "fields": {
+  "included": true, 
+  "product": 2, 
+  "tax": 1
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_customer.customer", 
+ "fields": {
+  "image": "", 
+  "use_company_addresses": true, 
+  "supplier_payment_term": 1, 
+  "is_supplier": false, 
+  "employee_at": null, 
+  "taxvat": "", 
+  "title": "", 
+  "phone_privat": "", 
+  "asset_account": 13, 
+  "email": "", 
+  "is_company": true, 
+  "phone_mobile": "", 
+  "website": "", 
+  "fax": "", 
+  "phone_office": "", 
+  "is_active": true, 
+  "liability_account": 8, 
+  "name2": "", 
+  "user": null, 
+  "job_position": "", 
+  "name": "Django ERP", 
+  "is_customer": true, 
+  "notes": "", 
+  "customer_payment_term": 1
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_customer.customer", 
+ "fields": {
+  "image": "", 
+  "use_company_addresses": true, 
+  "supplier_payment_term": 1, 
+  "is_supplier": false, 
+  "employee_at": 1, 
+  "taxvat": "", 
+  "title": "", 
+  "phone_privat": "", 
+  "asset_account": 13, 
+  "email": "", 
+  "is_company": false, 
+  "phone_mobile": "", 
+  "website": "", 
+  "fax": "", 
+  "phone_office": "", 
+  "is_active": true, 
+  "liability_account": 8, 
+  "name2": "", 
+  "user": null, 
+  "job_position": "", 
+  "name": "Sebastian Braun", 
+  "is_customer": true, 
+  "notes": "", 
+  "customer_payment_term": 1
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_project.Project", 
+ "fields": {
+  "customer": 1, 
+  "name": "Django ERP",
+  "is_bound": true, 
+  "is_active": true
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_project.Project", 
+ "fields": {
+  "customer": 2, 
+  "name": "Sebastian Braun",
+  "is_bound": true, 
+  "is_active": true
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_address.address", 
+ "fields": {
+  "customer": 1, 
+  "city": "Bottrop", 
+  "zip": "46236", 
+  "default_billing": true, 
+  "is_active": true, 
+  "state": "NRW", 
+  "street": "Pestalozzistr 37", 
+  "name2": "Sebastian Braun", 
+  "country": "DE", 
+  "is_shipping": true, 
+  "default_shipping": true, 
+  "is_billing": true, 
+  "name": "Django ERP"
+ }
+},
+
+{
+ "pk": 1, 
+ "model": "djangoerp_document.document", 
+ "fields": {
+  "is_static": true, 
+  "file": "static/pdf-template1-letter.pdf"
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp_document.document", 
+ "fields": {
+  "is_static": true, 
+  "file": "static/pdf-template1.pdf"
+ }
+},
+{
+ "pk": 1, 
+ "model": "djangoerp.report", 
+ "fields": {
+  "contenttype": [
+   "djangoerp_quotation", 
+   "quotation"
+  ], 
+  "mimetype": "pdf", 
+  "reporttype": "xhtml2pdf", 
+  "options": "[layout]\nsize = A4\nform = A\nletter = true\n\n[letter_page]\nmargin_left = 10mm\nmargin_bottom = 15mm\nextra = true\nextra_right = 10mm\nextra_top = 40mm\nbackground = None\n\n[pages]\nmargin_left = 10mm\nmargin_bottom = 15mm\nmargin_top = 20mm\nfooter_right = 10mm\nfooter_height = 10mm\nbackground = None", 
+  "modified": "2014-01-18T23:10:21.491Z"
+ }
+},
+{
+ "pk": 2, 
+ "model": "djangoerp.report", 
+ "fields": {
+  "contenttype": [
+   "djangoerp_invoice", 
+   "invoice"
+  ], 
+  "mimetype": "pdf", 
+  "reporttype": "xhtml2pdf", 
+  "options": "[layout]\nsize = A4\nform = A\nletter = true\n\n[letter_page]\nmargin_left = 10mm\nmargin_bottom = 15mm\nextra = true\nextra_right = 10mm\nextra_top = 40mm\nbackground = None\n\n[pages]\nmargin_left = 10mm\nmargin_bottom = 15mm\nmargin_top = 20mm\nfooter_right = 10mm\nfooter_height = 10mm\nbackground = None", 
+  "modified": "2014-01-18T23:10:34.381Z"
+ }
+},
+
+{
+ "fields": {
+  "field_name": "currency",
+  "value": "\"EUR\"",
+  "app_label": "djangoerp"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 1
+},
+{
+ "fields": {
+  "field_name": "income",
+  "value": "4",
+  "app_label": "djangoerp_accounting"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 2
+},
+{
+ "fields": {
+  "field_name": "company_name",
+  "value": "\"Django ERP Demo\"",
+  "app_label": "djangoerp"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 3
+},
+{
+ "fields": {
+  "field_name": "customer",
+  "value": "2",
+  "app_label": "djangoerp_accounting"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 4
+},
+{
+ "fields": {
+  "field_name": "default",
+  "value": "1",
+  "app_label": "djangoerp_product"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 5
+},
+{
+ "fields": {
+  "field_name": "supplier",
+  "value": "3",
+  "app_label": "djangoerp_accounting"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 6
+},
+{
+ "fields": {
+  "field_name": "company_email",
+  "value": "\"team@djangoerp.org\"",
+  "app_label": "djangoerp"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 7
+},
+{
+ "fields": {
+  "field_name": "expense",
+  "value": "5",
+  "app_label": "djangoerp_accounting"
+ },
+ "model": "djangoerp.configuration",
+ "pk": 8
+}
+]

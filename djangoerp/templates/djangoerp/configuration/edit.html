@@ -1,0 +1,18 @@
+{% extends "djangoerp/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Configuration" %}{% endblock %}
+{% block breadcrumb %}
+<li><a href="{% url 'djangoerp:configuration' %}">{% trans "Configuration" %}</a></li>
+{% endblock %}
+
+{% block full_content %}
+<form class="form" role="form" action="" method="post">
+    <div class="hidden">
+        {% csrf_token %}
+    </div>
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
+</form>
+{% endblock %}

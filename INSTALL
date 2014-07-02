@@ -1,0 +1,110 @@
+############
+Installation
+############
+
+This document assumes you are familiar with Python and Django. It should
+outline the steps necessary for you to follow the tutorial.
+
+************
+Requirements
+************
+
+* `Python`_ 2.7.X
+* `Django`_ 1.7.X
+* `django-mptt`_
+* An installed and working instance of one of the databases listed in the `Databases`_ section.
+
+.. note:: When installing the django ERP using pip all requirements are installed automatically.
+
+.. _Python: http://www.python.org
+.. _Django: http://www.djangoproject.com
+.. _django-mptt: https://github.com/django-mptt/django-mptt
+
+Recommended
+===========
+
+These packages are not *required*, but they provide useful functionality with
+minimal additional configuration and are well-proven.
+
+* `django-celery`_
+
+.. _django-celery: http://www.celeryproject.org/
+
+************************************
+Installing in a virtualenv using tox
+************************************
+
+Installing inside a `virtualenv`_ is the preferred way to install any Django installation. This approach should work on
+any platform where python and `tox_` are installed:
+
+.. code-block:: bash
+
+  #!/bin/sh
+  tox -e develop
+
+
+************************************
+Installing in a virtualenv using pip
+************************************
+
+Installing inside a `virtualenv`_ is the preferred way to install any Django installation. This should work on
+any platform where python in installed. The first step is to create the virtualenv:
+
+.. code-block:: bash
+
+  #!/bin/sh
+  sudo pip install --upgrade virtualenv
+  virtualenv --distribute --no-site-packages env
+
+You can switch to your virtualenv at the command line by typing:
+
+.. code-block:: bash
+
+  source env/bin/activate
+  
+Next, you can install packages one at a time using `pip`_, but we recommend using a `requirements.txt`_ file. The
+following is an example requirements.txt file that can be used with pip to install django ERP and its dependencies:
+
+::
+
+    # Bare minimum
+    django-erp
+
+    
+for Postgresql you would also add:
+
+::
+
+    psycopg2==2.5
+    
+and install libpq-dev (on Debian-based distro)
+
+for MySQL you would also add:
+
+::
+
+    mysql-python==1.2.4
+
+and install libmysqlclient-dev (on Debian-based distro)
+
+.. _virtualenv: http://www.virtualenv.org
+.. _pip: http://www.pip-installer.org
+.. _tox: http://tox.readthedocs.org/en/latest/
+.. _requirements.txt: http://www.pip-installer.org/en/latest/cookbook.html#requirements-files
+
+*********
+Databases
+*********
+
+We recommend using `PostgreSQL`_ or `MySQL`_ with django ERP. Installing and
+maintaining database systems is outside the scope of this documentation, but
+is very well documented on the systems' respective websites.
+
+To use django ERP efficiently, we recommend:
+
+* Creating a separate set of credentials for django ERP.
+* Creating a separate database for django ERP to use.
+
+.. _PostgreSQL: http://www.postgresql.org/
+.. _MySQL: http://www.mysql.com
+

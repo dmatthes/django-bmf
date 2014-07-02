@@ -1,0 +1,177 @@
+
+// BOOTSTRAP
+// -----------------------------------------------------
+@import "submodules/bootstrap/less/bootstrap.less";
+
+// OVERWRITES
+// -----------------------------------------------------
+
+@font-size-base: 13px;
+
+// Basics of a navbar
+@navbar-height: 36px;
+
+/* COLOR THEME
+-------------------------------------------------- */
+@brand-primary:         #DD4814; // #428bca;
+
+@brand-success:         #5cb85c;
+@brand-info:            #5bc0de;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #d9534f;
+
+@component-active-color:    #fff;
+@component-active-bg:       #77216F; // Light aubergine
+
+@navbar-inverse-color:                      @gray-lighter;
+@navbar-inverse-bg:                         #5E2750; // #222;
+@navbar-inverse-link-disabled-color:        lighten(@component-active-bg, 3%); // Light aubergine
+
+@nav-link-hover-bg: lighten(@brand-primary, 40%);
+
+@text-color:            #333;
+
+@btn-primary-color:              #fff;
+@btn-primary-bg:                 @component-active-bg;
+@btn-primary-border:             darken(@btn-primary-bg, 5%);
+
+@btn-warning-color:              #fff;
+@btn-warning-bg:                 @brand-primary;
+@btn-warning-border:             darken(@btn-warning-bg, 5%);
+
+@label-primary-bg:            @component-active-bg;
+@label-warning-bg:            @brand-primary;
+
+@breadcrumb-bg:                 @gray-lighter;
+@breadcrumb-color:              @gray-light;
+@breadcrumb-active-color:       @gray;
+
+/* Truncating long text
+--------------------------------------------------
+.text-truncate {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html {
+  overflow-y: scroll
+}
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  width: 100%;
+  min-height: 100%; /* Mindesthöhe für moderne Browser */
+  height:auto !important; /* Important Regel für moderne Browser */
+  height:100%; /* Mindesthöhe für den IE */
+  overflow: hidden !important; /* FF Scroll-leiste */ 
+}
+
+/* Navigation
+-------------------------------------------------- */
+.navbar-inverse {
+  span.nav-text {
+    display: none;
+  }
+
+  #erp_notification, #erp_message {
+    & > a > span.glyphicon {
+      color: @navbar-inverse-link-disabled-color;
+    }
+    & > a:hover > span.glyphicon {
+      color: @navbar-inverse-link-hover-color;
+    }
+  }
+
+  #erp_notification.new {
+    & > a > span.glyphicon {
+      color: @brand-primary;
+    }
+    & > a:hover > span.glyphicon {
+      color: @navbar-inverse-link-hover-color;
+    }
+  }
+  #erp_message.new {
+    & > a > span.glyphicon {
+      color: @brand-primary;
+    }
+    & > a:hover > span.glyphicon {
+      color: @navbar-inverse-link-hover-color;
+    }
+  }
+
+  #erp_timesheet.working {
+    & > a > span.glyphicon {
+      color: @brand-danger;
+    }
+    & > a:hover > span.glyphicon {
+      color: @navbar-inverse-link-hover-color;
+    }
+  }
+
+
+}
+@media (max-width: @screen-xs-max) {
+  .navbar-inverse {
+    span.nav-text {
+      display: inline;
+    }
+  }
+}
+
+/* Dropdown at mouseover
+-------------------------------------------------- */
+@media (min-width: @screen-sm) {
+  ul.nav.dashboards {
+    & > li.dropdown:hover .dropdown-menu {
+      display: block;
+    }
+//  & > li.dropdown:hover > a {
+//    cursor: s-resize;
+//  }
+  }
+}
+
+/* Footer
+-------------------------------------------------- */
+
+footer {
+  padding: @line-height-computed 0;
+  margin: 0;
+  color: @gray;
+  background: @gray-lighter;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+  a {
+    color: lighten(@gray, 10%);
+  }
+  b {
+    color: @brand-primary;
+  }
+  a:hover {
+    color: #fff;
+  }
+}
+
+/* MISC
+-------------------------------------------------- */
+
+#erpapi_follow.following {
+  color: @brand-warning;
+  &:hover {
+    color: @brand-warning;
+  }
+}
+

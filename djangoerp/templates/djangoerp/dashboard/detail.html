@@ -1,0 +1,56 @@
+{% extends "djangoerp/base_sitebar_l.html" %}
+{% load i18n %}
+
+{% block title %}{% if object.name %}{% trans "Dashboard" %} - {{ object.name }}{% else %}{% trans "Dashboards" %}{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+{% if object.name %}
+  <li><a href="{% url 'djangoerp:dashboard' djangoerp.dashboard_current.pk %}">{{ djangoerp.dashboard_current.name }}</a></li>
+{% endif %}
+{% endblock %}
+
+{% block base_headline %}
+<div class="page-header">
+{% if object.name %}
+  <h1>{{ object.name }}<span class="pull-right">
+    <a href="{% url "djangoerp:dashboard_update" pk=object.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}</a>
+    <a href="{% url "djangoerp:dashboard_delete" pk=object.pk %}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+  </h1>
+{% else %}
+  <h1>{% trans "Dashboards" %}<span class="pull-right">
+      <a href="{% url "djangoerp:dashboard_create" %}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</a>
+    </span> 
+  </h1>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block base_content %}
+<div class="alert alert-info" style="font-size: 150%">
+  <span class="glyphicon glyphicon-cog"></span>
+  TODO: Add plugins to a Dashboard
+</div>
+{% endblock %}
+
+{% block sitebar %}
+
+{% if object.name %}
+  {% regroup djangoerp.views|dictsort:"category" by category as view_list %}
+  {% for view in view_list %}
+  <div class="panel panel-default">
+      {% if view.grouper %}
+          <div class="panel-heading"><h2 class="panel-title">{{ view.grouper }}</h2></div>
+      {% endif %}
+      <div class="list-group">
+          {% for item in view.list|dictsort:"name" %}
+          <a class="list-group-item" href="{{ item.url }}">{{ item.name }}</a>
+          {% endfor %}
+      </div>
+  </div>
+  {% empty %}
+  <p>{% trans "You have not yet added a view to this dashboard" %}</p>
+  {% endfor %}
+
+{% else %}{% include "djangoerp/dashboard/sitebar.html" %}
+{% endif %}
+{% endblock %}

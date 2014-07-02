@@ -1,0 +1,10 @@
+{% load i18n %}
+<div>
+  <p>
+    <strong>{% trans "Item created"%}</strong><br />
+    <small class="text-muted">
+      {{ item.user.get_full_name|default:_("Unknown") }} {% trans "before" %} {{ item.modified|timesince }}
+    </small>
+  </p>
+  <hr />
+</div>

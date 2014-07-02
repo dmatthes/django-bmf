@@ -1,0 +1,12 @@
+{% extends "djangoerp/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Wizard" %}{% endblock %}
+{% block breadcrumb %}<li><a href="{% url 'djangoerp:wizard' %}">{% trans "Wizard" %}</a></li>{% endblock %}
+{% block navbar %}{% endblock %}
+
+{% block full_content %}
+<h1>{% trans "Wizard" %}</h1>
+<p>You need to add a Employee-Entry to your Account</p>
+{% endblock %}

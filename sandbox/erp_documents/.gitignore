@@ -1,0 +1,4 @@
+*
+!.gitignore
+!static/pdf-template1.pdf
+!static/pdf-template1-letter.pdf

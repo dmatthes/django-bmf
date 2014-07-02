@@ -1,0 +1,10 @@
+{% load i18n %}
+<div>
+  <p>
+  <strong>{% trans "State"%}: {{ item.get_text.new }}</strong> &larr; {{ item.get_text.old }}<br />
+    <small class="text-muted">
+      {{ item.user.get_full_name|default:_("Unknown") }} {% trans "before" %} {{ item.modified|timesince }}
+    </small>
+  </p>
+  <hr />
+</div>
