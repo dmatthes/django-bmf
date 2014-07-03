@@ -124,7 +124,7 @@ class AbstractTask(ERPModel):
     class Meta(ERPModel.Meta): # only needed for abstract models
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
-        ordering = ['-due_date', 'summary']
+        ordering = ['due_date', 'summary']
         abstract = True
 
     def __str__(self):

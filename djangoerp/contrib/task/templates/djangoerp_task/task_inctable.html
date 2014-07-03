@@ -29,7 +29,7 @@
           {% if obj.state == "review" %}<span class="label label-info">{% trans "review" %}</span>{% endif %}
           {% if obj.state == "started" %}<span class="label label-primary">{% trans "started" %}</span>{% endif %}
           {% if obj.state == "hold" %}<span class="label label-warning">{% trans "hold" %}</span>{% endif %}
-          {{ obj.summary }}
+          {% if obj.project %}[{{ obj.project }}] {% endif %}{{ obj.summary }}
           {% if obj.due_date %}{% if obj.state == "new" or obj.state == "started" or obj.state == "open" %}<br />
           <small>
             {% if obj.due_days <= 3 %}<span class="label label-danger"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
