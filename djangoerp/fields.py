@@ -115,5 +115,8 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
         from .sites import site
         return site.currencies['%s'%value]()
 
-    def get_prep_value(self, value):
-        return value.iso
+    def get_prep_value(self, obj):
+        return obj.iso
+
+    def value_to_string(self, obj):
+        return obj.iso
