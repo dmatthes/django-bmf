@@ -89,6 +89,9 @@ class MoneyField(with_metaclass(models.SubfieldBase, models.DecimalField)):
 
 # def to_python(self, value)
 
+def get_default_currency():
+    from .sites import site
+    return site.get_lazy_setting('djangoerp','currency')
 
 class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
     description = _("Currency Field")
@@ -103,7 +106,7 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
             'null': True,
             'blank': False,
             'editable': False,
-            'default': lambda: site.get_lazy_setting('djangoerp','currency'),
+            'default': get_default_currency,
         })
         # TODO using lambda to get the current setting value works, but the function is executed multiple times. maybe a different solution to solve this is better
         super(CurrencyField, self).__init__(*args, **defaults)

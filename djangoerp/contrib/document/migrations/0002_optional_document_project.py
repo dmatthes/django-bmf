@@ -9,19 +9,13 @@ if BASE_MODULE["PROJECT"]:
     class Migration(migrations.Migration):
 
         dependencies = [
-            ('djangoerp_task', '0002_optional_employee'),
+            ('djangoerp_document', '0001_initial'),
             migrations.swappable_dependency(BASE_MODULE["PROJECT"]),
         ]
 
         operations = [
             migrations.AddField(
-                model_name='goal',
-                name='project',
-                field=models.ForeignKey(blank=True, to=BASE_MODULE["PROJECT"], null=True),
-                preserve_default=True,
-            ),
-            migrations.AddField(
-                model_name='task',
+                model_name='document',
                 name='project',
                 field=models.ForeignKey(blank=True, to=BASE_MODULE["PROJECT"], null=True),
                 preserve_default=True,
