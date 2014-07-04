@@ -7,7 +7,6 @@ import mptt.fields
 import django.db.models.deletion
 from django.conf import settings
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
