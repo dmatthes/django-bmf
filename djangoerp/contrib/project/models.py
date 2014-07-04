@@ -14,8 +14,10 @@ from djangoerp.settings import BASE_MODULE
 
 @python_2_unicode_compatible
 class BaseProject(ERPModel):
-    customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name='erp_projects')
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True)
+    if BASE_MODULE["CUSTOMER"]:
+        customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name='erp_projects')
+    if BASE_MODULE["EMPLOYEE"]:
+        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True)
 
     name = models.CharField(_("Name"), max_length=255, null=False, blank=False, editable=True, )
     is_bound = models.BooleanField(null=False, blank=True, editable=False, default=False)
