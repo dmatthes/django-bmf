@@ -27,10 +27,11 @@ class AbstractInvoice(ERPModel):
     """
     state = WorkflowField()
     if BASE_MODULE['CUSTOMER']:
-        customer = models.ForeignKey(BASE_MODULE['CUSTOMER'], null=False, blank=False)
+        customer = models.ForeignKey(BASE_MODULE['CUSTOMER'], null=True, blank=False)
     if BASE_MODULE['PROJECT']:
-        project = models.ForeignKey(BASE_MODULE['PROJECT'], null=False, blank=False)
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False)
+        project = models.ForeignKey(BASE_MODULE['PROJECT'], null=True, blank=False)
+    if BASE_MODULE['EMPLOYEE']:
+        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False)
     shipping_address = models.ForeignKey(BASE_MODULE["ADDRESS"], related_name="shipping_invoice", blank=False, null=True)
     invoice_address = models.ForeignKey(BASE_MODULE["ADDRESS"], related_name="quotation_invoice", blank=False, null=True)
     invoice_number = models.CharField(_('Invoice number'), max_length=255, null=True, blank=False)
@@ -66,10 +67,14 @@ class AbstractInvoice(ERPModel):
             instance._meta.model.objects.filter(pk=instance.pk).update(invoice_number=name)
 
     def erpget_customer(self):
-        return self.customer
+        if hasattr(self, 'customer'):
+            return self.customer
+        return None
 
     def erpget_project(self):
-        return self.project
+        if hasattr(self, 'project'):
+            return self.project
+        return None
 
     @staticmethod
     def post_delete(sender, instance, *args, **kwargs):

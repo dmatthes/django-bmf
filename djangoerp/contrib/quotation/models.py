@@ -29,7 +29,8 @@ class AbstractQuotation(ERPModel):
     """
     state = WorkflowField()
     invoice = models.OneToOneField(BASE_MODULE["INVOICE"], null=True, blank=True, editable=False, related_name="quotation")
-    customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=False)
+    if BASE_MODULE["CUSTOMER"]:
+        customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=False)
     if BASE_MODULE["PROJECT"]:
         project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=False)
     if BASE_MODULE["EMPLOYEE"]:
@@ -52,10 +53,14 @@ class AbstractQuotation(ERPModel):
         return '%s' % self.quotation_number
 
     def erpget_customer(self):
-        return self.customer
+        if hasattr(self, 'customer'):
+            return self.customer
+        return None
 
     def erpget_project(self):
-        return self.project
+        if hasattr(self, 'project'):
+            return self.project
+        return None
 
     def clean(self):
 #   if self.project and not self.customer_id:
