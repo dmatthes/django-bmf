@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
-                'ordering': ['-due_date', 'summary'],
+                'ordering': ['due_date', 'summary'],
                 'abstract': False,
                 'verbose_name': 'Task',
                 'verbose_name_plural': 'Tasks',

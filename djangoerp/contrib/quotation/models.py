@@ -28,12 +28,12 @@ class AbstractQuotation(ERPModel):
     """
     """
     state = WorkflowField()
-
     invoice = models.OneToOneField(BASE_MODULE["INVOICE"], null=True, blank=True, editable=False, related_name="quotation")
-
     customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=False)
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=False)
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False)
+    if BASE_MODULE["PROJECT"]:
+        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=False)
+    if BASE_MODULE["EMPLOYEE"]:
+        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False)
     shipping_address = models.ForeignKey(BASE_MODULE["ADDRESS"], null=True, blank=True, related_name="shipping_quotation")
     invoice_address = models.ForeignKey(BASE_MODULE["ADDRESS"], null=True, blank=True, related_name="invoice_quotation")
     quotation_number = models.CharField(_('Quotation number'), max_length=255, null=True, blank=False)
