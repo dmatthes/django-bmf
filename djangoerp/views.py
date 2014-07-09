@@ -3,26 +3,27 @@
 
 from __future__ import unicode_literals
 
+from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse_lazy
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Q
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect, HttpResponse, Http404, QueryDict
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import BaseFormView
+from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.defaults import permission_denied
-from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils import formats
 from django.utils.encoding import force_text
-from django.views.generic.edit import FormView
-from django.contrib import messages
 from django.utils.timezone import now
 
 from django_filters.views import FilterView
@@ -408,6 +409,10 @@ class PluginFormAPI(AjaxMixin, PluginForm, PluginBase, SingleObjectMixin, BaseFo
     model = None
     queryset = None
     form_view = None
+
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+         return super(PluginFormAPI, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         """
