@@ -42,5 +42,5 @@ class TaskIndexView(PluginIndex):
 
     def get_queryset(self):
         qs = super(TaskIndexView, self).get_queryset()
-        qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count','due_date')
+        qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count','due_date','summary')
         return qs
