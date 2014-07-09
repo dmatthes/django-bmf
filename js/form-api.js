@@ -38,6 +38,8 @@
 
 //    base.input = base.$el.children('input[type="text"]').first();
 //    base.hidden = base.$el.find('input[type="hidden"]').first();
+      base.form = base.$el.parents('form').first();
+      // console.log(base.form);
       base.input = base.$el.find('input[type="text"]').last();
       base.hidden = base.$el.find('input[type="text"]').first();
       base.dropdown = base.$el.children('ul').first();
@@ -91,11 +93,11 @@
     base.changed = function() {
       var data = {};
       data.field = base.hidden.attr('id')
-      data.form = $('#djangoerpform').serialize();
+      data.form = base.form.serialize();
       console.log(data.form);
 
       $.ajax({
-        url: "./form-api/?changed",
+        url: base.form.attr('action')+"form-api/?changed",
         dataType: 'json',
         type: 'post',
         data: data,
@@ -116,7 +118,7 @@
     base.getList = function () {
       var data = {};
       data.field = base.hidden.attr('id')
-      data.form = $('#djangoerpform').serialize();
+      data.form = base.form.serialize();
 
       data.string = base.input.val();
       if (base.hidden.val() != '') {
@@ -124,7 +126,7 @@
       };
 
       $.ajax({
-        url: "./form-api/?search",
+        url: base.form.attr('action')+"form-api/?search",
         dataType: 'json',
         type: 'post',
         data: data,
@@ -256,7 +258,7 @@
    };
 })(jQuery);
 
-$(document).ready(function() {
-  $('div[data-erp-search=1]').djangoerp_search();
-  $("div[data-erp-inlineform=1]").djangoerp_inlineform();
-});
+//$(document).ready(function() {
+//  $('div[data-erp-search=1]').djangoerp_search();
+//  $("div[data-erp-inlineform=1]").djangoerp_inlineform();
+//});

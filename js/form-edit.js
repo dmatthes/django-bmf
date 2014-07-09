@@ -9,7 +9,7 @@ $(document).ready(function() {
         statusCode: {
             302: function() {
                 alert( "REDIRECT" );
-            }
+            },
             403: function() {
                 alert( "no permission" );
             },
@@ -24,11 +24,13 @@ $(document).ready(function() {
 
     $('.erp-edit').click(function (event) {
         event.preventDefault();
+        var form_target = $(this).attr('href');
+
         // initialize the modal
         if ($('#erpmodal_edit').length == 0) {
             $('#wrap').prepend('<div class="modal fade" id="erpmodal_edit" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-lg"></div></div>');
             $('#erpmodal_edit').modal({
-                keyboard: false,
+                keyboard: true,
                 show: false,
                 backdrop: 'static'
             });
@@ -44,9 +46,17 @@ $(document).ready(function() {
             })
         }
         // get the new content for the modal
-        $.get($(this).attr('href'), function(data) {
+        $.get(form_target, function(data) {
             $('#erpmodal_edit div.modal-dialog').prepend(data);
             $('#erpmodal_edit').modal('show');
+        }).done( function() {
+            // manipulate form url
+            // cause the template-tag which generates the form is not aware of the url
+            var form_object = $('#erpmodal_edit div.modal-dialog div:first-child form');
+            form_object.attr('action', form_target);
+            // apply erp-form functions
+            form_object.find('div[data-erp-search=1]').djangoerp_search();
+            form_object.find("div[data-erp-inlineform=1]").djangoerp_inlineform();
         });
     });
 });

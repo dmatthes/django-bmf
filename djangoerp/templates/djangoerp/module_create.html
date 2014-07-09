@@ -3,9 +3,9 @@
 {% load djangoerp_core %}
 {% load i18n %}
 
-{% block title %}Create{% endblock %}
+{% block title %}{% blocktrans with object=block.super %}Create {{ object }}{% endblocktrans %}{% endblock %}
 
 {% block base_buttons %}
-<button type="button" class="btn btn-danger">Cancel</button>
-<button type="button" class="btn btn-success">Save</button>
+<button type="button" class="btn btn-danger">{% trans "Cancel" %}</button>
+<button type="button" class="btn btn-primary">{% trans "Save" %}</button>
 {% endblock %}
