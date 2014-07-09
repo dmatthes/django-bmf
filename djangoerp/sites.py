@@ -78,6 +78,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
     update = None
     detail = None
     report = None
+    clone = None
     urlpatterns = None
 
     def __init__(self, model):
@@ -90,6 +91,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
         update = self.update or options.get('update', None)
         detail = self.detail or options.get('detail', None)
         report = self.report or options.get('report', None)
+        clone = self.create or options.get('clone', None)
 
         add_patterns = self.urlpatterns or options.get('urlpatterns', None)
 
@@ -182,6 +184,17 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     r'^(?P<pk>[0-9]+)/report/$',
                     report.as_view(model=self.model),
                     name='report',
+                ),
+            )
+
+        # clone model
+        if clone:
+            self.model._erpmeta.can_clone = True
+            urlpatterns += patterns('',
+                url(
+                    r'^(?P<pk>[0-9]+)/clone/$',
+                    report.as_view(model=self.model),
+                    name='clone',
                 ),
             )
 

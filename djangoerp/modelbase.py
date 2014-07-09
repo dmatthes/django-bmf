@@ -77,6 +77,8 @@ class ERPOptions(object):
         self.url_namespace = '%s:module_%s_%s' % (APP_LABEL, meta.app_label, meta.model_name)
         # is set to true if a report-view is defined for this model (see sites.py)
         self.has_report = False
+        # is set to true if a clone-view is deinied for this model (see sites.py)
+        self.can_clone = False
         # is filles with keys if multiple create views are definied for this model (see sites.py)
         self.create_views = []
 
