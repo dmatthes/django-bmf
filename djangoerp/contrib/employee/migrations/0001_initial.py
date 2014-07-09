@@ -32,6 +32,8 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ['name'],
+                'verbose_name': 'Employee',
+                'verbose_name_plural': 'Employees',
                 'abstract': False,
             },
             bases=(models.Model,),
