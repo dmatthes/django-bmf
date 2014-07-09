@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,74 +17,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:34
+#: models.py:37
 msgid "Invoice number"
 msgstr ""
 
-#: models.py:37
+#: models.py:40
 msgid "Date"
 msgstr ""
 
-#: models.py:38
+#: models.py:41
 msgid "Due"
 msgstr ""
 
-#: models.py:39
+#: models.py:42
 msgid "Notes"
 msgstr ""
 
-#: models.py:40
+#: models.py:43
 msgid "Term of payment"
 msgstr ""
 
-#: models.py:47
+#: models.py:50
 msgid "Invoice"
 msgstr ""
 
-#: models.py:48
+#: models.py:51
 msgid "Invoices"
 msgstr ""
 
-#: models.py:105
+#: models.py:134
 msgid "Name"
 msgstr ""
 
-#: models.py:106
+#: models.py:135
 msgid "Price"
 msgstr ""
 
-#: models.py:109
+#: models.py:138
 msgid "Amount"
 msgstr ""
 
-#: models.py:111
+#: models.py:140
 msgid "Description"
 msgstr ""
 
 #: templates/djangoerp_invoice/invoice_htmlreport.html:4
-#: templates/djangoerp_invoice/invoice_htmlreport.html:9
+#: templates/djangoerp_invoice/invoice_htmlreport.html:18
 #, python-format
 msgid "Invoice %(name)s"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:22
-msgid "Quantity"
-msgstr ""
-
-#: templates/djangoerp_invoice/invoice_htmlreport.html:23
-msgid "Article"
+#: templates/djangoerp_invoice/invoice_htmlreport.html:11
+msgid "Your contact person"
 msgstr ""
 
 #: templates/djangoerp_invoice/invoice_htmlreport.html:24
+msgid "Dear Valued Customer,"
+msgstr ""
+
+#: templates/djangoerp_invoice/invoice_htmlreport.html:33
+msgid "Quantity"
+msgstr ""
+
+#: templates/djangoerp_invoice/invoice_htmlreport.html:34
+msgid "Article"
+msgstr ""
+
+#: templates/djangoerp_invoice/invoice_htmlreport.html:35
 msgid "Tax"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:25
+#: templates/djangoerp_invoice/invoice_htmlreport.html:36
 msgid "Unit price"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:26
+#: templates/djangoerp_invoice/invoice_htmlreport.html:37
 msgid "Total price"
+msgstr ""
+
+#: templates/djangoerp_invoice/invoice_htmlreport.html:63
+msgid "Subtotal"
+msgstr ""
+
+#: templates/djangoerp_invoice/invoice_htmlreport.html:73
+msgid "Billing amount"
+msgstr ""
+
+#: templates/djangoerp_invoice/invoice_htmlreport.html:81
+msgid "With kind regards"
 msgstr ""
 
 #: workflows.py:16

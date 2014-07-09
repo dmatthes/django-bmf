@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,38 +37,48 @@ msgstr ""
 msgid "Default shipping"
 msgstr ""
 
-#: models.py:25
+#: models.py:28
 msgid "Address"
 msgstr ""
 
-#: models.py:26
+#: models.py:29
 msgid "Addresses"
 msgstr ""
 
-#: models.py:40
+#: models.py:43
 msgid "Name"
 msgstr ""
 
-#: models.py:41
+#: models.py:44
 msgid "Name2"
 msgstr ""
 
-#: models.py:42
+#: models.py:45
 msgid "Street"
 msgstr ""
 
-#: models.py:43
+#: models.py:46
 msgid "Zipcode"
 msgstr ""
 
-#: models.py:44
+#: models.py:47
 msgid "City"
 msgstr ""
 
-#: models.py:45
+#: models.py:48
 msgid "State"
 msgstr ""
 
-#: models.py:46
+#: models.py:49
 msgid "Country"
+msgstr ""
+
+#: models.py:55
+#, python-format
+msgid ""
+"\n"
+"                %(name)s %(name2)s\n"
+"                %(street)s\n"
+"                %(city)s, %(state)s, %(zip)s, %(country)s\n"
+"            "
 msgstr ""

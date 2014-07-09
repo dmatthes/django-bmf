@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:21
-msgid "Name"
-msgstr ""
+#: models.py:19
+msgid "Employee"
+msgstr "Mitarbeiter"
 
-#: models.py:22
+#: models.py:20
+#, fuzzy
+#| msgid "Employee"
+msgid "Employees"
+msgstr "Mitarbeiter"
+
+#: models.py:35
+msgid "Name"
+msgstr "Name"
+
+#: models.py:36
 msgid "Email"
 msgstr "Email"
 
-#: models.py:23
+#: models.py:37
 msgid "Phone office"
-msgstr ""
+msgstr "Telefon"
 
-#: models.py:24
+#: models.py:38
 msgid "Phone mobile"
-msgstr ""
+msgstr "Handy"
 
-#: models.py:25
+#: models.py:39
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
-#: models.py:26
+#: models.py:40
 msgid "Supervisor"
-msgstr ""
-
-#: models.py:29 models.py:30
-msgid "Employee"
-msgstr "Mitarbeiter"
+msgstr "Vorgesetzter"
