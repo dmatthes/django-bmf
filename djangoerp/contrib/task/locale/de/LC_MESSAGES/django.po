@@ -32,7 +32,7 @@ msgstr ""
 
 #: models.py:34 models.py:121 workflows.py:19
 msgid "Completed"
-msgstr ""
+msgstr "Abgeschlossen"
 
 #: models.py:37
 msgid "Goal"
@@ -56,7 +56,7 @@ msgstr "Aufgaben"
 
 #: templates/djangoerp_task/goal_erpdetail.html:26
 msgid "Open tasks"
-msgstr ""
+msgstr "Offene Aufgaben"
 
 #: templates/djangoerp_task/goal_erpdetail.html:27
 msgid "Tasks on hold"
@@ -64,37 +64,35 @@ msgstr ""
 
 #: templates/djangoerp_task/goal_erpdetail.html:28
 msgid "Accomplished Tasks"
-msgstr ""
+msgstr "Abgeschlossene Aufgaben"
 
 #: templates/djangoerp_task/goal_erpindex.html:8
 msgid "Project"
-msgstr ""
+msgstr "Projekt"
 
 #: templates/djangoerp_task/goal_erpindex.html:13
 msgid "Current State"
-msgstr ""
+msgstr "Aktueller Status"
 
 #: templates/djangoerp_task/goal_erpindex.html:29
 msgid "completed"
-msgstr ""
+msgstr "abgeschlossen"
 
 #: templates/djangoerp_task/task_inctable.html:6
 msgid "Employee"
-msgstr ""
+msgstr "Mitarbeiter"
 
 #: templates/djangoerp_task/task_inctable.html:7
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #: templates/djangoerp_task/task_inctable.html:29
 msgid "review"
 msgstr ""
 
 #: templates/djangoerp_task/task_inctable.html:30
-#, fuzzy
-#| msgid "Started"
 msgid "started"
-msgstr "Gestartet"
+msgstr "gestartet"
 
 #: templates/djangoerp_task/task_inctable.html:31
 msgid "hold"
@@ -102,7 +100,7 @@ msgstr ""
 
 #: templates/djangoerp_task/task_inctable.html:42
 msgid "None"
-msgstr ""
+msgstr "Kein"
 
 #: workflows.py:18 workflows.py:42
 msgid "Open"
@@ -110,11 +108,11 @@ msgstr "Offen"
 
 #: workflows.py:23
 msgid "Complete this Goal"
-msgstr ""
+msgstr "Schließe das Ziel ab"
 
 #: workflows.py:24
 msgid "Reopen this Goal"
-msgstr ""
+msgstr "Öffne das Ziel"
 
 #: workflows.py:29
 msgid "You can not complete a goal which has open tasks"
@@ -146,7 +144,7 @@ msgstr "Abgebrochen"
 
 #: workflows.py:50
 msgid "Work on this task"
-msgstr ""
+msgstr "Arbeite an dieser Aufgabe"
 
 #: workflows.py:51
 msgid "Set this task on hold"
@@ -158,7 +156,7 @@ msgstr ""
 
 #: workflows.py:53
 msgid "Finish this task"
-msgstr ""
+msgstr "Schließe diese Aufgabe ab"
 
 #: workflows.py:54 workflows.py:55
 msgid "Reopen this task"
@@ -166,7 +164,7 @@ msgstr ""
 
 #: workflows.py:56
 msgid "Cancel this task"
-msgstr ""
+msgstr "Breche diese Aufgabe ab"
 
 #: workflows.py:94
 msgid "Your need to be a referee to this goal to change the state"

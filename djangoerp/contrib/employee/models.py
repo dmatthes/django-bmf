@@ -39,7 +39,7 @@ class AbstractEmployee(BaseEmployee):
     fax = models.CharField(_("Fax"),  max_length=255, null=True, blank=True, )
     supervisor = models.ForeignKey('self', verbose_name=_("Supervisor"), null=True, blank=True, swappable=True) # TODO: Add validator or modify queryset so that an employee cant be the supervisor of him/her-self
 
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(BaseEmployee.Meta): # only needed for abstract models
         ordering = ['name']
         abstract = True
 
