@@ -29,17 +29,23 @@
           {% if obj.state == "review" %}<span class="label label-info">{% trans "review" %}</span>{% endif %}
           {% if obj.state == "started" %}<span class="label label-primary">{% trans "started" %}</span>{% endif %}
           {% if obj.state == "hold" %}<span class="label label-warning">{% trans "hold" %}</span>{% endif %}
-          {% if obj.project %}[{{ obj.project }}] {% endif %}{{ obj.summary }}
+          {{ obj.summary }}
+          {% if obj.project or obj.goal %}<br /><small>
+              <strong>{{ obj.project }}</strong> {{ obj.goal }}
+          </small>
+          {% endif %}
+      </td>
+      <td>{% if obj.employee %}{{ obj.employee }}{% else %}<i>{% trans "None" %}</i>{% endif %}
           {% if obj.due_date %}{% if obj.state == "new" or obj.state == "started" or obj.state == "open" %}<br />
           <small>
             {% if obj.due_days <= 3 %}<span class="label label-danger"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
             {% if obj.due_days > 3 and obj.due_days < 7 %}<span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
             {% if obj.due_days >= 7 %}<span class="label label-success"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
-            <strong>{{ obj.due_date }}</strong> {% if obj.due_days %}({{ obj.due_date|timeuntil }}){% endif %}
+            <strong>{{ obj.due_date }}</strong>
+            {# if obj.due_days %}<br />{{ obj.due_date|timeuntil }}{% endif #}
           </small>
           {% endif %}{% endif %}
       </td>
-      <td>{% if obj.employee %}{{ obj.employee }}{% else %}<i>{% trans "None" %}</i>{% endif %}</td>
       <td>{{ obj.get_workflow_state }}<br /><small>{{ obj.modified|date:"SHORT_DATE_FORMAT" }}</small></td>
       <td class="text-right">
           <a class="btn btn-xs btn-primary" href="{{ obj.erpmodule_detail }}?next={{ request.path }}">

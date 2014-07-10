@@ -42,5 +42,9 @@ class TaskIndexView(PluginIndex):
 
     def get_queryset(self):
         qs = super(TaskIndexView, self).get_queryset()
-        qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count','due_date','summary')
+        related = ['goal',]
+        if hasattr(self, 'project'):
+            related.append('project')
+
+        qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count','due_date','summary').select_related(*related)
         return qs
