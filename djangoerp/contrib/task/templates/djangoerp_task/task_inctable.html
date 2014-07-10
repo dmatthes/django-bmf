@@ -31,7 +31,7 @@
           {% if obj.state == "hold" %}<span class="label label-warning">{% trans "hold" %}</span>{% endif %}
           {{ obj.summary }}
           {% if obj.project or obj.goal %}<br /><small>
-              <strong>{{ obj.project }}</strong> {{ obj.goal }}
+              {% if obj.project %}<strong>{{ obj.project }}</strong>{% endif %} {% if obj.goal %}{{ obj.goal }}{% endif %}
           </small>
           {% endif %}
       </td>
