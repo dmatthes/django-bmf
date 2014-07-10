@@ -31,10 +31,23 @@ def css():
 
 
 @task
-def js():
+def js(debug=None):
     with lcd(BASEDIR):
-        local('cat js/jquery-1.11.0.js js/jquery.cookie.js js/jquery-ui-1.10.4.custom.js submodules/bootstrap/dist/js/bootstrap.js js/form-api.js js/menu.js > js/djangoerp.js')
-        local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js js/djangoerp.js')
+        js = [
+            'js/jquery-1.11.0.js',
+            'js/jquery.cookie.js',
+            'js/jquery-ui-1.10.4.custom.js',
+            'submodules/bootstrap/dist/js/bootstrap.js',
+            'js/variables.js',
+            'js/form-api.js',
+            'js/form-edit.js',
+            'js/menu.js',
+        ]
+        local('cat %s > js/djangoerp.js' % ' '.join(js))
+        if debug:
+            local('cp js/djangoerp.js djangoerp/static/djangoerp/js/djangoerp.min.js')
+        else:
+            local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js js/djangoerp.js')
 
 
 @task

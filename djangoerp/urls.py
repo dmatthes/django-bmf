@@ -20,6 +20,11 @@ from djangoerp.dashboard.views import DashboardView
 from djangoerp.module.views import ModuleView
 from djangoerp.modals.views import ModalSaveView
 
+# FIXME: Rewrite Tests and Forms to fully support AJAX - then DELETE THIS S**T
+from django.http import HttpResponse
+def status_ok(request):
+    return HttpResponse('ok')
+
 urlpatterns = patterns('',
     url(r'^$', DashboardView.as_view(), name="dashboard"),
     url(r'^accounts/', include('djangoerp.account.urls')),
@@ -30,6 +35,8 @@ urlpatterns = patterns('',
     url(r'^watching/', include('djangoerp.watch.urls')),
     url(r'^wizard/', include('djangoerp.wizard.urls')),
     #   r'^module/' via sites
+
+    url(r'^status_ok$', status_ok, name="status_ok"), # FIXME
 
     # TODO
     url(r'^modules/$', ModuleView.as_view(), name="modules"),

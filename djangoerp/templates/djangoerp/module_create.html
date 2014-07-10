@@ -1,19 +1,11 @@
-{% extends "djangoerp/module_base.html" %}
+{% extends "djangoerp/module_modal_base.html" %}
 
 {% load djangoerp_core %}
 {% load i18n %}
 
-{% block breadcrumb %}
-{{ block.super }}<li>{% trans "New" %}</li>
-{% endblock %}
+{% block title %}{% blocktrans with object=block.super %}Create {{ object }}{% endblocktrans %}{% endblock %}
 
 {% block base_buttons %}
-<div class="btn-toolbar pull-right" role="toolbar">
-  <div class="btn-group">
-  <a class="btn btn-default btn-sm btn-warning" href="{% get_erp_url erpmodel "index" %}">
-    <span class="glyphicon glyphicon-hand-left"></span> {% trans "Back" %}
-  </a>
-  </div>
-</div>
-<div class="clearfix"></div>
+<button type="button" class="btn erpedit-cancel btn-danger">{% trans "Cancel" %}</button>
+<button type="button" class="btn erpedit-submit btn-primary">{% trans "Create object" %}</button>
 {% endblock %}

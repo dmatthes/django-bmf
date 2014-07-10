@@ -1,28 +1,5 @@
 $(document).ready(function() {
 
-    ajax_dict = {
-        crossDomain: false,
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
-        },
-        dataType: 'json',
-        statusCode: {
-            403: function() {
-                alert( "no permission" );
-              //if ($('#erpmodal_nopermission').length == 0) {
-              //  $.get($(this).attr('href'), function(data) {
-              //    $('#wrap').prepend('<div class="modal fade" id="erpmodal_nopermission" tabindex="-1" role="dialog" aria-hidden="true">'+data+'</div>');
-              //  });
-              //}
-              //$('#erpmodal_nopermission').modal('show');
-            },
-            404: function() {
-                alert( "not found" );
-            }
-        }
-    };
-
-
     /* Notification
      * ----------------------------------------------------------------------- */
 
@@ -75,7 +52,7 @@ $(document).ready(function() {
         var search = $(location).attr('search');
         var pathname = $(location).attr('pathname');
         var url = $(this).attr('href');
-        dict = ajax_dict;
+        dict = ERPAJAX;
         dict.type = 'GET';
         dict.data = { search: search, pathname: pathname };
         dict.url = url;
@@ -85,7 +62,7 @@ $(document).ready(function() {
                 $('#erpmodal_saveview').modal('show');
                 $('#erpmodal_saveview form').submit(function(event){
                     event.preventDefault();
-                    dict = ajax_dict;
+                    dict = ERPAJAX;
                     dict.type = 'POST';
                     dict.data = $(this).serialize();
                     dict.url = url;
@@ -115,7 +92,7 @@ $(document).ready(function() {
             var ct = $(this).data('ct');
             var pk = $(this).data('pk');
             var url = $(this).attr('href');
-            dict = ajax_dict;
+            dict = ERPAJAX;
             dict.type = 'GET';
             dict.data = { ct: ct, pk: pk };
             dict.url = url;
@@ -127,7 +104,7 @@ $(document).ready(function() {
 
                 $('#erpmodal_follow form').submit(function(event){
                     event.preventDefault();
-                    dict = ajax_dict;
+                    dict = ERPAJAX;
                     dict.type = 'POST';
                     dict.data = $(this).serializeArray();
                     dict.data.push({name: 'ct', value: ct });
