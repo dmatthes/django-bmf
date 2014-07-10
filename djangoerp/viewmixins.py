@@ -245,6 +245,18 @@ class ModuleCreatePermissionMixin(object):
         return super(ModuleCreatePermissionMixin, self).get_permissions(perms)
 
 
+class ModuleClonePermissionMixin(object):
+    """
+    Checks create permissions of an erpmodule
+    """
+
+    def get_permissions(self, perms):
+        info = self.model._meta.app_label, self.model._meta.model_name
+        perms.append('%s.clone_%s' % info)
+        perms.append('%s.view_%s' % info)
+        return super(ModuleClonePermissionMixin, self).get_permissions(perms)
+
+
 class ModuleUpdatePermissionMixin(object):
     """
     Checks update permissions of an erpmodule

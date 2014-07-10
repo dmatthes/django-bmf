@@ -67,10 +67,11 @@ from .viewmixins import BaseMixin
 from .viewmixins import AjaxMixin
 from .viewmixins import NextMixin
 
-from .viewmixins import ModuleViewPermissionMixin as PluginViewPermission
+from .viewmixins import ModuleViewPermissionMixin
 from .viewmixins import ModuleCreatePermissionMixin as PluginCreatePermission
 from .viewmixins import ModuleUpdatePermissionMixin as PluginUpdatePermission
 from .viewmixins import ModuleDeletePermissionMixin as PluginDeletePermission
+from .viewmixins import ModuleClonePermissionMixin as PluginUpdatePermission
 
 from .viewmixins import ModuleBaseMixin as PluginBase
 
@@ -168,7 +169,7 @@ class PluginForm(object):
 # Actual Views ================================================================
 
 
-class PluginIndex(PluginViewPermission, PluginBase, FilterView):
+class PluginIndex(ModuleViewPermissionMixin, PluginBase, FilterView):
     """
     """
     context_object_name = 'objects'
@@ -190,7 +191,7 @@ class PluginIndex(PluginViewPermission, PluginBase, FilterView):
         return super(PluginIndex, self).get_context_data(**kwargs)
 
 
-class PluginBaseDetail(PluginViewPermission, PluginFiles, PluginActivity, PluginBase, DetailView):
+class PluginBaseDetail(ModuleViewPermissionMixin, PluginFiles, PluginActivity, PluginBase, DetailView):
     """
     show the details of an entry
     """
@@ -221,7 +222,7 @@ class PluginDetail(PluginForm, PluginBaseDetail):
         return super(PluginDetail, self).get_context_data(**kwargs)
 
 
-class PluginReport(PluginViewPermission, PluginBase, DetailView):
+class PluginReport(ModuleViewPermissionMixin, PluginBase, DetailView):
     """
     render a report
     """
@@ -246,6 +247,39 @@ class PluginReport(PluginViewPermission, PluginBase, DetailView):
         context['request'] = self.request
         return context
 
+
+class PluginClone(PluginForm, PluginUpdatePermission, PluginCreatePermission, PluginBase, UpdateView):
+    """
+    clone a object
+    """
+    context_object_name = 'object'
+    template_name_suffix = '_erpclone'
+    exclude=[]
+
+    def get_template_names(self):
+        return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_clone_default.html"]
+
+    def get_success_url(self):
+        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
+        redirect_to = self.request.GET.get('next', '')
+
+        netloc = urlparse.urlparse(redirect_to)[1]
+        if netloc and netloc != self.request.get_host():
+            redirect_to = None
+
+        if redirect_to:
+            return redirect_to
+
+        if self.success_url:
+            return self.success_url
+        return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Object cloned')
+        form.instance.modified_by = self.request.user
+        self.object = form.save()
+        activity_update.send(sender=self.object.__class__, instance=self.object)
+        return HttpResponseRedirect(self.get_success_url())
 
 class PluginUpdate(PluginForm, PluginUpdatePermission, PluginBase, UpdateView):
     """

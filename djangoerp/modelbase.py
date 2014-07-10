@@ -63,6 +63,7 @@ class ERPOptions(object):
         self.has_logging = True
         self.has_comments = False
         self.has_files = False
+        self.can_clone = True
         self.clean = False
         self.observed_fields = []
         self.search_fields = []
@@ -77,8 +78,6 @@ class ERPOptions(object):
         self.url_namespace = '%s:module_%s_%s' % (APP_LABEL, meta.app_label, meta.model_name)
         # is set to true if a report-view is defined for this model (see sites.py)
         self.has_report = False
-        # is set to true if a clone-view is deinied for this model (see sites.py)
-        self.can_clone = False
         # is filles with keys if multiple create views are definied for this model (see sites.py)
         self.create_views = []
 
@@ -137,6 +136,10 @@ class ERPModelBase(ModelBase):
         cls._meta.permissions.append(
             ('view_' + cls._meta.model_name, u'Can view %s' % cls.__name__)
         )
+        if cls._erpmeta.can_clone:
+            cls._meta.permissions.append(
+                ('clone_' + cls._meta.model_name, u'Can clone %s' % cls.__name__)
+            )
         if cls._erpmeta.has_comments:
             cls._meta.permissions.append(
                 ('comment_' + cls._meta.model_name, u'Can comment on %s' % cls.__name__)
