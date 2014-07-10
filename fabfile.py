@@ -36,7 +36,7 @@ def js(debug=None):
         js = [
             'js/jquery-1.11.0.js',
             'js/jquery.cookie.js',
-            'js/jquery-ui-1.10.4.custom.js',
+           #'js/jquery-ui-1.10.4.custom.js',
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
