@@ -302,6 +302,7 @@ class ModuleBaseMixin(BaseMixin):
 
     def get_context_data(self, **kwargs):
         ct = ContentType.objects.get_for_model(self.model)
+        info = self.model._meta.app_label, self.model._meta.model_name
         kwargs.update({
             'erpmodule': {
                 'namespace_index': self.model._erpmeta.url_namespace + ':index',
@@ -309,7 +310,7 @@ class ModuleBaseMixin(BaseMixin):
                 'create_views': self.model._erpmeta.create_views,
                 'model': self.model,
                 'has_report': self.model._erpmeta.has_report,
-#               'ct': ct, # unused
+                'can_clone': self.model._erpmeta.can_clone and self.request.user.has_perms(['%s.view_%s' % info,'%s.clone_%s' % info,]):
 #               'namespace': self.model._erpmeta.url_namespace, #unused
 #               'verbose_name': self.model._meta.verbose_name, # unused
             },

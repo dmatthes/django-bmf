@@ -58,30 +58,48 @@
   </a>
   </div>
 {% endif %}
-{% if erpworkflow.state.delete %}
-  <div class="btn-group">
-  <a class="btn btn-default btn-danger" href="{% get_erp_url object "delete" %}">
-    <span class="glyphicon glyphicon-trash"></span>
-  </a>
-  </div>
-{% else %}
-  <div class="btn-group">
-  <a class="btn btn-default btn-default disabled" href="#">
-    <span class="glyphicon glyphicon-trash"></span>
-  </a>
-  </div>
-{% endif %}
-<div class="btn-group">
-{% if erpactivity.watch %}
-<a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-default following">
-  <span class="glyphicon glyphicon-star"></span>
-</a>
-{% else %}
-<a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-default">
-  <span class="glyphicon glyphicon-star-empty"></span>
-</a>
-{% endif %}
-  </div>
+
+    <div class="btn-group">
+        {% if erpactivity.watch %}
+            <a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-info following">
+                <span class="glyphicon glyphicon-star"></span>
+            </a>
+        {% else %}
+            <a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-star-empty"></span>
+            </a>
+        {% endif %}
+
+        {% if files %}
+            <a class="btn btn-default btn-info" href="#">
+                <span class="glyphicon glyphicon-paperclip"></span>
+            </a>
+        {% else %}
+            <a class="btn btn-default btn-default disabled" href="#">
+                <span class="glyphicon glyphicon-paperclip"></span>
+            </a>
+        {% endif %}
+
+        {% if erpmodule.can_clone %}{# TODO CHECK PERMISSION #}
+            <a class="btn btn-default btn-default" href="#">
+                <span class="glyphicon glyphicon-transfer"></span>
+            </a>
+        {% else %}
+            <a class="btn btn-default btn-default disabled" href="#">
+                <span class="glyphicon glyphicon-transfer"></span>
+            </a>
+        {% endif %}
+
+        {% if erpworkflow.state.delete %}
+            <a class="btn btn-default btn-danger" href="{% get_erp_url object "delete" %}">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
+        {% else %}
+            <a class="btn btn-default btn-default disabled" href="#">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
+        {% endif %}
+    </div>
 </div>
 <div class="clearfix"></div>
 {% endblock %}
