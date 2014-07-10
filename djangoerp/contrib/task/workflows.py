@@ -76,6 +76,7 @@ class TaskWorkflow(Workflow):
 
     def finish(self):
         self.stop()
+        self.instance.due_date = None
         # TODO remove this functionality IF timesheets are implemented
         billable_time = ceil(self.instance.seconds_on/60.)
 
