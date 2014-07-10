@@ -1,24 +1,5 @@
 $(document).ready(function() {
 
-    ajax_dict = {
-        crossDomain: false,
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
-        },
-        dataType: 'json',
-        statusCode: {
-            302: function() {
-                alert( "REDIRECT" );
-            },
-            403: function() {
-                alert( "no permission" );
-            },
-            404: function() {
-                alert( "not found" );
-            }
-        }
-    };
-
     /* Load form modal
      * ----------------------------------------------------------------------- */
 
@@ -37,13 +18,13 @@ $(document).ready(function() {
             // delete the modals content, if closed
             $('#erpmodal_edit').on('hidden.bs.modal', function (e) {
                 $('#erpmodal_edit div.modal-dialog').empty();
-            })
+            });
             // reload the page if one save has appeared
             $('#erpmodal_edit').on('hide.bs.modal', function (e) {
-                if ($('#erpmodal_edit div.page-reload').length == 1) {
+                if ($('#erpmodal_edit > div.page-reload').length == 1) {
                     location.reload(false);
                 }
-            })
+            });
         }
         // get the new content for the modal
         $.get(form_target, function(data) {
@@ -52,11 +33,41 @@ $(document).ready(function() {
         }).done( function() {
             // manipulate form url
             // cause the template-tag which generates the form is not aware of the url
-            var form_object = $('#erpmodal_edit div.modal-dialog div:first-child form');
+            var parent_object = $('#erpmodal_edit div.modal-dialog div:first-child');
+            var form_object = parent_object.find('form');
             form_object.attr('action', form_target);
             // apply erp-form functions
             form_object.find('div[data-erp-search=1]').djangoerp_search();
-            form_object.find("div[data-erp-inlineform=1]").djangoerp_inlineform();
+            form_object.find('div[data-erp-inlineform=1]').djangoerp_inlineform();
+
+            parent_object.find('button.erpedit-cancel').click(function (event) {
+                // TODO check if there are multile forms and close modal or show next form
+                $('#erpmodal_edit').modal('hide');
+            });
+            parent_object.find('button.erpedit-submit').click(function (event) {
+            dict = ERPAJAX;
+            dict.dataType = 'html';
+            dict.type = "POST";
+            dict.data = form_object.serialize();
+            dict.url = form_object.attr('action');
+            $.ajax(dict).done(function( data, textStatus, jqXHR ) {
+                    if (data == "ok") {
+                        // TODO check if there are multile forms and close modal or show next form
+                        if ($('#erpmodal_edit > div.page-reload').length == 0) {
+                            $('#erpmodal_edit > div').addClass('page-reload');
+                        }
+                        $('#erpmodal_edit').modal('hide');
+                    }
+                    else {
+                        html = $($.parseHTML( data ));
+                        form_object.html(html.find('form').html())
+                        form_object.find('div[data-erp-search=1]').djangoerp_search();
+                        form_object.find('div[data-erp-inlineform=1]').djangoerp_inlineform();
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log( errorThrown+" ("+textStatus+")" );
+                });
+            });
         });
     });
 });

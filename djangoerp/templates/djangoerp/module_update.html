@@ -6,6 +6,6 @@
 {% block title %}{% blocktrans with object=block.super %}Change {{ object }}{% endblocktrans %}{% endblock %}
 
 {% block base_buttons %}
-<button type="button" class="btn btn-danger">{% trans "Cancel" %}</button>
-<button type="button" class="btn btn-primary">{% trans "Save" %}</button>
+<button type="button" class="btn erpedit-cancel btn-danger">{% trans "Cancel" %}</button>
+<button type="button" class="btn erpedit-submit btn-primary">{% trans "Save Changes" %}</button>
 {% endblock %}

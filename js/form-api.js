@@ -222,13 +222,13 @@
       row.find('div[data-erp-search=1]').djangoerp_search();
 
       // Code adapted from http://djangosnippets.org/snippets/1389/
-//     function updateElementIndex(el, prefix, ndx) {
+//    function updateElementIndex(el, prefix, ndx) {
 //       var id_regex = new RegExp('(' + prefix + '-\\d+-)');
 //       var replacement = prefix + '-' + ndx + '-';
 //       if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,replacement));
 //       if (el.id) el.id = el.id.replace(id_regex, replacement);
 //       if (el.name) el.name = el.name.replace(id_regex, replacement);
-//     }
+//    }
 
       console.log(base.prefix+' '+base.max_num_forms+' '+base.total_forms);
     };

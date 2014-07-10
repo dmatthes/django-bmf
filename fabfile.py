@@ -38,6 +38,7 @@ def js(debug=None):
             'js/jquery.cookie.js',
             'js/jquery-ui-1.10.4.custom.js',
             'submodules/bootstrap/dist/js/bootstrap.js',
+            'js/variables.js',
             'js/form-api.js',
             'js/form-edit.js',
             'js/menu.js',

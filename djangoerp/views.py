@@ -259,7 +259,7 @@ class PluginUpdate(PluginForm, PluginUpdatePermission, PluginBase, UpdateView):
         return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_update_default.html"]
 
     def get_success_url(self):
-        self
+        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
         redirect_to = self.request.GET.get('next', '')
 
         netloc = urlparse.urlparse(redirect_to)[1]
@@ -300,6 +300,7 @@ class PluginCreate(PluginForm, PluginCreatePermission, PluginBase, CreateView):
         return super(PluginCreate, self).get_template_names() + ["djangoerp/module_create_default.html"]
 
     def get_success_url(self):
+        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
         redirect_to = self.request.GET.get('next', '')
 
         netloc = urlparse.urlparse(redirect_to)[1]
