@@ -1,9 +1,11 @@
-{% extends "djangoerp/module_base.html" %}
+{% extends "djangoerp/module_modal_base.html" %}
 
-{% block breadcrumb %}
-{{ block.super }}<li><a href="{{ object.erpmodule_detail }}">{{ object }}</a></li>
-{% endblock %}
+{% load djangoerp_core %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with object=block.super %}Change {{ object }}{% endblocktrans %}{% endblock %}
 
 {% block base_buttons %}
-<a class="btn btn-default btn-xs" href="{{ object.erpmodule_detail }}">view</a>
+<button type="button" class="btn btn-danger">{% trans "Cancel" %}</button>
+<button type="button" class="btn btn-primary">{% trans "Save" %}</button>
 {% endblock %}
