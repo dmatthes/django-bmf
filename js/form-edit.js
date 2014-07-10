@@ -35,7 +35,7 @@ $(document).ready(function() {
             // cause the template-tag which generates the form is not aware of the url
             var parent_object = $('#erpmodal_edit div.modal-dialog div:first-child');
             var form_object = parent_object.find('form');
-            form_object.attr('action', form_target);
+            form_object.attr('action', form_target.split("?",1)[0]);
             // apply erp-form functions
             form_object.find('div[data-erp-search=1]').djangoerp_search();
             form_object.find('div[data-erp-inlineform=1]').djangoerp_inlineform();

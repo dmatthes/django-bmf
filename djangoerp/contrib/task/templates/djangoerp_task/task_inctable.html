@@ -15,7 +15,7 @@
       <td></td>
       <td></td>
       <td class="text-right">
-          <a class="btn btn-xs btn-success" href="{% url "djangoerp:module_djangoerp_task_task:create" %}?next={{ request.path }}&amp;data[goal]={{ object.pk }}&amp;data[project]={{ object.project_id|default:"" }}">
+          <a class="btn btn-xs erp-edit btn-success" href="{% url "djangoerp:module_djangoerp_task_task:create" %}?next={{ request.path }}&amp;data[goal]={{ object.pk }}&amp;data[project]={{ object.project_id|default:"" }}">
           <span class="glyphicon glyphicon-plus"></span>
         </a>
       </td>
