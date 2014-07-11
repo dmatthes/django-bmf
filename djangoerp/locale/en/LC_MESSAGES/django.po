@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-11 18:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,6 +229,8 @@ msgstr ""
 
 #: templates/djangoerp/account/modal_logout.html:10
 #: templates/djangoerp/modal/saveview.html:33
+#: templates/djangoerp/module_create.html:9
+#: templates/djangoerp/module_update.html:9
 msgid "Cancel"
 msgstr ""
 
@@ -291,12 +293,7 @@ msgstr ""
 msgid "Save current view"
 msgstr ""
 
-#: templates/djangoerp/base.html:111
-msgid "Start"
-msgstr ""
-
 #: templates/djangoerp/configuration/edit.html:16
-#: templates/djangoerp/forms/base_form.html:25
 #: templates/djangoerp/modal/follow.html:61
 #: templates/djangoerp/modal/saveview.html:34
 #: templates/djangoerp/watch/edit.html:43
@@ -343,10 +340,6 @@ msgstr ""
 msgid "Update dashboard"
 msgstr ""
 
-#: templates/djangoerp/forms/base_form.html:24
-msgid "Reset"
-msgstr ""
-
 #: templates/djangoerp/message/index.html:5
 #: templates/djangoerp/message/index.html:7
 msgid "Messages"
@@ -385,6 +378,7 @@ msgid "File added"
 msgstr ""
 
 #: templates/djangoerp/modal/follow.html:60
+#: templates/djangoerp/module_modal_base.html:4
 msgid "Close"
 msgstr ""
 
@@ -406,11 +400,15 @@ msgstr ""
 msgid "Load more items"
 msgstr ""
 
-#: templates/djangoerp/module_create.html:7
-msgid "New"
+#: templates/djangoerp/module_create.html:6
+#, python-format
+msgid "Create %(object)s"
 msgstr ""
 
-#: templates/djangoerp/module_create.html:14
+#: templates/djangoerp/module_create.html:10
+msgid "Create object"
+msgstr ""
+
 #: templates/djangoerp/module_delete.html:10
 #: templates/djangoerp/module_delete_default.html:8
 #: templates/djangoerp/module_workflow.html:11
@@ -436,6 +434,15 @@ msgstr ""
 
 #: templates/djangoerp/module_report.html:7
 msgid "You must configure this report in the admin interface"
+msgstr ""
+
+#: templates/djangoerp/module_update.html:6
+#, python-format
+msgid "Change %(object)s"
+msgstr ""
+
+#: templates/djangoerp/module_update.html:10
+msgid "Save Changes"
 msgstr ""
 
 #: templates/djangoerp/module_workflow.html:7
@@ -535,7 +542,7 @@ msgstr ""
 msgid "empty"
 msgstr ""
 
-#: views.py:429
+#: views.py:435
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""

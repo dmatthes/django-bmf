@@ -70,27 +70,27 @@ def test_contrib(app):
 def locale():
   with lcd(BASEDIR + '/djangoerp'):
     for lang in LANGUAGES:
-      local('%s makemessages -l %s' % (DJANGO, lang))
+      local('%s makemessages -l %s --domain django --domain djangojs' % (DJANGO, lang))
 
-  for i in os.listdir(BASEDIR + '/djangoerp/contrib'):
-    path = BASEDIR + '/djangoerp/contrib/' + i
+ #for i in os.listdir(BASEDIR + '/djangoerp/contrib'):
+ #  path = BASEDIR + '/djangoerp/contrib/' + i
 
-    if not os.path.isdir(path):
-      continue
-    with lcd(path):
-      with settings(warn_only=True):
-        for lang in LANGUAGES:
-          local('%s makemessages -l %s' % (DJANGO, lang))
+ #  if not os.path.isdir(path):
+ #    continue
+ #  with lcd(path):
+ #    with settings(warn_only=True):
+ #      for lang in LANGUAGES:
+ #        local('%s makemessages -l %s' % (DJANGO, lang))
 
-  for i in os.listdir(BASEDIR + '/djangoerp/currencies'):
-    path = BASEDIR + '/djangoerp/currencies/' + i
+ #for i in os.listdir(BASEDIR + '/djangoerp/currencies'):
+ #  path = BASEDIR + '/djangoerp/currencies/' + i
 
-    if not os.path.isdir(path):
-      continue
-    with lcd(path):
-      with settings(warn_only=True):
-        for lang in LANGUAGES:
-          local('%s makemessages -l %s' % (DJANGO, lang))
+ #  if not os.path.isdir(path):
+ #    continue
+ #  with lcd(path):
+ #    with settings(warn_only=True):
+ #      for lang in LANGUAGES:
+ #        local('%s makemessages -l %s' % (DJANGO, lang))
 
 @task
 def docs():

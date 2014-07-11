@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-11 18:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,7 +175,7 @@ msgstr "Benachrichtigung"
 #: templates/djangoerp/notification/index.html:5
 #: templates/djangoerp/notification/index.html:7
 msgid "Notifications"
-msgstr ""
+msgstr "Benachrichtigungen"
 
 #: report/models.py:35
 msgid "Reporttype"
@@ -183,7 +183,7 @@ msgstr "Berichttyp"
 
 #: report/models.py:36
 msgid "Mimetype"
-msgstr ""
+msgstr "Mimetyp"
 
 #: report/models.py:38
 msgid "Options"
@@ -230,6 +230,8 @@ msgstr "Sind Sie sicher, dass Sie sich ausloggen wollen?"
 
 #: templates/djangoerp/account/modal_logout.html:10
 #: templates/djangoerp/modal/saveview.html:33
+#: templates/djangoerp/module_create.html:9
+#: templates/djangoerp/module_update.html:9
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -292,12 +294,7 @@ msgstr "Modulübersicht"
 msgid "Save current view"
 msgstr "Speichere aktuelle Ansicht"
 
-#: templates/djangoerp/base.html:111
-msgid "Start"
-msgstr "Start"
-
 #: templates/djangoerp/configuration/edit.html:16
-#: templates/djangoerp/forms/base_form.html:25
 #: templates/djangoerp/modal/follow.html:61
 #: templates/djangoerp/modal/saveview.html:34
 #: templates/djangoerp/watch/edit.html:43
@@ -344,10 +341,6 @@ msgstr ""
 msgid "Update dashboard"
 msgstr "Aktualisiere Dashboard"
 
-#: templates/djangoerp/forms/base_form.html:24
-msgid "Reset"
-msgstr "Zurücksetzen"
-
 #: templates/djangoerp/message/index.html:5
 #: templates/djangoerp/message/index.html:7
 msgid "Messages"
@@ -386,6 +379,7 @@ msgid "File added"
 msgstr "Datei hinzugefügt"
 
 #: templates/djangoerp/modal/follow.html:60
+#: templates/djangoerp/module_modal_base.html:4
 msgid "Close"
 msgstr "Schließen"
 
@@ -407,11 +401,15 @@ msgstr "Nachricht schreiben"
 msgid "Load more items"
 msgstr "Lade weitere Datensätze"
 
-#: templates/djangoerp/module_create.html:7
-msgid "New"
-msgstr "Neu"
+#: templates/djangoerp/module_create.html:6
+#, python-format
+msgid "Create %(object)s"
+msgstr ""
 
-#: templates/djangoerp/module_create.html:14
+#: templates/djangoerp/module_create.html:10
+msgid "Create object"
+msgstr "Erstelle Objekt"
+
 #: templates/djangoerp/module_delete.html:10
 #: templates/djangoerp/module_delete_default.html:8
 #: templates/djangoerp/module_workflow.html:11
@@ -438,6 +436,15 @@ msgstr "Bericht nicht gefunden"
 #: templates/djangoerp/module_report.html:7
 msgid "You must configure this report in the admin interface"
 msgstr "Sie müssenen einen Bericht im Admin-Interface anlegen."
+
+#: templates/djangoerp/module_update.html:6
+#, python-format
+msgid "Change %(object)s"
+msgstr ""
+
+#: templates/djangoerp/module_update.html:10
+msgid "Save Changes"
+msgstr "Speichere Änderungen"
 
 #: templates/djangoerp/module_workflow.html:7
 msgid "State could not be changed"
@@ -499,15 +506,15 @@ msgstr "Alle"
 
 #: templates/djangoerp/report_html_base.html:110
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/djangoerp/report_html_base.html:111
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: templates/djangoerp/report_html_base.html:112
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: templates/djangoerp/report_html_base.html:114
 msgid "You may add extra content in this placeholder"
@@ -536,7 +543,7 @@ msgstr ""
 msgid "empty"
 msgstr "leer"
 
-#: views.py:429
+#: views.py:435
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""

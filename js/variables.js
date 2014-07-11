@@ -6,13 +6,13 @@ var ERPAJAX = {
     dataType: 'json',
     statusCode: {
         403: function() {
-            alert( "no permission" );
+            alert( gettext("no permission") );
         },
         404: function() {
-            alert( "not found" );
+            alert( gettext("not found") );
         },
         500: function() {
-            alert( "server error" );
+            alert( gettext("server error") );
         }
     }
 };
