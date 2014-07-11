@@ -22,42 +22,50 @@
 {% endif %}
 </div>
 <div class="btn-toolbar pull-right" role="toolbar">
-{% if erpworkflow.enabled %}
-  {% if erpworkflow.transitions %}
+    {% if erpmodule.can_clone %}
     <div class="btn-group">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ erpworkflow.state }} <span class="caret"></span></button>
-      <ul class="dropdown-menu" role="menu">
-        {% for transition in erpworkflow.transitions %}
-        <li><a href="{% get_erp_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
-        {% endfor %}
-      </ul>
+        <a class="btn btn-default btn-default" href="{% get_erp_url object "index" %}">
+            <span class="glyphicon glyphicon-transfer"></span>
+        </a>
     </div>
-  {% else %}
-    <div class="btn-group">
-      <button type="button" class="btn btn-default disabled">{{ erpworkflow.state }} <span class="caret"></span></button>
-    </div>
-  {% endif %}
-{% endif %}
-{% if erpmodule.has_report %}
-  <div class="btn-group">
-  <a class="btn btn-default btn-success" href="{% get_erp_url object "report" %}">
-    <span class="glyphicon glyphicon-print"></span> {% trans "Print" %} 
-  </a>
-  </div>
-{% endif %}
-{% if erpworkflow.state.update %}
-  <div class="btn-group">
-  <a class="btn btn-default btn-warning erp-edit" href="{% get_erp_url object "update" %}">
-    <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
-  </a>
-  </div>
-{% else %}
-  <div class="btn-group">
-  <a class="btn btn-default btn-default disabled" href="#">
-    <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
-  </a>
-  </div>
-{% endif %}
+    {% endif %}
+
+    {% if erpworkflow.enabled %}
+     {% if erpworkflow.transitions %}
+       <div class="btn-group">
+         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ erpworkflow.state }} <span class="caret"></span></button>
+         <ul class="dropdown-menu" role="menu">
+           {% for transition in erpworkflow.transitions %}
+           <li><a href="{% get_erp_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
+           {% endfor %}
+         </ul>
+       </div>
+     {% else %}
+       <div class="btn-group">
+         <button type="button" class="btn btn-default disabled">{{ erpworkflow.state }} <span class="caret"></span></button>
+       </div>
+     {% endif %}
+    {% endif %}
+    {% if erpmodule.has_report %}
+     <div class="btn-group">
+     <a class="btn btn-default btn-success" href="{% get_erp_url object "report" %}">
+       <span class="glyphicon glyphicon-print"></span> {% trans "Print" %} 
+     </a>
+     </div>
+    {% endif %}
+    {% if erpworkflow.state.update %}
+     <div class="btn-group">
+     <a class="btn btn-default btn-warning erp-edit" href="{% get_erp_url object "update" %}">
+       <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
+     </a>
+     </div>
+    {% else %}
+     <div class="btn-group">
+     <a class="btn btn-default btn-default disabled" href="#">
+       <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
+     </a>
+     </div>
+    {% endif %}
 
     <div class="btn-group">
         {% if erpactivity.watch %}
@@ -77,16 +85,6 @@
         {% else %}
             <a class="btn btn-default btn-default disabled" href="#">
                 <span class="glyphicon glyphicon-paperclip"></span>
-            </a>
-        {% endif %}
-
-        {% if erpmodule.can_clone %}{# TODO CHECK PERMISSION #}
-            <a class="btn btn-default btn-default" href="#">
-                <span class="glyphicon glyphicon-transfer"></span>
-            </a>
-        {% else %}
-            <a class="btn btn-default btn-default disabled" href="#">
-                <span class="glyphicon glyphicon-transfer"></span>
             </a>
         {% endif %}
 
