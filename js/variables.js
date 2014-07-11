@@ -10,6 +10,9 @@ var ERPAJAX = {
         },
         404: function() {
             alert( "not found" );
+        },
+        500: function() {
+            alert( "server error" );
         }
     }
 };

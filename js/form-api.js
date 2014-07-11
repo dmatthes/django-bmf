@@ -94,7 +94,7 @@
       var data = {};
       data.field = base.hidden.attr('id')
       data.form = base.form.serialize();
-      console.log(data.form);
+      //console.log(data.form);
 
       $.ajax({
         url: base.form.attr('action')+"form-api/?changed",
@@ -230,7 +230,7 @@
 //       if (el.name) el.name = el.name.replace(id_regex, replacement);
 //    }
 
-      console.log(base.prefix+' '+base.max_num_forms+' '+base.total_forms);
+      //console.log(base.prefix+' '+base.max_num_forms+' '+base.total_forms);
     };
     
     // Run initializer
