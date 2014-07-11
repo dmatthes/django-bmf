@@ -34,8 +34,8 @@ class Team(AbstractTeam):
 
 
 class TeamMember(models.Model):
-   team = models.ForeignKey(BASE_MODULE["TEAM"], null=True, blank=True, related_name="+")
-   employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, related_name="+")
+   team = models.ForeignKey(BASE_MODULE["TEAM"], null=True, blank=True, related_name="+", on_delete=models.CASCADE)
+   employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, related_name="+", on_delete=models.CASCADE)
    is_manager = models.BooleanField(_("Is manager"), default=False)
 
    class Meta:

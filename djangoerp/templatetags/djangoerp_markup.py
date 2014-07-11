@@ -18,6 +18,8 @@ register = template.Library()
 def markdown_filter(text):
     """
     """
+    if not text:
+        return ''
     return mark_safe(markdown.markdown(text, extensions=[
             UrlizeExtension(),
             ChecklistExtension(),

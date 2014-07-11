@@ -24,8 +24,8 @@ class AbstractGoal(ERPModel):
     """
     state = WorkflowField()
 
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True)
-    referee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True)
+    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
+    referee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
 
     summary = models.CharField(_("Summary"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
@@ -106,10 +106,10 @@ class AbstractTask(ERPModel):
 
     state = WorkflowField()
 
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True)
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True)
+    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
+    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
 
-    goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True)
+    goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
 
     summary = models.CharField(_("Summary"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )

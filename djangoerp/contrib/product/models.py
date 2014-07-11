@@ -55,8 +55,8 @@ class AbstractProduct(ERPModel):
 # discount = models.FloatField(_('Max. discount'), default=0.0)
 
     # Accounting
-    income_account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=False, blank=False, related_name="product_income", limit_choices_to={'type': ACCOUNTING_INCOME, 'read_only': False})
-    expense_account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=False, blank=False, related_name="product_expense", limit_choices_to={'type': ACCOUNTING_EXPENSE, 'read_only': False})
+    income_account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=False, blank=False, related_name="product_income", limit_choices_to={'type': ACCOUNTING_INCOME, 'read_only': False}, on_delete=models.PROTECT)
+    expense_account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=False, blank=False, related_name="product_expense", limit_choices_to={'type': ACCOUNTING_EXPENSE, 'read_only': False}, on_delete=models.PROTECT)
 
     # warehouse
 # number = models.PositiveSmallIntegerField( _("Product number"), null=True, blank=True, choices=PRODUCT_NO)
@@ -172,8 +172,8 @@ class Product(AbstractProduct):
 
 
 class ProductTax(models.Model):
-    product = models.ForeignKey(BASE_MODULE["PRODUCT"], null=True, blank=True, related_name="product_tax")
-    tax = models.ForeignKey(BASE_MODULE["TAX"], null=True, blank=True, related_name="product_tax")
+    product = models.ForeignKey(BASE_MODULE["PRODUCT"], null=True, blank=True, related_name="product_tax", on_delete=models.CASCADE)
+    tax = models.ForeignKey(BASE_MODULE["TAX"], null=True, blank=True, related_name="product_tax", on_delete=models.PROTECT)
     included = models.BooleanField(_("Is the tax included in the price?"), default=False)
 
     class Meta:

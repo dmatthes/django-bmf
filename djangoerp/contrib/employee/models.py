@@ -27,9 +27,9 @@ class AbstractEmployee(BaseEmployee):
     """
     """
     if BASE_MODULE["CUSTOMER"]:
-        contact = models.ForeignKey(BASE_MODULE["CUSTOMER"], verbose_name=("Contact"), blank=True, null=True, related_name="erp_employee", limit_choices_to={'is_company': False}, swappable=True)
+        contact = models.ForeignKey(BASE_MODULE["CUSTOMER"], verbose_name=("Contact"), blank=True, null=True, related_name="erp_employee", limit_choices_to={'is_company': False}, on_delete=models.PROTECT)
     if BASE_MODULE["PRODUCT"]:
-        product = models.ForeignKey(BASE_MODULE["PRODUCT"], verbose_name=("Product"), null=True, blank=True, related_name="employee_product", limit_choices_to={'type': PRODUCT_SERVICE}, swappable=True)
+        product = models.ForeignKey(BASE_MODULE["PRODUCT"], verbose_name=("Product"), null=True, blank=True, related_name="employee_product", limit_choices_to={'type': PRODUCT_SERVICE}, on_delete=models.PROTECT)
 
     user = models.OneToOneField(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=True, null=True, related_name="erp_employee", on_delete=models.SET_NULL)
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False, )
@@ -37,7 +37,7 @@ class AbstractEmployee(BaseEmployee):
     phone_office = models.CharField(_("Phone office"),  max_length=255, null=True, blank=True, )
     phone_mobile = models.CharField(_("Phone mobile"),  max_length=255, null=True, blank=True, )
     fax = models.CharField(_("Fax"),  max_length=255, null=True, blank=True, )
-    supervisor = models.ForeignKey('self', verbose_name=_("Supervisor"), null=True, blank=True, swappable=True) # TODO: Add validator or modify queryset so that an employee cant be the supervisor of him/her-self
+    supervisor = models.ForeignKey('self', verbose_name=_("Supervisor"), null=True, blank=True, swappable=True, on_delete=models.SET_NULL) # TODO: Add validator or modify queryset so that an employee cant be the supervisor of him/her-self
 
     class Meta(BaseEmployee.Meta): # only needed for abstract models
         ordering = ['name']

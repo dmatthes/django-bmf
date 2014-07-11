@@ -12,9 +12,9 @@ from djangoerp.file.models import BaseDocument
 
 class AbstractDocument(BaseDocument):
     if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=True)
+        customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=True, on_delete=models.SET_NULL)
     if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True)
+        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta(BaseDocument.Meta):
         abstract = True
