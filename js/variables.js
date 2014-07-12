@@ -10,13 +10,13 @@ var ERPAJAX = {
     },
     statusCode: {
         403: function(jqXHRm, textStatus, errorThrown) {
-            alert( gettext("no permission") );
+            alert( gettext("Error 403\n You don't have permission to view this page") );
         },
         404: function(jqXHRm, textStatus, errorThrown) {
-            alert( gettext("not found") );
+            alert( gettext("Error 404\n Page not found") );
         },
         500: function(jqXHRm, textStatus, errorThrown) {
-            alert( gettext("server error") );
+            alert( gettext("Error 500\n An Error occured while rendering the page") );
         }
     }
 };

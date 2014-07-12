@@ -39,7 +39,6 @@ def js(debug=None):
            #'js/jquery-ui-1.10.4.custom.js',
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
-           #'js/alert-modal.js',
             'js/form-api.js',
             'js/form-edit.js',
             'js/menu.js',

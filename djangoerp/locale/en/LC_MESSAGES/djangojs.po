@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 18:08+0200\n"
+"POT-Creation-Date: 2014-07-12 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,9 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: static/djangoerp/js/djangoerp.min.js:39
-msgid "no permission"
+msgid ""
+"Error 403\n"
+" You don't have permission to view this page"
 msgstr ""
 
 #: static/djangoerp/js/djangoerp.min.js:39
-msgid "not found"
+msgid ""
+"Error 404\n"
+" Page not found"
+msgstr ""
+
+#: static/djangoerp/js/djangoerp.min.js:39
+msgid ""
+"Error 500\n"
+" An Error occured while rendering the page"
 msgstr ""
