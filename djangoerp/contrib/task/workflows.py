@@ -76,6 +76,7 @@ class TaskWorkflow(Workflow):
 
     def finish(self):
         self.stop()
+        self.instance.due_date = None
         # TODO remove this functionality IF timesheets are implemented
         billable_time = ceil(self.instance.seconds_on/60.)
 
@@ -95,7 +96,7 @@ class TaskWorkflow(Workflow):
                     self.set_state("review")
 
         if self._current_state_key != "review":
-            self.instance.completed = False
+            self.instance.completed = True
 
             if project and project.customer and self.instance.goal and self.instance.employee:
                 if self.instance.goal.billable and billable_time > 0:

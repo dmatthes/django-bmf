@@ -365,7 +365,6 @@
  "pk": 1, 
  "model": "djangoerp_customer.customer", 
  "fields": {
-  "image": "", 
   "use_company_addresses": true, 
   "supplier_payment_term": 1, 
   "is_supplier": false, 
@@ -395,7 +394,6 @@
  "pk": 2, 
  "model": "djangoerp_customer.customer", 
  "fields": {
-  "image": "", 
   "use_company_addresses": true, 
   "supplier_payment_term": 1, 
   "is_supplier": false, 

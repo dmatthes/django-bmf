@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:30 models.py:108 templates/djangoerp_task/goal_erpindex.html:12
+#: models.py:30 models.py:114 templates/djangoerp_task/goal_erpindex.html:12
 msgid "Summary"
 msgstr ""
 
-#: models.py:31 models.py:109
+#: models.py:31 models.py:115
 msgid "Description"
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Is billable"
 msgstr ""
 
-#: models.py:34 workflows.py:19
+#: models.py:34 models.py:121 workflows.py:19
 msgid "Completed"
 msgstr ""
 
@@ -41,15 +41,15 @@ msgstr ""
 msgid "Goals"
 msgstr ""
 
-#: models.py:111
+#: models.py:117
 msgid "Due date"
 msgstr ""
 
-#: models.py:118
+#: models.py:125
 msgid "Task"
 msgstr ""
 
-#: models.py:119
+#: models.py:126
 msgid "Tasks"
 msgstr ""
 
@@ -97,74 +97,78 @@ msgstr ""
 msgid "hold"
 msgstr ""
 
-#: templates/djangoerp_task/task_inctable.html:41
+#: templates/djangoerp_task/task_inctable.html:42
 msgid "None"
 msgstr ""
 
-#: workflows.py:18 workflows.py:37
+#: workflows.py:18 workflows.py:42
 msgid "Open"
 msgstr ""
 
-#: workflows.py:22
+#: workflows.py:23
 msgid "Complete this Goal"
 msgstr ""
 
-#: workflows.py:23
+#: workflows.py:24
 msgid "Reopen this Goal"
 msgstr ""
 
-#: workflows.py:36
-msgid "New"
-msgstr ""
-
-#: workflows.py:38
-msgid "Started"
-msgstr ""
-
-#: workflows.py:39
-msgid "Hold"
-msgstr ""
-
-#: workflows.py:40
-msgid "Review"
+#: workflows.py:29
+msgid "You can not complete a goal which has open tasks"
 msgstr ""
 
 #: workflows.py:41
-msgid "Finished"
+msgid "New"
 msgstr ""
 
-#: workflows.py:42
-msgid "Cancelled"
+#: workflows.py:43
+msgid "Started"
+msgstr ""
+
+#: workflows.py:44
+msgid "Hold"
 msgstr ""
 
 #: workflows.py:45
-msgid "Work on this task"
+msgid "Review"
 msgstr ""
 
 #: workflows.py:46
-msgid "Set this task on hold"
+msgid "Finished"
 msgstr ""
 
 #: workflows.py:47
-msgid "Stop working on this task"
+msgid "Cancelled"
 msgstr ""
 
-#: workflows.py:48
-msgid "Finish this task"
-msgstr ""
-
-#: workflows.py:49 workflows.py:50
-msgid "Reopen this task"
+#: workflows.py:50
+msgid "Work on this task"
 msgstr ""
 
 #: workflows.py:51
+msgid "Set this task on hold"
+msgstr ""
+
+#: workflows.py:52
+msgid "Stop working on this task"
+msgstr ""
+
+#: workflows.py:53
+msgid "Finish this task"
+msgstr ""
+
+#: workflows.py:54 workflows.py:55
+msgid "Reopen this task"
+msgstr ""
+
+#: workflows.py:56
 msgid "Cancel this task"
 msgstr ""
 
-#: workflows.py:88
+#: workflows.py:94
 msgid "Your need to be a referee to this goal to change the state"
 msgstr ""
 
-#: workflows.py:94
+#: workflows.py:103
 msgid "The employee's user-account needs a default product"
 msgstr ""

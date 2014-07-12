@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: erp_module.py:16
+#: erp_module.py:18
 msgid "Company"
 msgstr ""
 
-#: erp_module.py:17 models.py:48
+#: erp_module.py:19 models.py:50
 msgid "Customer"
 msgstr ""
 
@@ -33,76 +33,76 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: models.py:24
+#: models.py:26
 msgid ""
 "Projects function as cost-centers. This setting defines a default project "
 "for this customer."
 msgstr ""
 
-#: models.py:28
+#: models.py:29
 msgid "Is Company"
 msgstr ""
 
-#: models.py:30
+#: models.py:31
 msgid "Taxvat"
 msgstr ""
 
-#: models.py:32
+#: models.py:33
 msgid "Can use company adresses"
 msgstr ""
 
-#: models.py:34
+#: models.py:35
 msgid "Is active"
 msgstr ""
 
-#: models.py:35
+#: models.py:36
 msgid "Is customer"
 msgstr ""
 
-#: models.py:36
+#: models.py:37
 msgid "Is supplier"
 msgstr ""
 
-#: models.py:49
+#: models.py:51
 msgid "Customers"
 msgstr ""
 
-#: models.py:91
+#: models.py:93
 msgid "Name 2"
 msgstr ""
 
-#: models.py:92
+#: models.py:94
 msgid "Job position"
 msgstr ""
 
-#: models.py:93
+#: models.py:95
 msgid "Title"
 msgstr ""
 
-#: models.py:94
+#: models.py:96
 msgid "Phone office"
 msgstr ""
 
-#: models.py:95
+#: models.py:97
 msgid "Phone privat"
 msgstr ""
 
-#: models.py:96
+#: models.py:98
 msgid "Phone mobile"
 msgstr ""
 
-#: models.py:97
+#: models.py:99
 msgid "Email"
 msgstr ""
 
-#: models.py:98
+#: models.py:100
 msgid "Fax"
 msgstr ""
 
-#: models.py:99
+#: models.py:101
 msgid "Website"
 msgstr ""
 
-#: models.py:100
+#: models.py:102
 msgid "Notes"
 msgstr ""

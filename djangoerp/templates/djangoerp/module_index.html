@@ -20,12 +20,12 @@
      </button>
      <ul class="dropdown-menu" role="menu">
        {% for key, label in erpmodule.create_views %}
-       <li><a href="{% get_erp_url erpmodule.model "create" key %}">{{ label }}</a></li>
+       <li><a class="erp-edit" href="{% get_erp_url erpmodule.model "create" key %}">{{ label }}</a></li>
        {% endfor %}
      </ul>
     </div>
     {% else %}
-    <a class="btn btn-success" href="{% get_erp_url erpmodule.model "create" %}">
+    <a class="btn btn-success erp-edit" href="{% get_erp_url erpmodule.model "create" %}">
       <span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
     </a>
     {% endif %}

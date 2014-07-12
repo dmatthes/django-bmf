@@ -49,6 +49,7 @@ setup(
         'django-filter',
         'reportlab<3.0',
         'xhtml2pdf',
+        'markdown',
     ],
     include_package_data=True,
     zip_safe=False,

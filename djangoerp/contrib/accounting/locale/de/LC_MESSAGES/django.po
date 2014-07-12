@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: 2014-01-26 06:24+0100\n"
 "Last-Translator: Admin User <admin@demo.django-erp.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,84 +19,105 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.7.3\n"
 
-#: models.py:30
+#: models.py:35
 msgid "Income"
 msgstr "Erträge"
 
-#: models.py:31
+#: models.py:36
 msgid "Expense"
 msgstr "Aufwände"
 
-#: models.py:32
+#: models.py:37
 msgid "Asset"
 msgstr "Aktiva"
 
-#: models.py:33
+#: models.py:38
 msgid "Liability"
 msgstr "Passiva"
 
-#: models.py:34
+#: models.py:39
 msgid "Equity"
 msgstr "Eigenkapital"
 
-#: models.py:52
+#: models.py:57
 msgid "Number"
 msgstr "Nummer"
 
-#: models.py:53
+#: models.py:58
 msgid "Name"
 msgstr "Name"
 
-#: models.py:54
+#: models.py:59
 msgid "Type"
 msgstr "Typ"
 
-#: models.py:55
+#: models.py:60
 msgid "Read-only"
 msgstr "Schreibgeschützt"
 
-#: models.py:82
+#: models.py:87
 msgid "Account"
 msgstr "Konto"
 
-#: models.py:83
+#: models.py:88
 msgid "Accounts"
 msgstr "Konten"
 
-#: models.py:98
+#: models.py:103
 msgid "Comment"
 msgstr "Kommentar"
 
-#: models.py:130
+#: models.py:137
 msgid "Posting text"
 msgstr "Verwendungszweck"
 
-#: models.py:132
+#: models.py:139
 msgid "Draft"
 msgstr "Entwurf"
 
-#: models.py:137
+#: models.py:144
 msgid "Transaction"
 msgstr "Buchung"
 
-#: models.py:138
+#: models.py:145
 msgid "Transactions"
 msgstr "Buchungen"
 
-#: models.py:169
+#: models.py:179
 msgid "Credit"
 msgstr ""
 
-#: models.py:169
+#: models.py:179
 msgid "Debit"
 msgstr ""
 
-#: models.py:171
+#: models.py:181
 msgid "Modified"
 msgstr ""
 
+#: workflows.py:14
+msgid "Open"
+msgstr ""
+
+#: workflows.py:15
+#, fuzzy
+#| msgid "Balance"
+msgid "Balanced"
+msgstr "Bilanz"
+
+#: workflows.py:16
+msgid "Cancelled"
+msgstr ""
+
+#: workflows.py:19
+msgid "Balance"
+msgstr "Bilanz"
+
+#: workflows.py:20
+#, fuzzy
+#| msgid "Balance"
+msgid "Cancel"
+msgstr "Bilanz"
+
 #~ msgid "Currency"
 #~ msgstr "Währung"
-
-#~ msgid "Balance"
-#~ msgstr "Bilanz"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-09 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,78 +17,98 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:30
+#: models.py:35
 msgid "Income"
 msgstr ""
 
-#: models.py:31
+#: models.py:36
 msgid "Expense"
 msgstr ""
 
-#: models.py:32
+#: models.py:37
 msgid "Asset"
 msgstr ""
 
-#: models.py:33
+#: models.py:38
 msgid "Liability"
 msgstr ""
 
-#: models.py:34
+#: models.py:39
 msgid "Equity"
 msgstr ""
 
-#: models.py:52
+#: models.py:57
 msgid "Number"
 msgstr ""
 
-#: models.py:53
+#: models.py:58
 msgid "Name"
 msgstr ""
 
-#: models.py:54
+#: models.py:59
 msgid "Type"
 msgstr ""
 
-#: models.py:55
+#: models.py:60
 msgid "Read-only"
 msgstr ""
 
-#: models.py:82
+#: models.py:87
 msgid "Account"
 msgstr ""
 
-#: models.py:83
+#: models.py:88
 msgid "Accounts"
 msgstr ""
 
-#: models.py:98
+#: models.py:103
 msgid "Comment"
 msgstr ""
 
-#: models.py:130
+#: models.py:137
 msgid "Posting text"
 msgstr ""
 
-#: models.py:132
+#: models.py:139
 msgid "Draft"
 msgstr ""
 
-#: models.py:137
+#: models.py:144
 msgid "Transaction"
 msgstr ""
 
-#: models.py:138
+#: models.py:145
 msgid "Transactions"
 msgstr ""
 
-#: models.py:169
+#: models.py:179
 msgid "Credit"
 msgstr ""
 
-#: models.py:169
+#: models.py:179
 msgid "Debit"
 msgstr ""
 
-#: models.py:171
+#: models.py:181
 msgid "Modified"
+msgstr ""
+
+#: workflows.py:14
+msgid "Open"
+msgstr ""
+
+#: workflows.py:15
+msgid "Balanced"
+msgstr ""
+
+#: workflows.py:16
+msgid "Cancelled"
+msgstr ""
+
+#: workflows.py:19
+msgid "Balance"
+msgstr ""
+
+#: workflows.py:20
+msgid "Cancel"
 msgstr ""

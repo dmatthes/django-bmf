@@ -50,7 +50,7 @@ ACCOUNTING_TYPES = (
 class BaseAccount(ERPMPTTModel):
     """
     """
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
 #   parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     balance = MoneyField(editable=False, default="0")
     balance_currency = CurrencyField(default="EUR")
@@ -133,7 +133,7 @@ class AbstractTransaction(ERPModel):
     """
     state = WorkflowField()
     if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True)
+        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL)
     text = models.CharField(_('Posting text'), max_length=255, null=False, blank=False, )
     accounts = models.ManyToManyField(BASE_MODULE["ACCOUNT"], null=True, blank=False, through="TransactionItem")
     balanced = models.BooleanField(_('Draft'), default=False, editable=False)
@@ -172,8 +172,8 @@ class TransactionItemManager(models.Manager):
 class AbstractTransactionItem(models.Model):
     """
     """
-    account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=True, blank=True, related_name="transaction_accounts")
-    transaction = models.ForeignKey(BASE_MODULE["TRANSACTION"], null=True, blank=True, related_name="account_transactions")
+    account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=True, blank=True, related_name="transaction_accounts", on_delete=models.PROTECT)
+    transaction = models.ForeignKey(BASE_MODULE["TRANSACTION"], null=True, blank=True, related_name="account_transactions", on_delete=models.CASCADE)
     amount = MoneyField()
     amount_currency = CurrencyField()
     credit = models.BooleanField(choices=((True, _('Credit')), (False, _('Debit'))), default=True)

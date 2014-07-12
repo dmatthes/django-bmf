@@ -3,6 +3,8 @@
 
 from __future__ import unicode_literals
 
+from django.db.models import Count
+
 from djangoerp.views import PluginIndex
 from djangoerp.views import PluginDetail
 
@@ -37,3 +39,12 @@ class GoalDetailView(PluginDetail):
 
 class TaskIndexView(PluginIndex):
     filterset_class = TaskFilter
+
+    def get_queryset(self):
+        qs = super(TaskIndexView, self).get_queryset()
+        related = ['goal',]
+        if hasattr(self, 'project'):
+            related.append('project')
+
+        qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count','due_date','summary').select_related(*related)
+        return qs

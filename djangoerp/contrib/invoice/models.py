@@ -27,12 +27,13 @@ class AbstractInvoice(ERPModel):
     """
     state = WorkflowField()
     if BASE_MODULE['CUSTOMER']:
-        customer = models.ForeignKey(BASE_MODULE['CUSTOMER'], null=False, blank=False)
+        customer = models.ForeignKey(BASE_MODULE['CUSTOMER'], null=True, blank=False, on_delete=models.SET_NULL)
     if BASE_MODULE['PROJECT']:
-        project = models.ForeignKey(BASE_MODULE['PROJECT'], null=False, blank=False)
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False)
-    shipping_address = models.ForeignKey(BASE_MODULE["ADDRESS"], related_name="shipping_invoice", blank=False, null=True)
-    invoice_address = models.ForeignKey(BASE_MODULE["ADDRESS"], related_name="quotation_invoice", blank=False, null=True)
+        project = models.ForeignKey(BASE_MODULE['PROJECT'], null=True, blank=False, on_delete=models.SET_NULL)
+    if BASE_MODULE['EMPLOYEE']:
+        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL)
+    shipping_address = models.ForeignKey(BASE_MODULE["ADDRESS"], related_name="shipping_invoice", blank=False, null=True, on_delete=models.SET_NULL)
+    invoice_address = models.ForeignKey(BASE_MODULE["ADDRESS"], related_name="quotation_invoice", blank=False, null=True, on_delete=models.SET_NULL)
     invoice_number = models.CharField(_('Invoice number'), max_length=255, null=True, blank=False)
     products = models.ManyToManyField(BASE_MODULE['PRODUCT'], through='InvoiceProduct')
     net = models.FloatField(editable=False, blank=True, null=True)
@@ -40,7 +41,7 @@ class AbstractInvoice(ERPModel):
     due = models.DateField(_("Due"), null=True, blank=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
     term_of_payment = models.TextField(_("Term of payment"), blank=True, null=True)
-    transaction = models.ForeignKey(BASE_MODULE["TRANSACTION"], null=True, blank=True, related_name="transation_invoice", editable=False)
+    transaction = models.ForeignKey(BASE_MODULE["TRANSACTION"], null=True, blank=True, related_name="transation_invoice", editable=False, on_delete=models.PROTECT)
 
     def __str__(self):
         return '%s' % self.invoice_number
@@ -66,10 +67,14 @@ class AbstractInvoice(ERPModel):
             instance._meta.model.objects.filter(pk=instance.pk).update(invoice_number=name)
 
     def erpget_customer(self):
-        return self.customer
+        if hasattr(self, 'customer'):
+            return self.customer
+        return None
 
     def erpget_project(self):
-        return self.project
+        if hasattr(self, 'project'):
+            return self.project
+        return None
 
     @staticmethod
     def post_delete(sender, instance, *args, **kwargs):
@@ -124,8 +129,8 @@ class Invoice(AbstractInvoice):
 
 
 class InvoiceProduct(models.Model):
-    invoice = models.ForeignKey(BASE_MODULE['INVOICE'], null=True, blank=True, related_name="invoice_products")
-    product = models.ForeignKey(BASE_MODULE['PRODUCT'], null=True, blank=True, related_name="invoice_products")
+    invoice = models.ForeignKey(BASE_MODULE['INVOICE'], null=True, blank=True, related_name="invoice_products", on_delete=models.CASCADE)
+    product = models.ForeignKey(BASE_MODULE['PRODUCT'], null=True, blank=True, related_name="invoice_products", on_delete=models.PROTECT)
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)
     price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()

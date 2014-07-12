@@ -50,7 +50,7 @@ class BaseDocument(ERPModel):
 
     is_static = models.BooleanField(default=False)
 
-    content_type = models.ForeignKey(ContentType, related_name="erp_document", null=True, blank=True, editable=False)
+    content_type = models.ForeignKey(ContentType, related_name="erp_document", null=True, blank=True, editable=False, on_delete=models.SET_NULL)
     content_id = models.PositiveIntegerField(null=True, blank=True, editable=False)
     content_object = GenericForeignKey('content_type', 'content_id')
 

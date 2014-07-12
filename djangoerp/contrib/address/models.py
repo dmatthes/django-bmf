@@ -13,7 +13,7 @@ from djangoerp.categories import SALES
 
 
 class BaseAddress(ERPModel):
-    customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=False, blank=False, related_name="customer_address")
+    customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=False, blank=False, related_name="customer_address", on_delete=models.CASCADE)
 
     is_active = models.BooleanField(_('Is active'), default=True)
     is_billing = models.BooleanField(_('Is billing'),  default=True)

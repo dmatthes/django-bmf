@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 19:14+0100\n"
+"POT-Creation-Date: 2014-07-11 18:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Passwort"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: activity/models.py:43 modelbase.py:191 notification/models.py:20
+#: activity/models.py:43 modelbase.py:198 notification/models.py:22
 msgid "Created"
 msgstr "Erstellt"
 
@@ -62,8 +62,8 @@ msgstr "Aktion"
 msgid "Template"
 msgstr "Vorlange"
 
-#: activity/models.py:67 modelbase.py:190 report/models.py:30
-#: watch/models.py:27
+#: activity/models.py:67 modelbase.py:197 report/models.py:39
+#: watch/models.py:29
 msgid "Modified"
 msgstr "Modifiziert"
 
@@ -71,63 +71,66 @@ msgstr "Modifiziert"
 msgid "History"
 msgstr "Log"
 
-#: categories.py:6 templates/djangoerp/base.html:88
+#: categories.py:8 templates/djangoerp/base.html:87
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: categories.py:7
+#: categories.py:9
 msgid "Customer Relationship"
 msgstr "Kundenbeziehung (CRM)"
 
-#: categories.py:8
+#: categories.py:10
 msgid "Human Resources"
 msgstr "Personalwesen"
 
-#: categories.py:9
+#: categories.py:11
 msgid "Sales"
 msgstr "Verkauf"
 
-#: categories.py:10
+#: categories.py:12
 msgid "Accounting"
 msgstr "Buchführung"
 
-#: categories.py:11
+#: categories.py:13
 msgid "Purchases"
 msgstr "Einkauf"
 
-#: categories.py:12
+#: categories.py:14
 msgid "Warehouse"
 msgstr "Lager"
 
-#: categories.py:13
+#: categories.py:15
 msgid "Knowledge"
 msgstr "Wissensdatenbank"
 
-#: categories.py:14 file/models.py:59
+#: categories.py:16 file/models.py:59
 msgid "Documents"
 msgstr "Dokumente"
 
-#: categories.py:15
+#: categories.py:17
 msgid "Projects"
 msgstr "Projekte"
 
-#: configuration/models.py:43
+#: configuration/models.py:47
 msgid "Application"
 msgstr "Anwendung"
 
-#: configuration/models.py:44
+#: configuration/models.py:48
 msgid "Fieldname"
 msgstr "Feldname"
 
-#: configuration/models.py:45
+#: configuration/models.py:49
 msgid "Value"
 msgstr "Wert"
 
-#: configuration/models.py:48
+#: configuration/models.py:52 templates/djangoerp/configuration/edit.html:5
+#: templates/djangoerp/configuration/edit.html:7
+#: templates/djangoerp/configuration/index.html:5
+#: templates/djangoerp/configuration/index.html:7
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: configuration/models.py:49
+#: configuration/models.py:53
 msgid "Configurations"
 msgstr "Konfigurationen"
 
@@ -136,7 +139,7 @@ msgstr "Konfigurationen"
 msgid "%(val)s %(sym)s"
 msgstr "%(val)s %(sym)s"
 
-#: dashboard/forms.py:22
+#: dashboard/forms.py:24
 msgid "Select Dashboard"
 msgstr "Wähle Dashboard"
 
@@ -148,7 +151,7 @@ msgstr "Arbeitsfluss-objekt"
 msgid "Money Field"
 msgstr "Geldfeld"
 
-#: fields.py:94
+#: fields.py:97
 msgid "Currency Field"
 msgstr "Währungsfeld"
 
@@ -156,47 +159,47 @@ msgstr "Währungsfeld"
 msgid "Document"
 msgstr "Dokument"
 
-#: modelbase.py:61
+#: modelbase.py:62
 msgid "No category"
 msgstr "Keine Kategorie"
 
-#: modelbase.py:277
-msgid "Identifier to sync this object with an external Application"
-msgstr ""
-
-#: notification/models.py:21
+#: notification/models.py:23
 msgid "Changed"
 msgstr "Datensatz geändert"
 
-#: notification/models.py:26
+#: notification/models.py:28
 msgid "Notification"
 msgstr "Benachrichtigung"
 
-#: notification/models.py:27 templates/djangoerp/base.html:58
+#: notification/models.py:29 templates/djangoerp/base.html:57
 #: templates/djangoerp/notification/index.html:5
 #: templates/djangoerp/notification/index.html:7
 msgid "Notifications"
-msgstr ""
+msgstr "Benachrichtigungen"
 
-#: report/models.py:21
+#: report/models.py:35
 msgid "Reporttype"
 msgstr "Berichttyp"
 
-#: report/models.py:29
+#: report/models.py:36
+msgid "Mimetype"
+msgstr "Mimetyp"
+
+#: report/models.py:38
 msgid "Options"
 msgstr "Optionen"
 
-#: report/models.py:29
+#: report/models.py:38
 msgid ""
 "Options for the renderer. Empty this field to get all available options with "
 "default values"
 msgstr ""
 
-#: report/models.py:33
+#: report/models.py:42
 msgid "Report"
 msgstr "Bericht"
 
-#: report/models.py:34
+#: report/models.py:43
 msgid "Reports"
 msgstr "Berichte"
 
@@ -213,7 +216,7 @@ msgstr "Bitte melden Sie sich an"
 #: templates/djangoerp/account/logout.html:5
 #: templates/djangoerp/account/modal_logout.html:6
 #: templates/djangoerp/account/modal_logout.html:11
-#: templates/djangoerp/base.html:101
+#: templates/djangoerp/base.html:100
 msgid "Logout"
 msgstr "Ausloggen"
 
@@ -227,6 +230,8 @@ msgstr "Sind Sie sicher, dass Sie sich ausloggen wollen?"
 
 #: templates/djangoerp/account/modal_logout.html:10
 #: templates/djangoerp/modal/saveview.html:33
+#: templates/djangoerp/module_create.html:9
+#: templates/djangoerp/module_update.html:9
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -236,7 +241,7 @@ msgstr "Datensatz erstellt"
 
 #: templates/djangoerp/activities/created.html:6
 #: templates/djangoerp/activities/file.html:6
-#: templates/djangoerp/activities/message.html:8
+#: templates/djangoerp/activities/message.html:9
 #: templates/djangoerp/activities/updated.html:7
 #: templates/djangoerp/activities/workflow.html:6
 msgid "Unknown"
@@ -244,7 +249,7 @@ msgstr "Unbekannt"
 
 #: templates/djangoerp/activities/created.html:6
 #: templates/djangoerp/activities/file.html:6
-#: templates/djangoerp/activities/message.html:8
+#: templates/djangoerp/activities/message.html:9
 #: templates/djangoerp/activities/updated.html:7
 #: templates/djangoerp/activities/workflow.html:6
 msgid "before"
@@ -278,20 +283,23 @@ msgstr ""
 msgid "Dashboards"
 msgstr "Dashboards"
 
-#: templates/djangoerp/base.html:91
+#: templates/djangoerp/base.html:90
 #: templates/djangoerp/dashboard/sitebar.html:18
 #: templates/djangoerp/modules.html:4 templates/djangoerp/modules.html.py:7
 #: templates/djangoerp/modules.html:13
 msgid "Module overview"
 msgstr "Modulübersicht"
 
-#: templates/djangoerp/base.html:93 templates/djangoerp/base.html.py:95
+#: templates/djangoerp/base.html:92 templates/djangoerp/base.html.py:94
 msgid "Save current view"
 msgstr "Speichere aktuelle Ansicht"
 
-#: templates/djangoerp/base.html:112
-msgid "Start"
-msgstr "Start"
+#: templates/djangoerp/configuration/edit.html:16
+#: templates/djangoerp/modal/follow.html:61
+#: templates/djangoerp/modal/saveview.html:34
+#: templates/djangoerp/watch/edit.html:43
+msgid "Save"
+msgstr "Speichern"
 
 #: templates/djangoerp/dashboard/create.html:4
 msgid "Create dashboard"
@@ -309,6 +317,7 @@ msgstr "Dashboard"
 #: templates/djangoerp/dashboard/update.html:14
 #: templates/djangoerp/module_detail.html:51
 #: templates/djangoerp/module_detail.html:57
+#: templates/djangoerp/module_workflow.html:12
 #: templates/djangoerp/watch/index.html:26
 msgid "Edit"
 msgstr "Bearbeiten"
@@ -331,17 +340,6 @@ msgstr ""
 #: templates/djangoerp/dashboard/update.html:75
 msgid "Update dashboard"
 msgstr "Aktualisiere Dashboard"
-
-#: templates/djangoerp/forms/base_form.html:24
-msgid "Reset"
-msgstr "Zurücksetzen"
-
-#: templates/djangoerp/forms/base_form.html:25
-#: templates/djangoerp/modal/follow.html:61
-#: templates/djangoerp/modal/saveview.html:34
-#: templates/djangoerp/watch/edit.html:43
-msgid "Save"
-msgstr "Speichern"
 
 #: templates/djangoerp/message/index.html:5
 #: templates/djangoerp/message/index.html:7
@@ -376,11 +374,12 @@ msgstr "Workflow-Status geändert"
 msgid "Object-data changed"
 msgstr "Objectdaten geändert"
 
-#: templates/djangoerp/modal/follow.html:50 watch/models.py:23
+#: templates/djangoerp/modal/follow.html:50 watch/models.py:25
 msgid "File added"
 msgstr "Datei hinzugefügt"
 
 #: templates/djangoerp/modal/follow.html:60
+#: templates/djangoerp/module_modal_base.html:4
 msgid "Close"
 msgstr "Schließen"
 
@@ -402,13 +401,18 @@ msgstr "Nachricht schreiben"
 msgid "Load more items"
 msgstr "Lade weitere Datensätze"
 
-#: templates/djangoerp/module_create.html:7
-msgid "New"
-msgstr "Neu"
+#: templates/djangoerp/module_create.html:6
+#, python-format
+msgid "Create %(object)s"
+msgstr ""
 
-#: templates/djangoerp/module_create.html:14
+#: templates/djangoerp/module_create.html:10
+msgid "Create object"
+msgstr "Erstelle Objekt"
+
 #: templates/djangoerp/module_delete.html:10
 #: templates/djangoerp/module_delete_default.html:8
+#: templates/djangoerp/module_workflow.html:11
 #: templates/djangoerp/watch/edit.html:44
 msgid "Back"
 msgstr "Zurück"
@@ -432,6 +436,24 @@ msgstr "Bericht nicht gefunden"
 #: templates/djangoerp/module_report.html:7
 msgid "You must configure this report in the admin interface"
 msgstr "Sie müssenen einen Bericht im Admin-Interface anlegen."
+
+#: templates/djangoerp/module_update.html:6
+#, python-format
+msgid "Change %(object)s"
+msgstr ""
+
+#: templates/djangoerp/module_update.html:10
+msgid "Save Changes"
+msgstr "Speichere Änderungen"
+
+#: templates/djangoerp/module_workflow.html:7
+msgid "State could not be changed"
+msgstr ""
+
+#: templates/djangoerp/module_workflow.html:8
+msgid ""
+"This object is not valid. You need to edit it in order to change it's state."
+msgstr ""
 
 #: templates/djangoerp/modules.html:24
 msgid "You don't have access to any modules"
@@ -482,7 +504,23 @@ msgstr "Weiter"
 msgid "All"
 msgstr "Alle"
 
-#: templates/djangoerp/report_html_base.html:123
+#: templates/djangoerp/report_html_base.html:110
+msgid "Email"
+msgstr "Email"
+
+#: templates/djangoerp/report_html_base.html:111
+msgid "Phone"
+msgstr "Telefon"
+
+#: templates/djangoerp/report_html_base.html:112
+msgid "Fax"
+msgstr "Fax"
+
+#: templates/djangoerp/report_html_base.html:114
+msgid "You may add extra content in this placeholder"
+msgstr ""
+
+#: templates/djangoerp/report_html_base.html:134
 #, python-format
 msgid "Page %(current)s of %(all)s"
 msgstr "Seite %(current)s von %(all)s"
@@ -495,40 +533,46 @@ msgstr "Standart Einstellungen"
 msgid "You don't watch any activities on this model"
 msgstr "Sie beobachten keine Aktivitäten von diesem Datensatz"
 
+#: templates/djangoerp/wizard/index.html:5
+#: templates/djangoerp/wizard/index.html:6
+#: templates/djangoerp/wizard/index.html:10
+msgid "Wizard"
+msgstr ""
+
 #: templatetags/djangoerp_forms.py:157
 msgid "empty"
 msgstr "leer"
 
-#: views.py:427
+#: views.py:435
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
 
-#: watch/models.py:19
+#: watch/models.py:21
 msgid "Active"
 msgstr "Aktiv"
 
-#: watch/models.py:21
+#: watch/models.py:23
 msgid "New entry"
 msgstr "Neuer Eintrag"
 
-#: watch/models.py:22
+#: watch/models.py:24
 msgid "Comment written"
 msgstr "Kommentar geschrieben"
 
-#: watch/models.py:24
+#: watch/models.py:26
 msgid "Object changed"
 msgstr "Datensatz geändert"
 
-#: watch/models.py:25
+#: watch/models.py:27
 msgid "Workflowstate changed"
 msgstr "Workflow geändert"
 
-#: watch/models.py:32
+#: watch/models.py:34
 msgid "Watched activity"
 msgstr "Beobachte Áktivität"
 
-#: watch/models.py:33
+#: watch/models.py:35
 msgid "Watched activities"
 msgstr "Beobachtete Aktivitäten"
 

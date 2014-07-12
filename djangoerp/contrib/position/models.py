@@ -31,14 +31,14 @@ class AbstractPosition(ERPModel):
     """
     """
     if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=False, related_name="+")
+        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=False, related_name="+", on_delete=models.SET_NULL)
     if BASE_MODULE["EMPLOYEE"]:
-        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False)
+        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL)
 
     date = models.DateField(_("Date"), null=True, blank=False)
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)
-    invoice = models.ForeignKey(BASE_MODULE["INVOICE"], null=True, blank=True, related_name="+", editable=False)
-    product = models.ForeignKey(BASE_MODULE["PRODUCT"], null=True, blank=False)
+    invoice = models.ForeignKey(BASE_MODULE["INVOICE"], null=True, blank=True, related_name="+", editable=False, on_delete=models.PROTECT)
+    product = models.ForeignKey(BASE_MODULE["PRODUCT"], null=True, blank=False, on_delete=models.PROTECT)
 
     invoiceable = models.PositiveSmallIntegerField(_("Invoiceable"), null=True, blank=False, default=1, choices=RATE_CHOICES, editable=False)
 

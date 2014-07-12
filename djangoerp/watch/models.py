@@ -14,7 +14,7 @@ class Watch(models.Model):
     Model which informs users about changes in the history
     """
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=True, null=True)
-    watch_ct = models.ForeignKey(ContentType)
+    watch_ct = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     watch_id = models.PositiveIntegerField()
     watch_object = GenericForeignKey('watch_ct', 'watch_id')
 

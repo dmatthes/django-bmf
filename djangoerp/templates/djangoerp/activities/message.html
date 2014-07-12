@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load djangoerp_markup %}
 <div>
   <p>
     {% if item.topic %}
@@ -9,7 +10,7 @@
     </small>
   </p>
   {% if item.text %}
-    {{ item.text|linebreaks }}
+    {{ item.text|erpmarkup }}
   {% endif %}
   <hr />
 </div>

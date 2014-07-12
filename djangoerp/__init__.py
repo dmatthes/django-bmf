@@ -3,23 +3,23 @@
 
 from __future__ import unicode_literals
 
-VERSION = (0, 0, 4, 'alpha', 0) # TODO accounting
-#VERSION = (0, 1, 0, 'beta', 0) # closed beta
-#VERSION = (0, 2, 0, 'beta', 0) # open beta
+VERSION = (0, 1, 1, 'alpha', 0)
+#VERSION = (0, 2, 0, 'beta', 0) # closed beta
+#VERSION = (0, 3, 0, 'beta', 0) # open beta
 #VERSION = (0, 9, 0, 'rc', 0)
 #VERSION = (1, 0, 0, 'final', 0)
 
-def get_version(*args, **kwargs):                                                                                                                                                                                                                                  
-    import os
-    import subprocess
-    import datetime
-
+def get_version(*args, **kwargs):
     assert len(VERSION) == 5
     assert VERSION[3] in ('alpha', 'beta', 'rc', 'final')
 
     version = '.'.join(map(str, VERSION[:3]))
 
     if VERSION[3] in ['alpha', 'beta'] and VERSION[4] == 0:
+        import os
+        import subprocess
+        import datetime
+
         # get version information from git
         repo_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         get_branch = subprocess.Popen('git rev-parse --abbrev-ref HEAD', stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, cwd=repo_dir, universal_newlines=True)

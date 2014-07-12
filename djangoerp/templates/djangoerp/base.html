@@ -102,6 +102,8 @@
       </div><!--/.container -->
     </nav>
     <div class="container">
+      {% comment %}
+      TODO we are trying to remove the breadcrumb navigation to enhance the user iterface
       <div class="row">
         <div class="col-lg-12">
           <ul class="breadcrumb">
@@ -110,6 +112,7 @@
           </ul>
         </div>
       </div>
+      {% endcomment %}
       {% if messages %}<div class="row">
         <div class="col-lg-12">
           {% for message in messages %}
@@ -134,6 +137,7 @@
         <p>&copy; django ERP</small></p>
       </div> <!-- /container -->
     </footer>
+    <script src="{% url "djangoerp:jsi18n" %}"></script>
     <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.min.js"></script>{% render_block "js" %}
   </body>
 </html>
