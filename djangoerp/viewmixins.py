@@ -92,9 +92,6 @@ class ViewMixin(BaseMixin):
 
         # update session
         self.request.session["djangoerp"] = session_data
-        # read current version, if in development mode
-        if settings.DEBUG:
-            self.request.session["djangoerp"]['version'] = get_version()
         if modify:
             self.request.session.modified = True
 
@@ -102,6 +99,9 @@ class ViewMixin(BaseMixin):
         kwargs.update({
             'djangoerp': self.read_session_data()
         })
+        # allways read current version, if in development mode
+        if settings.DEBUG:
+            kwargs["djangoerp"]['version'] = get_version()
         return super(BaseMixin, self).get_context_data(**kwargs)
 
     def update_notification(self, check_object=True):
