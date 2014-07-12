@@ -70,10 +70,10 @@ body {
 /* Wrapper for page content to push down footer */
 #wrap {
   width: 100%;
-  min-height: 100%; /* Mindesthöhe für moderne Browser */
-  height:auto !important; /* Important Regel für moderne Browser */
-  height:100%; /* Mindesthöhe für den IE */
-  overflow: hidden !important; /* FF Scroll-leiste */ 
+  min-height: 100%; /* for modern browsers */
+  height:auto !important; /* for modern browser */
+  height:100%; /* for IE */
+  overflow: hidden !important; /* FF scrollbar */ 
 }
 
 /* Navigation
@@ -135,9 +135,6 @@ body {
     & > li.dropdown:hover .dropdown-menu {
       display: block;
     }
-//  & > li.dropdown:hover > a {
-//    cursor: s-resize;
-//  }
   }
 }
 
@@ -174,4 +171,3 @@ footer {
     color: @brand-warning;
   }
 }
-

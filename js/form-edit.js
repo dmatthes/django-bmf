@@ -64,8 +64,6 @@ $(document).ready(function() {
                         form_object.find('div[data-erp-search=1]').djangoerp_search();
                         form_object.find('div[data-erp-inlineform=1]').djangoerp_inlineform();
                     }
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.log( errorThrown+" ("+textStatus+")" );
                 });
             });
         });
