@@ -37,6 +37,7 @@ class BaseMixin(object):
         """
         return permissions
 
+
     def check_permissions(self):
         """
         overwrite this function to add a custom permission check (i.e
@@ -49,6 +50,38 @@ class BaseMixin(object):
         return self.request.session.get("djangoerp", {})
     
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        """
+        checks permissions, requires a login and
+        because we are using a generic view approach to the data-models
+        in django ERP, we can ditch a middleware (less configuration)
+        and add the functionality to this function.
+        """
+
+        if not self.check_permissions() or not self.request.user.has_perms(self.get_permissions([])):
+            return permission_denied(self.request)
+
+        # === EMPLOYEE ====================================================
+
+        Employee = get_model_from_cfg('EMPLOYEE')
+        if Employee:
+            try:
+                self.request.djangoerp_employee = Employee.objects.get(user=self.request.user)
+            except Employee.DoesNotExist:
+                # the user does not have permission to view the erp
+                if self.request.user.is_superuser:
+                    return redirect('djangoerp:wizard', permanent=False)
+                else:
+                    raise PermissionDenied
+        else:
+            self.request.djangoerp_employee = None
+
+        return super(BaseMixin, self).dispatch(*args, **kwargs)
+
+
+class ViewMixin(BaseMixin):
+
     def write_session_data(self, data, modify=False):
         # reload sessiondata, because we can not be sure, that the
         # session was not changed during this function (update_notification)
@@ -60,15 +93,19 @@ class BaseMixin(object):
         if modify:
            self.request.session.modified = True
 
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'djangoerp': self.read_session_data()
+        })
+        return super(BaseMixin, self).get_context_data(**kwargs)
 
     def update_notification(self, check_object=True):
         """
         This function is used by django ERP to update the notifications
         used in the ERP-Framework
         """
-        if check_object:
-            if not self.object.djangoerp_notification.filter(user=self.request.user, unread=True).update(unread=None, changed=now()):
-                return None
+        if check_object and not self.object.djangoerp_notification.filter(user=self.request.user, unread=True).update(unread=None, changed=now()):
+            return None
 
         # get all session data
         session_data = self.read_session_data()
@@ -132,25 +169,10 @@ class BaseMixin(object):
         # update session
         self.write_session_data(session_data)
 
-
-    def get_context_data(self, **kwargs):
-        kwargs.update({
-            'djangoerp': self.read_session_data()
-        })
-        return super(BaseMixin, self).get_context_data(**kwargs)
-
-
-    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """
-        checks permissions, requires a login and
-        because we are using a generic view approach to the data-models
-        in django ERP, we can ditch a middleware (less configuration)
-        and add the functionality to this function.
         """
-
-        if not self.check_permissions() or not self.request.user.has_perms(self.get_permissions([])):
-            return permission_denied(self.request)
+        function = super(ViewMixin, self).dispatch(*args, **kwargs)
 
         session_data = self.read_session_data()
 
@@ -172,29 +194,15 @@ class BaseMixin(object):
         if not 'dashboard' in session_data:
             self.update_dashboard()
 
-        # === EMPLOYEE ====================================================
-
-        Employee = get_model_from_cfg('EMPLOYEE')
-        if Employee:
-            try:
-                self.request.djangoerp_employee = Employee.objects.get(user=self.request.user)
-            except Employee.DoesNotExist:
-                # the user does not have permission to view the erp
-                if self.request.user.is_superuser:
-                    return redirect('djangoerp:wizard', permanent=False)
-                else:
-                    raise PermissionDenied
-        else:
-            self.request.djangoerp_employee = None
-
-        return super(BaseMixin, self).dispatch(*args, **kwargs)
+        return function
 
 
 class AjaxMixin(BaseMixin):
-
+    """
+    add some basic function for ajax requests
+    """
     def check_permissions(self):
         return self.request.is_ajax() and super(AjaxMixin, self).check_permissions()
-
 
     def render_to_json_response(self, context, **response_kwargs):
         data = json.dumps(context, cls=DjangoJSONEncoder)
@@ -203,6 +211,9 @@ class AjaxMixin(BaseMixin):
 
 
 class NextMixin(object):
+    """
+    redirects to an url or to next, if it is set via get
+    """
 
     def redirect_next(self, reverse, *args, **kwargs):
         redirect_to = self.request.REQUEST.get('next', '')
@@ -288,11 +299,7 @@ class ModuleDeletePermissionMixin(object):
 
 # MODULES
 
-class ModuleBaseMixin(BaseMixin):
-    """
-    Basic objects, includes erp-specific functions and context
-    variables for all erp-views
-    """
+class ModuleBaseMixin(object):
     model = None
 
     def get_object(self):
@@ -325,3 +332,17 @@ class ModuleBaseMixin(BaseMixin):
             })
         return super(ModuleBaseMixin, self).get_context_data(**kwargs)
 
+class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
+    """
+    base mixin for update, clone and create views (ajax-forms)
+    and form-api
+    """
+    pass
+
+
+class ModuleViewMixin(ModuleBaseMixin, ViewMixin):
+    """
+    Basic objects, includes erp-specific functions and context
+    variables for erp-views
+    """
+    pass

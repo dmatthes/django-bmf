@@ -63,7 +63,7 @@ def form_class_factory(cls):
 
 # Base ========================================================================
 
-from .viewmixins import BaseMixin
+from .viewmixins import ViewMixin as BaseMixin
 from .viewmixins import AjaxMixin
 from .viewmixins import NextMixin
 
@@ -73,7 +73,8 @@ from .viewmixins import ModuleUpdatePermissionMixin as PluginUpdatePermission
 from .viewmixins import ModuleDeletePermissionMixin as PluginDeletePermission
 from .viewmixins import ModuleClonePermissionMixin as PluginUpdatePermission
 
-from .viewmixins import ModuleBaseMixin as PluginBase
+from .viewmixins import ModuleViewMixin as PluginBase
+from .viewmixins import ModuleAjaxMixin
 
 # Template Variables =========================================================
 
