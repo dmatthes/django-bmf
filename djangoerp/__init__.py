@@ -3,9 +3,9 @@
 
 from __future__ import unicode_literals
 
-VERSION = (0, 0, 4, 'alpha', 0) # TODO accounting
-#VERSION = (0, 1, 0, 'beta', 0) # closed beta
-#VERSION = (0, 2, 0, 'beta', 0) # open beta
+VERSION = (0, 1, 1, 'alpha', 0)
+#VERSION = (0, 2, 0, 'beta', 0) # closed beta
+#VERSION = (0, 3, 0, 'beta', 0) # open beta
 #VERSION = (0, 9, 0, 'rc', 0)
 #VERSION = (1, 0, 0, 'final', 0)
 
