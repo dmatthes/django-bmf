@@ -179,6 +179,9 @@ class ViewMixin(BaseMixin):
         """
         function = super(ViewMixin, self).dispatch(*args, **kwargs)
 
+        if self.request.user.is_anonymous():
+            return function
+
         session_data = self.read_session_data()
 
         # === NOTIFICATION ================================================
