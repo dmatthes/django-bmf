@@ -63,7 +63,8 @@ def test():
 @task
 def test_contrib(app):
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s; virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
+        local('.virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s' % {'app': app})
+        local('.virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
 
 
 @task
