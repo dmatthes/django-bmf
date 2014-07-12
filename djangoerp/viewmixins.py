@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.serializers.json import DjangoJSONEncoder
@@ -14,6 +15,7 @@ from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from django.views.defaults import permission_denied
 
+from djangoerp import get_version
 from djangoerp.decorators import login_required
 from djangoerp.models import Notification
 from djangoerp.utils import get_model_from_cfg
@@ -47,7 +49,7 @@ class BaseMixin(object):
 
 
     def read_session_data(self):
-        return self.request.session.get("djangoerp", {})
+        return self.request.session.get("djangoerp", {'version': get_version()})
     
 
     @method_decorator(login_required)
@@ -90,8 +92,11 @@ class ViewMixin(BaseMixin):
 
         # update session
         self.request.session["djangoerp"] = session_data
+        # read current version, if in development mode
+        if settings.DEBUG:
+            self.request.session["djangoerp"]['version'] = get_version()
         if modify:
-           self.request.session.modified = True
+            self.request.session.modified = True
 
     def get_context_data(self, **kwargs):
         kwargs.update({
