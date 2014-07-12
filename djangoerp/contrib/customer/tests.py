@@ -28,8 +28,6 @@ class CustomerTests(ERPTestCase):
         r = self.client.get(reverse(namespace + ':create', None, None, {'key': "customer"}))
         self.assertEqual(r.status_code, 200)
 
-        self.assertEqual(r.status_code, 302)
-
         obj = Customer.objects.order_by('pk').last()
         a = '%s' % obj # check if object name has any errors
 
