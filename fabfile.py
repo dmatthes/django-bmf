@@ -71,7 +71,8 @@ def test_contrib(app):
 def locale():
   with lcd(BASEDIR + '/djangoerp'):
     for lang in LANGUAGES:
-      local('%s makemessages -l %s --domain django --domain djangojs' % (DJANGO, lang))
+      local('%s makemessages -l %s --domain django' % (DJANGO, lang))
+      local('%s makemessages -l %s --domain djangojs' % (DJANGO, lang))
 
  #for i in os.listdir(BASEDIR + '/djangoerp/contrib'):
  #  path = BASEDIR + '/djangoerp/contrib/' + i

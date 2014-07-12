@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: 2014-01-26 06:24+0100\n"
 "Last-Translator: Admin User <admin@demo.django-erp.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,101 +19,101 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.7.3\n"
 
-#: models.py:35
+#: contrib/accounting/models.py:35
 msgid "Income"
 msgstr "Erträge"
 
-#: models.py:36
+#: contrib/accounting/models.py:36
 msgid "Expense"
 msgstr "Aufwände"
 
-#: models.py:37
+#: contrib/accounting/models.py:37
 msgid "Asset"
 msgstr "Aktiva"
 
-#: models.py:38
+#: contrib/accounting/models.py:38
 msgid "Liability"
 msgstr "Passiva"
 
-#: models.py:39
+#: contrib/accounting/models.py:39
 msgid "Equity"
 msgstr "Eigenkapital"
 
-#: models.py:57
+#: contrib/accounting/models.py:57
 msgid "Number"
 msgstr "Nummer"
 
-#: models.py:58
+#: contrib/accounting/models.py:58
 msgid "Name"
 msgstr "Name"
 
-#: models.py:59
+#: contrib/accounting/models.py:59
 msgid "Type"
 msgstr "Typ"
 
-#: models.py:60
+#: contrib/accounting/models.py:60
 msgid "Read-only"
 msgstr "Schreibgeschützt"
 
-#: models.py:87
+#: contrib/accounting/models.py:87
 msgid "Account"
 msgstr "Konto"
 
-#: models.py:88
+#: contrib/accounting/models.py:88
 msgid "Accounts"
 msgstr "Konten"
 
-#: models.py:103
+#: contrib/accounting/models.py:103
 msgid "Comment"
 msgstr "Kommentar"
 
-#: models.py:137
+#: contrib/accounting/models.py:137
 msgid "Posting text"
 msgstr "Verwendungszweck"
 
-#: models.py:139
+#: contrib/accounting/models.py:139
 msgid "Draft"
 msgstr "Entwurf"
 
-#: models.py:144
+#: contrib/accounting/models.py:144
 msgid "Transaction"
 msgstr "Buchung"
 
-#: models.py:145
+#: contrib/accounting/models.py:145
 msgid "Transactions"
 msgstr "Buchungen"
 
-#: models.py:179
+#: contrib/accounting/models.py:179
 msgid "Credit"
 msgstr ""
 
-#: models.py:179
+#: contrib/accounting/models.py:179
 msgid "Debit"
 msgstr ""
 
-#: models.py:181
+#: contrib/accounting/models.py:181
 msgid "Modified"
 msgstr ""
 
-#: workflows.py:14
+#: contrib/accounting/workflows.py:14
 msgid "Open"
 msgstr ""
 
-#: workflows.py:15
+#: contrib/accounting/workflows.py:15
 #, fuzzy
 #| msgid "Balance"
 msgid "Balanced"
 msgstr "Bilanz"
 
-#: workflows.py:16
+#: contrib/accounting/workflows.py:16
 msgid "Cancelled"
 msgstr ""
 
-#: workflows.py:19
+#: contrib/accounting/workflows.py:19
 msgid "Balance"
 msgstr "Bilanz"
 
-#: workflows.py:20
+#: contrib/accounting/workflows.py:20
 #, fuzzy
 #| msgid "Balance"
 msgid "Cancel"

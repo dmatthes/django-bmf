@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,98 +17,98 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:35
+#: contrib/accounting/models.py:35
 msgid "Income"
 msgstr ""
 
-#: models.py:36
+#: contrib/accounting/models.py:36
 msgid "Expense"
 msgstr ""
 
-#: models.py:37
+#: contrib/accounting/models.py:37
 msgid "Asset"
 msgstr ""
 
-#: models.py:38
+#: contrib/accounting/models.py:38
 msgid "Liability"
 msgstr ""
 
-#: models.py:39
+#: contrib/accounting/models.py:39
 msgid "Equity"
 msgstr ""
 
-#: models.py:57
+#: contrib/accounting/models.py:57
 msgid "Number"
 msgstr ""
 
-#: models.py:58
+#: contrib/accounting/models.py:58
 msgid "Name"
 msgstr ""
 
-#: models.py:59
+#: contrib/accounting/models.py:59
 msgid "Type"
 msgstr ""
 
-#: models.py:60
+#: contrib/accounting/models.py:60
 msgid "Read-only"
 msgstr ""
 
-#: models.py:87
+#: contrib/accounting/models.py:87
 msgid "Account"
 msgstr ""
 
-#: models.py:88
+#: contrib/accounting/models.py:88
 msgid "Accounts"
 msgstr ""
 
-#: models.py:103
+#: contrib/accounting/models.py:103
 msgid "Comment"
 msgstr ""
 
-#: models.py:137
+#: contrib/accounting/models.py:137
 msgid "Posting text"
 msgstr ""
 
-#: models.py:139
+#: contrib/accounting/models.py:139
 msgid "Draft"
 msgstr ""
 
-#: models.py:144
+#: contrib/accounting/models.py:144
 msgid "Transaction"
 msgstr ""
 
-#: models.py:145
+#: contrib/accounting/models.py:145
 msgid "Transactions"
 msgstr ""
 
-#: models.py:179
+#: contrib/accounting/models.py:179
 msgid "Credit"
 msgstr ""
 
-#: models.py:179
+#: contrib/accounting/models.py:179
 msgid "Debit"
 msgstr ""
 
-#: models.py:181
+#: contrib/accounting/models.py:181
 msgid "Modified"
 msgstr ""
 
-#: workflows.py:14
+#: contrib/accounting/workflows.py:14
 msgid "Open"
 msgstr ""
 
-#: workflows.py:15
+#: contrib/accounting/workflows.py:15
 msgid "Balanced"
 msgstr ""
 
-#: workflows.py:16
+#: contrib/accounting/workflows.py:16
 msgid "Cancelled"
 msgstr ""
 
-#: workflows.py:19
+#: contrib/accounting/workflows.py:19
 msgid "Balance"
 msgstr ""
 
-#: workflows.py:20
+#: contrib/accounting/workflows.py:20
 msgid "Cancel"
 msgstr ""

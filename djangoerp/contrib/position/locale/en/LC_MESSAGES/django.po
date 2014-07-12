@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,46 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:38 templates/djangoerp_position/position_erpindex.html:13
+#: contrib/position/models.py:38
+#: contrib/position/templates/djangoerp_position/position_erpindex.html:13
 msgid "Date"
 msgstr ""
 
-#: models.py:39 templates/djangoerp_position/position_erpindex.html:14
+#: contrib/position/models.py:39
+#: contrib/position/templates/djangoerp_position/position_erpindex.html:14
 msgid "Name"
 msgstr ""
 
-#: models.py:43
+#: contrib/position/models.py:43
 msgid "Invoiceable"
 msgstr ""
 
-#: models.py:47
+#: contrib/position/models.py:47
 msgid "Price"
 msgstr ""
 
-#: models.py:50
+#: contrib/position/models.py:50
 msgid "Amount"
 msgstr ""
 
-#: models.py:51
+#: contrib/position/models.py:51
 msgid "Description"
 msgstr ""
 
-#: models.py:81
+#: contrib/position/models.py:81
 msgid "Position"
 msgstr ""
 
-#: models.py:82
+#: contrib/position/models.py:82
 msgid "Positions"
 msgstr ""
 
-#: templates/djangoerp_position/position_erpindex.html:15
+#: contrib/position/templates/djangoerp_position/position_erpindex.html:15
 msgid "Product"
 msgstr ""
 
-#: templates/djangoerp_position/position_erpindex.html:16
+#: contrib/position/templates/djangoerp_position/position_erpindex.html:16
 msgid "Project"
 msgstr ""
 
-#: templates/djangoerp_position/position_erpindex.html:17
+#: contrib/position/templates/djangoerp_position/position_erpindex.html:17
 msgid "Employee"
 msgstr ""

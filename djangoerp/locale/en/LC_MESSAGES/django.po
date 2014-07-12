@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 18:00+0200\n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: activity/models.py:43 modelbase.py:198 notification/models.py:22
+#: activity/models.py:43 modelbase.py:203 notification/models.py:22
 msgid "Created"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Template"
 msgstr ""
 
-#: activity/models.py:67 modelbase.py:197 report/models.py:39
+#: activity/models.py:67 modelbase.py:202 report/models.py:39
 #: watch/models.py:29
 msgid "Modified"
 msgstr ""
@@ -314,8 +314,8 @@ msgstr ""
 
 #: templates/djangoerp/dashboard/detail.html:16
 #: templates/djangoerp/dashboard/update.html:14
-#: templates/djangoerp/module_detail.html:51
-#: templates/djangoerp/module_detail.html:57
+#: templates/djangoerp/module_detail.html:59
+#: templates/djangoerp/module_detail.html:65
 #: templates/djangoerp/module_workflow.html:12
 #: templates/djangoerp/watch/index.html:26
 msgid "Edit"
@@ -424,7 +424,7 @@ msgstr ""
 msgid "Files"
 msgstr ""
 
-#: templates/djangoerp/module_detail.html:44
+#: templates/djangoerp/module_detail.html:52
 msgid "Print"
 msgstr ""
 
@@ -542,7 +542,7 @@ msgstr ""
 msgid "empty"
 msgstr ""
 
-#: views.py:435
+#: views.py:470
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
