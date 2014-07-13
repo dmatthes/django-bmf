@@ -282,7 +282,7 @@ class PluginClone(PluginForm, PluginUpdatePermission, PluginCreatePermission, Pl
         activity_update.send(sender=self.object.__class__, instance=self.object)
         return HttpResponseRedirect(self.get_success_url())
 
-class PluginUpdate(PluginForm, PluginUpdatePermission, PluginBase, UpdateView):
+class PluginUpdate(PluginForm, PluginUpdatePermission, ModuleAjaxMixin, UpdateView):
     """
     update an update
     """
@@ -313,10 +313,12 @@ class PluginUpdate(PluginForm, PluginUpdatePermission, PluginBase, UpdateView):
         form.instance.modified_by = self.request.user
         self.object = form.save()
         activity_update.send(sender=self.object.__class__, instance=self.object)
-        return HttpResponseRedirect(self.get_success_url())
+        return self.render_valid_form({
+            'object_pk': self.object.pk
+        })
 
 
-class PluginCreate(PluginForm, PluginCreatePermission, PluginBase, CreateView):
+class PluginCreate(PluginForm, PluginCreatePermission, ModuleAjaxMixin, CreateView):
     """
     create a new instance
     """
@@ -350,12 +352,14 @@ class PluginCreate(PluginForm, PluginCreatePermission, PluginBase, CreateView):
         return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
 
     def form_valid(self, form):
-        messages.success(self.request, 'Object created')
+        #messages.success(self.request, 'Object created')
         form.instance.modified_by = self.request.user
         form.instance.created_by = self.request.user
         self.object = form.save()
         activity_create.send(sender=self.object.__class__, instance=self.object)
-        return HttpResponseRedirect(self.get_success_url())
+        return self.render_valid_form({
+            'object_pk': self.object.pk
+        })
 
 
 class PluginDelete(PluginDeletePermission, PluginBase, DeleteView):

@@ -345,8 +345,34 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
     base mixin for update, clone and create views (ajax-forms)
     and form-api
     """
-    pass
 
+
+    def get_ajax_context(self, context):
+        ctx = {
+            'object_pk': 0,
+            'status': 'static', # "static" for html, "valid" for valid forms
+            'html': '',
+            'redirect': '',
+        }
+        ctx.update(context)
+        return ctx
+
+
+    def render_to_response(self, context, **response_kwargs):
+        response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs) 
+        response.render()
+        ctx = self.get_ajax_context({
+             'html': response.rendered_content,
+        })
+        return self.render_to_json_response(ctx)
+
+    def render_valid_form(self, context):
+        ctx = self.get_ajax_context({
+            'status': 'valid',
+          # 'redirect': self.get_success_url(),
+        })
+        ctx.update(context)
+        return self.render_to_json_response(ctx)
 
 class ModuleViewMixin(ModuleBaseMixin, ViewMixin):
     """

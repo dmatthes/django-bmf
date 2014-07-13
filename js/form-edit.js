@@ -28,7 +28,7 @@ $(document).ready(function() {
         }
         // get the new content for the modal
         $.get(form_target, function(data) {
-            $('#erpmodal_edit div.modal-dialog').prepend(data);
+            $('#erpmodal_edit div.modal-dialog').prepend(data.html);
             $('#erpmodal_edit').modal('show');
         }).done( function() {
             // manipulate form url
@@ -46,12 +46,12 @@ $(document).ready(function() {
             });
             parent_object.find('button.erpedit-submit').click(function (event) {
             dict = ERPAJAX;
-            dict.dataType = 'html';
             dict.type = "POST";
             dict.data = form_object.serialize();
             dict.url = form_object.attr('action');
             $.ajax(dict).done(function( data, textStatus, jqXHR ) {
-                    if (data == "ok") {
+                console.log(data);
+                    if (data.status == "valid") {
                         // TODO check if there are multile forms and close modal or show next form
                         if ($('#erpmodal_edit > div.page-reload').length == 0) {
                             $('#erpmodal_edit > div').addClass('page-reload');
@@ -59,7 +59,7 @@ $(document).ready(function() {
                         $('#erpmodal_edit').modal('hide');
                     }
                     else {
-                        html = $($.parseHTML( data ));
+                        html = $($.parseHTML( data.html ));
                         form_object.html(html.find('form').html())
                         form_object.find('div[data-erp-search=1]').djangoerp_search();
                         form_object.find('div[data-erp-inlineform=1]').djangoerp_inlineform();
