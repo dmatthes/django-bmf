@@ -276,11 +276,14 @@ class PluginClone(PluginForm, PluginUpdatePermission, PluginCreatePermission, Pl
         return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        messages.success(self.request, 'Object cloned')
+       #messages.success(self.request, 'Object cloned')
         form.instance.modified_by = self.request.user
         self.object = form.save()
-        activity_update.send(sender=self.object.__class__, instance=self.object)
-        return HttpResponseRedirect(self.get_success_url())
+        activity_create.send(sender=self.object.__class__, instance=self.object)
+        return self.render_valid_form({
+            'object_pk': self.object.pk,
+            'message': _('Object cloned'),
+        })
 
 class PluginUpdate(PluginForm, PluginUpdatePermission, ModuleAjaxMixin, UpdateView):
     """
@@ -293,28 +296,14 @@ class PluginUpdate(PluginForm, PluginUpdatePermission, ModuleAjaxMixin, UpdateVi
     def get_template_names(self):
         return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_update_default.html"]
 
-    def get_success_url(self):
-        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
-
     def form_valid(self, form):
-        messages.success(self.request, 'Object updated')
+       #messages.success(self.request, 'Object updated')
         form.instance.modified_by = self.request.user
         self.object = form.save()
         activity_update.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
-            'object_pk': self.object.pk
+            'object_pk': self.object.pk,
+            'message': _('Object updated'),
         })
 
 
@@ -336,21 +325,6 @@ class PluginCreate(PluginForm, PluginCreatePermission, ModuleAjaxMixin, CreateVi
     def get_template_names(self):
         return super(PluginCreate, self).get_template_names() + ["djangoerp/module_create_default.html"]
 
-    def get_success_url(self):
-        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
-
     def form_valid(self, form):
         #messages.success(self.request, 'Object created')
         form.instance.modified_by = self.request.user
@@ -358,7 +332,8 @@ class PluginCreate(PluginForm, PluginCreatePermission, ModuleAjaxMixin, CreateVi
         self.object = form.save()
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
-            'object_pk': self.object.pk
+            'object_pk': self.object.pk,
+            'message': _('Object created'),
         })
 
 
