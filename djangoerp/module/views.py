@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 
 from django.views.generic.base import TemplateView
 
-from ..views import BaseMixin
+from ..viewmixins import ViewMixin
 
-class ModuleView(BaseMixin, TemplateView):
+class ModuleView(ViewMixin, TemplateView):
     template_name = "djangoerp/modules.html"
 
     def get_context_data(self, **kwargs):

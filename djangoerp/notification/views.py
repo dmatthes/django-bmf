@@ -11,10 +11,10 @@ from django.utils.text import force_text
 from django.utils.timezone import now
 
 from ..models import Notification
-from ..views import BaseMixin
-from ..views import AjaxMixin
+from ..viewmixins import ViewMixin
+#from ..views import AjaxMixin
 
-class NotificationView(BaseMixin, ListView):
+class NotificationView(ViewMixin, ListView):
     model = Notification
     allow_empty = True
     template_name = "djangoerp/notification/index.html"

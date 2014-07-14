@@ -20,7 +20,6 @@ from django.utils.functional import SimpleLazyObject
 from .apps import ERPConfig
 from .modelbase import ERPSimpleModel
 from .models import Configuration
-from .views import PluginBase
 from .views import PluginIndex
 from .views import PluginReport
 from .views import PluginCreate

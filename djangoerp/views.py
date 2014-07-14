@@ -41,6 +41,20 @@ from .signals import activity_workflow
 from .signals import djangoerp_post_save
 from .utils import get_model_from_cfg
 
+from .viewmixins import ViewMixin
+from .viewmixins import AjaxMixin
+from .viewmixins import NextMixin
+
+from .viewmixins import ModuleViewPermissionMixin
+from .viewmixins import ModuleCreatePermissionMixin
+from .viewmixins import ModuleUpdatePermissionMixin
+from .viewmixins import ModuleDeletePermissionMixin
+from .viewmixins import ModuleClonePermissionMixin
+
+from .viewmixins import ModuleBaseMixin
+from .viewmixins import ModuleViewMixin
+from .viewmixins import ModuleAjaxMixin
+
 import json
 import re
 import operator
@@ -61,20 +75,6 @@ def form_class_factory(cls):
     FactoryERPForm.__name__ = cls.__name__ + str('ERP')
     return FactoryERPForm
 
-# Base ========================================================================
-
-from .viewmixins import ViewMixin as BaseMixin
-from .viewmixins import AjaxMixin
-from .viewmixins import NextMixin
-
-from .viewmixins import ModuleViewPermissionMixin
-from .viewmixins import ModuleCreatePermissionMixin as PluginCreatePermission
-from .viewmixins import ModuleUpdatePermissionMixin as PluginUpdatePermission
-from .viewmixins import ModuleDeletePermissionMixin as PluginDeletePermission
-from .viewmixins import ModuleClonePermissionMixin as PluginUpdatePermission
-
-from .viewmixins import ModuleViewMixin as PluginBase
-from .viewmixins import ModuleAjaxMixin
 
 # Template Variables =========================================================
 
@@ -170,7 +170,7 @@ class PluginForm(object):
 # Actual Views ================================================================
 
 
-class PluginIndex(ModuleViewPermissionMixin, PluginBase, FilterView):
+class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     """
     """
     context_object_name = 'objects'
@@ -192,7 +192,7 @@ class PluginIndex(ModuleViewPermissionMixin, PluginBase, FilterView):
         return super(PluginIndex, self).get_context_data(**kwargs)
 
 
-class PluginBaseDetail(ModuleViewPermissionMixin, PluginFiles, PluginActivity, PluginBase, DetailView):
+class PluginBaseDetail(ModuleViewPermissionMixin, PluginFiles, PluginActivity, ModuleViewMixin, DetailView):
     """
     show the details of an entry
     """
@@ -223,7 +223,7 @@ class PluginDetail(PluginForm, PluginBaseDetail):
         return super(PluginDetail, self).get_context_data(**kwargs)
 
 
-class PluginReport(ModuleViewPermissionMixin, PluginBase, DetailView):
+class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
     """
     render a report
     """
@@ -249,7 +249,7 @@ class PluginReport(ModuleViewPermissionMixin, PluginBase, DetailView):
         return context
 
 
-class PluginClone(PluginForm, PluginUpdatePermission, PluginCreatePermission, PluginBase, UpdateView):
+class PluginClone(PluginForm, ModuleClonePermissionMixin, ModuleViewMixin, UpdateView):
     """
     clone a object
     """
@@ -282,10 +282,10 @@ class PluginClone(PluginForm, PluginUpdatePermission, PluginCreatePermission, Pl
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
-            'message': _('Object cloned'),
+        #   'message': _('Object cloned'),
         })
 
-class PluginUpdate(PluginForm, PluginUpdatePermission, ModuleAjaxMixin, UpdateView):
+class PluginUpdate(PluginForm, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     update an update
     """
@@ -303,11 +303,11 @@ class PluginUpdate(PluginForm, PluginUpdatePermission, ModuleAjaxMixin, UpdateVi
         activity_update.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
-            'message': _('Object updated'),
+        #   'message': _('Object updated'),
         })
 
 
-class PluginCreate(PluginForm, PluginCreatePermission, ModuleAjaxMixin, CreateView):
+class PluginCreate(PluginForm, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
     """
     create a new instance
     """
@@ -333,11 +333,11 @@ class PluginCreate(PluginForm, PluginCreatePermission, ModuleAjaxMixin, CreateVi
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
-            'message': _('Object created'),
+        #   'message': _('Object created'),
         })
 
 
-class PluginDelete(PluginDeletePermission, PluginBase, DeleteView):
+class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
     """
     delete an instance
     """
@@ -364,7 +364,7 @@ class PluginDelete(PluginDeletePermission, PluginBase, DeleteView):
         return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
 
 
-class PluginWorkflow(PluginBase, DetailView):
+class PluginWorkflow(ModuleViewMixin, DetailView):
     """
     update the state of a workflow
     """
@@ -418,7 +418,7 @@ class PluginWorkflow(PluginBase, DetailView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PluginFormAPI(AjaxMixin, PluginForm, PluginBase, SingleObjectMixin, BaseFormView):
+class PluginFormAPI(PluginForm, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
     """
     """
     model = None
