@@ -249,7 +249,7 @@ class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
         return context
 
 
-class PluginClone(PluginForm, ModuleClonePermissionMixin, ModuleViewMixin, UpdateView):
+class ModuleCloneView(PluginForm, ModuleClonePermissionMixin, ModuleViewMixin, UpdateView):
     """
     clone a object
     """

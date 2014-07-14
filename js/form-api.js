@@ -1,11 +1,4 @@
-/*! django ERP custom js */
 (function($){
-  var VERSION = "0.1.0";
-
-  if(!$.djangoerp){
-      $.djangoerp = new Object();
-  };
-
   // Keys
   var keys = {
     ESC: 27,
@@ -21,7 +14,7 @@
    *
    */
           
-  $.djangoerp.search = function(el, options) {
+  $.erp.search = function(el, options) {
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -31,10 +24,10 @@
     base.el = el;
     
     // Add a reverse reference to the DOM object
-    base.$el.data("djangoerp.search", base);
+    base.$el.data("erp.search", base);
 
     base.init = function(){
-      base.options = $.extend({}, $.djangoerp.search.defaultOptions, options);
+      base.options = $.extend({}, $.erp.search.defaultOptions, options);
 
 //    base.input = base.$el.children('input[type="text"]').first();
 //    base.hidden = base.$el.find('input[type="hidden"]').first();
@@ -145,7 +138,7 @@
     base.init();
   };
   
-  $.djangoerp.search.defaultOptions = {
+  $.erp.search.defaultOptions = {
     // Wait 350 ms until the last key action until the request is send
     wait: 350, // TODO Not implemented
     // Which filter options are submitted
@@ -158,7 +151,7 @@
    *
    */
 
-  $.djangoerp.inlineform = function(el, options){
+  $.erp.inlineform = function(el, options){
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -168,10 +161,10 @@
     base.el = el;
     
     // Add a reverse reference to the DOM object
-    base.$el.data("djangoerp.inlineform", base);
+    base.$el.data("erp.inlineform", base);
 
     base.init = function() {
-      base.options = $.extend({}, $.djangoerp.inlineform.defaultOptions, options);
+      base.options = $.extend({}, $.erp.inlineform.defaultOptions, options);
       // Put your initialization code here
       var regex_max = /(.*)-MAX_NUM_FORMS$/;
       var regex_total = /.*-TOTAL_FORMS$/;
@@ -219,7 +212,7 @@
         this.name = this.name.replace(name_regex, name_replacement);
       });
       base.total_forms += 1;
-      row.find('div[data-erp-search=1]').djangoerp_search();
+      row.find('div[data-erp-search=1]').erp_search();
 
       // Code adapted from http://djangosnippets.org/snippets/1389/
 //    function updateElementIndex(el, prefix, ndx) {
@@ -237,7 +230,7 @@
     base.init();
   };
 
-  $.djangoerp.inlineform.defaultOptions = {
+  $.erp.inlineform.defaultOptions = {
   };
 
   /*
@@ -246,19 +239,14 @@
    *
    */
   
-   $.fn.djangoerp_search = function(options){
+   $.fn.erp_search = function(options){
      return this.each(function(){
-       (new $.djangoerp.search(this, options));
+       (new $.erp.search(this, options));
      });
    };
-   $.fn.djangoerp_inlineform = function(options){
+   $.fn.erp_inlineform = function(options){
      return this.each(function(){
-       (new $.djangoerp.inlineform(this, options));
+       (new $.erp.inlineform(this, options));
      });
    };
 })(jQuery);
-
-//$(document).ready(function() {
-//  $('div[data-erp-search=1]').djangoerp_search();
-//  $("div[data-erp-inlineform=1]").djangoerp_inlineform();
-//});

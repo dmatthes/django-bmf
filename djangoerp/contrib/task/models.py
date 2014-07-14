@@ -157,6 +157,7 @@ class AbstractTask(ERPModel):
     class ERPMeta:
         has_files = True
         has_comments = True
+        can_clone = False
         workflow = TaskWorkflow
         workflow_field = 'state'
         category = PROJECT

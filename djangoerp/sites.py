@@ -20,14 +20,15 @@ from django.utils.functional import SimpleLazyObject
 from .apps import ERPConfig
 from .modelbase import ERPSimpleModel
 from .models import Configuration
-from .views import PluginIndex
-from .views import PluginReport
-from .views import PluginCreate
-from .views import PluginDelete
-from .views import PluginDetail
-from .views import PluginUpdate
-from .views import PluginWorkflow
-from .views import PluginFormAPI
+from .views import PluginIndex as ModuleIndexView
+from .views import PluginReport as ModuleReportView
+from .views import PluginCreate as ModuleCreateView
+from .views import PluginDelete as ModuleDeleteView
+from .views import ModuleCloneView
+from .views import PluginDetail as ModuleDetailView
+from .views import PluginUpdate as ModuleUpdateView
+from .views import PluginWorkflow as ModuleWorkflowView
+from .views import PluginFormAPI as ModuleFormAPI
 
 import copy
 
@@ -90,7 +91,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
         update = self.update or options.get('update', None)
         detail = self.detail or options.get('detail', None)
         report = self.report or options.get('report', None)
-        clone = self.create or options.get('clone', None)
+        clone = self.clone or options.get('clone', None)
 
         add_patterns = self.urlpatterns or options.get('urlpatterns', None)
 
@@ -117,7 +118,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
             ),
             url(
                 r'^(?P<pk>[0-9]+)/update/form-api/$',
-                PluginFormAPI.as_view(
+                ModuleFormAPI.as_view(
                     model=self.model,
                     form_view=update,
                 ),
@@ -141,7 +142,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     ),
                     url(
                         r'^create/(?P<key>%s)/form-api/$' % key,
-                        PluginFormAPI.as_view(
+                        ModuleFormAPI.as_view(
                             model=self.model,
                             form_view=view,
                         ),
@@ -157,7 +158,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                 ),
                 url(
                     r'^create/form-api/$',
-                    PluginFormAPI.as_view(
+                    ModuleFormAPI.as_view(
                         model=self.model,
                         form_view=create,
                     ),
@@ -170,7 +171,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
             urlpatterns += patterns('',
               url(
                   r'^(?P<pk>[0-9]+)/workflow/(?P<transition>\w+)/$',
-                  PluginWorkflow.as_view(model=self.model),
+                  ModuleWorkflowView.as_view(model=self.model),
                   name='workflow',
               ),
             )
@@ -187,12 +188,11 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
             )
 
         # clone model
-        if clone:
-            self.model._erpmeta.can_clone = True
+        if self.model._erpmeta.can_clone:
             urlpatterns += patterns('',
                 url(
                     r'^(?P<pk>[0-9]+)/clone/$',
-                    report.as_view(model=self.model),
+                    clone.as_view(model=self.model),
                     name='clone',
                 ),
             )
@@ -236,7 +236,7 @@ class DjangoERPSite(object):
     def register(self, model, admin=None, **options):
         self.register_model(model, admin)
 
-        for view in ['index', 'create', 'detail', 'update', 'delete', 'report']:
+        for view in ['index', 'create', 'detail', 'update', 'delete', 'report', 'clone']:
             if view in options:
                 self.register_view(model, view, options[view])
 
@@ -252,11 +252,12 @@ class DjangoERPSite(object):
 
         self._registry[model] = {
             'admin': (admin or DjangoERPModule)(model),
-            'index': PluginIndex,
-            'create': PluginCreate,
-            'detail': PluginDetail,
-            'update': PluginUpdate,
-            'delete': PluginDelete,
+            'index': ModuleIndexView,
+            'create': ModuleCreateView,
+            'detail': ModuleDetailView,
+            'update': ModuleUpdateView,
+            'delete': ModuleDeleteView,
+            'clone': ModuleCloneView,
             'report': None,
             'urlpatterns': None,
         }
@@ -270,7 +271,7 @@ class DjangoERPSite(object):
         del self._registry[model]
 
     def register_view(self, model, type, view):
-        if type in ['index','detail','update','delete']:
+        if type in ['index','detail','update','delete','clone']:
             # TODO check if view is an erp-view
             # add the view
             self._registry[model][type] = view
@@ -278,7 +279,7 @@ class DjangoERPSite(object):
         elif type == 'report':
             if isinstance(view, bool):
                 if view:
-                    self._registry[model][type] = PluginReport
+                    self._registry[model][type] = ModuleReportView
             else:
                 # TODO check if view is an erp-view
                 # add the view
@@ -394,6 +395,7 @@ class DjangoERPSite(object):
                 update = data['update'],
                 delete = data['delete'],
                 report = data['report'],
+                clone = data['clone'],
                 urlpatterns = data['urlpatterns'],
             )
             info = (model._meta.app_label, model._meta.model_name)
