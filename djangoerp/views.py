@@ -22,6 +22,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.defaults import permission_denied
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.utils import formats
 from django.utils.encoding import force_text
 from django.utils.timezone import now
@@ -249,7 +250,7 @@ class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
         return context
 
 
-class ModuleCloneView(PluginForm, ModuleClonePermissionMixin, ModuleViewMixin, UpdateView):
+class ModuleCloneView(PluginForm, ModuleClonePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     clone a object
     """
@@ -258,22 +259,7 @@ class ModuleCloneView(PluginForm, ModuleClonePermissionMixin, ModuleViewMixin, U
     exclude=[]
 
     def get_template_names(self):
-        return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_clone_default.html"]
-
-    def get_success_url(self):
-        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
+        return super(ModuleCloneView, self).get_template_names() + ["djangoerp/module_clone_default.html"]
 
     def form_valid(self, form):
        #messages.success(self.request, 'Object cloned')
@@ -282,7 +268,7 @@ class ModuleCloneView(PluginForm, ModuleClonePermissionMixin, ModuleViewMixin, U
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
-        #   'message': _('Object cloned'),
+            'message': ugettext('Object copied'),
         })
 
 class PluginUpdate(PluginForm, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
@@ -303,7 +289,7 @@ class PluginUpdate(PluginForm, ModuleUpdatePermissionMixin, ModuleAjaxMixin, Upd
         activity_update.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
-        #   'message': _('Object updated'),
+            'message': ugettext('Object updated'),
         })
 
 
@@ -333,7 +319,7 @@ class PluginCreate(PluginForm, ModuleCreatePermissionMixin, ModuleAjaxMixin, Cre
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
-        #   'message': _('Object created'),
+            'message': ugettext('Object created'),
         })
 
 
