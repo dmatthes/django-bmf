@@ -9,45 +9,28 @@ from django.core.urlresolvers import reverse
 import unittest
 
 from .models import Account
-from ...testcase import ERPTestCase
+from ...testcase import ERPModuleTestCase
 
 
-class AccountTests(ERPTestCase):
+class AccountModuleTests(ERPModuleTestCase):
 
     def test_get_urls(self):
         """
         """
-        namespace = Account._erpmeta.url_namespace
+        self.model = Account
 
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
+        data = self.autotest_ajax_get('create')
+        data = self.autotest_ajax_post('create', data={
+            'number': "1",
+            'name': "account 1",
+            'type': 50,
+        })
+        self.autotest_get('index', 200)
 
-        r = self.client.get(reverse(namespace + ':create'))
-        self.assertEqual(r.status_code, 200)
+        obj = self.get_latest_object()
+        a = '%s'%obj # check if object name has any errors
 
-        obj = Account.objects.order_by('pk').last()
-        a = '%s' % obj # check if object name has any errors
-
-        r = self.client.get(reverse(namespace + ':detail', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':update', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-    @unittest.expectedFailure
-    def test_post_urls(self):
-        """
-        """
-        namespace = Account._erpmeta.url_namespace
-
-        r = self.client.post(reverse(namespace+':create'),{'name':1, 'account':3, 'rate':'10', 'is_active': '1'})
-        self.assertEqual(r.status_code, 302)
-
-        obj = Account.objects.order_by('pk').last()
-        a = '%s' % obj # check if object name has any errors
-
-        r = self.client.post(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('detail', kwargs={'pk': obj.pk})
+        data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
+        self.autotest_get('delete', kwargs={'pk': obj.pk})
+        self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})

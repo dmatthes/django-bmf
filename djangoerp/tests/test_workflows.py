@@ -163,19 +163,17 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from ..utils import get_model_from_cfg
-from ..testcase import ERPTestCase
+from ..testcase import ERPModuleTestCase
 
 
-class ViewTests(ERPTestCase):
+class ViewTests(ERPModuleTestCase):
 
     def test_views(self):
         """
         """
 
-        model = get_model_from_cfg("QUOTATION")
-        namespace = model._erpmeta.url_namespace
-
-        r = self.client.post(reverse(namespace + ':create'), {
+        self.model = get_model_from_cfg("QUOTATION")
+        self.autotest_ajax_post('create', data={
             'project': 1,
             'customer': 1,
             'date': '2012-01-01',
@@ -188,9 +186,11 @@ class ViewTests(ERPTestCase):
             'erp-products-0-price': 100,
             'erp-products-0-name': "Service",
         })
-        self.assertEqual(r.status_code, 302)
 
-        obj = model.objects.order_by('pk').last()
+        model = get_model_from_cfg("QUOTATION")
+        namespace = model._erpmeta.url_namespace
+
+        obj = self.model.objects.order_by('pk').last()
 
         # a quotation can't be deleted, if workflow state is not canceled
         r = self.client.get(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))

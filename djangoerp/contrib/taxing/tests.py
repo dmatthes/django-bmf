@@ -3,40 +3,31 @@
 
 from __future__ import unicode_literals
 
-from django.test import LiveServerTestCase
-from django.core.urlresolvers import reverse
-
 from .models import Tax
-from ...testcase import ERPTestCase
+from ...testcase import ERPModuleTestCase
 
 
-class TaxTests(ERPTestCase):
+class TaxModuleTests(ERPModuleTestCase):
 
     def test_urls_user(self):
         """
         """
-        namespace = Tax._erpmeta.url_namespace
+        self.model = Tax
 
-        r = self.client.get(reverse(namespace + ':create'))
-        self.assertEqual(r.status_code, 200)
+        data = self.autotest_ajax_get('create')
+        data = self.autotest_ajax_post('create', data={
+            'name': 1,
+            'account': 10,
+            'rate': '10',
+            'is_active': '1',
+        })
+        self.assertNotEqual(data["object_pk"], 0)
+        self.autotest_get('index', 200)
 
-        r = self.client.post(reverse(namespace + ':create'), {'name': 1, 'account': 10, 'rate': '10', 'is_active': '1'})
-        self.assertEqual(r.status_code, 302)
+        obj = self.get_latest_object()
+        a = '%s'%obj # check if object name has any errors
 
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
-
-        obj = Tax.objects.order_by('pk').last()
-        a = '%s' % obj # check if object name has any errors
-
-        r = self.client.get(reverse(namespace + ':detail', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':update', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('detail', kwargs={'pk': obj.pk})
+        data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
+        self.autotest_get('delete', kwargs={'pk': obj.pk})
+        self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})

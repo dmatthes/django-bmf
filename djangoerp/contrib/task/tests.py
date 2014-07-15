@@ -15,9 +15,9 @@ class TaskModuleTests(ERPModuleTestCase):
 
     def test_goal_views(self):
         self.model = Goal
-        self.autotest_get('index', 200)
         data = self.autotest_ajax_get('create')
         data = self.autotest_ajax_post('create', data={'summary':'test'})
+        self.autotest_get('index', 200)
 
         obj = self.get_latest_object()
         a = '%s'%obj # check if object name has any errors
