@@ -36,7 +36,7 @@ Default: ``True``
 ``can_clone``
 -----------------
 
-Default: ``True``
+Default: ``False``
 
 .. attribute:: Options.can_clone
 
