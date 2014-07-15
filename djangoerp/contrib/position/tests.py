@@ -3,57 +3,45 @@
 
 from __future__ import unicode_literals
 
-from django.test import LiveServerTestCase
-from django.core.urlresolvers import reverse
-
 from .models import Position
-from ...testcase import ERPTestCase
+from ...testcase import ERPModuleTestCase
 
-
-class PositionTests(ERPTestCase):
+class PositionModuleTests(ERPModuleTestCase):
 
     def test_urls_user(self):
         """
         """
+        self.model = Position
         namespace = Position._erpmeta.url_namespace
 
-        r = self.client.get(reverse(namespace + ':create'))
-        self.assertEqual(r.status_code, 200)
+        data = self.autotest_ajax_get('create')
+        self.autotest_get('api', status_code=404)
+        self.autotest_post('api', status_code=302)
 
-        r = self.client.get(reverse(namespace + ':api'))
-        self.assertEqual(r.status_code, 404)
+        data = self.autotest_ajax_post('create', data={
+            'project': 1, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-01', 'amount': '2.0', 'employee': 1, 'invoiceable': 1,
+        })
+        data = self.autotest_ajax_post('create', data={
+            'project': 2, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-02', 'amount': '0.1', 'employee': 1, 'invoiceable': 1,
+        })
+        data = self.autotest_ajax_post('create', data={
+            'project': 1, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-01', 'amount': '1.0', 'employee': 2, 'invoiceable': 1,
+        })
+        data = self.autotest_ajax_post('create', data={
+            'project': 2, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-02', 'amount': '5.0', 'employee': 2, 'invoiceable': 1,
+        })
+        self.assertNotEqual(data["object_pk"], 0)
 
-        r = self.client.post(reverse(namespace + ':api'))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('index')
 
-        r = self.client.post(reverse(namespace + ':create'), {'project': 1, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-01', 'amount': '2.0', 'employee': 1, 'invoiceable': 1})
-        self.assertEqual(r.status_code, 302)
-        r = self.client.post(reverse(namespace + ':create'), {'project': 2, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-02', 'amount': '0.1', 'employee': 1, 'invoiceable': 1})
-        self.assertEqual(r.status_code, 302)
-
-        r = self.client.post(reverse(namespace + ':create'), {'project': 1, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-01', 'amount': '1.0', 'employee': 2, 'invoiceable': 1})
-        self.assertEqual(r.status_code, 302)
-        r = self.client.post(reverse(namespace + ':create'), {'project': 2, 'name': 'Service', 'price': '100', 'product': 1, 'date': '2012-01-02', 'amount': '5.0', 'employee': 2, 'invoiceable': 1})
-        self.assertEqual(r.status_code, 302)
-
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
-
-        obj = Position.objects.order_by('pk').last()
-        a = '%s' % obj # check if object name has any errors
+        obj = self.get_latest_object()
         self.assertEqual(obj.has_invoice(), False)
+        a = '%s'%obj # check if object name has any errors
 
-        r = self.client.get(reverse(namespace + ':detail', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':update', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('detail', kwargs={'pk': obj.pk})
+        data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
+        self.autotest_get('delete', kwargs={'pk': obj.pk})
+        self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})
 
         obj = Position.objects.filter(invoice__isnull=True)
         data = {}
@@ -62,12 +50,10 @@ class PositionTests(ERPTestCase):
             data['pk.%s' % i.pk] = 1
             pks.append(i.pk)
 
- #      r = self.client.post(reverse(namespace + ':api'), data)
- #      self.assertEqual(r.status_code, 302)
-
- #      obj = Position.objects.filter(pk__in=pks)
- #      for i in obj:
- #          self.assertEqual(bool(i.invoice_id), True)
+       #self.autotest_post('api', status_code=302, data=data)
+       #obj = Position.objects.filter(pk__in=pks)
+       #for i in obj:
+       #    self.assertEqual(bool(i.invoice_id), True)
 
     def test_cleans(self):
         obj = Position()

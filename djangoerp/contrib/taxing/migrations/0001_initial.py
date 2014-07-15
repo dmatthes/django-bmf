@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('rate', models.DecimalField(max_digits=8, decimal_places=5)),
                 ('passive', models.BooleanField(default=False, verbose_name='Tax is allways included in the product price and never visible to the customer')),
                 ('is_active', models.BooleanField(default=True, verbose_name='Is active')),
-                ('account', models.ForeignKey(to=BASE_MODULE["ACCOUNT"])),
+                ('account', models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],

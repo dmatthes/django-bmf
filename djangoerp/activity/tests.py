@@ -10,27 +10,23 @@ from django.contrib.contenttypes.models import ContentType
 from ..utils import get_model_from_cfg
 
 from ..models import Activity
-from ..testcase import ERPTestCase
+from ..testcase import ERPModuleTestCase
 
 
-class CoreTests(ERPTestCase):
+class CoreTests(ERPModuleTestCase):
 
     def test_history(self):
         """
         """
-        model = get_model_from_cfg("PROJECT")
-        namespace = model._erpmeta.url_namespace
-
-        # creation of project leads to the creation of a comment
-        r = self.client.post(reverse(namespace + ':create'), {
+        self.model = get_model_from_cfg("PROJECT")
+        data = self.autotest_ajax_post('create', data={
             'customer': 1,
             'name': "Testproject",
             'employee': 1,
         })
-        self.assertEqual(r.status_code, 302)
-
-        obj = model.objects.order_by('pk').last()
-        ct = ContentType.objects.get_for_model(model)
+        self.assertNotEqual(data["object_pk"], 0)
+        obj = self.get_latest_object()
+        ct = ContentType.objects.get_for_model(self.model)
 
         self.assertEqual(obj.name, "Testproject")
         self.assertEqual(int(Activity.objects.filter(parent_ct=ct, parent_id=obj.pk).count()), 1)
@@ -64,29 +60,25 @@ class CoreTests(ERPTestCase):
         # now, we should have 2 comments connected to our object
         self.assertEqual(int(Activity.objects.filter(parent_ct=ct, parent_id=obj.pk).count()), 4)
 
-        model = get_model_from_cfg("TAX")
-        namespace = model._erpmeta.url_namespace
-
         # creation of a tax leads to the creation of a comment
-        r = self.client.post(reverse(namespace + ':create'), {
+        self.model = get_model_from_cfg("TAX")
+        data = self.autotest_ajax_post('create', data={
             'name': "Testtax",
             'rate': 10,
             'account': 10,
         })
-        self.assertEqual(r.status_code, 302)
-
-        obj = model.objects.order_by('pk').last()
-        ct = ContentType.objects.get_for_model(model)
+        self.assertNotEqual(data["object_pk"], 0)
+        obj = self.get_latest_object()
+        ct = ContentType.objects.get_for_model(self.model)
 
         # changing the rate of a tax creates a log entry
-        r = self.client.post(reverse(namespace + ':update', None, None, {'pk': obj.pk}), {
+        data = self.autotest_ajax_post('update', kwargs={'pk': obj.pk}, data={
             'name': "Testtax",
             'rate': 20,
             'account': 10,
         })
-        self.assertEqual(r.status_code, 302)
-
-        obj = model.objects.order_by('pk').last()
+        self.assertNotEqual(data["object_pk"], 0)
+        obj = self.get_latest_object()
 
         self.assertEqual(obj.rate, 20)
         self.assertEqual(int(Activity.objects.filter(parent_ct=ct, parent_id=obj.pk).count()), 2)
