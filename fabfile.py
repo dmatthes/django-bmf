@@ -40,6 +40,7 @@ def js(debug=None):
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
+            'js/erp-calendar.js',
             'js/erp-editform.js',
             'js/menu.js',
         ]
