@@ -52,13 +52,13 @@ def js(debug=None):
 
 @task
 def test():
-  """
-  Tests code with django unittests
-  """
-  with lcd(BASEDIR):
-    local('%s %s test djangoerp --liveserver=localhost:8001-9000' % (PYTHON, MANAGE))
-    local('find %s/sandbox/erp_documents -empty -delete' % BASEDIR)
-
+    """
+    Tests code with django unittests
+    """
+    with lcd(BASEDIR):
+        local('.virtenv/bin/coverage run %s test djangoerp --liveserver=localhost:8001-9000' % MANAGE)
+        local('find %s/sandbox/erp_documents -empty -delete' % BASEDIR)
+        local('.virtenv/bin/coverage report -m --include="djangoerp/*"')
 
 @task
 def test_contrib(app):
