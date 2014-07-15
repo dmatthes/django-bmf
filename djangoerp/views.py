@@ -25,6 +25,8 @@ from django.utils import formats
 from django.utils.encoding import force_text
 from django.utils.timezone import now
 
+import warnings
+
 from django_filters.views import FilterView
 
 from .activity.models import Activity
@@ -39,6 +41,7 @@ from .signals import activity_workflow
 from .signals import djangoerp_post_save
 from .utils import get_model_from_cfg
 from .utils import form_class_factory
+from .utils.deprecation import RemovedInNextVersionWarning
 
 from .viewmixins import ViewMixin
 from .viewmixins import AjaxMixin
@@ -156,7 +159,7 @@ class ModuleFormMixin(object):
 # Actual Views ================================================================
 
 
-class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
+class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     """
     """
     context_object_name = 'objects'
@@ -164,7 +167,7 @@ class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     allow_empty = True
 
     def get_template_names(self):
-        return super(PluginIndex, self).get_template_names() + ["djangoerp/module_index_default.html"]
+        return super(ModuleIndexView, self).get_template_names() + ["djangoerp/module_index_default.html"]
 
     def get_context_data(self, **kwargs):
         if self.filterset_class:
@@ -175,8 +178,14 @@ class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
             kwargs.update({
                 'has_filter': False,
             })
-        return super(PluginIndex, self).get_context_data(**kwargs)
+        return super(ModuleIndexView, self).get_context_data(**kwargs)
 
+class PluginIndex(ModuleIndexView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginIndex is deprecated, use ModuleIndexView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginIndex, self).__init__(*args,**kwargs)
 
 class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
@@ -188,13 +197,24 @@ class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivi
     def get_template_names(self):
         self.update_notification()
         return super(PluginBaseDetail, self).get_template_names() + ["djangoerp/module_detail_default.html"]
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginBaseDetail is deprecated in %s' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginBaseDetail, self).__init__(*args,**kwargs)
 
 
-class PluginDetail(ModuleFormMixin, PluginBaseDetail):
+class ModuleDetailView(ModuleFormMixin, ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
     show the details of an entry
     """
     form_class = None
+    context_object_name = 'object'
+    template_name_suffix = '_erpdetail'
+
+    def get_template_names(self):
+        self.update_notification()
+        return super(ModuleDetailView, self).get_template_names() + ["djangoerp/module_detail_default.html"]
 
     def get_form(self, **kwargs):
         if self.form_class == None:
@@ -206,10 +226,17 @@ class PluginDetail(ModuleFormMixin, PluginBaseDetail):
         kwargs.update({
             'form': self.get_form()
         })
-        return super(PluginDetail, self).get_context_data(**kwargs)
+        return super(ModuleDetailView, self).get_context_data(**kwargs)
+
+class PluginDetail(ModuleDetailView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginDetail is deprecated, use ModuleDetailView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginDetail, self).__init__(*args,**kwargs)
 
 
-class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
+class ModuleReportView(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
     """
     render a report
     """
@@ -219,7 +246,7 @@ class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
         return ["djangoerp/module_report.html"]
 
     def get(self, request, *args, **kwargs):
-        response = super(PluginReport, self).get(request, *args, **kwargs)
+        response = super(ModuleReportView, self).get(request, *args, **kwargs)
 
         ct = ContentType.objects.get_for_model(self.get_object())
         try:
@@ -230,10 +257,16 @@ class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
             return response
 
     def get_context_data(self, **kwargs):
-        context = super(PluginReport, self).get_context_data(**kwargs)
+        context = super(ModuleReportView, self).get_context_data(**kwargs)
         context['request'] = self.request
         return context
 
+class PluginReport(ModuleReportView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginReport is deprecated, use ModuleReportView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginReport, self).__init__(*args,**kwargs)
 
 class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
@@ -269,7 +302,7 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
             'message': ugettext('Object copied'),
         })
 
-class PluginUpdate(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
+class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     update an update
     """
@@ -278,7 +311,7 @@ class PluginUpdate(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin
     exclude=[]
 
     def get_template_names(self):
-        return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_update_default.html"]
+        return super(ModuleUpdateView, self).get_template_names() + ["djangoerp/module_update_default.html"]
 
     def form_valid(self, form):
        #messages.success(self.request, 'Object updated')
@@ -289,9 +322,15 @@ class PluginUpdate(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin
             'object_pk': self.object.pk,
             'message': ugettext('Object updated'),
         })
+class PluginUpdate(ModuleUpdateView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginUpdate is deprecated, use ModuleUpdateView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginUpdate, self).__init__(*args,**kwargs)
 
 
-class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
+class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
     """
     create a new instance
     """
@@ -304,10 +343,10 @@ class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin
             if re.match(match, key):
                 field = re.match(match, key).groups()[0]
                 self.initial.update({field: self.request.GET.get(key)})
-        return super(PluginCreate, self).get_initial()
+        return super(ModuleCreateView, self).get_initial()
 
     def get_template_names(self):
-        return super(PluginCreate, self).get_template_names() + ["djangoerp/module_create_default.html"]
+        return super(ModuleCreateView, self).get_template_names() + ["djangoerp/module_create_default.html"]
 
     def form_valid(self, form):
         #messages.success(self.request, 'Object created')
@@ -320,8 +359,15 @@ class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin
             'message': ugettext('Object created'),
         })
 
+class PluginCreate(ModuleCreateView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginCreate is deprecated, use ModuleCreateView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginCreate, self).__init__(*args,**kwargs)
 
-class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
+
+class ModuleDeleteView(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
     """
     delete an instance
     """
@@ -329,7 +375,7 @@ class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
     template_name_suffix = '_erpdelete'
 
     def get_template_names(self):
-        return super(PluginDelete, self).get_template_names() + ["djangoerp/module_delete_default.html"]
+        return super(ModuleDeleteView, self).get_template_names() + ["djangoerp/module_delete_default.html"]
 
     def get_success_url(self):
         redirect_to = self.request.GET.get('next', '')
@@ -347,8 +393,15 @@ class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
             return self.success_url
         return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
 
+class PluginDelete(ModuleDeleteView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginDelete is deprecated, use ModuleDeleteView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginDelete, self).__init__(*args,**kwargs)
 
-class PluginWorkflow(ModuleViewMixin, DetailView):
+
+class ModuleWorkflowView(ModuleViewMixin, DetailView):
     """
     update the state of a workflow
     """
@@ -359,7 +412,7 @@ class PluginWorkflow(ModuleViewMixin, DetailView):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.update_%s' % info)
         perms.append('%s.view_%s' % info)
-        return super(PluginWorkflow, self).get_permissions(perms)
+        return super(ModuleWorkflowView, self).get_permissions(perms)
 
     def get_success_url(self):
         redirect_to = self.request.GET.get('next', '')
@@ -401,8 +454,15 @@ class PluginWorkflow(ModuleViewMixin, DetailView):
         messages.success(self.request, 'Workflow-State changed')
         return HttpResponseRedirect(self.get_success_url())
 
+class PluginWorkflow(ModuleWorkflowView):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginWorklow is deprecated, use ModuleWorkflowView for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginWorkflow, self).__init__(*args,**kwargs)
 
-class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
+
+class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
     """
     """
     model = None
@@ -470,7 +530,7 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
         raise Http404
 
     def get_form_kwargs(self):
-        kwargs = super(PluginFormAPI, self).get_form_kwargs()
+        kwargs = super(ModuleFormAPI, self).get_form_kwargs()
         kwargs.update({
             'instance': self.get_object(),
         })
@@ -498,3 +558,10 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
             return "%s__search" % field_name[1:]
         else:
             return "%s__icontains" % field_name
+
+class PluginFormAPI(ModuleFormAPI):
+    def __init__(self,*args,**kwargs):
+        warnings.warn(
+                'PluginFormAPI is deprecated, use ModuleFormAPI for %s instead' % self.__class__,
+                RemovedInNextVersionWarning)
+        return super(PluginFormAPI, self).__init__(*args,**kwargs)
