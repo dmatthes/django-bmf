@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django
 
 from djangoerp.settings import BASE_MODULE
 
@@ -17,13 +18,13 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='goal',
                 name='project',
-                field=models.ForeignKey(blank=True, to=BASE_MODULE["PROJECT"], null=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=BASE_MODULE["PROJECT"], null=True),
                 preserve_default=True,
             ),
             migrations.AddField(
                 model_name='task',
                 name='project',
-                field=models.ForeignKey(blank=True, to=BASE_MODULE["PROJECT"], null=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=BASE_MODULE["PROJECT"], null=True),
                 preserve_default=True,
             ),
         ]

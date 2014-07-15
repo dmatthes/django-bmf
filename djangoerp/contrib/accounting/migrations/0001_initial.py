@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
                 ('credit', models.BooleanField(default=True, choices=[(True, 'Credit'), (False, 'Debit')])),
                 ('balanced', models.BooleanField(default=False, editable=False)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified', null=True)),
-                ('account', models.ForeignKey(blank=True, to='djangoerp_accounting.Account', null=True)),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='djangoerp_accounting.Account', null=True)),
             ],
             options={
                 'abstract': False,
