@@ -93,6 +93,7 @@ class AbstractGoal(ERPModel):
         category = PROJECT
         workflow = GoalWorkflow
         workflow_field = 'state'
+        can_clone = True
 
 
 class Goal(AbstractGoal):

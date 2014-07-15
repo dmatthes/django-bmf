@@ -63,7 +63,7 @@ class ERPOptions(object):
         self.has_logging = True
         self.has_comments = False
         self.has_files = False
-        self.can_clone = True
+        self.can_clone = False
         self.clean = False
         self.observed_fields = []
         self.search_fields = []
@@ -89,7 +89,7 @@ class ERPOptions(object):
         # set options
         for key, value in options:
             # auto-set known options (no validation!)
-            if key in ['category', 'has_logging', 'has_comments', 'has_files', 'search_fields', 'number_cycle', 'workflow', 'workflow_field', 'clean']:
+            if key in ['category', 'has_logging', 'has_comments', 'has_files', 'search_fields', 'number_cycle', 'workflow', 'workflow_field', 'clean', 'can_clone']:
                 setattr(self, key, value)
 
             # only observe valid fields

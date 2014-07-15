@@ -9,84 +9,43 @@ from django.contrib.contenttypes.models import ContentType
 from .models import Goal
 from .models import Task
 from ...testcase import ERPTestCase
+from ...testcase import ERPModuleTestCase
 
-class TaskTests(ERPTestCase):
+class TaskModuleTests(ERPModuleTestCase):
 
     def test_goal_views(self):
-        """
-        """
-        namespace = Goal._erpmeta.url_namespace
+        self.model = Goal
+        self.autotest_get('index', 200)
+        data = self.autotest_ajax_get('create')
+        data = self.autotest_ajax_post('create', data={'summary':'test'})
 
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':create'))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace+':create'), {'summary':'test'})
-        self.assertEqual(r.status_code, 302)
-
-        obj = Goal.objects.order_by('pk').last()
+        obj = self.get_latest_object()
         a = '%s'%obj # check if object name has any errors
 
-        r = self.client.get(reverse(namespace+':detail', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-     
-        r = self.client.get(reverse(namespace+':update', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-     
-        r = self.client.get(reverse(namespace+':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 403)
-
-        r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': obj.pk, 'transition': 'complete'}))
-        self.assertEqual(r.status_code, 302)
-     
-        r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': obj.pk, 'transition': 'reopen'}))
-        self.assertEqual(r.status_code, 302)
-
-        r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': obj.pk, 'transition': 'complete'}))
-        self.assertEqual(r.status_code, 302)
-     
-        r = self.client.get(reverse(namespace+':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace+':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('detail', kwargs={'pk': obj.pk})
+        data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
+        self.autotest_get('delete', status_code=403, kwargs={'pk': obj.pk})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'complete'})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'reopen'})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'complete'})
+        self.autotest_get('delete', kwargs={'pk': obj.pk})
+        self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})
 
     def test_task_views(self):
-        """
-        """
-        namespace = Task._erpmeta.url_namespace
+        self.model = Task
+        self.autotest_get('index')
+        data = self.autotest_ajax_get('create')
+        data = self.autotest_ajax_post('create', data={'summary':'test'})
 
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':create'))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace+':create'), {'summary':'test'})
-        self.assertEqual(r.status_code, 302)
-
-        obj = Task.objects.order_by('pk').last()
+        obj = self.get_latest_object()
         a = '%s'%obj # check if object name has any errors
 
-        r = self.client.get(reverse(namespace+':detail', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-     
-        r = self.client.get(reverse(namespace+':update', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-     
-        r = self.client.get(reverse(namespace+':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 403)
-
-        r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': obj.pk, 'transition': 'finish'}))
-        self.assertEqual(r.status_code, 302)
-     
-        r = self.client.get(reverse(namespace+':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace+':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('detail', kwargs={'pk': obj.pk})
+        data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
+        self.autotest_get('delete', status_code=403, kwargs={'pk': obj.pk})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'finish'})
+        self.autotest_get('delete', kwargs={'pk': obj.pk})
+        self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})
 
     def test_task_workflows(self):
         """
@@ -211,4 +170,3 @@ class TaskTests(ERPTestCase):
 
         r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': goal1.pk, 'transition': 'complete'}))
         self.assertEqual(r.status_code, 200)
-

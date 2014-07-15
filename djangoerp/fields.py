@@ -106,10 +106,8 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
             'null': True,
             'blank': False,
             'editable': False,
-            'default': 'EUR',
             'default': get_default_currency,
         })
-        # TODO using lambda to get the current setting value works, but the function is executed multiple times. maybe a different solution to solve this is better
         super(CurrencyField, self).__init__(*args, **defaults)
 
     def to_python(self, value):

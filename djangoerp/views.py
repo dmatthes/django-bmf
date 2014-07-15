@@ -22,6 +22,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.defaults import permission_denied
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from django.utils import formats
 from django.utils.encoding import force_text
 from django.utils.timezone import now
@@ -33,13 +34,27 @@ from .watch.models import Watch
 from .models import Report
 from .models import Notification
 from .decorators import login_required
-from .forms import ERPForm
 from .activity.forms import HistoryCommentForm
 from .signals import activity_create
 from .signals import activity_update
 from .signals import activity_workflow
 from .signals import djangoerp_post_save
 from .utils import get_model_from_cfg
+from .utils import form_class_factory
+
+from .viewmixins import ViewMixin
+from .viewmixins import AjaxMixin
+from .viewmixins import NextMixin
+
+from .viewmixins import ModuleViewPermissionMixin
+from .viewmixins import ModuleCreatePermissionMixin
+from .viewmixins import ModuleUpdatePermissionMixin
+from .viewmixins import ModuleDeletePermissionMixin
+from .viewmixins import ModuleClonePermissionMixin
+
+from .viewmixins import ModuleBaseMixin
+from .viewmixins import ModuleViewMixin
+from .viewmixins import ModuleAjaxMixin
 
 import json
 import re
@@ -48,38 +63,11 @@ import urlparse
 
 from functools import reduce
 
-# Helper ======================================================================
-
-
-def form_class_factory(cls):
-    if issubclass(cls, ERPForm):
-        return cls
-
-    class FactoryERPForm(ERPForm):
-        class Meta:
-            form_class = cls
-    FactoryERPForm.__name__ = cls.__name__ + str('ERP')
-    return FactoryERPForm
-
-# Base ========================================================================
-
-from .viewmixins import ViewMixin as BaseMixin
-from .viewmixins import AjaxMixin
-from .viewmixins import NextMixin
-
-from .viewmixins import ModuleViewPermissionMixin
-from .viewmixins import ModuleCreatePermissionMixin as PluginCreatePermission
-from .viewmixins import ModuleUpdatePermissionMixin as PluginUpdatePermission
-from .viewmixins import ModuleDeletePermissionMixin as PluginDeletePermission
-from .viewmixins import ModuleClonePermissionMixin as PluginUpdatePermission
-
-from .viewmixins import ModuleViewMixin as PluginBase
-from .viewmixins import ModuleAjaxMixin
 
 # Template Variables =========================================================
 
 
-class PluginActivity(object):
+class ModuleActivityMixin(object):
     """
     Parse history to view (as a context variable)
     """
@@ -114,10 +102,10 @@ class PluginActivity(object):
             kwargs['erpactivity']['log_data'] = Activity.objects.select_related('user').filter(parent_ct=ct, parent_id=self.object.pk)
         if self.model._erpmeta.has_comments:
             kwargs['erpactivity']['comment_form'] = HistoryCommentForm()
-        return super(PluginActivity, self).get_context_data(**kwargs)
+        return super(ModuleActivityMixin, self).get_context_data(**kwargs)
 
 
-class PluginFiles(object):
+class ModuleFilesMixin(object):
     """
     Parse files to view (as a context variable)
     """
@@ -134,10 +122,10 @@ class PluginFiles(object):
                 'history_file_form': FileAddView.form_class(),
                 'files': Document.objects.filter(content_type=ct, content_id=self.object.pk),
             })
-        return super(PluginFiles, self).get_context_data(**kwargs)
+        return super(ModuleFilesMixin, self).get_context_data(**kwargs)
 
 
-class PluginForm(object):
+class ModuleFormMixin(object):
     """
     make an ERP-Form
     """
@@ -161,8 +149,8 @@ class PluginForm(object):
                 # from that
                 model = self.get_queryset().model
 
-            if self.fields:
-                self.form_class = modelform_factory(model, fields=fields)
+            if isinstance(self.fields, list):
+                self.form_class = modelform_factory(model, fields=self.fields)
             else:
                 self.form_class = modelform_factory(model, exclude=self.exclude)
         return form_class_factory(self.form_class)
@@ -170,7 +158,7 @@ class PluginForm(object):
 # Actual Views ================================================================
 
 
-class PluginIndex(ModuleViewPermissionMixin, PluginBase, FilterView):
+class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     """
     """
     context_object_name = 'objects'
@@ -192,7 +180,7 @@ class PluginIndex(ModuleViewPermissionMixin, PluginBase, FilterView):
         return super(PluginIndex, self).get_context_data(**kwargs)
 
 
-class PluginBaseDetail(ModuleViewPermissionMixin, PluginFiles, PluginActivity, PluginBase, DetailView):
+class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
     show the details of an entry
     """
@@ -204,7 +192,7 @@ class PluginBaseDetail(ModuleViewPermissionMixin, PluginFiles, PluginActivity, P
         return super(PluginBaseDetail, self).get_template_names() + ["djangoerp/module_detail_default.html"]
 
 
-class PluginDetail(PluginForm, PluginBaseDetail):
+class PluginDetail(ModuleFormMixin, PluginBaseDetail):
     """
     show the details of an entry
     """
@@ -223,7 +211,7 @@ class PluginDetail(PluginForm, PluginBaseDetail):
         return super(PluginDetail, self).get_context_data(**kwargs)
 
 
-class PluginReport(ModuleViewPermissionMixin, PluginBase, DetailView):
+class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
     """
     render a report
     """
@@ -249,40 +237,41 @@ class PluginReport(ModuleViewPermissionMixin, PluginBase, DetailView):
         return context
 
 
-class PluginClone(PluginForm, PluginUpdatePermission, PluginCreatePermission, PluginBase, UpdateView):
+class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     clone a object
     """
     context_object_name = 'object'
     template_name_suffix = '_erpclone'
-    exclude=[]
+    fields = []
 
     def get_template_names(self):
-        return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_clone_default.html"]
+        return super(ModuleCloneView, self).get_template_names() + ["djangoerp/module_clone_default.html"]
 
-    def get_success_url(self):
-        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
-        redirect_to = self.request.GET.get('next', '')
+    def clone_object(self, form, instance):
+        pass
 
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
+    def clone_related_objects(self, object):
+        pass
 
     def form_valid(self, form):
-        messages.success(self.request, 'Object cloned')
+       #messages.success(self.request, 'Object cloned')
+        self.clone_object(form, form.instance)
+        form.instance.pk = None
+        if form.instance._erpmeta.workflow_field:
+            setattr(form.instance, form.instance._erpmeta.workflow_field, None)
+        form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
         self.object = form.save()
-        activity_update.send(sender=self.object.__class__, instance=self.object)
-        return HttpResponseRedirect(self.get_success_url())
+        self.clone_related_objects(self.object)
+        activity_create.send(sender=self.object.__class__, instance=self.object)
+        return self.render_valid_form({
+            'object_pk': self.object.pk,
+            'redirect': self.object.get_absolute_url(),
+            'message': ugettext('Object copied'),
+        })
 
-class PluginUpdate(PluginForm, PluginUpdatePermission, PluginBase, UpdateView):
+class PluginUpdate(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     update an update
     """
@@ -293,30 +282,18 @@ class PluginUpdate(PluginForm, PluginUpdatePermission, PluginBase, UpdateView):
     def get_template_names(self):
         return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_update_default.html"]
 
-    def get_success_url(self):
-        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
-
     def form_valid(self, form):
-        messages.success(self.request, 'Object updated')
+       #messages.success(self.request, 'Object updated')
         form.instance.modified_by = self.request.user
         self.object = form.save()
         activity_update.send(sender=self.object.__class__, instance=self.object)
-        return HttpResponseRedirect(self.get_success_url())
+        return self.render_valid_form({
+            'object_pk': self.object.pk,
+            'message': ugettext('Object updated'),
+        })
 
 
-class PluginCreate(PluginForm, PluginCreatePermission, PluginBase, CreateView):
+class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
     """
     create a new instance
     """
@@ -334,31 +311,19 @@ class PluginCreate(PluginForm, PluginCreatePermission, PluginBase, CreateView):
     def get_template_names(self):
         return super(PluginCreate, self).get_template_names() + ["djangoerp/module_create_default.html"]
 
-    def get_success_url(self):
-        return reverse_lazy('djangoerp:status_ok') # FIXME: Rewrite Tests and Forms to fully support AJAX
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
-
     def form_valid(self, form):
-        messages.success(self.request, 'Object created')
+        #messages.success(self.request, 'Object created')
         form.instance.modified_by = self.request.user
         form.instance.created_by = self.request.user
         self.object = form.save()
         activity_create.send(sender=self.object.__class__, instance=self.object)
-        return HttpResponseRedirect(self.get_success_url())
+        return self.render_valid_form({
+            'object_pk': self.object.pk,
+            'message': ugettext('Object created'),
+        })
 
 
-class PluginDelete(PluginDeletePermission, PluginBase, DeleteView):
+class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
     """
     delete an instance
     """
@@ -385,7 +350,7 @@ class PluginDelete(PluginDeletePermission, PluginBase, DeleteView):
         return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
 
 
-class PluginWorkflow(PluginBase, DetailView):
+class PluginWorkflow(ModuleViewMixin, DetailView):
     """
     update the state of a workflow
     """
@@ -439,7 +404,7 @@ class PluginWorkflow(PluginBase, DetailView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PluginFormAPI(AjaxMixin, PluginForm, PluginBase, SingleObjectMixin, BaseFormView):
+class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
     """
     """
     model = None

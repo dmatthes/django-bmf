@@ -40,7 +40,7 @@ def js(debug=None):
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
-            'js/form-edit.js',
+            'js/erp-editform.js',
             'js/menu.js',
         ]
         local('cat %s > js/djangoerp.js' % ' '.join(js))

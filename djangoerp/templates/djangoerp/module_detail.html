@@ -24,7 +24,7 @@
 <div class="btn-toolbar pull-right" role="toolbar">
     {% if erpmodule.can_clone %}
     <div class="btn-group">
-        <a class="btn btn-default btn-default" href="{% get_erp_url object "index" %}">
+        <a class="btn btn-default btn-default erp-edit" href="{% get_erp_url object "clone" %}">
             <span class="glyphicon glyphicon-transfer"></span>
         </a>
     </div>

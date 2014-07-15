@@ -12,9 +12,9 @@ from django.views.generic import DeleteView
 from django.utils import six
 
 from ..models import Dashboard
-from ..views import BaseMixin
+from ..viewmixins import ViewMixin
 
-class DashboardView(BaseMixin, DetailView):
+class DashboardView(ViewMixin, DetailView):
     context_object_name = 'object'
     model = Dashboard
     template_name = "djangoerp/dashboard/detail.html"
@@ -49,7 +49,7 @@ class DashboardView(BaseMixin, DetailView):
         return context
 
 
-class DashboardDelete(BaseMixin, DeleteView):
+class DashboardDelete(ViewMixin, DeleteView):
     model = Dashboard
     template_name = "djangoerp/dashboard/delete.html"
 
@@ -58,7 +58,7 @@ class DashboardDelete(BaseMixin, DeleteView):
         return reverse('djangoerp:dashboard')
 
 
-class DashboardCreate(BaseMixin, CreateView):
+class DashboardCreate(ViewMixin, CreateView):
     model = Dashboard
     fields = ['name',]
     template_name = "djangoerp/dashboard/create.html"
@@ -72,7 +72,7 @@ class DashboardCreate(BaseMixin, CreateView):
         return reverse('djangoerp:dashboard')
 
 
-class DashboardUpdate(BaseMixin, UpdateView):
+class DashboardUpdate(ViewMixin, UpdateView):
     model = Dashboard
     fields = ['name',]
     template_name = "djangoerp/dashboard/update.html"
