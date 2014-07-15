@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: 2014-01-26 06:30+0100\n"
 "Last-Translator: Admin User <admin@demo.django-erp.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,122 +19,122 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.7.3\n"
 
-#: models.py:37
+#: contrib/invoice/models.py:37
 msgid "Invoice number"
 msgstr "Rechnungsnummer"
 
-#: models.py:40
+#: contrib/invoice/models.py:40
 msgid "Date"
 msgstr ""
 
-#: models.py:41
+#: contrib/invoice/models.py:41
 msgid "Due"
 msgstr ""
 
-#: models.py:42
+#: contrib/invoice/models.py:42
 msgid "Notes"
 msgstr ""
 
-#: models.py:43
+#: contrib/invoice/models.py:43
 msgid "Term of payment"
 msgstr ""
 
-#: models.py:50
+#: contrib/invoice/models.py:50
 msgid "Invoice"
 msgstr "Rechnung"
 
-#: models.py:51
+#: contrib/invoice/models.py:51
 msgid "Invoices"
 msgstr "Rechnungen"
 
-#: models.py:134
+#: contrib/invoice/models.py:134
 msgid "Name"
 msgstr ""
 
-#: models.py:135
+#: contrib/invoice/models.py:135
 msgid "Price"
 msgstr ""
 
-#: models.py:138
+#: contrib/invoice/models.py:138
 msgid "Amount"
 msgstr ""
 
-#: models.py:140
+#: contrib/invoice/models.py:140
 msgid "Description"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:4
-#: templates/djangoerp_invoice/invoice_htmlreport.html:18
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:4
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:18
 #, fuzzy, python-format
 #| msgid "Invoice number"
 msgid "Invoice %(name)s"
 msgstr "Rechnungsnummer"
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:11
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:11
 msgid "Your contact person"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:24
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:24
 msgid "Dear Valued Customer,"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:33
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:33
 msgid "Quantity"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:34
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:34
 msgid "Article"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:35
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:35
 msgid "Tax"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:36
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:36
 msgid "Unit price"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:37
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:37
 msgid "Total price"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:63
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:63
 msgid "Subtotal"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:73
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:73
 msgid "Billing amount"
 msgstr ""
 
-#: templates/djangoerp_invoice/invoice_htmlreport.html:81
+#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:81
 msgid "With kind regards"
 msgstr ""
 
-#: workflows.py:16
+#: contrib/invoice/workflows.py:16
 msgid "Draft"
 msgstr "Entwurf"
 
-#: workflows.py:17
+#: contrib/invoice/workflows.py:17
 msgid "Open"
 msgstr "Offen"
 
-#: workflows.py:18
+#: contrib/invoice/workflows.py:18
 msgid "Payed"
 msgstr "Bezahlt"
 
-#: workflows.py:19
+#: contrib/invoice/workflows.py:19
 msgid "Cancelled"
 msgstr ""
 
-#: workflows.py:22
+#: contrib/invoice/workflows.py:22
 msgid "Send to Customer"
 msgstr ""
 
-#: workflows.py:23
+#: contrib/invoice/workflows.py:23
 msgid "Customer payed"
 msgstr ""
 
-#: workflows.py:25
+#: contrib/invoice/workflows.py:25
 msgid "Cancel"
 msgstr ""
 

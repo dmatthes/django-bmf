@@ -12,7 +12,7 @@ from django.http import Http404
 from django.http import HttpResponseRedirect
 
 from ..models import Watch
-from ..views import BaseMixin
+from ..viewmixins import ViewMixin
 from ..views import NextMixin
 from ..sites import site
 
@@ -89,7 +89,7 @@ class WatchMixin(object):
         return super(WatchMixin, self).get_context_data(**kwargs)
 
 
-class WatchView(WatchMixin, BaseMixin, ListView):
+class WatchView(WatchMixin, ViewMixin, ListView):
     allow_empty = True
     template_name = "djangoerp/watch/index.html"
     paginate_by = 50
@@ -123,7 +123,7 @@ class WatchView(WatchMixin, BaseMixin, ListView):
         return super(WatchView, self).get_context_data(**kwargs)
         
 
-class WatchEdit(WatchMixin, NextMixin, BaseMixin, UpdateView):
+class WatchEdit(WatchMixin, NextMixin, ViewMixin, UpdateView):
     template_name = "djangoerp/watch/edit.html"
 
     def get_form_class(self):
@@ -153,5 +153,3 @@ class WatchEdit(WatchMixin, NextMixin, BaseMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())
-
-

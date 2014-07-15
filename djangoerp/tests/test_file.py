@@ -10,25 +10,24 @@ from django.contrib.contenttypes.models import ContentType
 from ..utils import get_model_from_cfg
 
 from ..models import Report
-from ..testcase import ERPTestCase
+from ..testcase import ERPModuleTestCase
 
 
-class CoreTests(ERPTestCase):
+class CoreTests(ERPModuleTestCase):
 
     def test_history_files(self):
         """
         """
 
-        model = get_model_from_cfg("PROJECT")
-        namespace = model._erpmeta.url_namespace
-
-        # creation of project leads to the creation of a comment
-        r = self.client.post(reverse(namespace + ':create'), {
+        self.model = get_model_from_cfg("PROJECT")
+        self.autotest_ajax_post('create', data={
             'customer': 1,
             'name': "Testproject",
             'employee': 1,
         })
-        self.assertEqual(r.status_code, 302)
+
+        model = get_model_from_cfg("PROJECT")
+        namespace = model._erpmeta.url_namespace
 
         obj = model.objects.order_by('pk').last()
         ct = ContentType.objects.get_for_model(model)

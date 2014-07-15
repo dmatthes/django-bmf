@@ -40,7 +40,7 @@ def js(debug=None):
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
-            'js/form-edit.js',
+            'js/erp-editform.js',
             'js/menu.js',
         ]
         local('cat %s > js/djangoerp.js' % ' '.join(js))
@@ -63,14 +63,16 @@ def test():
 @task
 def test_contrib(app):
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s; virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
+        local('.virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s' % {'app': app})
+        local('.virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
 
 
 @task
 def locale():
   with lcd(BASEDIR + '/djangoerp'):
     for lang in LANGUAGES:
-      local('%s makemessages -l %s --domain django --domain djangojs' % (DJANGO, lang))
+      local('%s makemessages -l %s --domain django' % (DJANGO, lang))
+      local('%s makemessages -l %s --domain djangojs' % (DJANGO, lang))
 
  #for i in os.listdir(BASEDIR + '/djangoerp/contrib'):
  #  path = BASEDIR + '/djangoerp/contrib/' + i

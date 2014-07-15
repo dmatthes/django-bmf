@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('size', models.PositiveIntegerField(null=True, editable=False, blank=True)),
                 ('is_static', models.BooleanField(default=False)),
                 ('content_id', models.PositiveIntegerField(null=True, editable=False, blank=True)),
-                ('content_type', models.ForeignKey(blank=True, editable=False, to='contenttypes.ContentType', null=True)),
+                ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to='contenttypes.ContentType', null=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],

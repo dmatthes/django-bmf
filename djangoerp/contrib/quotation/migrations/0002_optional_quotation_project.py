@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-
+import django.db.models.deletion
 from djangoerp.settings import BASE_MODULE
 
 if BASE_MODULE["PROJECT"]:
@@ -15,7 +15,7 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='quotation',
                 name='project',
-                field=models.ForeignKey(to=BASE_MODULE["PROJECT"], null=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["PROJECT"], null=True),
                 preserve_default=True,
             ),
         ]

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-
+import django.db.models.deletion
 from djangoerp.settings import BASE_MODULE
 
 if BASE_MODULE["PROJECT"]:
@@ -15,7 +15,7 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='invoice',
                 name='customer',
-                field=models.ForeignKey(to=BASE_MODULE["CUSTOMER"], null=True),
+                field=models.ForeignKey(to=BASE_MODULE["CUSTOMER"], on_delete=django.db.models.deletion.SET_NULL, null=True),
                 preserve_default=True,
             ),
         ]

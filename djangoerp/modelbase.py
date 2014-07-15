@@ -63,6 +63,7 @@ class ERPOptions(object):
         self.has_logging = True
         self.has_comments = False
         self.has_files = False
+        self.can_clone = False
         self.clean = False
         self.observed_fields = []
         self.search_fields = []
@@ -88,7 +89,7 @@ class ERPOptions(object):
         # set options
         for key, value in options:
             # auto-set known options (no validation!)
-            if key in ['category', 'has_logging', 'has_comments', 'has_files', 'search_fields', 'number_cycle', 'workflow', 'workflow_field', 'clean']:
+            if key in ['category', 'has_logging', 'has_comments', 'has_files', 'search_fields', 'number_cycle', 'workflow', 'workflow_field', 'clean', 'can_clone']:
                 setattr(self, key, value)
 
             # only observe valid fields
@@ -135,6 +136,10 @@ class ERPModelBase(ModelBase):
         cls._meta.permissions.append(
             ('view_' + cls._meta.model_name, u'Can view %s' % cls.__name__)
         )
+        if cls._erpmeta.can_clone:
+            cls._meta.permissions.append(
+                ('clone_' + cls._meta.model_name, u'Can clone %s' % cls.__name__)
+            )
         if cls._erpmeta.has_comments:
             cls._meta.permissions.append(
                 ('comment_' + cls._meta.model_name, u'Can comment on %s' % cls.__name__)

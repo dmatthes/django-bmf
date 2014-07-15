@@ -25,7 +25,7 @@ from django.http import HttpResponseRedirect
 #from django.utils.timezone import now
 from django.views.generic import View
 
-from djangoerp.views import PluginBase
+from djangoerp.viewmixins import ModuleViewMixin
 
 import re
 
@@ -58,7 +58,7 @@ class PositionTableView(PluginIndex):
 
 # === API =====================================================================
 
-class PositionAPI(PluginBase, View):
+class PositionAPI(ModuleViewMixin, View):
     model = Position
 # success_url = None
 

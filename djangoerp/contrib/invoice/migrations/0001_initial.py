@@ -32,10 +32,10 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(null=True, verbose_name='Notes', blank=True)),
                 ('term_of_payment', models.TextField(null=True, verbose_name='Term of payment', blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('invoice_address', models.ForeignKey(to=BASE_MODULE["ADDRESS"], null=True)),
+                ('invoice_address', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["ADDRESS"], null=True)),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('shipping_address', models.ForeignKey(to=BASE_MODULE["ADDRESS"], null=True)),
-                ('transaction', models.ForeignKey(blank=True, editable=False, to=BASE_MODULE["TRANSACTION"], null=True)),
+                ('shipping_address', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["ADDRESS"], null=True)),
+                ('transaction', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, editable=False, to=BASE_MODULE["TRANSACTION"], null=True)),
             ],
             options={
                 'ordering': ['invoice_number'],
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='invoiceproduct',
             name='product',
-            field=models.ForeignKey(blank=True, to='djangoerp_product.Product', null=True),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='djangoerp_product.Product', null=True),
             preserve_default=True,
         ),
     ]

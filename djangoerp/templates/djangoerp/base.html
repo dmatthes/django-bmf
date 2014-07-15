@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="Content-Language" content="{{ LANGUAGE_CODE }}" />
     <meta name="language" content="{{ LANGUAGE_CODE }}" />
-    <link href="{{ STATIC_URL }}djangoerp/css/bootstrap.min.css" rel="stylesheet">{% render_block "css" %}
+    <link href="{{ STATIC_URL }}djangoerp/css/bootstrap.min.css?{{ djangoerp.version }}" rel="stylesheet">{% render_block "css" %}
   </head>
   <body>
     <div id="wrap">
@@ -134,10 +134,10 @@
     </div> <!-- /wrap -->
     <footer>
       <div class="container">
-        <p>&copy; django ERP</small></p>
+          <p>django ERP {{ djangoerp.version }}</small></p>
       </div> <!-- /container -->
     </footer>
-    <script src="{% url "djangoerp:jsi18n" %}"></script>
-    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.min.js"></script>{% render_block "js" %}
+    <script src="{% url "djangoerp:jsi18n" %}?{{ djangoerp.version }}"></script>
+    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.min.js?{{ djangoerp.version }}"></script>{% render_block "js" %}
   </body>
 </html>

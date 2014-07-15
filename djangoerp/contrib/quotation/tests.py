@@ -7,20 +7,18 @@ from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 
 from .models import Quotation, QuotationProduct
-from ...testcase import ERPTestCase
+from ...testcase import ERPModuleTestCase
 
 
-class QuotationTests(ERPTestCase):
+class QuotationModuleTests(ERPModuleTestCase):
 
     def test_urls_user(self):
         """
         """
-        namespace = Quotation._erpmeta.url_namespace
+        self.model = Quotation
 
-        r = self.client.get(reverse(namespace + ':create'))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace + ':create'), {
+        data = self.autotest_ajax_get('create')
+        data = self.autotest_ajax_post('create', data={
             'project': 1,
             'customer': 1,
             'date': '2012-01-01',
@@ -33,8 +31,7 @@ class QuotationTests(ERPTestCase):
             'erp-products-0-price': 100,
             'erp-products-0-name': "Service",
         })
-        self.assertEqual(r.status_code, 302)
-        r = self.client.post(reverse(namespace + ':create'), {
+        data = self.autotest_ajax_post('create', data={
             'project': 2,
             'customer': 2,
             'date': '2012-01-01',
@@ -47,39 +44,21 @@ class QuotationTests(ERPTestCase):
             'erp-products-0-price': 10,
             'erp-products-0-name': "Service",
         })
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('index', 200)
 
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
+        obj = self.get_latest_object()
 
-        obj = Quotation.objects.order_by('pk').last()
-        a = '%s' % obj # check if object name has any errors
+        self.autotest_get('detail', kwargs={'pk': obj.pk})
+        data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'cancel'})
+        self.autotest_get('delete', kwargs={'pk': obj.pk})
+        self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})
 
-        r = self.client.get(reverse(namespace + ':detail', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
+        obj = self.get_latest_object()
 
-        r = self.client.get(reverse(namespace + ':update', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse(namespace + ':workflow', None, None, {'pk': obj.pk, 'transition': 'cancel'}))
-        self.assertEqual(r.status_code, 302)
-
-        r = self.client.get(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 200)
-
-        r = self.client.post(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
-        self.assertEqual(r.status_code, 302)
-
-        obj = Quotation.objects.order_by('pk').last()
-
-        r = self.client.get(reverse(namespace + ':workflow', None, None, {'pk': obj.pk, 'transition': 'send'}))
-        self.assertEqual(r.status_code, 302)
-
-        r = self.client.get(reverse(namespace + ':workflow', None, None, {'pk': obj.pk, 'transition': 'accept'}))
-        self.assertEqual(r.status_code, 302)
-
-        r = self.client.get(reverse(namespace + ':workflow', None, None, {'pk': obj.pk, 'transition': 'invoice'}))
-        self.assertEqual(r.status_code, 302)
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'send'})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'accept'})
+        self.autotest_get('workflow', status_code=302, kwargs={'pk': obj.pk, 'transition': 'invoice'})
 
     def test_cleans(self):
         obj = Quotation()

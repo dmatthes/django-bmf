@@ -11,13 +11,14 @@ from django.db import models
 from django.views.generic import TemplateView
 from django.views.generic import FormView
 
-from ..views import BaseMixin
+from ..views import ViewMixin
 from ..models import Configuration
 from ..sites import site, SETTING_KEY
 
 import json
 
-class ConfigurationView(BaseMixin, TemplateView):
+
+class ConfigurationView(ViewMixin, TemplateView):
     template_name = "djangoerp/configuration/index.html"
 
     def get_context_data(self, **kwargs):
@@ -27,7 +28,7 @@ class ConfigurationView(BaseMixin, TemplateView):
         return super(ConfigurationView, self).get_context_data(**kwargs)
 
 
-class ConfigurationEdit(BaseMixin, FormView):
+class ConfigurationEdit(ViewMixin, FormView):
     template_name = "djangoerp/configuration/edit.html"
 
     def get_form_class(self):

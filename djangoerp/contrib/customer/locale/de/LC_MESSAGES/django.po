@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 13:16+0200\n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,93 +18,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: erp_module.py:18
+#: contrib/customer/erp_module.py:18
 msgid "Company"
 msgstr ""
 
-#: erp_module.py:19 models.py:50
+#: contrib/customer/erp_module.py:19 contrib/customer/models.py:50
 msgid "Customer"
 msgstr "Kunde"
 
-#: models.py:20
+#: contrib/customer/models.py:20
 msgid "Name"
 msgstr ""
 
-#: models.py:21
+#: contrib/customer/models.py:21
 msgid "Number"
 msgstr ""
 
-#: models.py:26
+#: contrib/customer/models.py:26
 msgid ""
 "Projects function as cost-centers. This setting defines a default project "
 "for this customer."
 msgstr ""
 
-#: models.py:29
+#: contrib/customer/models.py:29
 msgid "Is Company"
 msgstr ""
 
-#: models.py:31
+#: contrib/customer/models.py:31
 msgid "Taxvat"
 msgstr ""
 
-#: models.py:33
+#: contrib/customer/models.py:33
 msgid "Can use company adresses"
 msgstr ""
 
-#: models.py:35
+#: contrib/customer/models.py:35
 msgid "Is active"
 msgstr ""
 
-#: models.py:36
+#: contrib/customer/models.py:36
 #, fuzzy
 msgid "Is customer"
 msgstr "Kunde"
 
-#: models.py:37
+#: contrib/customer/models.py:37
 msgid "Is supplier"
 msgstr ""
 
-#: models.py:51
+#: contrib/customer/models.py:51
 msgid "Customers"
 msgstr "Kunden"
 
-#: models.py:93
+#: contrib/customer/models.py:93
 msgid "Name 2"
 msgstr ""
 
-#: models.py:94
+#: contrib/customer/models.py:94
 msgid "Job position"
 msgstr ""
 
-#: models.py:95
+#: contrib/customer/models.py:95
 msgid "Title"
 msgstr ""
 
-#: models.py:96
+#: contrib/customer/models.py:96
 msgid "Phone office"
 msgstr ""
 
-#: models.py:97
+#: contrib/customer/models.py:97
 msgid "Phone privat"
 msgstr ""
 
-#: models.py:98
+#: contrib/customer/models.py:98
 msgid "Phone mobile"
 msgstr ""
 
-#: models.py:99
+#: contrib/customer/models.py:99
 msgid "Email"
 msgstr "Email"
 
-#: models.py:100
+#: contrib/customer/models.py:100
 msgid "Fax"
 msgstr ""
 
-#: models.py:101
+#: contrib/customer/models.py:101
 msgid "Website"
 msgstr ""
 
-#: models.py:102
+#: contrib/customer/models.py:102
 msgid "Notes"
 msgstr ""

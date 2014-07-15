@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django
 from djangoerp.settings import BASE_MODULE
 
 if BASE_MODULE["EMPLOYEE"]:
@@ -14,7 +15,7 @@ if BASE_MODULE["EMPLOYEE"]:
             migrations.AddField(
                 model_name='project',
                 name='employee',
-                field=models.ForeignKey(to=BASE_MODULE["EMPLOYEE"], null=True, blank=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["EMPLOYEE"], null=True, blank=True),
                 preserve_default=True,
             ),
         ]

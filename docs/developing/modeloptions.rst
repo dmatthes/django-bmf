@@ -33,6 +33,15 @@ Default: ``True``
     have entries for created instances and if a instance is changed
     via a workflow transition or the :attr:`~Options.observed_fields` attribute.
 
+``can_clone``
+-----------------
+
+Default: ``False``
+
+.. attribute:: Options.can_clone
+
+    Enables if the object can be cloned
+
 ``has_comments``
 -----------------
 

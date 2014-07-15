@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from djangoerp.settings import BASE_MODULE
+import django
 
 if BASE_MODULE["PROJECT"]:
     class Migration(migrations.Migration):
@@ -14,7 +15,7 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='project',
                 name='customer',
-                field=models.ForeignKey(to=BASE_MODULE["CUSTOMER"], null=True, blank=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["CUSTOMER"], null=True, blank=True),
                 preserve_default=True,
             ),
         ]

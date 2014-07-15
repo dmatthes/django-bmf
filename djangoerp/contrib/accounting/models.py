@@ -53,7 +53,7 @@ class BaseAccount(ERPMPTTModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
 #   parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     balance = MoneyField(editable=False, default="0")
-    balance_currency = CurrencyField(default="EUR")
+    balance_currency = CurrencyField()
     number = models.CharField(_('Number'), max_length=30, null=True, blank=True, )
     name = models.CharField(_('Name'), max_length=100, null=False, blank=False, )
     type = models.PositiveSmallIntegerField(_('Type'), null=False, blank=False, choices=ACCOUNTING_TYPES)

@@ -3,8 +3,9 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from djangoerp.settings import BASE_MODULE
+import django
 
-if BASE_MODULE["PROJECT"]:
+if BASE_MODULE["ACCOUNT"]:
     class Migration(migrations.Migration):
 
         dependencies = [
@@ -16,13 +17,13 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='customer',
                 name='asset_account',
-                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], null=True),
+                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT, null=True),
                 preserve_default=True,
             ),
             migrations.AddField(
                 model_name='customer',
                 name='liability_account',
-                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], null=True),
+                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT, null=True),
                 preserve_default=True,
             ),
         ]
