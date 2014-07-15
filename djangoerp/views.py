@@ -12,8 +12,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect, HttpResponse, Http404, QueryDict
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import never_cache
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import RedirectView
@@ -410,10 +408,6 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
     model = None
     queryset = None
     form_view = None
-
-    @method_decorator(never_cache)
-    def dispatch(self, *args, **kwargs):
-         return super(PluginFormAPI, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         """

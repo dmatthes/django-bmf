@@ -13,6 +13,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.utils.timezone import now
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.defaults import permission_denied
 
 from djangoerp import get_version
@@ -209,6 +211,10 @@ class AjaxMixin(BaseMixin):
     """
     add some basic function for ajax requests
     """
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+         return super(AjaxMixin, self).dispatch(*args, **kwargs)
+
     def check_permissions(self):
         return self.request.is_ajax() and super(AjaxMixin, self).check_permissions()
 
