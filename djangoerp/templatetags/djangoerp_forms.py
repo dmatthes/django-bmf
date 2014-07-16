@@ -170,12 +170,13 @@ def erpfield(field, only_text):
             model = field.field.choices.queryset.model
             if hasattr(model, "_erpmeta"):
                 if field.value():
+                    print field.value() # TODO remove me
                     text = field.field.choices.queryset.get(pk=field.value()) # FIXME FAILS IF QUERYSET IS INVALID
                 else:
                     text = ""
-                data = '<div style="position:relative" data-erp-search="1">'
+                data = '<div data-erp-search="1">'
                 data += '<div class="hidden">'
-#       data += field.as_hidden()
+#               data += field.as_hidden()
                 data += field.as_text(attrs={
                     'autocomplete': 'off',
                 })
@@ -193,5 +194,19 @@ def erpfield(field, only_text):
             else:
                 # TODO: this manages relationsships to non-django models. it makes propably sense to implement a search-function for django models like user
                 return field.as_widget(attrs={'class': 'form-control'})
+        elif isinstance(field.field, forms.DateTimeField):
+            data  = '<div class="input-group" data-erp-calendar="dt">'
+            data += field.as_widget(attrs={'class': 'form-control'})
+            return data
+        elif isinstance(field.field, forms.DateField):
+            data  = '<div class="input-group" data-erp-calendar="d">'
+            data += field.as_widget(attrs={'class': 'form-control'})
+            data += '</div>'
+            return data
+        elif isinstance(field.field, forms.TimeField):
+            data  = '<div class="input-group" data-erp-calendar="t">'
+            data += field.as_widget(attrs={'class': 'form-control'})
+            data += '</div>'
+            return data
         else:
             return field.as_widget(attrs={'class': 'form-control'})

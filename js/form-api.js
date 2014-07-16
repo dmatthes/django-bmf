@@ -165,6 +165,7 @@
 
     base.init = function() {
       base.options = $.extend({}, $.erp.inlineform.defaultOptions, options);
+      base.$el.css('position','relative');
       // Put your initialization code here
       var regex_max = /(.*)-MAX_NUM_FORMS$/;
       var regex_total = /.*-TOTAL_FORMS$/;

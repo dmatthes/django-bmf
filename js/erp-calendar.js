@@ -17,6 +17,8 @@
             // load options
             base.options = $.extend({}, $.erp.editform.defaultOptions, options);
 
+            base.$el.append('<span class="input-group-btn"><button class="btn btn-default disabled" type="button"><span class="glyphicon glyphicon-calendar"></span></button></span></div>');
+
             // initialization logic
         }
       
@@ -31,9 +33,8 @@
 
     // register as jquery function
     $.fn.erp_calendar = function(options){
-        return this.each(function(){
+        return $(this).find('div.input-group[data-erp-calendar]').each(function(){
             (new $.erp.calendar(this, options));
         });
     };
 })(jQuery);
-// $(document).ready(function() {$('.calendar').erp_calendar()});

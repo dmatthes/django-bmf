@@ -42,6 +42,7 @@ def js(debug=None):
             'js/form-api.js',
             'js/erp-calendar.js',
             'js/erp-editform.js',
+            'js/erp-buildform.js',
             'js/menu.js',
         ]
         local('cat %s > js/djangoerp.js' % ' '.join(js))
