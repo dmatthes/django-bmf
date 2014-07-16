@@ -51,7 +51,7 @@ class AbstractGoal(ERPModel):
 
 
     def __str__(self):
-        return '#%s: %s' % (self.pk, self.summary)
+        return '%s' % (self.summary)
 
 
     def get_states(self):

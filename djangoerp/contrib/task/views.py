@@ -37,7 +37,7 @@ class GoalCloneView(ModuleCloneView):
                 task.completed = False
                 task.work_date = None
                 task.seconds_on = 0
-                setattr(task, task._erpmeta.workflow_field, None)
+                setattr(task, task._erpmeta.workflow_field, task._erpmeta.workflow._default_state_key)
                 task.save()
 
 class GoalDetailView(ModuleDetailView):

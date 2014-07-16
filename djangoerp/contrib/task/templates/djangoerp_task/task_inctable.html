@@ -26,11 +26,17 @@
     {% for obj in object_list %}
     <tr{% if obj.state == "cancelled" or obj.state == "finished" %} class="text-muted" {% endif %}>
       <td>
+          {% if obj.completed %}
+          <span class="glyphicon glyphicon-check"></span>
+          {% else %}
+          <span class="glyphicon glyphicon-unchecked"></span>
+          {% endif %}
+
           {% if obj.state == "review" %}<span class="label label-info">{% trans "review" %}</span>{% endif %}
           {% if obj.state == "started" %}<span class="label label-primary">{% trans "started" %}</span>{% endif %}
           {% if obj.state == "hold" %}<span class="label label-warning">{% trans "hold" %}</span>{% endif %}
           {{ obj.summary }}
-          {% if obj.project or obj.goal %}<br /><small>
+          {% if obj.project or obj.goal %}<br /><small class="text-muted">
               {% if obj.project %}<strong>{{ obj.project }}</strong>{% endif %} {% if obj.goal %}{{ obj.goal }}{% endif %}
           </small>
           {% endif %}

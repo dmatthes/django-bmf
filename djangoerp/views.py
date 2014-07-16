@@ -292,7 +292,7 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
         self.clone_object(form.cleaned_data, form.instance)
         form.instance.pk = None
         if form.instance._erpmeta.workflow_field:
-            setattr(form.instance, form.instance._erpmeta.workflow_field, None)
+            setattr(form.instance, form.instance._erpmeta.workflow_field, form.instance._erpmeta.workflow._default_state_key)
         form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
         self.object = form.save()

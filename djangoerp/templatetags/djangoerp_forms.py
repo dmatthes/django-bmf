@@ -170,7 +170,6 @@ def erpfield(field, only_text):
             model = field.field.choices.queryset.model
             if hasattr(model, "_erpmeta"):
                 if field.value():
-                    print field.value() # TODO remove me
                     text = field.field.choices.queryset.get(pk=field.value()) # FIXME FAILS IF QUERYSET IS INVALID
                 else:
                     text = ""
