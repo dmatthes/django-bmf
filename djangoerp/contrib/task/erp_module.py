@@ -9,6 +9,7 @@ from .models import Task
 from .models import Goal
 
 from .views import TaskIndexView
+from .views import GoalCloneView
 from .views import GoalIndexView
 from .views import GoalDetailView
 
@@ -18,5 +19,6 @@ site.register(Task, **{
 
 site.register(Goal, **{
     'index': GoalIndexView,
+    'clone': GoalCloneView,
     'detail': GoalDetailView,
 })

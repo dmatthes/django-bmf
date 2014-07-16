@@ -27,7 +27,7 @@ class AbstractGoal(ERPModel):
     project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
     referee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
 
-    summary = models.CharField(_("Summary"), max_length=255, null=True, blank=False, )
+    summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
     billable = models.BooleanField(_("Is billable"), default=False)
@@ -112,7 +112,7 @@ class AbstractTask(ERPModel):
 
     goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
 
-    summary = models.CharField(_("Summary"), max_length=255, null=True, blank=False, )
+    summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
     due_date = models.DateField(_('Due date'), null=True, blank=True)

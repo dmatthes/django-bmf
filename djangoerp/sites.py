@@ -195,6 +195,14 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     clone.as_view(model=self.model),
                     name='clone',
                 ),
+                url(
+                    r'^(?P<pk>[0-9]+)/clone/form-api/$',
+                    ModuleFormAPI.as_view(
+                        model=self.model,
+                        form_view=clone,
+                    ),
+                    name='clone-form-api',
+                ),
             )
 
         # url patterns

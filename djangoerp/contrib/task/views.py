@@ -5,19 +5,42 @@ from __future__ import unicode_literals
 
 from django.db.models import Count
 
-from djangoerp.views import PluginIndex
-from djangoerp.views import PluginDetail
+from djangoerp.views import ModuleIndexView
+from djangoerp.views import ModuleDetailView
+from djangoerp.views import ModuleCloneView
 
 from .models import Task
 from .filters import TaskFilter
 from .filters import GoalFilter
+from .forms import ERPGoalCloneForm
 
 
-class GoalIndexView(PluginIndex):
+class GoalIndexView(ModuleIndexView):
     filterset_class = GoalFilter
 
+class GoalCloneView(ModuleCloneView):
+    form_class = ERPGoalCloneForm
 
-class GoalDetailView(PluginDetail):
+    def clone_object(self, formdata, instance):
+        instance.completed = False
+
+    def clone_related_objects(self, formdata, old_object, new_object):
+        if formdata['copy_tasks']:
+            for task in old_object.task_set.all():
+                print task
+                task.pk = None
+                task.goal = new_object
+                task.project = new_object.project
+                if formdata['clear_employee']:
+                    task.employee = None
+                task.due_date = None
+                task.completed = False
+                task.work_date = None
+                task.seconds_on = 0
+                setattr(task, task._erpmeta.workflow_field, None)
+                task.save()
+
+class GoalDetailView(ModuleDetailView):
     def get_context_data(self, **kwargs):
         tasks = {
             'open': [],
@@ -37,13 +60,13 @@ class GoalDetailView(PluginDetail):
         })
         return super(GoalDetailView, self).get_context_data(**kwargs)
 
-class TaskIndexView(PluginIndex):
+class TaskIndexView(ModuleIndexView):
     filterset_class = TaskFilter
 
     def get_queryset(self):
         qs = super(TaskIndexView, self).get_queryset()
         related = ['goal',]
-        if hasattr(self, 'project'):
+        if hasattr(Task, 'project'):
             related.append('project')
 
         qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count','due_date','summary').select_related(*related)

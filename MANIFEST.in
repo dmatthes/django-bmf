@@ -4,6 +4,4 @@ include INSTALL
 include LICENSE
 include MANIFEST.in
 recursive-include djangoerp *
-recursive-include djangoerp_contrib *
-recursive-include djangoerp_currency *
 recursive-exclude * *.py[co]

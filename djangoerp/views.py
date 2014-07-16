@@ -26,6 +26,7 @@ from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 import warnings
+import copy
 
 from django_filters.views import FilterView
 
@@ -279,22 +280,23 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
     def get_template_names(self):
         return super(ModuleCloneView, self).get_template_names() + ["djangoerp/module_clone_default.html"]
 
-    def clone_object(self, form, instance):
+    def clone_object(self, formdata, instance):
         pass
 
-    def clone_related_objects(self, object):
+    def clone_related_objects(self, formdata, old_object, new_object):
         pass
 
     def form_valid(self, form):
        #messages.success(self.request, 'Object cloned')
-        self.clone_object(form, form.instance)
+        old_object = copy.copy(self.object)
+        self.clone_object(form.cleaned_data, form.instance)
         form.instance.pk = None
         if form.instance._erpmeta.workflow_field:
             setattr(form.instance, form.instance._erpmeta.workflow_field, None)
         form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
         self.object = form.save()
-        self.clone_related_objects(self.object)
+        self.clone_related_objects(form.cleaned_data, old_object, self.object)
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
