@@ -72,9 +72,9 @@ class ClassTests(TestCase):
 
         # logic
 
-        # self.assertFalse(TestCurrency())  # TODO
-        # self.assertFalse(TestCurrency(0))  # TODO
+        self.assertFalse(TestCurrency(0))
         self.assertTrue(TestCurrency(1))
+        self.assertFalse(TestCurrency())
 
         self.assertTrue(TestCurrency(1) == TestCurrency(1))
         self.assertTrue(TestCurrency(1) != TestCurrency(2))
@@ -139,7 +139,7 @@ class ClassTests(TestCase):
         # wallet
 
         wallet = Wallet()
-        self.assertEqual(repr(wallet), "<Wallet>")
+        self.assertEqual(repr(wallet), "<Wallet object at 0x%x>" % id(wallet))
 
         with self.assertRaises(TypeError):
             wallet + str()
@@ -149,23 +149,58 @@ class ClassTests(TestCase):
             wallet * str()
         with self.assertRaises(TypeError):
             str() * wallet
+        with self.assertRaises(TypeError):
+            wallet // str()
 
-        # self.assertFalse(wallet)  # TODO
+        self.assertFalse(wallet)
+
+        # math with currencies 
 
         wallet += TestCurrency(1)
         wallet += TestCurrency(2)
         wallet -= DemoCurrency(1)
         wallet -= TestCurrency(1)
 
-        # TODO
-        # wallet1 = wallet * 2
-        # wallet2 = wallet + wallet
-        # self.assertEqual(wallet1, wallet2)
-        # wallet1 = wallet / 2.0
-        # wallet2 = wallet - Decimal('1') * wallet
-        # self.assertEqual(wallet1, wallet2)
+        self.assertTrue(wallet)
+        self.assertNotEqual(wallet, dict)
 
-        self.assertEqual(wallet.currencies[TestCurrency.iso], TestCurrency(2))
-        self.assertEqual(wallet.currencies[DemoCurrency.iso], DemoCurrency(-1))
+        self.assertEqual(wallet[TestCurrency.iso], TestCurrency(2))
+        self.assertEqual(wallet[DemoCurrency.iso], DemoCurrency(-1))
 
-        # self.assertTrue(wallet)  # TODO
+        # math with wallets
+
+        double_wallet = wallet + wallet
+        self.assertEqual(double_wallet[TestCurrency.iso], TestCurrency(4))
+        self.assertEqual(double_wallet[DemoCurrency.iso], DemoCurrency(-2))
+
+        self.assertNotEqual(double_wallet, wallet)
+
+        self.assertEqual(double_wallet, 2 * wallet)
+        self.assertEqual(double_wallet, 2.0 * wallet)
+        self.assertEqual(double_wallet, Decimal(2) * wallet)
+
+        self.assertEqual(double_wallet // 2, wallet)
+        self.assertEqual(double_wallet // 2.0, wallet)
+        self.assertEqual(double_wallet // Decimal(2), wallet)
+
+        self.assertEqual(double_wallet - wallet, wallet)
+
+        # comparison of wallets
+
+        new_wallet = Wallet()
+        new_wallet += TestCurrency(1)
+
+        self.assertNotEqual(new_wallet, wallet)
+        self.assertNotEqual(wallet, new_wallet)
+
+        test_wallet = new_wallet + wallet
+        self.assertEqual(test_wallet[TestCurrency.iso], TestCurrency(3))
+        self.assertEqual(test_wallet[DemoCurrency.iso], DemoCurrency(-1))
+
+        test_wallet = new_wallet - wallet
+        self.assertEqual(test_wallet[TestCurrency.iso], TestCurrency(-1))
+        self.assertEqual(test_wallet[DemoCurrency.iso], DemoCurrency(1))
+
+        test_wallet = new_wallet * 2
+        self.assertNotEqual(test_wallet, wallet)
+        self.assertNotEqual(wallet, test_wallet)
