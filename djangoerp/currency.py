@@ -5,9 +5,7 @@ from __future__ import division
 from __future__ import unicode_literals
 
 from django.core.exceptions import ImproperlyConfigured
-from django.core.exceptions import ValidationError
 from django.utils import six
-#rom django.utils.encoding import force_text
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.formats import number_format
 from django.utils.translation import ugettext_lazy as _
@@ -29,7 +27,7 @@ class CurrencyMetaclass(type):
             isinstance(b, CurrencyMetaclass)
             and not (b.__name__ == 'NewBase'
             and b.__mro__ == (b, object))
-          ]
+        ]
         if not parents:
             return super_new(cls, name, bases, attrs)
 
@@ -64,7 +62,7 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
             self.value = None
 
     def __str__(self):
-        if self.value == None:
+        if self.value is None:
             r = self.name
         else:
             r = self.formatstr % {'val': number_format(self.value, force_grouping=True), 'sym': self.symbol}
@@ -188,7 +186,7 @@ class Wallet(object):
             if other.iso in wallet.currencies:
                 wallet.currencies[other.iso] += other
             else:
-                wallet.currencies[other.iso]  = other
+                wallet.currencies[other.iso] = other
             return wallet
         raise TypeError("Must add a currency to the Wallet")
 
@@ -201,8 +199,6 @@ class Wallet(object):
             if other.iso in wallet.currencies:
                 wallet.currencies[other.iso] -= other
             else:
-                wallet.currencies[other.iso] = -1*other
+                wallet.currencies[other.iso] = -1 * other
             return wallet
         raise TypeError("Must substract a currency from the Wallet")
-
-

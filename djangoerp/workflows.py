@@ -19,11 +19,11 @@ class State(object):
     creation_counter = 0
 
     def __init__(self, name, default=False, update=True, delete=True, permission=None):
-        self.name = name # name of this state
+        self.name = name  # name of this state
         self.default = default
-        self.update = update # can update object from this state
-        self.delete = delete # can delete object from this state
-        self.permission = permission # does nothing ... yet!
+        self.update = update  # can update object from this state
+        self.delete = delete  # can delete object from this state
+        self.permission = permission  # does nothing ... yet!
         self.order = State.creation_counter
         State.creation_counter += 1
 
@@ -51,8 +51,8 @@ class Transition(object):
             #       string objects (and even check the iterable object if it returns strings)
             self.sources = [sources]
         self.target = target
-        self.validate = validate # use object validation bevor object is changed
-        self.permission = permission # does nothing ... yet!
+        self.validate = validate  # use object validation bevor object is changed
+        self.permission = permission  # does nothing ... yet!
         self.order = Transition.creation_counter
         Transition.creation_counter += 1
 
@@ -75,11 +75,12 @@ class WorkflowMetaclass(type):
             return super_new(cls, name, bases, attrs)
 
         # excluding Model class itself
-        parents = [b for b in bases if
-              isinstance(b, WorkflowMetaclass)
-              and not (b.__name__ == 'NewBase'
-              and b.__mro__ == (b, object))
-        ]
+        parents = [
+                    b for b in bases if
+                    isinstance(b, WorkflowMetaclass)
+                    and not (b.__name__ == 'NewBase'
+                    and b.__mro__ == (b, object))
+                  ]
         if not parents:
             return super_new(cls, name, bases, attrs)
 

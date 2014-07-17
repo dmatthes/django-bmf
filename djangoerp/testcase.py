@@ -31,7 +31,7 @@ class ERPModuleTestCase(ERPTestCase):
         """
         tests the POST request of a view, returns the response
         """
-        url = reverse(self.model._erpmeta.url_namespace+':'+namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         r = self.client.get(url, data)
         self.assertEqual(r.status_code, status_code)
         return r
@@ -40,7 +40,7 @@ class ERPModuleTestCase(ERPTestCase):
         """
         tests the GET request of a view, returns the response
         """
-        url = reverse(self.model._erpmeta.url_namespace+':'+namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         r = self.client.post(url, data)
         self.assertEqual(r.status_code, status_code)
         return r
@@ -49,7 +49,7 @@ class ERPModuleTestCase(ERPTestCase):
         """
         tests the GET request of an ajax-view, returns the serialized data
         """
-        url = reverse(self.model._erpmeta.url_namespace+':'+namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         r = self.client.get(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(r.status_code, 200)
         return json.loads(r.content)
@@ -58,7 +58,7 @@ class ERPModuleTestCase(ERPTestCase):
         """
         tests the POST request of an ajax-view, returns the serialized data
         """
-        url = reverse(self.model._erpmeta.url_namespace+':'+namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         r = self.client.post(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(r.status_code, 200)
         return json.loads(r.content)

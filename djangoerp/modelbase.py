@@ -29,21 +29,22 @@ from mptt.models import MPTTModelBase, MPTTModel
 
 APP_LABEL = ERPConfig.label
 
+
 def add_signals(cls):
     # cleanup history and follows
     def post_delete(sender, instance, *args, **kwargs):
         Notification.objects.filter(
             obj_ct=ContentType.objects.get_for_model(sender),
             obj_id=instance.pk,
-            ).delete()
+        ).delete()
         Activity.objects.filter(
             parent_ct=ContentType.objects.get_for_model(sender),
             parent_id=instance.pk,
-            ).delete()
+        ).delete()
         Watch.objects.filter(
             watch_ct=ContentType.objects.get_for_model(sender),
             watch_id=instance.pk,
-            ).delete()
+        ).delete()
     signals.post_delete.connect(post_delete, sender=cls, weak=False)
 
 
@@ -89,7 +90,18 @@ class ERPOptions(object):
         # set options
         for key, value in options:
             # auto-set known options (no validation!)
-            if key in ['category', 'has_logging', 'has_comments', 'has_files', 'search_fields', 'number_cycle', 'workflow', 'workflow_field', 'clean', 'can_clone']:
+            if key in [
+                    'category',
+                    'has_logging',
+                    'has_comments',
+                    'has_files',
+                    'search_fields',
+                    'number_cycle',
+                    'workflow',
+                    'workflow_field',
+                    'clean',
+                    'can_clone',
+                    ]:
                 setattr(self, key, value)
 
             # only observe valid fields
@@ -194,7 +206,6 @@ class ERPModelBase(ModelBase):
 
         return cls
 
-
 class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
     """
     Base class for ERP models.
@@ -239,7 +250,6 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return self._erpworkflow._current_state
 
-
     def has_permissions(self, qs, user):
         """
         Overwrite this function to enable object bases permissions. It must return
@@ -248,7 +258,6 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         Default: queryset
         """
         return qs
-
 
     def erpget_project(self):
         """
@@ -259,7 +268,6 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return None
 
-
     def erpget_customer(self):
         """
         The result of this value is currently used by the document-management system
@@ -269,14 +277,12 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return None
 
-
     @models.permalink
     def erpmodule_detail(self):
         """
         A permalink to the default view of this model in the ERP-System
         """
         return ('%s:detail' % self._erpmeta.url_namespace, (), {"pk": self.pk})
-
 
     def get_absolute_url(self):
         return self.erpmodule_detail()

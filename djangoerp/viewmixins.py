@@ -41,7 +41,6 @@ class BaseMixin(object):
         """
         return permissions
 
-
     def check_permissions(self):
         """
         overwrite this function to add a custom permission check (i.e
@@ -49,11 +48,9 @@ class BaseMixin(object):
         """
         return True
 
-
     def read_session_data(self):
         return self.request.session.get("djangoerp", {'version': get_version()})
     
-
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """
@@ -123,7 +120,6 @@ class ViewMixin(BaseMixin):
 
         # update session
         self.write_session_data(session_data)
-
 
     def update_dashboard(self, pk=None):
         """
@@ -311,6 +307,7 @@ class ModuleDeletePermissionMixin(object):
         perms.append('%s.view_%s' % info)
         return super(ModuleDeletePermissionMixin, self).get_permissions(perms)
 
+
 # MODULES
 
 class ModuleBaseMixin(object):
@@ -346,12 +343,12 @@ class ModuleBaseMixin(object):
             })
         return super(ModuleBaseMixin, self).get_context_data(**kwargs)
 
+
 class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
     """
     base mixin for update, clone and create views (ajax-forms)
     and form-api
     """
-
 
     def get_ajax_context(self, context):
         ctx = {
@@ -363,7 +360,6 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
         }
         ctx.update(context)
         return ctx
-
 
     def render_to_response(self, context, **response_kwargs):
         response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs) 
@@ -380,6 +376,7 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
         })
         ctx.update(context)
         return self.render_to_json_response(ctx)
+
 
 class ModuleViewMixin(ModuleBaseMixin, ViewMixin):
     """

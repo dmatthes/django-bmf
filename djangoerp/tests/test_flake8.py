@@ -37,10 +37,10 @@ class Flake8Test(TestCase):
         StyleGuide.options.report.start()
         StyleGuide.input_dir('djangoerp')
         StyleGuide.options.report.stop()
-        StyleGuide.options.report.print_statistics()
+       #StyleGuide.options.report.print_statistics()
        #stats = StyleGuide.options.report.get_statistics()
         count = StyleGuide.options.report.get_count()
         with open('flakes8.log', 'w') as file:
             for i in StyleGuide.options.report._log_messages:
                 file.write(i+'\n')
-        self.assertLess(count, 678)
+        self.assertLess(count, 626)
