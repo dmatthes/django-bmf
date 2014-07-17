@@ -5,7 +5,7 @@ Customer
 Models
 ==================================================
 
-.. automodule:: djangoerp_contrib.customer.models
+.. automodule:: djangoerp.contrib.customer.models
    :members:
    :show-inheritance:
 

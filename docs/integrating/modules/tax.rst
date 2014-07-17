@@ -5,7 +5,7 @@ Tax
 Models
 ==================================================
 
-.. automodule:: djangoerp_contrib.tax.models
+.. automodule:: djangoerp.contrib.taxing.models
    :members:
    :show-inheritance:
 
