@@ -95,5 +95,3 @@ class HistoryCommentAddView(CreateView):
 
     def get_success_url(self):
         return self.get_rel_object().erpmodule_detail()
-
-
