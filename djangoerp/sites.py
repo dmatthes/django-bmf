@@ -95,7 +95,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
 
         add_patterns = self.urlpatterns or options.get('urlpatterns', None)
 
-        urlpatterns =  patterns('',
+        urlpatterns =  patterns(
+            '',
             url(
                 r'^$',
                 index.as_view(model=self.model),
@@ -134,7 +135,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     label = view[0]
                     view = view[1]
                 self.model._erpmeta.create_views.append((key, label))
-                urlpatterns += patterns('',
+                urlpatterns += patterns(
+                    '',
                     url(
                         r'^create/(?P<key>%s)/$' % key,
                         view.as_view(model=self.model),
@@ -150,7 +152,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     ),
                 )
         else:
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
                     r'^create/$',
                     create.as_view(model=self.model),
@@ -168,18 +171,20 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
 
         # workflow interactions
         if bool(len(self.model._erpworkflow._transitions)):
-            urlpatterns += patterns('',
-              url(
-                  r'^(?P<pk>[0-9]+)/workflow/(?P<transition>\w+)/$',
-                  ModuleWorkflowView.as_view(model=self.model),
-                  name='workflow',
-              ),
+            urlpatterns += patterns(
+                '',
+                url(
+                    r'^(?P<pk>[0-9]+)/workflow/(?P<transition>\w+)/$',
+                    ModuleWorkflowView.as_view(model=self.model),
+                    name='workflow',
+                ),
             )
 
         # model reports
         if report:
             self.model._erpmeta.has_report = True
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
                     r'^(?P<pk>[0-9]+)/report/$',
                     report.as_view(model=self.model),
@@ -189,7 +194,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
 
         # clone model
         if self.model._erpmeta.can_clone:
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
                     r'^(?P<pk>[0-9]+)/clone/$',
                     clone.as_view(model=self.model),

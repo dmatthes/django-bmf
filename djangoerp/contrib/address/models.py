@@ -16,10 +16,10 @@ class BaseAddress(ERPModel):
     customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=False, blank=False, related_name="customer_address", on_delete=models.CASCADE)
 
     is_active = models.BooleanField(_('Is active'), default=True)
-    is_billing = models.BooleanField(_('Is billing'),  default=True)
-    is_shipping = models.BooleanField(_('Is shipping'),  default=True)
-    default_billing = models.BooleanField(_('Default billing'),  default=False)
-    default_shipping = models.BooleanField(_('Default shipping'),  default=False)
+    is_billing = models.BooleanField(_('Is billing'), default=True)
+    is_shipping = models.BooleanField(_('Is shipping'), default=True)
+    default_billing = models.BooleanField(_('Default billing'), default=False)
+    default_shipping = models.BooleanField(_('Default shipping'), default=False)
 
     def as_report(self):
         raise NotImplementedError('You need to implement a function to print your address in a report')
@@ -40,13 +40,13 @@ class BaseAddress(ERPModel):
 class AbstractAddress(BaseAddress):
     """
     """
-    name = models.CharField(_('Name'),  max_length=255, null=True, blank=False, )
-    name2 = models.CharField(_('Name2'),  max_length=255, null=True, blank=True, )
-    street = models.CharField(_('Street'),  max_length=255, null=True, blank=False, )
-    zip = models.CharField(_('Zipcode'),  max_length=255, null=True, blank=False, )
-    city = models.CharField(_('City'),  max_length=255, null=True, blank=False, )
-    state = models.CharField(_('State'),  max_length=255, null=True, blank=True, )
-    country = models.CharField(_('Country'),  max_length=255, null=True, blank=False, )
+    name = models.CharField(_('Name'), max_length=255, null=True, blank=False, )
+    name2 = models.CharField(_('Name2'), max_length=255, null=True, blank=True, )
+    street = models.CharField(_('Street'), max_length=255, null=True, blank=False, )
+    zip = models.CharField(_('Zipcode'), max_length=255, null=True, blank=False, )
+    city = models.CharField(_('City'), max_length=255, null=True, blank=False, )
+    state = models.CharField(_('State'), max_length=255, null=True, blank=True, )
+    country = models.CharField(_('Country'), max_length=255, null=True, blank=False, )
 
     class Meta(BaseAddress.Meta):
         abstract = True
@@ -72,7 +72,7 @@ class AbstractAddress(BaseAddress):
 
     def __unicode__(self):
         if self.name2:
-            return self.name+", "+self.name2
+            return self.name + ", " + self.name2
         return self.name
 
 
