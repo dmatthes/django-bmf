@@ -15,13 +15,13 @@ class ClassTests(TestCase):
     def test_state(self):
         obj = State(b'name')
         self.assertEqual(obj.name, b"name")
-        self.assertEqual(str(obj), b"name")
+        self.assertEqual(str(obj), "name")
         self.assertEqual(repr(obj), b"<State: 'name'>")
 
     def test_transition(self):
         obj = Transition(b'name', 'from', 'to')
         self.assertEqual(obj.name, b"name")
-        self.assertEqual(str(obj), b"name")
+        self.assertEqual(str(obj), "name")
         self.assertEqual(repr(obj), b"<Transition: 'name'>")
         self.assertEqual(obj.sources, ["from", ])
 

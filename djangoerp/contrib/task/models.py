@@ -39,20 +39,16 @@ class AbstractGoal(ERPModel):
         ordering = ['project__name','summary']
         abstract = True
 
-
     def erpget_customer(self):
         if self.project:
             return self.project.customer
         return None
 
-
     def erpget_project(self):
         return self.project
 
-
     def __str__(self):
         return '%s' % (self.summary)
-
 
     def get_states(self):
         active_states = 0
@@ -63,30 +59,29 @@ class AbstractGoal(ERPModel):
         }
 
         for state, count in self.task_set.values_list('state').annotate(count=models.Count('state')).order_by():
-            if state in ["new","open","started"]:
+            if state in ["new", "open", "started", ]:
                 active_states += count
 
-            if state in ["hold",]:
+            if state in ["hold", ]:
                 states["hold"] += count
                 active_states += count
 
-            if state in ["review",]:
+            if state in ["review", ]:
                 states["review"] += count
                 active_states += count
 
-            if state in ["finished",]:
+            if state in ["finished", ]:
                 states["done"] += count
                 active_states += count
 
         if active_states == 0:
-          return states
+            return states
 
-        states['hold'] = '%4.2f' % (floor(10000*states["hold"]/active_states)/100)
-        states['done'] = '%4.2f' % (floor(10000*states["done"]/active_states)/100)
-        states['review'] = '%4.2f' % (floor(10000*states["review"]/active_states)/100)
+        states['hold'] = '%4.2f' % (floor(10000 * states["hold"] / active_states) / 100)
+        states['done'] = '%4.2f' % (floor(10000 * states["done"] / active_states) / 100)
+        states['review'] = '%4.2f' % (floor(10000 * states["review"] / active_states) / 100)
 
         return states
-
 
     class ERPMeta:
         has_logging = False
@@ -121,8 +116,7 @@ class AbstractTask(ERPModel):
     seconds_on = models.PositiveIntegerField(null=True, default=0, editable=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
-
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
         ordering = ['due_date', 'summary']

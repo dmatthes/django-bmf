@@ -24,7 +24,10 @@ from djangoerp.utils import get_model_from_cfg
 
 import json
 import datetime
-import urlparse
+try:
+    from urllib import parse
+except ImportError:
+    import urlparse as parse
 
 # TO BE USED IN EVERY ERP-View
 
@@ -228,7 +231,7 @@ class NextMixin(object):
     def redirect_next(self, reverse, *args, **kwargs):
         redirect_to = self.request.REQUEST.get('next', '')
 
-        netloc = urlparse.urlparse(redirect_to)[1]
+        netloc = parse.urlparse(redirect_to)[1]
         if netloc and netloc != self.request.get_host():
             redirect_to = None
 

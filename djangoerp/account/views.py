@@ -13,8 +13,7 @@ from django.views.generic.edit import FormView
 from django.core.urlresolvers import reverse_lazy
 
 from ..viewmixins import AjaxMixin
-
-import urlparse
+from ..viewmixins import NextMixin
 
 from .forms import ERPAuthenticationForm
 
@@ -31,7 +30,7 @@ class LogoutView(TemplateView):
 #from django.shortcuts import redirect
 
 
-class LoginView(FormView):
+class LoginView(FormView, NextMixin):
     form_class = ERPAuthenticationForm
     redirect_field_name = REDIRECT_FIELD_NAME
     template_name = 'djangoerp/account/login.html'
@@ -47,15 +46,7 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):
-        redirect_to = self.request.GET.get(self.redirect_field_name, '')
-        netloc = urlparse.urlparse(redirect_to)[1]
-
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if not redirect_to:
-            redirect_to = reverse_lazy('djangoerp:dashboard')
-        return redirect_to
+        return self.redirect_next('djangoerp:dashboard')
 
 # def form_invalid(self, form):
 #   self.request.session.set_test_cookie()

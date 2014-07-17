@@ -28,7 +28,6 @@ class GoalCloneView(ModuleCloneView):
     def clone_related_objects(self, formdata, old_object, new_object):
         if formdata['copy_tasks']:
             for task in old_object.task_set.all():
-                print task
                 task.pk = None
                 task.goal = new_object
                 task.project = new_object.project

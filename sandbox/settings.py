@@ -1,6 +1,8 @@
 # Django settings
 
 import os
+from django.utils import six
+
 gettext = lambda s: s
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -121,8 +123,11 @@ TEST_PROJECT_APPS = (
 #   'djangoerp.contrib.timesheet',
     'djangoerp.currencies.EUR',
     'djangoerp.currencies.USD',
-    'djangoerp.reports.xhtml2pdf',
 )
+if six.PY2:
+    TEST_PROJECT_APPS += (
+        'djangoerp.reports.xhtml2pdf',
+    )
 
 INSTALLED_APPS = (
     'django.contrib.auth',

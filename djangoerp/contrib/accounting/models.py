@@ -135,7 +135,7 @@ class AbstractTransaction(ERPModel):
     if BASE_MODULE["PROJECT"]:
         project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL)
     text = models.CharField(_('Posting text'), max_length=255, null=False, blank=False, )
-    accounts = models.ManyToManyField(BASE_MODULE["ACCOUNT"], null=True, blank=False, through="TransactionItem")
+    accounts = models.ManyToManyField(BASE_MODULE["ACCOUNT"], blank=False, through="TransactionItem")
     balanced = models.BooleanField(_('Draft'), default=False, editable=False)
 
 # expensed = models.BooleanField(_('Expensed'), blank=True, null=False, default=False, )

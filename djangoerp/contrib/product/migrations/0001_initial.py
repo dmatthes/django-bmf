@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='taxes',
-            field=models.ManyToManyField(to=BASE_MODULE["TAX"], null=True, through='djangoerp_product.ProductTax', blank=True),
+            field=models.ManyToManyField(to=BASE_MODULE["TAX"], through='djangoerp_product.ProductTax', blank=True),
             preserve_default=True,
         ),
         migrations.AddField(

@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 
-from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ValidationError
 from django.forms.fields import CharField
 from django.forms.fields import FloatField
@@ -11,14 +10,10 @@ from django.forms.fields import DecimalField
 from django.forms.models import BaseModelFormSet
 from django.forms.models import ModelChoiceField
 from django.forms.util import ErrorList
-from django.utils.datastructures import SortedDict, MultiValueDict
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.safestring import mark_safe
-from django.forms import TextInput, PasswordInput
 from django.utils import six
 
 from .signals import djangoerp_post_save
-from .activity.models import Activity, ACTION_CREATED, ACTION_UPDATED
 
 from collections import OrderedDict
 
@@ -48,7 +43,8 @@ class ERPFormMetaclass(type):
 @python_2_unicode_compatible
 class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
 
-    def __init__(self, data=None, files=None, auto_id='erp_%s', prefix=None, initial=None, instance=None, initial_inlines=None, error_class=ErrorList, **kwargs):
+    def __init__(self, data=None, files=None, auto_id='erp_%s',
+            prefix=None, initial=None, instance=None, initial_inlines=None, error_class=ErrorList, **kwargs):
         self.is_bound = data is not None or files is not None
         self.prefix = prefix or self.get_default_prefix()
         self.auto_id = auto_id
@@ -87,7 +83,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
                 self.base_form.fields[form_prefix].required = False
                 self.base_form.fields[form_prefix].inlineformset = True
                 self.forms[form_prefix] = inlineform
-                if self.base_form._meta.exclude == None:
+                if self.base_form._meta.exclude is None:
                     self.base_form._meta.exclude = [form_prefix]
                 else:
                     if form_prefix not in self.base_form._meta.exclude:
@@ -166,7 +162,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
         fields = []
         if self.base_form._meta.exclude:
             for field in self:
-                if not field.name in self.base_form._meta.exclude:
+                if field.name not in self.base_form._meta.exclude:
                     fields.append(field)
         else:
             for field in self:

@@ -27,38 +27,50 @@ class ERPModuleTestCase(ERPTestCase):
     def get_latest_object(self):
         return self.model.objects.order_by('pk').last()
 
-    def autotest_get(self, namespace, status_code=200, data=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_get(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the POST request of a view, returns the response
         """
         url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
         r = self.client.get(url, data)
         self.assertEqual(r.status_code, status_code)
         return r
 
-    def autotest_post(self, namespace, status_code=200, data=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_post(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the GET request of a view, returns the response
         """
         url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
         r = self.client.post(url, data)
         self.assertEqual(r.status_code, status_code)
         return r
 
-    def autotest_ajax_get(self, namespace, data=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_ajax_get(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the GET request of an ajax-view, returns the serialized data
         """
         url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
         r = self.client.get(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(r.status_code, 200)
-        return json.loads(r.content)
+        self.assertEqual(r.status_code, status_code)
+        if status_code == 200:
+            return json.loads(r.content.decode())
+        return r
 
-    def autotest_ajax_post(self, namespace, data=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_ajax_post(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the POST request of an ajax-view, returns the serialized data
         """
         url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
         r = self.client.post(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(r.status_code, 200)
-        return json.loads(r.content)
+        self.assertEqual(r.status_code, status_code)
+        if status_code == 200:
+            return json.loads(r.content.decode())
+        return r

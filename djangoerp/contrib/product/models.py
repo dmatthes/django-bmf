@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from djangoerp.categories import SALES
 from djangoerp.models import ERPModel
@@ -35,6 +36,7 @@ PRODUCT_NO = (
 # =============================================================================
 
 
+@python_2_unicode_compatible
 class AbstractProduct(ERPModel):
     """
     """
@@ -51,7 +53,7 @@ class AbstractProduct(ERPModel):
     price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
     price_precision = models.PositiveSmallIntegerField(default=0, blank=True, null=True, editable=False)
-    taxes = models.ManyToManyField(BASE_MODULE["TAX"], null=True, blank=True, related_name="product_taxes", limit_choices_to={'is_active': True}, through='ProductTax')
+    taxes = models.ManyToManyField(BASE_MODULE["TAX"], blank=True, related_name="product_taxes", limit_choices_to={'is_active': True}, through='ProductTax')
 # discount = models.FloatField(_('Max. discount'), default=0.0)
 
     # Accounting
@@ -130,7 +132,7 @@ class AbstractProduct(ERPModel):
         category = SALES
         search_fields = ['name', 'code']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 # def calc_default_price(self, project, amount, price):
