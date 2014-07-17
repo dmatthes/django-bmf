@@ -19,32 +19,57 @@ from djangoerp.contrib.accounting.models import ACCOUNTING_ASSET, ACCOUNTING_LIA
 class BaseCustomer(ERPModel):
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False, )
     number = models.CharField(_("Number"), max_length=255, null=True, blank=True, )
-    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=True, null=True, related_name="erp_customer", on_delete=models.SET_NULL)
-
+    user = models.ForeignKey(
+        getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        blank=True,
+        null=True,
+        related_name="erp_customer",
+        on_delete=models.SET_NULL,
+    )
     if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, related_name="+", on_delete=models.SET_NULL,
-            help_text=_("Projects function as cost-centers. This setting defines a default project for this customer.")) # TODO edit queryset for projects (show only company projects and own ones)
-
-    employee_at = models.ForeignKey('self', null=True, blank=True, limit_choices_to={'is_company': True}, on_delete=models.SET_NULL)
+        # TODO edit queryset for projects (show only company projects and own ones)
+        project = models.ForeignKey(
+            BASE_MODULE["PROJECT"],
+            null=True,
+            blank=True,
+            related_name="+",
+            on_delete=models.SET_NULL,
+            help_text=_("Projects function as cost-centers. This setting defines a default project for this customer."),
+        )
+    employee_at = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        limit_choices_to={'is_company': True},
+        on_delete=models.SET_NULL,
+    )
     is_company = models.BooleanField(_("Is Company"), default=False)
-
     taxvat = models.CharField(_("Taxvat"), max_length=255, null=True, blank=True, )
-
     use_company_addresses = models.BooleanField(_("Can use company adresses"), default=True)
-
     is_active = models.BooleanField(_("Is active"), default=True)
     is_customer = models.BooleanField(_("Is customer"), default=True)
     is_supplier = models.BooleanField(_("Is supplier"), default=False)
-
-# TODO add language
-# TODO add timezone
-
+    # TODO add language
+    # TODO add timezone
     if BASE_MODULE["ACCOUNT"]:
-        asset_account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=True, blank=False, related_name="customer_asset", limit_choices_to={'type': ACCOUNTING_ASSET, 'read_only': False}, on_delete=models.PROTECT)
-        liability_account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=True, blank=False, related_name="customer_liability", limit_choices_to={'type': ACCOUNTING_LIABILITY, 'read_only': False}, on_delete=models.PROTECT)
+        asset_account = models.ForeignKey(
+            BASE_MODULE["ACCOUNT"],
+            null=True,
+            blank=False,
+            related_name="customer_asset",
+            limit_choices_to={'type': ACCOUNTING_ASSET, 'read_only': False},
+            on_delete=models.PROTECT,
+        )
+        liability_account = models.ForeignKey(
+            BASE_MODULE["ACCOUNT"],
+            null=True,
+            blank=False,
+            related_name="customer_liability",
+            limit_choices_to={'type': ACCOUNTING_LIABILITY, 'read_only': False},
+            on_delete=models.PROTECT,
+        )
     customer_payment_term = models.PositiveSmallIntegerField(editable=False, default=1)
     supplier_payment_term = models.PositiveSmallIntegerField(editable=False, default=1)
-
 
     class Meta:
         verbose_name = _('Customer')

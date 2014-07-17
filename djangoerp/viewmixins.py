@@ -4,7 +4,6 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse_lazy
@@ -28,7 +27,6 @@ try:
 except ImportError:
     import urlparse as parse
 
-# TO BE USED IN EVERY ERP-View
 
 class BaseMixin(object):
     """
@@ -67,11 +65,11 @@ class BaseMixin(object):
 
         # === EMPLOYEE ====================================================
 
-        Employee = get_model_from_cfg('EMPLOYEE')
-        if Employee:
+        employee = get_model_from_cfg('EMPLOYEE')
+        if employee:
             try:
-                self.request.djangoerp_employee = Employee.objects.get(user=self.request.user)
-            except Employee.DoesNotExist:
+                self.request.djangoerp_employee = employee.objects.get(user=self.request.user)
+            except employee.DoesNotExist:
                 # the user does not have permission to view the erp
                 if self.request.user.is_superuser:
                     return redirect('djangoerp:wizard', permanent=False)
@@ -167,7 +165,7 @@ class ViewMixin(BaseMixin):
             try:
                 data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': d.get_absolute_url()}
             except NoReverseMatch:
-                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'} # TODO
+                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'}  # TODO
                 continue
             session_data['views'].append(data)
 
@@ -199,7 +197,7 @@ class ViewMixin(BaseMixin):
 
         # === DASHBOARD AND VIEWS =========================================
 
-        if not 'dashboard' in session_data:
+        if 'dashboard' not in session_data:
             self.update_dashboard()
 
         return function
@@ -211,7 +209,7 @@ class AjaxMixin(BaseMixin):
     """
     @method_decorator(never_cache)
     def dispatch(self, *args, **kwargs):
-         return super(AjaxMixin, self).dispatch(*args, **kwargs)
+        return super(AjaxMixin, self).dispatch(*args, **kwargs)
 
     def check_permissions(self):
         return self.request.is_ajax() and super(AjaxMixin, self).check_permissions()
@@ -321,7 +319,6 @@ class ModuleBaseMixin(object):
         return super(ModuleBaseMixin, self).get_object()
 
     def get_context_data(self, **kwargs):
-        ct = ContentType.objects.get_for_model(self.model)
         info = self.model._meta.app_label, self.model._meta.model_name
         kwargs.update({
             'erpmodule': {
@@ -330,9 +327,12 @@ class ModuleBaseMixin(object):
                 'create_views': self.model._erpmeta.create_views,
                 'model': self.model,
                 'has_report': self.model._erpmeta.has_report,
-                'can_clone': self.model._erpmeta.can_clone and self.request.user.has_perms(['%s.view_%s' % info,'%s.clone_%s' % info,]),
-#               'namespace': self.model._erpmeta.url_namespace, #unused
-#               'verbose_name': self.model._meta.verbose_name, # unused
+                'can_clone': self.model._erpmeta.can_clone and self.request.user.has_perms([
+                    '%s.view_%s' % info,
+                    '%s.clone_%s' % info,
+                ]),
+                # 'namespace': self.model._erpmeta.url_namespace,  # unused
+                # 'verbose_name': self.model._meta.verbose_name,  # unused
             },
         })
         if hasattr(self, 'object') and self.object:
@@ -355,7 +355,7 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
     def get_ajax_context(self, context):
         ctx = {
             'object_pk': 0,
-            'status': 'ok', # "ok" for normal html, "valid" for valid forms, "error" if an error occured
+            'status': 'ok',  # "ok" for normal html, "valid" for valid forms, "error" if an error occured
             'html': '',
             'message': '',
             'redirect': '',
@@ -364,17 +364,17 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
         return ctx
 
     def render_to_response(self, context, **response_kwargs):
-        response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs) 
+        response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs)
         response.render()
         ctx = self.get_ajax_context({
-             'html': response.rendered_content,
+            'html': response.rendered_content,
         })
         return self.render_to_json_response(ctx)
 
     def render_valid_form(self, context):
         ctx = self.get_ajax_context({
             'status': 'valid',
-          # 'redirect': self.get_success_url(),
+            # 'redirect': self.get_success_url(),
         })
         ctx.update(context)
         return self.render_to_json_response(ctx)

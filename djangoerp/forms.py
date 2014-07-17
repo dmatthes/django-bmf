@@ -43,8 +43,9 @@ class ERPFormMetaclass(type):
 @python_2_unicode_compatible
 class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
 
-    def __init__(self, data=None, files=None, auto_id='erp_%s',
-            prefix=None, initial=None, instance=None, initial_inlines=None, error_class=ErrorList, **kwargs):
+    def __init__(self, data=None, files=None, auto_id='erp_%s', prefix=None, 
+            initial=None, instance=None, initial_inlines=None,
+            error_class=ErrorList, **kwargs):
         self.is_bound = data is not None or files is not None
         self.prefix = prefix or self.get_default_prefix()
         self.auto_id = auto_id
@@ -194,7 +195,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
             # input-type fields
             val_instance = getattr(field.form.instance, field.name, None)
 
-            if isinstance(field.field, CharField) or isinstance(field.field, DecimalField) or isinstance(field.field, FloatField):
+            if isinstance(field.field, (CharField, DecimalField, FloatField)):
                 if not field.value() and val_instance:
                     data.append({'field': field.auto_id, 'value': val_instance})
                 continue

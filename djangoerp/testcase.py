@@ -27,7 +27,8 @@ class ERPModuleTestCase(ERPTestCase):
     def get_latest_object(self):
         return self.model.objects.order_by('pk').last()
 
-    def autotest_get(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_get(self, namespace, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the POST request of a view, returns the response
         """
@@ -38,7 +39,8 @@ class ERPModuleTestCase(ERPTestCase):
         self.assertEqual(r.status_code, status_code)
         return r
 
-    def autotest_post(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_post(self, namespace, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the GET request of a view, returns the response
         """
@@ -49,7 +51,8 @@ class ERPModuleTestCase(ERPTestCase):
         self.assertEqual(r.status_code, status_code)
         return r
 
-    def autotest_ajax_get(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_ajax_get(self, namespace, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the GET request of an ajax-view, returns the serialized data
         """
@@ -62,7 +65,8 @@ class ERPModuleTestCase(ERPTestCase):
             return json.loads(r.content.decode())
         return r
 
-    def autotest_ajax_post(self, namespace, status_code=200, data=None, parameter=None, urlconf=None, args=None, kwargs=None, current_app=None):
+    def autotest_ajax_post(self, namespace, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None):
         """
         tests the POST request of an ajax-view, returns the serialized data
         """

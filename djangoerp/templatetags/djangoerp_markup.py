@@ -20,7 +20,9 @@ def markdown_filter(text):
     """
     if not text:
         return ''
-    return mark_safe(markdown.markdown(text, extensions=[
+    return mark_safe(markdown.markdown(
+        text,
+        extensions=[
             UrlizeExtension(),
             ChecklistExtension(),
             'smart_strong',

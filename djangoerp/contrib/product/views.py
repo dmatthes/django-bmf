@@ -3,21 +3,21 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import PluginCreate
-from djangoerp.views import PluginUpdate
-from djangoerp.views import PluginDetail
+from ...views import ModuleCreateView
+from ...views import ModuleUpdateView
+from ...views import ModuleDetailView
 
 from .forms import ERPProductUpdateForm
 from .forms import ERPProductCreateForm
 
 
-class ProductCreateView(PluginCreate):
+class ProductCreateView(ModuleCreateView):
     form_class = ERPProductCreateForm
 
 
-class ProductUpdateView(PluginUpdate):
+class ProductUpdateView(ModuleUpdateView):
     form_class = ERPProductUpdateForm
 
 
-class ProductDetailView(PluginDetail):
+class ProductDetailView(ModuleDetailView):
     form_class = ERPProductUpdateForm

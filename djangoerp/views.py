@@ -157,42 +157,22 @@ class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
         return super(ModuleIndexView, self).get_context_data(**kwargs)
 
 
-class PluginIndex(ModuleIndexView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginIndex is deprecated, use ModuleIndexView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginIndex, self).__init__(*args, **kwargs)
-
-
-class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
+class ModuleDetailView(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
     show the details of an entry
     """
-    context_object_name = 'object'
-    template_name_suffix = '_erpdetail'
-
-    def get_template_names(self):
-        self.update_notification()
-        return super(PluginBaseDetail, self).get_template_names() + ["djangoerp/module_detail_default.html"]
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginBaseDetail is deprecated in %s' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginBaseDetail, self).__init__(*args, **kwargs)
-
-
-class ModuleDetailView(ModuleFormMixin, ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
-    """
-    show the details of an entry
-    """
-    form_class = None
     context_object_name = 'object'
     template_name_suffix = '_erpdetail'
 
     def get_template_names(self):
         self.update_notification()
         return super(ModuleDetailView, self).get_template_names() + ["djangoerp/module_detail_default.html"]
+
+class ModuleAutoDetailView(ModuleFormMixin, ModuleDetailView):
+    """
+    show the details of an entry
+    """
+    form_class = None
 
     def get_form(self, **kwargs):
         if self.form_class == None:
@@ -204,15 +184,7 @@ class ModuleDetailView(ModuleFormMixin, ModuleViewPermissionMixin, ModuleFilesMi
         kwargs.update({
             'form': self.get_form()
         })
-        return super(ModuleDetailView, self).get_context_data(**kwargs)
-
-
-class PluginDetail(ModuleDetailView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginDetail is deprecated, use ModuleDetailView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginDetail, self).__init__(*args, **kwargs)
+        return super(ModuleAutoDetailView, self).get_context_data(**kwargs)
 
 
 class ModuleReportView(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
@@ -239,14 +211,6 @@ class ModuleReportView(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
         context = super(ModuleReportView, self).get_context_data(**kwargs)
         context['request'] = self.request
         return context
-
-
-class PluginReport(ModuleReportView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginReport is deprecated, use ModuleReportView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginReport, self).__init__(*args, **kwargs)
 
 
 class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMixin, UpdateView):
@@ -307,14 +271,6 @@ class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxM
         })
 
 
-class PluginUpdate(ModuleUpdateView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginUpdate is deprecated, use ModuleUpdateView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginUpdate, self).__init__(*args, **kwargs)
-
-
 class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
     """
     create a new instance
@@ -345,14 +301,6 @@ class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxM
         })
 
 
-class PluginCreate(ModuleCreateView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginCreate is deprecated, use ModuleCreateView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginCreate, self).__init__(*args, **kwargs)
-
-
 class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, DeleteView):
     """
     delete an instance
@@ -366,14 +314,6 @@ class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, 
     def get_success_url(self):
         messages.info(self.request, 'Object deleted')
         return self.redirect_next('%s:index' % self.model._erpmeta.url_namespace)
-
-
-class PluginDelete(ModuleDeleteView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginDelete is deprecated, use ModuleDeleteView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginDelete, self).__init__(*args, **kwargs)
 
 
 class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
@@ -417,14 +357,6 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
         djangoerp_post_save.send(sender=self.object.__class__, instance=self.object, new=False)
         messages.success(self.request, 'Workflow-State changed')
         return HttpResponseRedirect(self.get_success_url())
-
-
-class PluginWorkflow(ModuleWorkflowView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginWorklow is deprecated, use ModuleWorkflowView for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginWorkflow, self).__init__(*args, **kwargs)
 
 
 class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
@@ -523,11 +455,3 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
             return "%s__search" % field_name[1:]
         else:
             return "%s__icontains" % field_name
-
-
-class PluginFormAPI(ModuleFormAPI):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-                'PluginFormAPI is deprecated, use ModuleFormAPI for %s instead' % self.__class__,
-                RemovedInNextVersionWarning)
-        return super(PluginFormAPI, self).__init__(*args, **kwargs)

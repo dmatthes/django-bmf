@@ -24,11 +24,8 @@ class CurrencyMetaclass(type):
             return super_new(cls, name, bases, attrs)
 
         # excluding Model class itself
-        parents = [b for b in bases if
-            isinstance(b, CurrencyMetaclass)
-            and not (b.__name__ == 'NewBase'
-            and b.__mro__ == (b, object))
-        ]
+        parents = [b for b in bases if isinstance(b, CurrencyMetaclass) 
+                and not (b.__name__ == 'NewBase' and b.__mro__ == (b, object))]
         if not parents:
             return super_new(cls, name, bases, attrs)
 
@@ -162,11 +159,12 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
 
 
 class Wallet(object):
+
     def __init__(self):
         self.currencies = {}
 
     def __repr__(self):
-        return "<%s>" % (self.__class__.__name__) # TODO add address
+        return "<%s>" % (self.__class__.__name__)  # TODO add address
 
     def __bool__(self):
         for key, currency in self.currencies.items():

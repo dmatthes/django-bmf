@@ -3,10 +3,7 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import PluginCreate, PluginUpdate
+from ...views import ModuleUpdateView
 
-from .forms import ProjectUpdateForm
-
-
-class ProjectUpdateView(PluginUpdate):
+class ProjectUpdateView(ModuleUpdateView):
     pass

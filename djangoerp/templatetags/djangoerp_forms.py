@@ -3,12 +3,12 @@
 
 from __future__ import unicode_literals
 
-from django.template import Library, Node, Variable
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.conf import settings
-from django.template.loader import get_template
 from django import forms
+from django import template
+from django.template import Library, Node, Variable
+from django.template.loader import get_template
 
 register = Library()
 
@@ -98,7 +98,6 @@ class HelperNode(Node):
     def render(self, context):
         as_view = self.as_view.resolve(context)
         form = self.form.resolve(context)
-        helper = form.erphelper
         return form.erphelper.render(form, as_view, context)
 
 
@@ -139,7 +138,7 @@ def erplayout(parser, token):
 
 
 @register.tag('erpformset')
-def erplayout(parser, token):
+def erpformset(parser, token):
     try:
         tag_name, obj = token.split_contents()
     except ValueError:
@@ -194,16 +193,16 @@ def erpfield(field, only_text):
                 # TODO: this manages relationsships to non-django models. it makes propably sense to implement a search-function for django models like user
                 return field.as_widget(attrs={'class': 'form-control'})
         elif isinstance(field.field, forms.DateTimeField):
-            data  = '<div class="input-group" data-erp-calendar="dt">'
+            data = '<div class="input-group" data-erp-calendar="dt">'
             data += field.as_widget(attrs={'class': 'form-control'})
             return data
         elif isinstance(field.field, forms.DateField):
-            data  = '<div class="input-group" data-erp-calendar="d">'
+            data = '<div class="input-group" data-erp-calendar="d">'
             data += field.as_widget(attrs={'class': 'form-control'})
             data += '</div>'
             return data
         elif isinstance(field.field, forms.TimeField):
-            data  = '<div class="input-group" data-erp-calendar="t">'
+            data = '<div class="input-group" data-erp-calendar="t">'
             data += field.as_widget(attrs={'class': 'form-control'})
             data += '</div>'
             return data

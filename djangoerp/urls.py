@@ -11,7 +11,6 @@ the module views get appended by an '^module/' expression
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.utils import timezone
-from django.utils.importlib import import_module
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import last_modified
 
@@ -19,11 +18,6 @@ from djangoerp.dashboard.views import DashboardView
 from djangoerp.module.views import ModuleView
 from djangoerp.modals.views import ModalSaveView
 from djangoerp import get_version
-
-# FIXME: Rewrite Tests and Forms to fully support AJAX - then DELETE THIS S**T
-from django.http import HttpResponse
-def status_ok(request):
-    return HttpResponse('ok')
 
 
 @cache_page(86400, key_prefix='erp-js18n-%s' % get_version())
@@ -46,14 +40,11 @@ urlpatterns = patterns(
     url(r'^config/', include('djangoerp.configuration.urls')),
     url(r'^dashboard/', include('djangoerp.dashboard.urls')),
     url(r'^i18n/', i18n_javascript, name="jsi18n"),
-#   url(r'^messages/', include('djangoerp.message.urls')),
+    #  url(r'^messages/', include('djangoerp.message.urls')),
     url(r'^notifications/', include('djangoerp.notification.urls')),
     url(r'^watching/', include('djangoerp.watch.urls')),
     url(r'^wizard/', include('djangoerp.wizard.urls')),
     #   r'^module/' via sites
-
-    url(r'^status_ok$', status_ok, name="status_ok"), # FIXME
-
     # TODO
     url(r'^modules/$', ModuleView.as_view(), name="modules"),
     url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),

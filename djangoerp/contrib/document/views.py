@@ -5,23 +5,23 @@ from __future__ import unicode_literals
 
 # === VIEWS ===================================================================
 
-from djangoerp.views import PluginCreate
-from djangoerp.views import PluginUpdate
-from djangoerp.views import PluginDetail
+from djangoerp.views import ModuleCreateView
+from djangoerp.views import ModuleUpdateView
+from djangoerp.views import ModuleDetailView
 
 from .models import Document
 from .forms import DocumentForm
 
 
-class DocumentCreateView(PluginCreate):
+class DocumentCreateView(ModuleCreateView):
     form_class = DocumentForm
 
 
-class DocumentUpdateView(PluginUpdate):
+class DocumentUpdateView(ModuleUpdateView):
     form_class = DocumentForm
 
 
-class DocumentDetailView(PluginDetail):
+class DocumentDetailView(ModuleDetailView):
     form_class = DocumentForm
 
 '''

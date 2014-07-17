@@ -9,8 +9,6 @@ from django.utils.six import with_metaclass
 
 from .currency import BaseCurrency
 
-# Workflow
-# -----------------------------------------------------------------------------
 
 class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
     """
@@ -86,11 +84,11 @@ class MoneyField(with_metaclass(models.SubfieldBase, models.DecimalField)):
             value = value.value
         return super(MoneyField, self).get_db_prep_save(value, *args, **kwargs)
 
-# def to_python(self, value)
 
 def get_default_currency():
     from .sites import site
-    return site.get_lazy_setting('djangoerp','currency')
+    return site.get_lazy_setting('djangoerp', 'currency')
+
 
 class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
     description = _("Currency Field")
@@ -113,7 +111,7 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
             return value
         # The string case.
         from .sites import site
-        return site.currencies['%s'%value]()
+        return site.currencies['%s' % value]()
 
     def get_prep_value(self, obj):
         if hasattr(obj, 'iso'):

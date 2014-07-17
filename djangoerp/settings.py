@@ -12,7 +12,7 @@ from django.core.files.storage import get_storage_class
 
 __all__ = (
     'BASE_MODULE',
-#   'FILE_SERVER',
+    # 'FILE_SERVER',
     'DOCUMENT_ROOT',
     'DOCUMENT_URL',
     'STORAGE',

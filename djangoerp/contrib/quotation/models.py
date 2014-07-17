@@ -28,15 +28,49 @@ class AbstractQuotation(ERPModel):
     """
     """
     state = WorkflowField()
-    invoice = models.OneToOneField(BASE_MODULE["INVOICE"], null=True, blank=True, editable=False, related_name="quotation", on_delete=models.PROTECT)
+    invoice = models.OneToOneField(
+        BASE_MODULE["INVOICE"],
+        null=True,
+        blank=True,
+        editable=False,
+        related_name="quotation",
+        on_delete=models.PROTECT
+    )
     if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=True, blank=False, on_delete=models.SET_NULL)
+        customer = models.ForeignKey(
+            BASE_MODULE["CUSTOMER"],
+            null=True,
+            blank=False,
+            on_delete=models.SET_NULL,
+        )
     if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=False, on_delete=models.SET_NULL)
+        project = models.ForeignKey(
+            BASE_MODULE["PROJECT"],
+            null=True,
+            blank=False,
+            on_delete=models.SET_NULL,
+        )
     if BASE_MODULE["EMPLOYEE"]:
-        employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL)
-    shipping_address = models.ForeignKey(BASE_MODULE["ADDRESS"], null=True, blank=True, related_name="shipping_quotation", on_delete=models.PROTECT)
-    invoice_address = models.ForeignKey(BASE_MODULE["ADDRESS"], null=True, blank=True, related_name="invoice_quotation", on_delete=models.PROTECT)
+        employee = models.ForeignKey(
+            BASE_MODULE["EMPLOYEE"],
+            null=True,
+            blank=False,
+            on_delete=models.SET_NULL,
+        )
+    shipping_address = models.ForeignKey(
+        BASE_MODULE["ADDRESS"],
+        null=True,
+        blank=True,
+        related_name="shipping_quotation",
+        on_delete=models.PROTECT,
+    )
+    invoice_address = models.ForeignKey(
+        BASE_MODULE["ADDRESS"],
+        null=True,
+        blank=True,
+        related_name="invoice_quotation",
+        on_delete=models.PROTECT,
+    )
     quotation_number = models.CharField(_('Quotation number'), max_length=255, null=True, blank=False)
     products = models.ManyToManyField(BASE_MODULE["PRODUCT"], blank=False, through='QuotationProduct')
     net = models.FloatField(editable=False, blank=True, null=True)
@@ -70,9 +104,11 @@ class AbstractQuotation(ERPModel):
 #   if self.customer and not self.project_id:
 #     self.project = self.customer.project
         if self.customer and not self.invoice_address_id:
-            self.invoice_address = self.customer.customer_address.filter(is_billing=True, default_billing=True).first()
+            self.invoice_address = \
+                self.customer.customer_address.filter(is_billing=True, default_billing=True).first()
         if self.customer and not self.shipping_address_id:
-            self.shipping_address = self.customer.customer_address.filter(is_shipping=True, default_shipping=True).first()
+            self.shipping_address = \
+                self.customer.customer_address.filter(is_shipping=True, default_shipping=True).first()
         if not self.date:
             self.date = datetime.datetime.now().date()
 
@@ -145,7 +181,7 @@ class QuotationProduct(models.Model):
     price_currency = CurrencyField()
     price_precision = models.PositiveSmallIntegerField(default=0, blank=True, null=True, editable=False)
     amount = models.FloatField(_("Amount"), null=True, blank=False, default=1.0)
-# unit = models.CharField() # TODO add units
+    # unit = models.CharField() # TODO add units
     description = models.TextField(_("Description"), null=True, blank=True)
 
     def __init__(self, *args, **kwargs):

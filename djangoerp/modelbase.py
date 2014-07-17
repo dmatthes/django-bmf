@@ -101,7 +101,7 @@ class ERPOptions(object):
                     'workflow_field',
                     'clean',
                     'can_clone',
-                    ]:
+                ]:
                 setattr(self, key, value)
 
             # only observe valid fields
@@ -122,7 +122,7 @@ class ERPOptions(object):
         # determin if the model has an activity
         self.has_activity = self.has_logging or self.has_comments or self.has_files
 
-        self.has_history = self.has_logging # TODO OLD REMOVE ME
+        self.has_history = self.has_logging  # TODO OLD REMOVE ME
 
 
 class ERPModelBase(ModelBase):
@@ -130,8 +130,8 @@ class ERPModelBase(ModelBase):
     Metaclass for ERP models
     """
 
-    def __new__(meta, name, bases, attrs):
-        cls = super(ERPModelBase, meta).__new__(meta, name, bases, attrs)
+    def __new__(cls, name, bases, attrs):
+        cls = super(ERPModelBase, cls).__new__(cls, name, bases, attrs)
 
         parents = [b for b in bases if isinstance(b, ERPModelBase)]
         if not parents:

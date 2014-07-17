@@ -18,15 +18,15 @@ from django.apps import apps
 
 from .apps import ERPConfig
 from .models import Configuration
-from .views import PluginIndex as ModuleIndexView
-from .views import PluginReport as ModuleReportView
-from .views import PluginCreate as ModuleCreateView
-from .views import PluginDelete as ModuleDeleteView
+from .views import ModuleIndexView
+from .views import ModuleReportView
+from .views import ModuleCreateView
+from .views import ModuleDeleteView
 from .views import ModuleCloneView
-from .views import PluginDetail as ModuleDetailView
-from .views import PluginUpdate as ModuleUpdateView
-from .views import PluginWorkflow as ModuleWorkflowView
-from .views import PluginFormAPI as ModuleFormAPI
+from .views import ModuleAutoDetailView
+from .views import ModuleUpdateView
+from .views import ModuleWorkflowView
+from .views import ModuleFormAPI
 
 import copy
 
@@ -268,7 +268,7 @@ class DjangoERPSite(object):
             'admin': (admin or DjangoERPModule)(model),
             'index': ModuleIndexView,
             'create': ModuleCreateView,
-            'detail': ModuleDetailView,
+            'detail': ModuleAutoDetailView,
             'update': ModuleUpdateView,
             'delete': ModuleDeleteView,
             'clone': ModuleCloneView,
