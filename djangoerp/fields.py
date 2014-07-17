@@ -12,7 +12,6 @@ from .currency import BaseCurrency
 # Workflow
 # -----------------------------------------------------------------------------
 
-
 class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
     """
     Holds the current state of an Workflow object
@@ -22,7 +21,7 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
 
     def __init__(self, **kwargs):
         defaults = {
-            'max_length': 32, # max length
+            'max_length': 32,  # max length
             'db_index': True,
         }
         defaults.update(kwargs)
@@ -36,7 +35,7 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
 # Currency and Money
 # -----------------------------------------------------------------------------
 
-#lass MoneyFieldProxy(object):
+# lass MoneyFieldProxy(object):
 # """
 # An equivalent to Django's default attribute descriptor class (enabled via
 # the SubfieldBase metaclass, see module doc for details). However, instead
@@ -97,9 +96,8 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
     description = _("Currency Field")
 
     def __init__(self, *args, **kwargs):
-        from .sites import site
         defaults = {
-            'max_length': 4, # max length
+            'max_length': 4,
         }
         defaults.update(kwargs)
         defaults.update({

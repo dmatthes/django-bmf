@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 
 from django.db.models import Count
 
-from djangoerp.views import ModuleIndexView
-from djangoerp.views import ModuleDetailView
-from djangoerp.views import ModuleCloneView
+from ...views import ModuleIndexView
+from ...views import ModuleDetailView
+from ...views import ModuleCloneView
 
 from .models import Task
 from .filters import TaskFilter
@@ -17,6 +17,7 @@ from .forms import ERPGoalCloneForm
 
 class GoalIndexView(ModuleIndexView):
     filterset_class = GoalFilter
+
 
 class GoalCloneView(ModuleCloneView):
     form_class = ERPGoalCloneForm
@@ -40,6 +41,7 @@ class GoalCloneView(ModuleCloneView):
                 setattr(task, task._erpmeta.workflow_field, task._erpmeta.workflow._default_state_key)
                 task.save()
 
+
 class GoalDetailView(ModuleDetailView):
     def get_context_data(self, **kwargs):
         tasks = {
@@ -59,6 +61,7 @@ class GoalDetailView(ModuleDetailView):
             'tasks': tasks,
         })
         return super(GoalDetailView, self).get_context_data(**kwargs)
+
 
 class TaskIndexView(ModuleIndexView):
     filterset_class = TaskFilter

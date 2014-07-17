@@ -8,33 +8,22 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse_lazy
-from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from django.forms.models import modelform_factory
-from django.http import HttpResponseRedirect, HttpResponse, Http404, QueryDict
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from django.views.generic.base import TemplateView
-from django.views.generic.base import RedirectView
+from django.http import HttpResponseRedirect, Http404, QueryDict
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import DetailView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
 from django.views.generic.edit import BaseFormView
-from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
-from django.views.defaults import permission_denied
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils import formats
-from django.utils.encoding import force_text
-from django.utils.timezone import now
-
-import warnings
-import copy
-
-from django_filters.views import FilterView
 
 from .activity.models import Activity
 from .watch.models import Watch
 from .models import Report
-from .models import Notification
-from .decorators import login_required
 from .activity.forms import HistoryCommentForm
 from .signals import activity_create
 from .signals import activity_update
@@ -43,30 +32,23 @@ from .signals import djangoerp_post_save
 from .utils import get_model_from_cfg
 from .utils import form_class_factory
 from .utils.deprecation import RemovedInNextVersionWarning
-
-from .viewmixins import ViewMixin
-from .viewmixins import AjaxMixin
-from .viewmixins import NextMixin
-
-from .viewmixins import ModuleViewPermissionMixin
-from .viewmixins import ModuleCreatePermissionMixin
-from .viewmixins import ModuleUpdatePermissionMixin
-from .viewmixins import ModuleDeletePermissionMixin
 from .viewmixins import ModuleClonePermissionMixin
-
+from .viewmixins import ModuleCreatePermissionMixin
+from .viewmixins import ModuleDeletePermissionMixin
+from .viewmixins import ModuleUpdatePermissionMixin
+from .viewmixins import ModuleViewPermissionMixin
+from .viewmixins import ModuleAjaxMixin
 from .viewmixins import ModuleBaseMixin
 from .viewmixins import ModuleViewMixin
-from .viewmixins import ModuleAjaxMixin
+# from .viewmixins import NextMixin
 
-import json
 import re
 import operator
 import urlparse
-
+import warnings
+import copy
 from functools import reduce
-
-
-# Template Variables =========================================================
+from django_filters.views import FilterView
 
 
 class ModuleActivityMixin(object):
@@ -77,7 +59,7 @@ class ModuleActivityMixin(object):
     def get_context_data(self, **kwargs):
         ct = ContentType.objects.get_for_model(self.object)
 
-        watch = Watch.objects.filter(user=self.request.user, watch_ct=ct, watch_id__in=[self.object.pk,0]).order_by('-watch_id').first()
+        watch = Watch.objects.filter(user=self.request.user, watch_ct=ct, watch_id__in=[self.object.pk, 0]).order_by('-watch_id').first()
         if watch:
             watching = watch.active
         else:
@@ -91,11 +73,9 @@ class ModuleActivityMixin(object):
                 'log': self.model._erpmeta.has_history,
                 'pk': self.object.pk,
                 'ct': ct.pk,
-
                 'watch': watching,
                 'log_data': None,
                 'comment_form': None,
-
                 'object_ct': ct,
                 'object_pk': self.object.pk,
             },

@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 
 from ..models import Watch
 from ..viewmixins import ViewMixin
-from ..views import NextMixin
+from ..viewmixins import NextMixin
 from ..sites import site
 
 from ..settings import ACTIVITY_WORKFLOW

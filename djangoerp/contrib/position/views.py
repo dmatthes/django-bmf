@@ -3,36 +3,27 @@
 
 from __future__ import unicode_literals
 
-# === VIEWS ===================================================================
+from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.views.generic import View
 
-from djangoerp.views import PluginIndex
-from djangoerp.views import PluginCreate
-from djangoerp.views import PluginUpdate
-from djangoerp.views import PluginDetail
-from djangoerp.views import PluginFormAPI
+import re
+import datetime
+
+from ...views import ModuleIndexView
+from ...views import ModuleCreateView
+from ...views import ModuleUpdateView
+from ...views import ModuleDetailView
+from ...views import ModuleFormAPI
+from ...viewmixins import ModuleViewMixin
 
 from .models import Position
 from .filters import PositionFilter
 from .forms import PositionForm
 
-import datetime
 
-# === API =====================================================================
-
-from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
-from django.http import HttpResponseRedirect
-#from django.utils.timezone import now
-from django.views.generic import View
-
-from djangoerp.viewmixins import ModuleViewMixin
-
-import re
-
-# === VIEWS ===================================================================
-
-
-class PositionCreateView(PluginCreate):
+class PositionCreateView(ModuleCreateView):
     form_class = PositionForm
 
     def get_initial(self):
@@ -44,27 +35,22 @@ class PositionCreateView(PluginCreate):
         return super(PositionCreateView, self).post(request, *args, **kwargs)
 
 
-class PositionUpdateView(PluginUpdate):
+class PositionUpdateView(ModuleUpdateView):
     form_class = PositionForm
 
 
-class PositionDetailView(PluginDetail):
+class PositionDetailView(ModuleDetailView):
     form_class = PositionForm
 
 
-class PositionTableView(PluginIndex):
+class PositionTableView(ModuleIndexView):
     filterset_class = PositionFilter
 
 
-# === API =====================================================================
-
 class PositionAPI(ModuleViewMixin, View):
     model = Position
-# success_url = None
 
     def get_success_url(self):
-#   if self.success_url:
-#     return self.success_url
         return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
 
     def get_permissions(self, perms):

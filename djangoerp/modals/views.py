@@ -18,7 +18,7 @@ from ..models import View
 from ..dashboard.forms import ViewForm
 from ..models import Watch
 from ..activity.forms import FollowForm
-from ..views import AjaxMixin
+from ..viewmixins import AjaxMixin
 from ..workflows import DefaultWorkflow
 
 class ModalSaveView(AjaxMixin, TemplateView):

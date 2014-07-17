@@ -11,7 +11,7 @@ from django.db import models
 from django.views.generic import TemplateView
 from django.views.generic import FormView
 
-from ..views import ViewMixin
+from ..viewmixins import ViewMixin
 from ..models import Configuration
 from ..sites import site, SETTING_KEY
 
@@ -46,14 +46,14 @@ class ConfigurationEdit(ViewMixin, FormView):
     def form_valid(self, form, *args, **kwargs):
         obj, created = Configuration.objects.get_or_create(app_label=self.kwargs['app_label'], field_name=self.kwargs['name'])
         value = form.cleaned_data[self.kwargs['name']]
-      # data = {
-      #     'type': None,
-      #     'value': value,
-      # }
-      # if isinstance(value, models.Model):
-      #     data['type'] = 'object'
-      #     data['value'] = value.pk
-      # obj.value = json.dumps(data, cls=DjangoJSONEncoder)
+        # data = {
+        #     'type': None,
+        #     'value': value,
+        # }
+        # if isinstance(value, models.Model):
+        #     data['type'] = 'object'
+        #     data['value'] = value.pk
+        # obj.value = json.dumps(data, cls=DjangoJSONEncoder)
         if isinstance(value, models.Model):
             value = value.pk
         obj.value = json.dumps(value, cls=DjangoJSONEncoder)

@@ -12,7 +12,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.core.urlresolvers import reverse_lazy
 
-from ..views import AjaxMixin
+from ..viewmixins import AjaxMixin
 
 import urlparse
 
