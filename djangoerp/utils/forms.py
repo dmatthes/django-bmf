@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from ..forms import ERPForm
 
+
 def form_class_factory(cls):
     if issubclass(cls, ERPForm):
         return cls

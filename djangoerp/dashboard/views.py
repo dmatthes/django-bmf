@@ -10,6 +10,7 @@ from django.views.generic import UpdateView
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.utils import six
+from django.utils.encoding import force_text
 
 from ..models import Dashboard
 from ..viewmixins import ViewMixin
@@ -42,7 +43,8 @@ class DashboardView(ViewMixin, DetailView):
             info = model._meta.app_label, model._meta.model_name
             perm = '%s.view_%s' % info
             if self.request.user.has_perms([perm, ]):
-                key = unicode(model._erpmeta.category)
+                # key = unicode(model._erpmeta.category)
+                key = force_text(model._erpmeta.category)
                 models.append({'category': key, 'model': model, 'name': model._meta.verbose_name_plural, 'url': model._erpmeta.url_namespace + ':index'})
 
         context['modules'] = models

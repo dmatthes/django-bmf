@@ -7,14 +7,12 @@ from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect, Http404, QueryDict
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import DetailView
-from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic.edit import BaseFormView
 from django.views.generic.detail import SingleObjectMixin
@@ -63,7 +61,7 @@ class ModuleActivityMixin(object):
             watching = watch.active
         else:
             watching = False
-        
+
         kwargs.update({
             'erpactivity': {
                 'qs': Activity.objects.filter(parent_ct=ct, parent_id=self.object.pk),
@@ -158,12 +156,14 @@ class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
             })
         return super(ModuleIndexView, self).get_context_data(**kwargs)
 
+
 class PluginIndex(ModuleIndexView):
     def __init__(self, *args, **kwargs):
         warnings.warn(
                 'PluginIndex is deprecated, use ModuleIndexView for %s instead' % self.__class__,
                 RemovedInNextVersionWarning)
         return super(PluginIndex, self).__init__(*args, **kwargs)
+
 
 class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
@@ -206,6 +206,7 @@ class ModuleDetailView(ModuleFormMixin, ModuleViewPermissionMixin, ModuleFilesMi
         })
         return super(ModuleDetailView, self).get_context_data(**kwargs)
 
+
 class PluginDetail(ModuleDetailView):
     def __init__(self, *args, **kwargs):
         warnings.warn(
@@ -239,12 +240,14 @@ class ModuleReportView(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
         context['request'] = self.request
         return context
 
+
 class PluginReport(ModuleReportView):
     def __init__(self, *args, **kwargs):
         warnings.warn(
                 'PluginReport is deprecated, use ModuleReportView for %s instead' % self.__class__,
                 RemovedInNextVersionWarning)
         return super(PluginReport, self).__init__(*args, **kwargs)
+
 
 class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
@@ -281,6 +284,7 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
             'message': ugettext('Object copied'),
         })
 
+
 class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     update an update
@@ -301,6 +305,8 @@ class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxM
             'object_pk': self.object.pk,
             'message': ugettext('Object updated'),
         })
+
+
 class PluginUpdate(ModuleUpdateView):
     def __init__(self, *args, **kwargs):
         warnings.warn(
@@ -338,6 +344,7 @@ class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxM
             'message': ugettext('Object created'),
         })
 
+
 class PluginCreate(ModuleCreateView):
     def __init__(self, *args, **kwargs):
         warnings.warn(
@@ -359,6 +366,7 @@ class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, 
     def get_success_url(self):
         messages.info(self.request, 'Object deleted')
         return self.redirect_next('%s:index' % self.model._erpmeta.url_namespace)
+
 
 class PluginDelete(ModuleDeleteView):
     def __init__(self, *args, **kwargs):
@@ -409,6 +417,7 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
         djangoerp_post_save.send(sender=self.object.__class__, instance=self.object, new=False)
         messages.success(self.request, 'Workflow-State changed')
         return HttpResponseRedirect(self.get_success_url())
+
 
 class PluginWorkflow(ModuleWorkflowView):
     def __init__(self, *args, **kwargs):
@@ -514,6 +523,7 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
             return "%s__search" % field_name[1:]
         else:
             return "%s__icontains" % field_name
+
 
 class PluginFormAPI(ModuleFormAPI):
     def __init__(self, *args, **kwargs):

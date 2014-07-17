@@ -38,7 +38,7 @@ class CoreTests(ERPModuleTestCase):
         r = self.client.post(reverse('djangoerp:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
         self.assertEqual(r.status_code, 302)
 
-        file = open('README.rst', 'r')
+        file = open('README.rst', 'rb')
         r = self.client.post(reverse('djangoerp:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
             'file': file,
         })

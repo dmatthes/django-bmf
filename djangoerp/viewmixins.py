@@ -11,7 +11,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import NoReverseMatch
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.utils.decorators import method_decorator
 from django.utils.timezone import now
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -53,7 +52,7 @@ class BaseMixin(object):
 
     def read_session_data(self):
         return self.request.session.get("djangoerp", {'version': get_version()})
-    
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """
@@ -168,7 +167,7 @@ class ViewMixin(BaseMixin):
             try:
                 data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': d.get_absolute_url()}
             except NoReverseMatch:
-                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'} # TODO 
+                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'} # TODO
                 continue
             session_data['views'].append(data)
 

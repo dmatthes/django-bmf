@@ -384,14 +384,20 @@ class DjangoERPSite(object):
         installed, as well as the auth context processor.
         """
         if not apps.is_installed('django.contrib.admin'):
-            raise ImproperlyConfigured("Put 'django.contrib.admin' in "
-                "your INSTALLED_APPS setting in order to use the admin application.")
+            raise ImproperlyConfigured(
+                "Put 'django.contrib.admin' in "
+                "your INSTALLED_APPS setting in order to use the admin application."
+            )
         if not apps.is_installed('django.contrib.contenttypes'):
-            raise ImproperlyConfigured("Put 'django.contrib.contenttypes' in "
-                "your INSTALLED_APPS setting in order to use the admin application.")
+            raise ImproperlyConfigured(
+                "Put 'django.contrib.contenttypes' in "
+                "your INSTALLED_APPS setting in order to use the admin application."
+            )
         if 'django.contrib.auth.context_processors.auth' not in settings.TEMPLATE_CONTEXT_PROCESSORS:
-            raise ImproperlyConfigured("Put 'django.contrib.auth.context_processors.auth' "
-                "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application.")
+            raise ImproperlyConfigured(
+                "Put 'django.contrib.auth.context_processors.auth' "
+                "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application."
+            )
 
     def get_urls(self):
         from djangoerp.urls import urlpatterns
@@ -402,31 +408,34 @@ class DjangoERPSite(object):
         for model in self._registry:
             ct = ContentType.objects.get_for_model(model)
             data = self._registry[model]
-            urls = data['admin'].get_urls(
-                index = data['index'],
-                create = data['create'],
-                detail = data['detail'],
-                update = data['update'],
-                delete = data['delete'],
-                report = data['report'],
-                clone = data['clone'],
-                urlpatterns = data['urlpatterns'],
-            )
+            urls = data['admin'].get_urls(**{
+                "index": data['index'],
+                "create": data['create'],
+                "detail": data['detail'],
+                "update": data['update'],
+                "delete": data['delete'],
+                "report": data['report'],
+                "clone": data['clone'],
+                "urlpatterns": data['urlpatterns'],
+            })
             info = (model._meta.app_label, model._meta.model_name)
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
-                r'^module/%s/%s/' % ( ct.pk, info[1] ),
-                include((urls, self.app_name, "module_%s_%s" % info))
+                r'^module/%s/%s/' % (
+                    ct.pk, info[1]),
+                    include((urls, self.app_name, "module_%s_%s" % info))
                 )
             )
         return urlpatterns
 
         # Add in each model's views
         for model, model_admin in six.iteritems(self._registry):
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
-                        r'^%s/%s/' % (model._meta.app_label, model._meta.model_name),
-                        include(model_admin.urls)
+                    r'^%s/%s/' % (model._meta.app_label, model._meta.model_name),
+                    include(model_admin.urls)
                 )
             )
 

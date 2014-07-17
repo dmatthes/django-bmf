@@ -60,18 +60,20 @@ class ClassTests(TestCase):
             iso = "XTE"
             name = 'Currency'
             symbol = 'c'
-#     symbol = six.u('¢') # LOOK test unicode-characters
+            # symbol = six.u('¢') # LOOK test unicode-characters
             precision = 3
 
         class DemoCurrency(BaseCurrency):
             iso = "XDL"
             name = 'Dollar'
             symbol = '$'
-#     symbol = _('ł') # LOOK test translations
+            # symbol = _('ł') # LOOK test translations
             precision = 2
 
         # logic
 
+        # self.assertFalse(TestCurrency())  # TODO
+        # self.assertFalse(TestCurrency(0))  # TODO
         self.assertTrue(TestCurrency(1))
 
         self.assertTrue(TestCurrency(1) == TestCurrency(1))
@@ -143,16 +145,27 @@ class ClassTests(TestCase):
             wallet + str()
         with self.assertRaises(TypeError):
             wallet - str()
+        with self.assertRaises(TypeError):
+            wallet * str()
+        with self.assertRaises(TypeError):
+            str() * wallet
 
-        self.assertTrue(not wallet)
+        # self.assertFalse(wallet)  # TODO
 
         wallet += TestCurrency(1)
         wallet += TestCurrency(2)
         wallet -= DemoCurrency(1)
         wallet -= TestCurrency(1)
 
+        # TODO
+        # wallet1 = wallet * 2
+        # wallet2 = wallet + wallet
+        # self.assertEqual(wallet1, wallet2)
+        # wallet1 = wallet / 2.0
+        # wallet2 = wallet - Decimal('1') * wallet
+        # self.assertEqual(wallet1, wallet2)
+
         self.assertEqual(wallet.currencies[TestCurrency.iso], TestCurrency(2))
         self.assertEqual(wallet.currencies[DemoCurrency.iso], DemoCurrency(-1))
 
-        self.assertTrue(wallet)
-
+        # self.assertTrue(wallet)  # TODO

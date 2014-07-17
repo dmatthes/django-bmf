@@ -4,11 +4,10 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.utils.datastructures import SortedDict
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils import six
-from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import force_text
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 import inspect
 from collections import OrderedDict
@@ -31,7 +30,7 @@ class State(object):
         return force_text(self.name)
 
     def __repr__(self):
-        return '<%s: %r>' % (self.__class__.__name__, self.name)
+        return force_text("<%s: '%s'>" % (self.__class__.__name__, str(self)))
 
 
 @python_2_unicode_compatible
@@ -60,7 +59,7 @@ class Transition(object):
         return force_text(self.name)
 
     def __repr__(self):
-        return '<%s: %r>' % (self.__class__.__name__, self.name)
+        return force_text("<%s: '%s'>" % (self.__class__.__name__, str(self)))
 
     def affected_states(self):
         return self.sources + [self.target]

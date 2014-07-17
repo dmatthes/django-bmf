@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import six
+from django.utils.encoding import force_text
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.formats import number_format
 from django.utils.translation import ugettext_lazy as _
@@ -63,13 +64,13 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
 
     def __str__(self):
         if self.value is None:
-            r = self.name
+            value = self.name
         else:
-            r = self.formatstr % {'val': number_format(self.value, force_grouping=True), 'sym': self.symbol}
-        return r.encode("utf-8")
+            value = self.formatstr % {'val': number_format(self.value, force_grouping=True), 'sym': self.symbol}
+        return force_text(value)
 
     def __repr__(self):
-        return "<%s: '%s'>" % (self.__class__.__name__, str(self))
+        return force_text("<%s: '%s'>" % (self.__class__.__name__, str(self)))
 
     # logic .....
 
@@ -128,9 +129,7 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
         """
         if isinstance(other, float):
             return self.__class__(Decimal(str(other)) * self.value)
-        elif isinstance(other, six.integer_types):
-            return self.__class__(other * self.value)
-        elif isinstance(other, Decimal):
+        elif isinstance(other, (six.integer_types, Decimal)):
             return self.__class__(other * self.value)
         raise TypeError("cannot multiply '%s' and '%s'" % (self.__class__.__name__, other.__class__.__name__))
 
@@ -144,9 +143,7 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
         """
         if isinstance(other, float):
             return self.__class__(self.value // Decimal(str(other)))
-        elif isinstance(other, six.integer_types):
-            return self.__class__(self.value // other)
-        elif isinstance(other, Decimal):
+        elif isinstance(other, (six.integer_types, Decimal)):
             return self.__class__(self.value // other)
         elif self.__class__ == other.__class__:
             return self.value // other.value
@@ -169,18 +166,19 @@ class Wallet(object):
         self.currencies = {}
 
     def __repr__(self):
-        return "<%s>" % (self.__class__.__name__)
+        return "<%s>" % (self.__class__.__name__) # TODO add address
 
-    def __nonzero__(self):
+    def __bool__(self):
         for key, currency in self.currencies.items():
             if currency:
-                return True
-        return False
+                return False
+        return True
 
     def __add__(self, other):
         """
         Addition should only work with currencies!
         """
+
         if isinstance(other, BaseCurrency):
             wallet = copy(self)
             if other.iso in wallet.currencies:
@@ -188,12 +186,23 @@ class Wallet(object):
             else:
                 wallet.currencies[other.iso] = other
             return wallet
-        raise TypeError("Must add a currency to the Wallet")
+
+        if isinstance(other, Wallet):
+            wallet = copy(self)
+            for key, currency in other.currencies.items():
+                if currency.iso in wallet.currencies:
+                    wallet.currencies[currency.iso] += currency
+                else:
+                    wallet.currencies[currency.iso] = currency
+            return wallet
+
+        raise TypeError("Must add a currency or wallet object to the wallet")
 
     def __sub__(self, other):
         """
         should only work with currencies!
         """
+
         if isinstance(other, BaseCurrency):
             wallet = copy(self)
             if other.iso in wallet.currencies:
@@ -201,4 +210,40 @@ class Wallet(object):
             else:
                 wallet.currencies[other.iso] = -1 * other
             return wallet
-        raise TypeError("Must substract a currency from the Wallet")
+
+        if isinstance(other, Wallet):
+            wallet = copy(self)
+            for key, currency in other.currencies.items():
+                if currency.iso in wallet.currencies:
+                    wallet.currencies[currency.iso] -= currency
+                else:
+                    wallet.currencies[currency.iso] = -1 * currency
+            return wallet
+
+        raise TypeError("Must substract a currency or wallet object from the wallet")
+
+    def __mul__(self, other):
+        """
+        Multiplication should work with int, float, decimal, but NOT with currency (it makes no sense)
+        """
+        if isinstance(other, (float, six.integer_types, Decimal)):
+            wallet = copy(self)
+            for key, currency in wallet.items():
+                wallet[key] = other * currency
+            return wallet
+        raise TypeError("cannot multiply '%s' and '%s'" % (self.__class__.__name__, other.__class__.__name__))
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __floordiv__(self, other):
+        """
+        Division should work with int, float, decimal, returning a currency
+        and with Currency returning a decimal
+        """
+        if isinstance(other, (float, six.integer_types, Decimal)):
+            wallet = copy(self)
+            for key, currency in wallet.items():
+                wallet[key] = other // currency
+            return wallet
+        raise TypeError("cannot divide '%s' by '%s'" % (self.__class__.__name__, other.__class__.__name__))

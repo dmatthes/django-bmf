@@ -11,15 +11,15 @@ from .models import Account
 def account_balance(account=None):
 
     if isinstance(account, Account):
-        A = [account]
+        a = [account]
     elif isinstance(account, int):
-        A = Account.objects.filter(pk=account)
+        a = Account.objects.filter(pk=account)
     else:
-        A = Account.objects.filter(parent=None)
+        a = Account.objects.filter(parent=None)
 
-    for item in A:
-        debit = item.debits.all().aggregate(Sum('amount'))
-        credit = item.credits.all().aggregate(Sum('amount'))
+    for item in a:
+       #debit = item.debits.all().aggregate(Sum('amount'))
+       #credit = item.credits.all().aggregate(Sum('amount'))
 
         for child in item.children.all():
             account_balance(child)

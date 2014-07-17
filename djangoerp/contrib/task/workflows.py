@@ -6,29 +6,26 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 
-from datetime import timedelta
 from math import ceil
 
 from djangoerp.workflows import Workflow, State, Transition
 from djangoerp.utils import get_model_from_cfg
 from django.core.exceptions import ValidationError
 
+
 class GoalWorkflow(Workflow):
     class States:
         open = State(_(u"Open"), default=True, delete=False)
         completed = State(_(u"Completed"))
 
-
     class Transitions:
         complete = Transition(_("Complete this Goal"), ["open"], "completed")
         reopen = Transition(_("Reopen this Goal"), ["completed"], "open")
-
 
     def complete(self):
         if self.instance.task_set.filter(completed=False).count() > 0:
             raise ValidationError(_('You can not complete a goal which has open tasks'))
         self.instance.completed = True
-
 
     def reopen(self):
         self.instance.completed = False
@@ -102,14 +99,13 @@ class TaskWorkflow(Workflow):
                 if self.instance.goal.billable and billable_time > 0:
                     if not self.instance.employee.product:
                         raise ValidationError(_("The employee's user-account needs a default product"))
-                    Position = get_model_from_cfg('POSITION')
-                    position = Position(
-                        name=self.instance.summary,
-                        project=project,
-                        employee=self.user.erp_employee,
-                        date=now(),
-                        product=self.user.erp_employee.product,
-                        amount=self.bill_resolution*ceil(billable_time/self.bill_resolution)/60.
+                    position = get_model_from_cfg('POSITION')(
+                        name = self.instance.summary,
+                        project = project,
+                        employee = self.user.erp_employee,
+                        date = now(),
+                        product = self.user.erp_employee.product,
+                        amount = self.bill_resolution * ceil(billable_time / self.bill_resolution) / 60.
                     )
                     position.clean()
                     position.save()

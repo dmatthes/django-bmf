@@ -16,13 +16,13 @@ class ClassTests(TestCase):
         obj = State(b'name')
         self.assertEqual(obj.name, b"name")
         self.assertEqual(str(obj), "name")
-        self.assertEqual(repr(obj), b"<State: 'name'>")
+        self.assertEqual(repr(obj), "<State: 'name'>")
 
     def test_transition(self):
         obj = Transition(b'name', 'from', 'to')
         self.assertEqual(obj.name, b"name")
         self.assertEqual(str(obj), "name")
-        self.assertEqual(repr(obj), b"<Transition: 'name'>")
+        self.assertEqual(repr(obj), "<Transition: 'name'>")
         self.assertEqual(obj.sources, ["from", ])
 
         # may even add a object ... but why should you do it?

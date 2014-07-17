@@ -12,7 +12,7 @@ from django.core.files.storage import get_storage_class
 
 __all__ = (
     'BASE_MODULE',
-    'FILE_SERVER',
+#   'FILE_SERVER',
     'DOCUMENT_ROOT',
     'DOCUMENT_URL',
     'STORAGE',
@@ -48,7 +48,7 @@ BASE_MODULE = {
     'QUOTATION': 'djangoerp_quotation.Quotation',
     'TIMESHEET': 'djangoerp_timesheet.Timesheet',
     'TRANSACTION': 'djangoerp_accounting.Transaction',
-    'TRANSACTION_ITEM': 'djangoerp_accounting.TransactionItem', # TODO: check if i am needed
+    'TRANSACTION_ITEM': 'djangoerp_accounting.TransactionItem',  # TODO: check if i am needed
 }
 BASE_MODULE.update(erp_modules)
 
@@ -63,9 +63,9 @@ CFG_STORAGE = {
 }
 CFG_STORAGE.update(erp_storage)
 
-if not 'location' in CFG_STORAGE['OPTIONS']:
+if 'location' not in CFG_STORAGE['OPTIONS']:
     CFG_STORAGE['OPTIONS']['location'] = getattr(settings, 'ERP_DOCUMENT_ROOT', None)
-if not 'base_url' in CFG_STORAGE['OPTIONS']:
+if 'base_url' not in CFG_STORAGE['OPTIONS']:
     CFG_STORAGE['OPTIONS']['base_url'] = getattr(settings, 'ERP_DOCUMENT_URL', None)
 
 if not CFG_STORAGE['OPTIONS']['location']:

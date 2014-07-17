@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
@@ -67,10 +66,10 @@ class BaseDocument(ERPModel):
         if self.file:
             self.size = self.file.size
 
-        if hasattr(self,'project') and hasattr(self.content_object,'erpget_project'):
+        if hasattr(self, 'project') and hasattr(self.content_object, 'erpget_project'):
             self.project = self.content_object.get_project
 
-        if hasattr(self,'customer') and hasattr(self.content_object,'erpget_customer'):
+        if hasattr(self, 'customer') and hasattr(self.content_object, 'erpget_customer'):
             self.customer = self.content_object.get_customer
 
     class ERPMeta:

@@ -3,10 +3,10 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import PluginCreate
+from djangoerp.views import ModuleCreateView
 
 
-class EmployeeCreateView(PluginCreate):
+class EmployeeCreateView(ModuleCreateView):
     def get_initial(self):
         # TODO: ADD a default product to settings and read the configuration here
 #       if self.request.djangoerp_employee:
