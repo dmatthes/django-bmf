@@ -100,13 +100,10 @@ class TaskWorkflow(Workflow):
                     if not self.instance.employee.product:
                         raise ValidationError(_("The employee's user-account needs a default product"))
                     position = get_model_from_cfg('POSITION')(
-                        name = self.instance.summary,
-                        project = project,
-                        employee = self.user.erp_employee,
-                        date = now(),
-                        product = self.user.erp_employee.product,
-                        amount = self.bill_resolution * ceil(billable_time / self.bill_resolution) / 60.
-                    )
+                        name=self.instance.summary, project=project,
+                        employee=self.user.erp_employee, 
+                        date=now(), product=self.user.erp_employee.product, 
+                        amount=self.bill_resolution * ceil(billable_time/self.bill_resolution) / 60.)
                     position.clean()
                     position.save()
                     return position.erpmodule_detail()

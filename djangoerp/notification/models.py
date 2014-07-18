@@ -13,7 +13,10 @@ class Notification(models.Model):
     """
     Model which informs users about changes in the history
     """
-    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=False, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=False,
+        null=True, on_delete=models.CASCADE,
+    )
     activity = models.ForeignKey("djangoerp.Activity", blank=False, null=True, on_delete=models.CASCADE)
     obj_ct = models.ForeignKey(ContentType, related_name=False)
     obj_id = models.PositiveIntegerField()
@@ -21,7 +24,11 @@ class Notification(models.Model):
     unread = models.NullBooleanField(default=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True, editable=False,)
     changed = models.DateTimeField(_("Changed"), auto_now=True, editable=False,)
-    created_by = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=True, null=True, editable=False, related_name="+", on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(
+        getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        blank=True, null=True, editable=False,
+        related_name="+", on_delete=models.SET_NULL,
+    )
 
     class Meta:
         ordering = ('-created',)

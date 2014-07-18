@@ -4,11 +4,8 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
 
 from djangoerp.workflows import Workflow, State, Transition
-
-import datetime
 
 
 class InvoiceWorkflow(Workflow):

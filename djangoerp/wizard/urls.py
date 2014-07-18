@@ -3,10 +3,11 @@
 
 from __future__ import unicode_literals
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 from .views import WizardView
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', WizardView.as_view(), name="wizard"),
 )

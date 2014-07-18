@@ -17,13 +17,14 @@ from djangoerp.contrib.accounting.models import ACCOUNTING_INCOME, ACCOUNTING_EX
 
 from decimal import Decimal
 
+
 PRODUCT_SERVICE = 1
 PRODUCT_CONSUMABLE = 2
 PRODUCT_STOCKABLE = 3
 PRODUCT_TYPES = (
     (PRODUCT_SERVICE, _("Service")),
-# (PRODUCT_CONSUMABLE,_("Consumable")),
-# (PRODUCT_STOCKABLE,_("Stockable")),
+    # (PRODUCT_CONSUMABLE,_("Consumable")),
+    # (PRODUCT_STOCKABLE,_("Stockable")),
 )
 
 PRODUCT_NO_BATCH = 1
@@ -60,12 +61,18 @@ class AbstractProduct(ERPModel):
         choices=PRODUCT_TYPES,
         default=PRODUCT_SERVICE,
     )
-    can_sold = models.BooleanField(_("Can be sold"), null=False, blank=True, default=False, db_index=True)
-    can_purchased = models.BooleanField(_("Can be purchased"), null=False, blank=True, default=False, db_index=True)
+    can_sold = models.BooleanField(
+        _("Can be sold"), null=False, blank=True, default=False, db_index=True,
+    )
+    can_purchased = models.BooleanField(
+        _("Can be purchased"), null=False, blank=True, default=False, db_index=True,
+    )
     description = models.TextField(_("Description"), null=False, blank=True)
     price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
-    price_precision = models.PositiveSmallIntegerField(default=0, blank=True, null=True, editable=False)
+    price_precision = models.PositiveSmallIntegerField(
+        default=0, blank=True, null=True, editable=False,
+    )
     taxes = models.ManyToManyField(
         BASE_MODULE["TAX"],
         blank=True,

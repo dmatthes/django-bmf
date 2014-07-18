@@ -4,17 +4,17 @@
 import re
 
 from markdown.extensions import Extension
-from markdown.preprocessors import Preprocessor
+# from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 
 
-def makeExtension(configs=None):
+def makeExtension(configs=None):  # noqa
     return ChecklistExtension(configs=configs)
 
 
 class ChecklistExtension(Extension):
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md, md_globals):  # noqa
         md.postprocessors.add('checklist', ChecklistPostprocessor(md),
                 '>raw_html')
 

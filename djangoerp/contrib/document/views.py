@@ -9,7 +9,6 @@ from djangoerp.views import ModuleCreateView
 from djangoerp.views import ModuleUpdateView
 from djangoerp.views import ModuleDetailView
 
-from .models import Document
 from .forms import DocumentForm
 
 

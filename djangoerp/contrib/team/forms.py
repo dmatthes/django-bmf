@@ -4,7 +4,6 @@
 from __future__ import unicode_literals
 
 from django.forms import ModelForm
-from django.forms.models import inlineformset_factory
 
 from djangoerp.forms import ERPForm
 

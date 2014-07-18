@@ -4,7 +4,6 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
-from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic import UpdateView
 from django.views.generic import CreateView

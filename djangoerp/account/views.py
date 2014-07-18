@@ -10,15 +10,16 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
-from django.core.urlresolvers import reverse_lazy
 
 from ..viewmixins import AjaxMixin
 from ..viewmixins import NextMixin
 
 from .forms import ERPAuthenticationForm
 
+
 class LogoutModal(AjaxMixin, TemplateView):
     template_name = 'djangoerp/account/modal_logout.html'
+
 
 class LogoutView(TemplateView):
     template_name = "djangoerp/account/logout.html"
@@ -26,8 +27,6 @@ class LogoutView(TemplateView):
     def get(self, *args, **kwargs):
         logout(self.request)
         return super(LogoutView, self).get(*args, **kwargs)
-
-#from django.shortcuts import redirect
 
 
 class LoginView(FormView, NextMixin):
@@ -40,18 +39,17 @@ class LoginView(FormView, NextMixin):
         return super(LoginView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-#   if self.request.session.test_cookie_worked():
-#     self.request.session.delete_test_cookie()
+        # if self.request.session.test_cookie_worked():
+        #     self.request.session.delete_test_cookie()
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):
         return self.redirect_next('djangoerp:dashboard')
 
-# def form_invalid(self, form):
-#   self.request.session.set_test_cookie()
-#   return super(LoginView, self).form_invalid(form)
+    #   self.request.session.set_test_cookie()
+    #   return super(LoginView, self).form_invalid(form)
 
-# def get(self, request, *args, **kwargs):
-#   self.request.session.set_test_cookie()
-#   return super(LoginView, self).get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #   self.request.session.set_test_cookie()
+    #   return super(LoginView, self).get(request, *args, **kwargs)

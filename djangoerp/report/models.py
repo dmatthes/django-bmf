@@ -34,10 +34,22 @@ class Report(models.Model):
     """
     Model to store informations to generate a report
     """
-    reporttype = models.CharField(_("Reporttype"), max_length=20, blank=False, null=False)  # TODO replace with report field
-    mimetype = models.CharField(_("Mimetype"), max_length=20, blank=False, null=False, editable=False, default="pdf")  # TODO 
-    contenttype = models.ForeignKey(ContentType, related_name="erp_report", null=True, blank=True, help_text="Connect a Report to an ERP-Model", on_delete=models.CASCADE)
-    options = models.TextField(_("Options"), blank=True, null=False, help_text=_("Options for the renderer. Empty this field to get all available options with default values"))  # TODO needs validator
+    # TODO replace with report field
+    reporttype = models.CharField(
+        _("Reporttype"), max_length=20, blank=False, null=False,
+    )
+    mimetype = models.CharField(
+        _("Mimetype"), max_length=20, blank=False, null=False, editable=False, default="pdf",
+    )
+    contenttype = models.ForeignKey(
+        ContentType, related_name="erp_report", null=True, blank=True,
+        help_text="Connect a Report to an ERP-Model", on_delete=models.CASCADE,
+    )
+    # TODO needs validator
+    options = models.TextField(
+        _("Options"), blank=True, null=False,
+        help_text=_("Options for the renderer. Empty this field to get all available options with default values"),
+        )
     modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False,)
 
     class Meta:

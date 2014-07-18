@@ -4,7 +4,6 @@
 from __future__ import unicode_literals
 
 from django.forms import ModelForm
-from django.utils.translation import ugettext_lazy as _
 
 from .models import Customer
 

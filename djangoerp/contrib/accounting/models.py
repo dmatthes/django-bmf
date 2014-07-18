@@ -10,7 +10,6 @@ models doctype
 from django.db import models
 from django.db.models import Sum
 from django.utils.translation import ugettext_lazy as _
-from django.forms.widgets import RadioSelect
 
 from djangoerp.models import ERPMPTTModel
 from djangoerp.models import ERPModel
@@ -50,32 +49,34 @@ ACCOUNTING_TYPES = (
 class BaseAccount(ERPMPTTModel):
     """
     """
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
+    parent = TreeForeignKey(
+        'self', null=True, blank=True, related_name='children',
+        on_delete=models.CASCADE,
+    )
 #   parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     balance = MoneyField(editable=False, default="0")
     balance_currency = CurrencyField()
     number = models.CharField(_('Number'), max_length=30, null=True, blank=True, )
     name = models.CharField(_('Name'), max_length=100, null=False, blank=False, )
-    type = models.PositiveSmallIntegerField(_('Type'), null=False, blank=False, choices=ACCOUNTING_TYPES)
+    type = models.PositiveSmallIntegerField(
+        _('Type'), null=False, blank=False, choices=ACCOUNTING_TYPES,
+    )
     read_only = models.BooleanField(_('Read-only'), default=False)
 
-# def get_debit(self):
-#   if self.type in [ACCOUNTING_ASSET, ACCOUNTING_EXPENSE]:
-#     return -1*self.debit
-#   return self.debit
-
-# def get_credit(self):
-#   if self.type in [ACCOUNTING_ASSET, ACCOUNTING_EXPENSE]:
-#     return -1*self.credit
-#   return self.credit
 
     def get_balance(self):
-#       items = list(self.get_descendants().values_list('pk', flat=True))
-#       items.append(self.pk)
-#   bal_credit = self.transaction_accounts.model.objects.filter(pk__in=items, balanced=True, credit=True).aggregate(Sum('amount'))
-#   bal_debit = self.transaction_accounts.model.objects.filter(pk__in=items, balanced=True, credit=False).aggregate(Sum('amount'))
-        bal_credit = self.transaction_accounts.filter(balanced=True, credit=True).aggregate(Sum('amount'))
-        bal_debit = self.transaction_accounts.filter(balanced=True, credit=False).aggregate(Sum('amount'))
+        # items = list(self.get_descendants().values_list('pk', flat=True))
+        # items.append(self.pk)
+        # bal_credit = self.transaction_accounts.model.objects.filter(pk__in=items, balanced=True, credit=True).aggregate(Sum('amount'))
+        # bal_debit = self.transaction_accounts.model.objects.filter(pk__in=items, balanced=True, credit=False).aggregate(Sum('amount'))
+        bal_credit = self.transaction_accounts.filter(
+            balanced=True,
+            credit=True,
+        ).aggregate(Sum('amount'))
+        bal_debit = self.transaction_accounts.filter(
+            balanced=True,
+            credit=False,
+        ).aggregate(Sum('amount'))
         number_credit = bal_credit['amount__sum'] or Decimal(0)
         number_debit = bal_debit['amount__sum'] or Decimal(0)
         if self.type in [ACCOUNTING_ASSET, ACCOUNTING_EXPENSE]:
@@ -133,8 +134,12 @@ class AbstractTransaction(ERPModel):
     """
     state = WorkflowField()
     if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL)
-    text = models.CharField(_('Posting text'), max_length=255, null=False, blank=False, )
+        project = models.ForeignKey(
+            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
+        )
+    text = models.CharField(
+        _('Posting text'), max_length=255, null=False, blank=False,
+    )
     accounts = models.ManyToManyField(BASE_MODULE["ACCOUNT"], blank=False, through="TransactionItem")
     balanced = models.BooleanField(_('Draft'), default=False, editable=False)
 
@@ -172,13 +177,24 @@ class TransactionItemManager(models.Manager):
 class AbstractTransactionItem(models.Model):
     """
     """
-    account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=True, blank=True, related_name="transaction_accounts", on_delete=models.PROTECT)
-    transaction = models.ForeignKey(BASE_MODULE["TRANSACTION"], null=True, blank=True, related_name="account_transactions", on_delete=models.CASCADE)
+    account = models.ForeignKey(
+        BASE_MODULE["ACCOUNT"], null=True, blank=True,
+        related_name="transaction_accounts", on_delete=models.PROTECT,
+    )
+    transaction = models.ForeignKey(
+        BASE_MODULE["TRANSACTION"], null=True, blank=True,
+        related_name="account_transactions", on_delete=models.CASCADE,
+    )
     amount = MoneyField()
     amount_currency = CurrencyField()
-    credit = models.BooleanField(choices=((True, _('Credit')), (False, _('Debit'))), default=True)
+    credit = models.BooleanField(
+        choices=((True, _('Credit')), (False, _('Debit'))),
+        default=True,
+    )
     balanced = models.BooleanField(default=False, editable=False)
-    modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False, null=True, blank=False)
+    modified = models.DateTimeField(
+        _("Modified"), auto_now=True, editable=False, null=True, blank=False,
+    )
 
     objects = TransactionItemManager()
 

@@ -32,8 +32,13 @@ def _generate_name(value, date, counter):
 
 
 class NumberCycle(models.Model):
-    ct = models.OneToOneField(ContentType, related_name="erp_numbercycle", null=True, blank=False, editable=False)
-    name_template = models.CharField(max_length=64, null=True, blank=False, validators=[template_name_validator])
+    ct = models.OneToOneField(
+        ContentType, related_name="erp_numbercycle", null=True, blank=False, editable=False,
+    )
+    name_template = models.CharField(
+        _("Template"),
+        max_length=64, null=True, blank=False, validators=[template_name_validator],
+    )
     counter_start = models.PositiveIntegerField(null=True, blank=False, default=1)
     current_period = models.DateField(null=True, blank=False, default=now)
 

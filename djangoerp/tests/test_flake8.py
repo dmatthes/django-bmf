@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # ex:set fileencoding=utf-8:
+# flake8: noqa
 
 import os
 
@@ -43,4 +44,4 @@ class Flake8Test(TestCase):
         with open('flakes8.log', 'w') as file:
             for i in StyleGuide.options.report._log_messages:
                 file.write(i+'\n')
-        self.assertLess(count, 390)
+        self.assertLess(count, 220)

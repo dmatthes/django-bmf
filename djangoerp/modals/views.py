@@ -4,22 +4,13 @@
 from __future__ import unicode_literals
 
 from django.views.generic.base import TemplateView
-from django.views.generic.base import RedirectView
-from django.views.defaults import permission_denied
-from django.utils.decorators import method_decorator
-from django.http import Http404
 from django.template.loader import select_template
 from django.template import RequestContext
 from django.core.urlresolvers import resolve, NoReverseMatch
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
 
-from ..models import View
 from ..dashboard.forms import ViewForm
-from ..models import Watch
-from ..activity.forms import FollowForm
 from ..viewmixins import AjaxMixin
-from ..workflows import DefaultWorkflow
+
 
 class ModalSaveView(AjaxMixin, TemplateView):
     template_name = 'djangoerp/modal/saveview.html'

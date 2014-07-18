@@ -43,7 +43,8 @@ class ERPFormMetaclass(type):
 @python_2_unicode_compatible
 class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
 
-    def __init__(self, data=None, files=None, auto_id='erp_%s', prefix=None, 
+    def __init__(
+            self, data=None, files=None, auto_id='erp_%s', prefix=None,
             initial=None, instance=None, initial_inlines=None,
             error_class=ErrorList, **kwargs):
         self.is_bound = data is not None or files is not None

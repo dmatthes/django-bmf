@@ -4,10 +4,6 @@
 {% load djangoerp_forms %}
 {% load i18n %}
 
-{% block breadcrumb %}
-{{ block.super }}<li><a href="{{ object.erpmodule_detail }}">{{ object }}</a></li>
-{% endblock %}
-
 {% block base_buttons %}
 <div class="btn-toolbar pull-left" role="toolbar">
 {% if files %} 

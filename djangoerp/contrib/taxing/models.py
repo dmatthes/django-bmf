@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -18,11 +17,18 @@ from decimal import Decimal
 
 class AbstractTax(ERPModel):
     name = models.CharField(max_length=255, null=False, blank=False, )
-# invoice_name_long = models.CharField( max_length=255, null=False, blank=False, )
-# invoice_name_short = models.CharField( max_length=255, null=False, blank=False, )
-    account = models.ForeignKey(BASE_MODULE["ACCOUNT"], null=False, blank=False, related_name="tax_liability", limit_choices_to={'type': ACCOUNTING_LIABILITY, 'read_only': False}, on_delete=models.PROTECT)
+    # invoice_name_long = models.CharField( max_length=255, null=False, blank=False, )
+    # invoice_name_short = models.CharField( max_length=255, null=False, blank=False, )
+    account = models.ForeignKey(
+        BASE_MODULE["ACCOUNT"], null=False, blank=False, related_name="tax_liability",
+        limit_choices_to={'type': ACCOUNTING_LIABILITY, 'read_only': False},
+        on_delete=models.PROTECT,
+    )
     rate = models.DecimalField(max_digits=8, decimal_places=5)
-    passive = models.BooleanField(_('Tax is allways included in the product price and never visible to the customer'), null=False, blank=False, default=False)
+    passive = models.BooleanField(
+        _('Tax is allways included in the product price and never visible to the customer'),
+        null=False, blank=False, default=False,
+    )
     is_active = models.BooleanField(_("Is active"), null=False, blank=False, default=True)
 
     def get_rate(self):

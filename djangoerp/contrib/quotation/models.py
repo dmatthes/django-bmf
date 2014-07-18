@@ -15,8 +15,6 @@ from djangoerp.numbering.utils import numbercycle_get_name, numbercycle_delete_o
 from djangoerp.fields import CurrencyField
 from djangoerp.fields import MoneyField
 
-from django.core.exceptions import ValidationError
-
 import datetime
 from decimal import Decimal
 
@@ -97,12 +95,12 @@ class AbstractQuotation(ERPModel):
         return None
 
     def clean(self):
-#   if self.project and not self.customer_id:
-#     self.customer = self.project.customer
-#   if self.project and not self.employee_id:
-#     self.employee_id = self.project.employee_id
-#   if self.customer and not self.project_id:
-#     self.project = self.customer.project
+        # if self.project and not self.customer_id:
+        #   self.customer = self.project.customer
+        # if self.project and not self.employee_id:
+        #   self.employee_id = self.project.employee_id
+        # if self.customer and not self.project_id:
+        #   self.project = self.customer.project
         if self.customer and not self.invoice_address_id:
             self.invoice_address = \
                 self.customer.customer_address.filter(is_billing=True, default_billing=True).first()
@@ -174,12 +172,20 @@ class Quotation(AbstractQuotation):
 
 
 class QuotationProduct(models.Model):
-    quotation = models.ForeignKey(BASE_MODULE["QUOTATION"], null=True, blank=True, related_name="quotation_products", on_delete=models.CASCADE)
-    product = models.ForeignKey(BASE_MODULE["PRODUCT"], null=True, blank=True, related_name="quotation_products", on_delete=models.PROTECT)
+    quotation = models.ForeignKey(
+        BASE_MODULE["QUOTATION"], null=True, blank=True,
+        related_name="quotation_products", on_delete=models.CASCADE,
+    )
+    product = models.ForeignKey(
+        BASE_MODULE["PRODUCT"], null=True, blank=True,
+        related_name="quotation_products", on_delete=models.PROTECT,
+    )
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)
     price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
-    price_precision = models.PositiveSmallIntegerField(default=0, blank=True, null=True, editable=False)
+    price_precision = models.PositiveSmallIntegerField(
+        default=0, blank=True, null=True, editable=False,
+    )
     amount = models.FloatField(_("Amount"), null=True, blank=False, default=1.0)
     # unit = models.CharField() # TODO add units
     description = models.TextField(_("Description"), null=True, blank=True)

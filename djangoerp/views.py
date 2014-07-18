@@ -29,7 +29,6 @@ from .signals import activity_workflow
 from .signals import djangoerp_post_save
 from .utils import get_model_from_cfg
 from .utils import form_class_factory
-from .utils.deprecation import RemovedInNextVersionWarning
 from .viewmixins import ModuleClonePermissionMixin
 from .viewmixins import ModuleCreatePermissionMixin
 from .viewmixins import ModuleDeletePermissionMixin
@@ -42,7 +41,6 @@ from .viewmixins import NextMixin
 
 import re
 import operator
-import warnings
 import copy
 from functools import reduce
 from django_filters.views import FilterView
@@ -56,7 +54,12 @@ class ModuleActivityMixin(object):
     def get_context_data(self, **kwargs):
         ct = ContentType.objects.get_for_model(self.object)
 
-        watch = Watch.objects.filter(user=self.request.user, watch_ct=ct, watch_id__in=[self.object.pk, 0]).order_by('-watch_id').first()
+        watch = Watch.objects.filter(
+            user=self.request.user,
+            watch_ct=ct,
+            watch_id__in=[self.object.pk, 0]
+        ).order_by('-watch_id').first()
+
         if watch:
             watching = watch.active
         else:

@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 
-from django.utils.translation import ugettext_lazy as _
 from django.template.loader import select_template
 from django.template import Context
 
@@ -14,6 +13,7 @@ from djangoerp.utils import get_model_from_cfg
 from io import BytesIO
 from xhtml2pdf import pisa
 from ConfigParser import RawConfigParser
+
 
 class xhtml2pdfReport(BaseReport):
 
@@ -86,20 +86,21 @@ pdf_background_pk = None
             'template_letter': letter_file,
             'template_pages': pages_file,
 
-         #  'margin_left': self.cfg.getboolean('letter_page', 'margin_left'),
-         #  'margin_bottom': self.cfg.getboolean('letter_page', 'margin_bottom'),
+            #  'margin_left': self.cfg.getboolean('letter_page', 'margin_left'),
+            #  'margin_bottom': self.cfg.getboolean('letter_page', 'margin_bottom'),
             'extra': self.options.getboolean('letter_page', 'extra'),
-         #  'extra_right': self.cfg.getboolean('letter_page', 'extra_right'),
-         #  'extra_top': self.cfg.getboolean('letter_page', 'extra_top'),
+            #  'extra_right': self.cfg.getboolean('letter_page', 'extra_right'),
+            #  'extra_top': self.cfg.getboolean('letter_page', 'extra_top'),
 
         }
         context['options'] = options
 
         template = select_template([template_name, 'djangoerp/report_html_base.html'])
         html = template.render(Context(context))
-        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), buffer) # pdf won't be UTF-8
+        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), buffer)  # pdf won't be UTF-8
         pdf = buffer.getvalue()
         buffer.close()
         return pdf
+
 
 site.register_report('xhtml2pdf', xhtml2pdfReport)

@@ -69,7 +69,9 @@ class Activity(models.Model):
     )
     template = models.CharField(_("Template"), max_length=100, editable=False, blank=False, null=True)
     parent_id = models.PositiveIntegerField()
-    parent_ct = models.ForeignKey(ContentType, related_name="erp_history_parent", on_delete=models.CASCADE)
+    parent_ct = models.ForeignKey(
+        ContentType, related_name="erp_history_parent", on_delete=models.CASCADE,
+    )
     parent_object = GenericForeignKey('parent_ct', 'parent_id')
 
     modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False,)

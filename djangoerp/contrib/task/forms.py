@@ -5,13 +5,11 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.forms import ModelForm
-from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
 from djangoerp.forms import ERPForm
 
 from .models import Goal
-from .models import Task
 
 class GoalCloneForm(ModelForm):
     class Meta:

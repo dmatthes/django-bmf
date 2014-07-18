@@ -18,14 +18,19 @@ from .workflows import TaskWorkflow
 
 from math import floor
 
+
 @python_2_unicode_compatible
 class AbstractGoal(ERPModel):
     """
     """
     state = WorkflowField()
 
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
-    referee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+    )
+    referee = models.ForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
 
     summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
@@ -36,7 +41,7 @@ class AbstractGoal(ERPModel):
     class Meta(ERPModel.Meta): # only needed for abstract models
         verbose_name = _('Goal')
         verbose_name_plural = _('Goals')
-        ordering = ['project__name','summary']
+        ordering = ['project__name', 'summary']
         abstract = True
 
     def erpget_customer(self):
@@ -102,8 +107,12 @@ class AbstractTask(ERPModel):
 
     state = WorkflowField()
 
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+    )
+    employee = models.ForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
 
     goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
 

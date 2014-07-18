@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,7 +12,10 @@ from djangoerp.categories import SALES
 
 
 class BaseAddress(ERPModel):
-    customer = models.ForeignKey(BASE_MODULE["CUSTOMER"], null=False, blank=False, related_name="customer_address", on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        BASE_MODULE["CUSTOMER"], null=False, blank=False,
+        related_name="customer_address", on_delete=models.CASCADE,
+    )
 
     is_active = models.BooleanField(_('Is active'), default=True)
     is_billing = models.BooleanField(_('Is billing'), default=True)
@@ -22,7 +24,9 @@ class BaseAddress(ERPModel):
     default_shipping = models.BooleanField(_('Default shipping'), default=False)
 
     def as_report(self):
-        raise NotImplementedError('You need to implement a function to print your address in a report')
+        raise NotImplementedError(
+            'You need to implement a function to print your address in a report'
+        )
 
     class Meta:
         verbose_name = _('Address')

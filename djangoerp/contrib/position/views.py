@@ -15,7 +15,6 @@ from ...views import ModuleIndexView
 from ...views import ModuleCreateView
 from ...views import ModuleUpdateView
 from ...views import ModuleDetailView
-from ...views import ModuleFormAPI
 from ...viewmixins import ModuleViewMixin
 
 from .models import Position
