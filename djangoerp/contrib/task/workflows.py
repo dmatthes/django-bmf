@@ -23,7 +23,7 @@ class GoalWorkflow(Workflow):
         reopen = Transition(_("Reopen this Goal"), "completed", "open")
 
     def complete(self):
-        if self.instance.task_set.filter(completed=False).count() > 0:
+        if self.instance.task_set.filter(completed=False).count() > 0:  # TODO untested
             raise ValidationError(_('You can not complete a goal which has open tasks'))
         self.instance.completed = True
 
@@ -32,12 +32,14 @@ class GoalWorkflow(Workflow):
 
 
 def review_condition(object, user):
-    if object.goal and object.goal.referee_id and user.pk != object.goal.referee_id:
+    if object.goal and object.goal.referee_id and user.pk != object.goal.referee_id:  # TODO: untested
         return True
     return False
 
+
 def finish_condition(object, user):
     return not review_condition(object, user)
+
 
 class TaskWorkflow(Workflow):
     bill_resolution = 5 # minutes
@@ -102,42 +104,38 @@ class TaskWorkflow(Workflow):
         self.instance.work_date = now()
         self.instance.completed = False
 
+    def review(self):
+        self.stop()
+
     def finish(self):
         self.stop()
         self.instance.due_date = None
+
         # TODO remove this functionality IF timesheets are implemented
         billable_time = ceil(self.instance.seconds_on/60.)
 
         # get the project from
-        if self.instance.project:
+        if self.instance.project:  # TODO untested
             project = self.instance.project
-        elif self.instance.goal:
+        elif self.instance.goal:  # TODO untested
             project = self.instance.goal.project
         else:
             project = None
 
-        if self.instance.goal:
-            if self.instance.goal.referee:
-                if self.user.erp_employee != self.instance.goal.referee:
-                    if self._initial_state_key == "review":
-                        raise ValidationError(_('Your need to be a referee to this goal to change the state'))
-                    self.set_state("review")
+        self.instance.completed = True
 
-        if self._current_state_key != "review":
-            self.instance.completed = True
-
-            if project and project.customer and self.instance.goal and self.instance.employee:
-                if self.instance.goal.billable and billable_time > 0:
-                    if not self.instance.employee.product:
-                        raise ValidationError(_("The employee's user-account needs a default product"))
-                    position = get_model_from_cfg('POSITION')(
-                        name=self.instance.summary, project=project,
-                        employee=self.user.erp_employee, 
-                        date=now(), product=self.user.erp_employee.product, 
-                        amount=self.bill_resolution * ceil(billable_time/self.bill_resolution) / 60.)
-                    position.clean()
-                    position.save()
-                    return position.erpmodule_detail()
+        if project and project.customer and self.instance.goal and self.instance.employee:  # TODO untested
+            if self.instance.goal.billable and billable_time > 0:
+                if not self.instance.employee.product:
+                    raise ValidationError(_("The employee's user-account needs a default product"))
+                position = get_model_from_cfg('POSITION')(
+                    name=self.instance.summary, project=project,
+                    employee=self.user.erp_employee, 
+                    date=now(), product=self.user.erp_employee.product, 
+                    amount=self.bill_resolution * ceil(billable_time/self.bill_resolution) / 60.)
+                position.clean()
+                position.save()
+                return position.erpmodule_detail()
 
     def cancel(self):
         self.finish()

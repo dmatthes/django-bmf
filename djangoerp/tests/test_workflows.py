@@ -101,7 +101,7 @@ class ClassTests(TestCase):
                 class Transitions:
                     instance = Transition('Transition 1', 'test1', 'test2')
 
-        msg = "reserved name: set_state"
+        msg = "transition name starts with underscrore"
         with self.assertRaises(ImproperlyConfigured, msg=msg):
             class TestWF(Workflow):
                 class States:
@@ -109,7 +109,7 @@ class ClassTests(TestCase):
                     test2 = State('Test 2')
 
                 class Transitions:
-                    set_state = Transition('Transition 1', 'test1', 'test2')
+                    _test = Transition('Transition 1', 'test1', 'test2')
 
         msg = "reserved name: user"
         with self.assertRaises(ImproperlyConfigured, msg=msg):
@@ -147,7 +147,7 @@ class ClassTests(TestCase):
         WF = TestWF()
         self.assertTrue(hasattr(WF, 'trans1'), "Test 2")
 
-        WF.set_state('test2')
+        WF._set_state('test2')
         self.assertEqual(str(WF), "Test 2")
         self.assertEqual(WF._from_here(), [('trans2', WF._transitions['trans2']), ('trans3', WF._transitions['trans3'])])
 

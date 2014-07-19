@@ -135,8 +135,8 @@ class WorkflowMetaclass(type):
                 raise ImproperlyConfigured('The name "user" is reserved, please rename your transition defined in %s' % new_cls)
             if key == "instance":
                 raise ImproperlyConfigured('The name "instance" is reserved, please rename your transition defined in %s' % new_cls)
-            if key == "set_state":
-                raise ImproperlyConfigured('The name "set_state" is reserved, please rename your transition defined in %s' % new_cls)
+            if key[0] == "_":
+                raise ImproperlyConfigured('The keys can not start with an underscore in %s' % new_cls)
             for state in value.affected_states():
                 if state not in new_cls._states:
                     raise ImproperlyConfigured('The state %s is not defined in %s' % (state, new_cls))
@@ -166,7 +166,7 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
         self.instance = None
 
         if state:
-            self.set_state(state)
+            self._set_state(state)
         else:
             self._current_state = self._default_state
             self._current_state_key = self._default_state_key
@@ -185,7 +185,7 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
                 out.append((key, transition))
         return out
 
-    def set_state(self, key):
+    def _set_state(self, key):
         if key not in self._states:
             raise ValidationError(_("The state %s is not valid") % key)
         self._current_state = self._states[key]
@@ -203,7 +203,7 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
 
         # normaly the instance attribute should only be unset during the tests
         if not self.instance:
-            self.set_state(self._transitions[key].target)
+            self._set_state(self._transitions[key].target)
             return getattr(self, key)()
 
         # validate the instance
@@ -215,7 +215,7 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
             self._transitions[key].eval_condition(instance, user)
 
         # everything is valid, we can set the new state
-        self.set_state(self._transitions[key].target)
+        self._set_state(self._transitions[key].target)
 
         # call function
         url = getattr(self, key)()

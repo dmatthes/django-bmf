@@ -3,13 +3,18 @@
 
 from __future__ import unicode_literals
 
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import LiveServerTestCase
+from django.test import TestCase
 
 import json
 
+import warnings
+from djangoerp.utils.deprecation import RemovedInNextERPVersionWarning
 
-class ERPTestCase(LiveServerTestCase):
+
+class ERPViewTestCase(LiveServerTestCase):
     fixtures = [
         "djangoerp/fixtures_demousers.json",
         "djangoerp/fixtures_demodata.json",
@@ -21,7 +26,16 @@ class ERPTestCase(LiveServerTestCase):
         self.client.login(username='admin', password='admin')
 
 
-class ERPModuleTestCase(ERPTestCase):
+class ERPTestCase(ERPViewTestCase):
+    def __init__(self, *args, **kwargs):
+        super(ERPTestCase, self).__init__(*args, **kwargs)
+
+        warnings.warn(
+            "The is class is deprecated.",
+            RemovedInNextERPVersionWarning, stacklevel=2)
+
+
+class ERPModuleTestCase(ERPViewTestCase):
     model = None
 
     def get_latest_object(self):
@@ -82,3 +96,46 @@ class ERPModuleTestCase(ERPTestCase):
         if status_code == 200:
             return json.loads(r.content.decode())
         return r
+
+class ERPWorkflowTestCase(TestCase):
+    object = None
+
+    def setUp(self): # noqa
+        self.user = get_user_model()(is_superuser=True)
+
+    def workflow_build(self):
+        wf = self.workflow_get()
+        self.workflow = {}
+        self.workflow_walk(wf._default_state_key)
+
+    def workflow_walk(self, state):
+        if state in self.workflow:
+            return
+        wf = self.workflow_get()
+        wf._set_state(state)
+        self.workflow[state] = {}
+
+        for name, transition in wf._from_here():
+            self.workflow[state][transition.target] = {
+                'transition': name,
+                'instance': self.object,
+                'user': self.user,
+                'manipulate_object': False,
+            }
+            self.workflow_walk(transition.target)
+
+    def workflow_test(self, initial, final, instance, user=None, test_final=True):
+        transition = self.workflow[initial][final]["transition"]
+        wf = self.workflow_get()
+        wf._set_state(initial)
+        wf._call(transition, instance, user or self.user)
+        if test_final:
+            self.assertEqual(wf._current_state_key, final)
+
+    def workflow_autotest(self):
+        for i, data in self.workflow.items():
+            for f, data in data.items():
+                self.workflow_test(i, f, data["instance"], data["user"])
+
+    def workflow_get(self):
+        return self.object._erpworkflow
