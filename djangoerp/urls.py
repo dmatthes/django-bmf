@@ -14,10 +14,10 @@ from django.utils import timezone
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import last_modified
 
+from djangoerp import get_version
 from djangoerp.dashboard.views import DashboardView
 from djangoerp.module.views import ModuleView
 from djangoerp.modals.views import ModalSaveView
-from djangoerp import get_version
 
 
 @cache_page(86400, key_prefix='erp-js18n-%s' % get_version())
@@ -26,9 +26,9 @@ def i18n_javascript(request):
     """
     Displays the i18n JavaScript that the Django admin requires.
     """
-    if settings.USE_I18N:
+    if settings.USE_I18N:  # pragma: no cover
         from django.views.i18n import javascript_catalog
-    else:
+    else:  # pragma: no cover
         from django.views.i18n import null_javascript_catalog as javascript_catalog
     return javascript_catalog(request, packages=['djangoerp'])
 
@@ -45,6 +45,7 @@ urlpatterns = patterns(
     url(r'^watching/', include('djangoerp.watch.urls')),
     url(r'^wizard/', include('djangoerp.wizard.urls')),
     #   r'^module/' via sites
+
     # TODO
     url(r'^modules/$', ModuleView.as_view(), name="modules"),
     url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),

@@ -95,14 +95,14 @@ class ModuleFilesMixin(object):
     def get_context_data(self, **kwargs):
         if self.model._erpmeta.has_files:
             from .file.views import FileAddView
-            Document = get_model_from_cfg('DOCUMENT')
+            document = get_model_from_cfg('DOCUMENT')
 
             ct = ContentType.objects.get_for_model(self.object)
 
             kwargs.update({
                 'has_files': True,
                 'history_file_form': FileAddView.form_class(),
-                'files': Document.objects.filter(content_type=ct, content_id=self.object.pk),
+                'files': document.objects.filter(content_type=ct, content_id=self.object.pk),
             })
         return super(ModuleFilesMixin, self).get_context_data(**kwargs)
 
@@ -178,7 +178,7 @@ class ModuleAutoDetailView(ModuleFormMixin, ModuleDetailView):
     form_class = None
 
     def get_form(self, **kwargs):
-        if self.form_class == None:
+        if self.form_class is None:
             self.get_form_class()
         form = self.form_class(instance=self.object)
         return form
@@ -339,7 +339,7 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
         self.object = self.get_object()
 
         transitions = dict(self.object._erpworkflow._from_here())
-        if not transition in transitions:
+        if transition not in transitions:
             raise Http404
 
         try:
@@ -386,7 +386,9 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
         try:
             obj = queryset.get(pk=pk)
         except ObjectDoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the query") % {'verbose_name': queryset.model._meta.verbose_name})
+            raise Http404(_("No %(verbose_name)s found matching the query") % {
+                'verbose_name': queryset.model._meta.verbose_name
+            })
         return obj
 
     def get(self, request, *args, **kwargs):
@@ -395,7 +397,10 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
 
     def post(self, request, *args, **kwargs):
         form_class = self.form_view(model=self.model, object=self.get_object()).get_form_class()
-        form = form_class(prefix=self.get_prefix(), data=QueryDict(self.request.POST['form']), instance=self.get_object())
+        form = form_class(
+            prefix=self.get_prefix(),
+            data=QueryDict(self.request.POST['form']),
+            instance=self.get_object())
 
         if "search" in self.request.GET:
             # do form validation to fill form.instance with data
@@ -436,14 +441,15 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
         })
         return kwargs
 
-    def normalize_query(self, query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+    def normalize_query(
+            self, query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
             normspace=re.compile(r'\s{2,}').sub):
         '''
         Splits the query string in invidual keywords, getting rid of unecessary spaces
         and grouping quoted words together.
 
         Example:
-        >>> self.normalize_query('  some random  words "with   quotes  " and   spaces')
+        > self.normalize_query('  some random  words "with   quotes  " and   spaces')
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
 
         '''

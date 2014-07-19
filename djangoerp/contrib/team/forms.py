@@ -8,7 +8,7 @@ from django.forms import ModelForm
 from djangoerp.forms import ERPForm
 
 from .models import Team
-#from .models import TeamMember
+# from .models import TeamMember
 
 
 class TeamUpdateForm(ModelForm):
@@ -22,16 +22,16 @@ class TeamCreateForm(ModelForm):
         model = Team
         exclude = []
 
-#TeamInlineFormset = inlineformset_factory(Team, TeamMember, extra=1, exclude=[])
+# TeamInlineFormset = inlineformset_factory(Team, TeamMember, extra=1, exclude=[])
 
 
 class ERPTeamUpdateForm(ERPForm):
     class Meta:
         form_class = TeamUpdateForm
-#        inlines = {'members': TeamInlineFormset}
+        # inlines = {'members': TeamInlineFormset}
 
 
 class ERPTeamCreateForm(ERPForm):
     class Meta:
         form_class = TeamCreateForm
-#        inlines = {'members': TeamInlineFormset}
+        # inlines = {'members': TeamInlineFormset}

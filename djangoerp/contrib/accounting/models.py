@@ -63,7 +63,6 @@ class BaseAccount(ERPMPTTModel):
     )
     read_only = models.BooleanField(_('Read-only'), default=False)
 
-
     def get_balance(self):
         # items = list(self.get_descendants().values_list('pk', flat=True))
         # items.append(self.pk)
@@ -123,7 +122,7 @@ class AbstractTransaction(ERPModel):
     Transaction
 
     ==============  ========  ========
-    Account-Type     Credit     Debit 
+    Account-Type     Credit     Debit
     ==============  ========  ========
     Asset           Decrease  Increase
     Liability       Increase  Decrease

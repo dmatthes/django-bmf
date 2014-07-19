@@ -115,7 +115,7 @@ class AbstractProduct(ERPModel):
     # netto weight
     # UOM weight
     # supplier
-    # cost-center / 
+    # cost-center
     # pricelist
     # inspection
     # manufactoring
@@ -148,7 +148,7 @@ class AbstractProduct(ERPModel):
     # Categories  empty
     # Tags  empty
 
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
         ordering = ['name']
@@ -161,8 +161,8 @@ class AbstractProduct(ERPModel):
     def __str__(self):
         return self.name
 
-# def calc_default_price(self, project, amount, price):
-#   return self.get_price(1.0, self.price)
+    # def calc_default_price(self, project, amount, price):
+    #   return self.get_price(1.0, self.price)
 
     def calc_tax(self, amount, price):
         # TODO add currency for calculation of taxes

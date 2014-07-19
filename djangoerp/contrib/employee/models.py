@@ -58,13 +58,13 @@ class AbstractEmployee(BaseEmployee):
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False, )
     email = models.EmailField(_('Email'), null=True, blank=True)
     phone_office = models.CharField(
-        _("Phone office"),  max_length=255, null=True, blank=True,
+        _("Phone office"), max_length=255, null=True, blank=True,
     )
     phone_mobile = models.CharField(
-        _("Phone mobile"),  max_length=255, null=True, blank=True,
+        _("Phone mobile"), max_length=255, null=True, blank=True,
     )
     fax = models.CharField(
-        _("Fax"),  max_length=255, null=True, blank=True,
+        _("Fax"), max_length=255, null=True, blank=True,
     )
     # TODO: Add validator or modify queryset so that an employee cant be the supervisor of him/her-self
     supervisor = models.ForeignKey(

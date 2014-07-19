@@ -96,11 +96,11 @@ class TaskWorkflow(Workflow):
     def hold(self):
         self.stop()
 
-    def unreview(self): # LOOK: probably not needed, if timesheets are implemented
+    def unreview(self):  # LOOK: probably not needed, if timesheets are implemented
         self.instance.work_date = now()
 
     def reopen(self):
-        self.instance.seconds_on = 0 # LOOK: probably not needed, if timesheets are implemented
+        self.instance.seconds_on = 0  # LOOK: probably not needed, if timesheets are implemented
         self.instance.work_date = now()
         self.instance.completed = False
 
@@ -130,9 +130,9 @@ class TaskWorkflow(Workflow):
                     raise ValidationError(_("The employee's user-account needs a default product"))
                 position = get_model_from_cfg('POSITION')(
                     name=self.instance.summary, project=project,
-                    employee=self.user.erp_employee, 
-                    date=now(), product=self.user.erp_employee.product, 
-                    amount=self.bill_resolution * ceil(billable_time/self.bill_resolution) / 60.)
+                    employee=self.user.erp_employee,
+                    date=now(), product=self.user.erp_employee.product,
+                    amount=self.bill_resolution * ceil(billable_time / self.bill_resolution) / 60.)
                 position.clean()
                 position.save()
                 return position.erpmodule_detail()

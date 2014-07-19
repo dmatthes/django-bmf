@@ -11,12 +11,14 @@ from djangoerp.forms import ERPForm
 
 from .models import Goal
 
+
 class GoalCloneForm(ModelForm):
     class Meta:
         model = Goal
         exclude = []
     copy_tasks = forms.BooleanField(label=_("Copy the Tasks"), initial=True, required=False)
     clear_employee = forms.BooleanField(label=_("When copying unset the task's employee"), initial=True, required=False)
+
 
 class ERPGoalCloneForm(ERPForm):
     class Meta:
