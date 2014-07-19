@@ -21,7 +21,7 @@ class ERPViewTestCase(LiveServerTestCase):
         "fixtures/contrib_task.json",
     ]
 
-    def setUp(self): # noqa
+    def setUp(self):  # noqa
         from . import sites
         sites.autodiscover()
         self.client.login(username='admin', password='admin')
@@ -98,10 +98,11 @@ class ERPModuleTestCase(ERPViewTestCase):
             return json.loads(r.content.decode())
         return r
 
+
 class ERPWorkflowTestCase(TestCase):
     object = None
 
-    def setUp(self): # noqa
+    def setUp(self):  # noqa
         self.user = get_user_model()(is_superuser=True)
 
     def workflow_build(self):

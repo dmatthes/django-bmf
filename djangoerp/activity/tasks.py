@@ -36,7 +36,7 @@ def djangoerp_user_watch(activity):
 
     # Always add event to admin-user (pk=1) when in debug mode
     if settings.DEBUG:
-        if not 1 in user_list:
+        if 1 not in user_list:
             user_list.append(1)
 
     for user in user_list:

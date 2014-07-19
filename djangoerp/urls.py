@@ -39,6 +39,7 @@ urlpatterns = patterns(
     url(r'^accounts/', include('djangoerp.account.urls')),
     url(r'^config/', include('djangoerp.configuration.urls')),
     url(r'^dashboard/', include('djangoerp.dashboard.urls')),
+    url(r'^file/', include('djangoerp.file.urls')),
     url(r'^i18n/', i18n_javascript, name="jsi18n"),
     #  url(r'^messages/', include('djangoerp.message.urls')),
     url(r'^notifications/', include('djangoerp.notification.urls')),
@@ -50,5 +51,4 @@ urlpatterns = patterns(
     url(r'^modules/$', ModuleView.as_view(), name="modules"),
     url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),
     url(r'^activities/', include('djangoerp.activity.urls')),
-    url(r'^file/', include('djangoerp.file.urls')),
 )

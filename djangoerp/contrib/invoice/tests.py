@@ -18,13 +18,13 @@ from ...testcase import ERPWorkflowTestCase
 class InvoiceFactory(DjangoModelFactory):
     class Meta:
         model = Invoice
-    customer = 1
-    project = 1
-    date = '2014-01-01'
-    invoice_address = 1
-    shipping_address = 1
-    employee = 1
-    invoice_number = "TEST INVOICE"
+   #customer = 1
+   #project = 1
+   #date = '2014-01-01'
+   #invoice_address = 1
+   #shipping_address = 1
+   #employee = 1
+   #invoice_number = "TEST INVOICE"
 
 
 class InvoiceModuleTests(ERPModuleTestCase):
@@ -42,8 +42,9 @@ class InvoiceModuleTests(ERPModuleTestCase):
 
 @expectedFailure
 class InvoiceWorkflowTests(ERPWorkflowTestCase):
+    pass
 
-    def test_invoice_workflow(self):
-        self.object = InvoiceFactory()
-        workflow = self.workflow_build()
-        workflow = self.workflow_autotest()
+   #def test_invoice_workflow(self):
+   #    self.object = InvoiceFactory()
+   #    workflow = self.workflow_build()
+   #    workflow = self.workflow_autotest()

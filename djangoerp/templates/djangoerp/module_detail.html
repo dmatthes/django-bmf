@@ -11,7 +11,7 @@
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span> {% trans "Files" %} {{ files.count }}</button>
     <ul class="dropdown-menu" role="menu">
       {% for file in files %}
-      <li><a href="{{ file.file.url }}">{{ file }}<br /><small>{{ file.size|filesizeformat }}</small></a></li>
+      <li><a href="{{ file.erpfile_download }}">{{ file }}<br /><small>{{ file.size|filesizeformat }}</small></a></li>
       {% endfor %}
     </ul>
   </div>
