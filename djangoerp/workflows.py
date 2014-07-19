@@ -115,7 +115,11 @@ class WorkflowMetaclass(type):
 
         # set and check states
         new_cls._states = OrderedDict()
-        for key, value in sorted(inspect.getmembers(new_cls.States, lambda o: isinstance(o, State)), key=lambda i: i[1]._order):
+        for key, value in sorted(
+                inspect.getmembers(
+                    new_cls.States,
+                    lambda o: isinstance(o, State)
+                ), key=lambda i: i[1]._order):
             new_cls._states[key] = value
             if value.default:
                 if hasattr(new_cls, '_default_state'):
@@ -130,11 +134,19 @@ class WorkflowMetaclass(type):
 
         # set and check transitions
         new_cls._transitions = OrderedDict()
-        for key, value in sorted(inspect.getmembers(new_cls.Transitions, lambda o: isinstance(o, Transition)), key=lambda i: i[1]._order):
+        for key, value in sorted(
+                inspect.getmembers(
+                    new_cls.Transitions,
+                    lambda o: isinstance(o, Transition)
+                ), key=lambda i: i[1]._order):
             if key == "user":
-                raise ImproperlyConfigured('The name "user" is reserved, please rename your transition defined in %s' % new_cls)
+                raise ImproperlyConfigured(
+                    'The name "user" is reserved, please rename your transition defined in %s' % new_cls
+                )
             if key == "instance":
-                raise ImproperlyConfigured('The name "instance" is reserved, please rename your transition defined in %s' % new_cls)
+                raise ImproperlyConfigured(
+                    'The name "instance" is reserved, please rename your transition defined in %s' % new_cls
+                )
             if key[0] == "_":
                 raise ImproperlyConfigured('The keys can not start with an underscore in %s' % new_cls)
             for state in value.affected_states():

@@ -7,10 +7,25 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
+from factory.django import DjangoModelFactory
+
 from .models import Goal
 from .models import Task
 from ...testcase import ERPModuleTestCase
 from ...testcase import ERPWorkflowTestCase
+
+
+class GoalFactory(DjangoModelFactory):
+    class Meta:
+        model = Goal
+    summary = 'Test summary'
+
+
+class TaskFactory(DjangoModelFactory):
+    class Meta:
+        model = Goal
+    summary = 'Test summary'
+
 
 class TaskModuleTests(ERPModuleTestCase):
 
@@ -172,14 +187,15 @@ class TaskModuleTests(ERPModuleTestCase):
         r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': goal1.pk, 'transition': 'complete'}))
         self.assertEqual(r.status_code, 200)
 
+
 class TaskWorkflowTests(ERPWorkflowTestCase):
 
     def test_goal_workflow(self):
-        self.object = Goal(summary="workflow test")
+        self.object = GoalFactory()
         workflow = self.workflow_build()
         workflow = self.workflow_autotest()
 
     def test_task_workflow(self):
-        self.object = Task(summary="workflow test")
+        self.object = TaskFactory()
         workflow = self.workflow_build()
         workflow = self.workflow_autotest()

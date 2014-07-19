@@ -16,8 +16,9 @@ from djangoerp.utils.deprecation import RemovedInNextERPVersionWarning
 
 class ERPViewTestCase(LiveServerTestCase):
     fixtures = [
-        "djangoerp/fixtures_demousers.json",
-        "djangoerp/fixtures_demodata.json",
+        "fixtures/users.json",
+        "fixtures/demodata.json",
+        "fixtures/contrib_task.json",
     ]
 
     def setUp(self): # noqa

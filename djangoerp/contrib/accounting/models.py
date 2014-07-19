@@ -53,7 +53,6 @@ class BaseAccount(ERPMPTTModel):
         'self', null=True, blank=True, related_name='children',
         on_delete=models.CASCADE,
     )
-#   parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
     balance = MoneyField(editable=False, default="0")
     balance_currency = CurrencyField()
     number = models.CharField(_('Number'), max_length=30, null=True, blank=True, )
@@ -64,15 +63,14 @@ class BaseAccount(ERPMPTTModel):
     read_only = models.BooleanField(_('Read-only'), default=False)
 
     def get_balance(self):
-        # items = list(self.get_descendants().values_list('pk', flat=True))
-        # items.append(self.pk)
-        # bal_credit = self.transaction_accounts.model.objects.filter(pk__in=items, balanced=True, credit=True).aggregate(Sum('amount'))
-        # bal_debit = self.transaction_accounts.model.objects.filter(pk__in=items, balanced=True, credit=False).aggregate(Sum('amount'))
-        bal_credit = self.transaction_accounts.filter(
+        items = [self.pk] + list(self.get_descendants().values_list('pk', flat=True))
+        bal_credit = TransactionItem.objects.filter(
+            account__in=items,
             balanced=True,
             credit=True,
         ).aggregate(Sum('amount'))
-        bal_debit = self.transaction_accounts.filter(
+        bal_debit = TransactionItem.objects.filter(
+            account__in=items,
             balanced=True,
             credit=False,
         ).aggregate(Sum('amount'))
@@ -170,7 +168,8 @@ class TransactionItemManager(models.Manager):
     """
     """
     def get_queryset(self):
-        return super(TransactionItemManager, self).get_queryset().select_related('account').extra(select={"type": "type"})
+        return super(TransactionItemManager, self).get_queryset() \
+            .select_related('account').extra(select={"type": "type"})
 
 
 class AbstractTransactionItem(models.Model):

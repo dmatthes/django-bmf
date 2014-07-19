@@ -18,7 +18,7 @@ class InvoiceWorkflow(Workflow):
     class Transitions:
         send = Transition(_("Send to Customer"), "draft", "open")
         payment = Transition(_("Customer payed"), 'open', 'payed')
-#   edit = Transition( _("Edit invoice"), 'open', 'draft')
+        # edit = Transition( _("Edit invoice"), 'open', 'draft')
         cancel = Transition(_("Cancel"), ('draft', 'open'), 'cancelled', validate=False)
 
     def send(self):

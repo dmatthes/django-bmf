@@ -47,7 +47,7 @@ setup(
         'django-sekizai',
         'django-mptt',
         'django-filter',
-        'reportlab<3.0',
+        'reportlab',
         'xhtml2pdf',
         'markdown',
     ],

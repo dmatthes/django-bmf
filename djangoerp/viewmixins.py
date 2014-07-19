@@ -108,7 +108,11 @@ class ViewMixin(BaseMixin):
         This function is used by django ERP to update the notifications
         used in the ERP-Framework
         """
-        if check_object and not self.object.djangoerp_notification.filter(user=self.request.user, unread=True).update(unread=None, changed=now()):
+        if check_object \
+                and not self.object.djangoerp_notification.filter(
+                    user=self.request.user,
+                    unread=True,
+                ).update(unread=None, changed=now()):
             return None
 
         # get all session data
@@ -284,7 +288,8 @@ class ModuleUpdatePermissionMixin(object):
     """
 
     def check_permissions(self):
-        return self.get_object()._erpworkflow._current_state.update and super(ModuleUpdatePermissionMixin, self).check_permissions()
+        return self.get_object()._erpworkflow._current_state.update \
+            and super(ModuleUpdatePermissionMixin, self).check_permissions()
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name
@@ -299,7 +304,8 @@ class ModuleDeletePermissionMixin(object):
     """
 
     def check_permissions(self):
-        return self.get_object()._erpworkflow._current_state.delete and super(ModuleDeletePermissionMixin, self).check_permissions()
+        return self.get_object()._erpworkflow._current_state.delete \
+            and super(ModuleDeletePermissionMixin, self).check_permissions()
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name

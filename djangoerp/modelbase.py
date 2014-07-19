@@ -25,6 +25,7 @@ from .watch.models import Watch
 import types
 import inspect
 
+from mptt.managers import TreeManager
 from mptt.models import MPTTModelBase, MPTTModel
 
 APP_LABEL = ERPConfig.label
@@ -303,5 +304,7 @@ class ERPMPTTModelBase(MPTTModelBase, ERPModelBase):
 
 
 class ERPMPTTModel(six.with_metaclass(ERPMPTTModelBase, ERPModel, MPTTModel)):
+    objects = TreeManager()
+
     class Meta:
         abstract = True

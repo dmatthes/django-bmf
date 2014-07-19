@@ -1,0 +1,92 @@
+[
+{
+ "fields": {
+  "customer": 1,
+  "valid_until": null,
+  "modified_by": 1,
+  "uuid": null,
+  "term_of_payment": "",
+  "created": "2014-07-19T15:44:48.317Z",
+  "notes": "",
+  "modified": "2014-07-19T15:45:34.110Z",
+  "created_by": 1,
+  "project": 1,
+  "quotation_number": "Q2014/07-0001",
+  "state": "invoiced",
+  "invoice_address": 1,
+  "invoice": 1,
+  "shipping_address": 1,
+  "employee": 1,
+  "net": 173.94,
+  "date": "2014-07-19"
+ },
+ "model": "djangoerp_quotation.quotation",
+ "pk": 1
+},
+{
+ "fields": {
+  "customer": 1,
+  "valid_until": null,
+  "modified_by": 1,
+  "uuid": null,
+  "term_of_payment": "",
+  "created": "2014-07-19T15:45:12.863Z",
+  "notes": "",
+  "modified": "2014-07-19T15:45:12.908Z",
+  "created_by": 1,
+  "project": 1,
+  "quotation_number": "Q2014/07-0002",
+  "state": "draft",
+  "invoice_address": 1,
+  "invoice": null,
+  "shipping_address": 1,
+  "employee": 1,
+  "net": 579.8,
+  "date": "2014-07-19"
+ },
+ "model": "djangoerp_quotation.quotation",
+ "pk": 2
+},
+{
+ "fields": {
+  "price_currency": "EUR",
+  "product": 1,
+  "name": "Installation",
+  "price": "69",
+  "description": "",
+  "price_precision": 0,
+  "amount": 1.0,
+  "quotation": 1
+ },
+ "model": "djangoerp_quotation.quotationproduct",
+ "pk": 1
+},
+{
+ "fields": {
+  "price_currency": "EUR",
+  "product": 1,
+  "name": "Configuration",
+  "price": "69",
+  "description": "",
+  "price_precision": 0,
+  "amount": 2.0,
+  "quotation": 1
+ },
+ "model": "djangoerp_quotation.quotationproduct",
+ "pk": 2
+},
+{
+ "fields": {
+  "price_currency": "EUR",
+  "product": 1,
+  "name": "Service",
+  "price": "69",
+  "description": "",
+  "price_precision": 0,
+  "amount": 10.0,
+  "quotation": 2
+ },
+ "model": "djangoerp_quotation.quotationproduct",
+ "pk": 3
+}
+]

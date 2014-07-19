@@ -6,13 +6,25 @@ from fabric.contrib import files
 
 import os
 
+
 BASEDIR = os.path.dirname(env.real_fabfile)
+
 
 PYTHON = BASEDIR + "/.virtenv/bin/python"
 DJANGO = BASEDIR + "/.virtenv/bin/django-admin.py"
 MANAGE = BASEDIR + "/sandbox/manage.py"
 
+
 LANGUAGES = ('en', 'de',)
+
+
+FIXTURES = (
+    'fixtures/users.json',
+    'fixtures/demodata.json',
+    'fixtures/contrib_invoice.json',
+    'fixtures/contrib_quotation.json',
+    'fixtures/contrib_task.json',
+)
 
 
 @task
@@ -143,9 +155,9 @@ def make(data=''):
     local('rm -f sandbox/database.sqlite')
     local('%s %s migrate --noinput' % (PYTHON, MANAGE))
     if not data:
-        local('%s %s loaddata djangoerp/fixtures_demousers.json djangoerp/fixtures_demodata.json' % (PYTHON, MANAGE))
+        local('%s %s loaddata %s' % (PYTHON, MANAGE, ' '.join(FIXTURES)))
     else:
-        local('%s %s loaddata djangoerp/fixtures_demousers.json' % (PYTHON, MANAGE))
+        local('%s %s loaddata fixtures/users.json' % (PYTHON, MANAGE))
 
 
 @task
