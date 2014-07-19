@@ -19,7 +19,7 @@ def get_version(dev=True):
 
     version = '.'.join(map(str, VERSION[0]))
 
-    if VERSION[1][0] == "final":
+    if VERSION[1][0] == "final":  # pragma: no cover
         return version
 
     version += VERSION[1][0] + str(VERSION[1][1])
@@ -44,7 +44,7 @@ def get_version(dev=True):
         try:
             timestamp = datetime.datetime.utcfromtimestamp(int(timestamp))
             version += '.dev%s' % timestamp.strftime('%Y%m%d%H%M%S')
-        except ValueError:
+        except ValueError:  # pragma: no cover
             pass
 
     return version

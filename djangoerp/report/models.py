@@ -48,8 +48,10 @@ class Report(models.Model):
     # TODO needs validator
     options = models.TextField(
         _("Options"), blank=True, null=False,
-        help_text=_("Options for the renderer. Empty this field to get all available options with default values"),
-        )
+        help_text=_(
+            "Options for the renderer. Empty this field to get all available options with default values"
+        ),
+    )
     modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False,)
 
     class Meta:

@@ -340,7 +340,7 @@ class ModuleBaseMixin(object):
                 'erpworkflow': {
                     'enabled': bool(len(self.model._erpworkflow._transitions)),
                     'state': self.object._erpworkflow._current_state,
-                    'transitions': self.object._erpworkflow._from_here(),
+                    'transitions': self.object._erpworkflow._from_here(self.object, self.request.user),
                 },
             })
         return super(ModuleBaseMixin, self).get_context_data(**kwargs)

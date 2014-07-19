@@ -19,8 +19,8 @@ class GoalWorkflow(Workflow):
         completed = State(_(u"Completed"))
 
     class Transitions:
-        complete = Transition(_("Complete this Goal"), ["open"], "completed")
-        reopen = Transition(_("Reopen this Goal"), ["completed"], "open")
+        complete = Transition(_("Complete this Goal"), "open", "completed")
+        reopen = Transition(_("Reopen this Goal"), "completed", "open")
 
     def complete(self):
         if self.instance.task_set.filter(completed=False).count() > 0:
@@ -30,6 +30,14 @@ class GoalWorkflow(Workflow):
     def reopen(self):
         self.instance.completed = False
 
+
+def review_condition(object, user):
+    if object.goal and object.goal.referee_id and user.pk != object.goal.referee_id:
+        return True
+    return False
+
+def finish_condition(object, user):
+    return not review_condition(object, user)
 
 class TaskWorkflow(Workflow):
     bill_resolution = 5 # minutes
@@ -46,18 +54,41 @@ class TaskWorkflow(Workflow):
     class Transitions:
         start = Transition(_("Work on this task"), ["new", "hold", "open"], "started")
         hold = Transition(_("Set this task on hold"), ["new", "open", "started"], "hold")
-        stop = Transition(_("Stop working on this task"), ["started"], "open")
-        finish = Transition(_("Finish this task"), ["started", "open", "hold", "new","review"], "finished")
-        reopen = Transition(_("Reopen this task"), ['finished', 'cancelled'], 'open')
-        unreview = Transition(_("Reopen this task"), ['review'], 'open')
-        cancel = Transition(_("Cancel this task"), ('new', 'hold', 'open','review'), 'cancelled')
+        stop = Transition(_("Stop working on this task"), "started", "open")
+        finish = Transition(
+            _("Finish this task"),
+            ["started", "open", "hold", "new", "review"],
+            "finished",
+            condition=finish_condition,
+        )
+        review = Transition(
+            _("Set to review"),
+            ["started", "open", "hold", "new"],
+            "review",
+            condition=review_condition,
+        )
+        reopen = Transition(
+            _("Reopen this task"),
+            ['finished', 'cancelled'],
+            'open',
+        )
+        unreview = Transition(
+            _("Reopen this task"),
+            ['review'],
+            'open',
+        )
+        cancel = Transition(
+            _("Cancel this task"),
+            ('new', 'hold', 'open', 'review'),
+            'cancelled',
+        )
 
     def start(self):
         self.instance.work_date = now()
 
     def stop(self):
         if self.instance.work_date:
-          self.instance.seconds_on += int((now() - self.instance.work_date).total_seconds())
+            self.instance.seconds_on += int((now() - self.instance.work_date).total_seconds())
         self.instance.work_date = now()
 
     def hold(self):

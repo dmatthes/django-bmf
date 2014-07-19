@@ -258,13 +258,13 @@ class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxM
     """
     context_object_name = 'object'
     template_name_suffix = '_erpupdate'
-    exclude=[]
+    exclude = []
 
     def get_template_names(self):
         return super(ModuleUpdateView, self).get_template_names() + ["djangoerp/module_update_default.html"]
 
     def form_valid(self, form):
-       #messages.success(self.request, 'Object updated')
+        # messages.success(self.request, 'Object updated')
         form.instance.modified_by = self.request.user
         self.object = form.save()
         activity_update.send(sender=self.object.__class__, instance=self.object)
@@ -293,7 +293,7 @@ class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxM
         return super(ModuleCreateView, self).get_template_names() + ["djangoerp/module_create_default.html"]
 
     def form_valid(self, form):
-        #messages.success(self.request, 'Object created')
+        # messages.success(self.request, 'Object created')
         form.instance.modified_by = self.request.user
         form.instance.created_by = self.request.user
         self.object = form.save()
@@ -436,13 +436,14 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
         })
         return kwargs
 
-    def normalize_query(self, query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall, normspace=re.compile(r'\s{2,}').sub):
+    def normalize_query(self, query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+            normspace=re.compile(r'\s{2,}').sub):
         '''
         Splits the query string in invidual keywords, getting rid of unecessary spaces
         and grouping quoted words together.
 
         Example:
-        >>> normalize_query('  some random  words "with   quotes  " and   spaces')
+        >>> self.normalize_query('  some random  words "with   quotes  " and   spaces')
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
 
         '''

@@ -27,7 +27,7 @@ class ConfigurationManager(models.Manager):
         if app in CONFIGURATION_CACHE:
             CONFIGURATION_CACHE[app][name] = value
         else:
-            CONFIGURATION_CACHE[app] = {name: value,}
+            CONFIGURATION_CACHE[app] = {name: value}
 
         return value
 

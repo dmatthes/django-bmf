@@ -34,6 +34,7 @@ class ConfigurationEdit(ViewMixin, FormView):
     def get_form_class(self):
         key = SETTING_KEY % (self.kwargs['app_label'], self.kwargs['name'])
         name = self.kwargs['name']
+
         class ConfigForm(forms.Form):
             """
             dynamic generated form with all settings
@@ -44,7 +45,8 @@ class ConfigurationEdit(ViewMixin, FormView):
         return ConfigForm
 
     def form_valid(self, form, *args, **kwargs):
-        obj, created = Configuration.objects.get_or_create(app_label=self.kwargs['app_label'], field_name=self.kwargs['name'])
+        obj, created = Configuration.objects.get_or_create(
+                app_label=self.kwargs['app_label'], field_name=self.kwargs['name'])
         value = form.cleaned_data[self.kwargs['name']]
         # data = {
         #     'type': None,
