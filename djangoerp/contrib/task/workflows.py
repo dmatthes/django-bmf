@@ -83,6 +83,7 @@ class TaskWorkflow(Workflow):
             _("Cancel this task"),
             ('new', 'hold', 'open', 'review'),
             'cancelled',
+            condition=finish_condition,
         )
 
     def start(self):
