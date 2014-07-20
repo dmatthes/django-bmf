@@ -31,6 +31,12 @@ class GoalWorkflow(Workflow):
         self.instance.completed = False
 
 
+def start_condition(object, user):
+    if getattr(object, 'employee_id', False) and object.employee_id != user.pk: # TODO: untested
+        return False
+    return True
+
+
 def review_condition(object, user):
     if object.goal and object.goal.referee_id and user.pk != object.goal.referee_id:  # TODO: untested
         return True
@@ -54,9 +60,22 @@ class TaskWorkflow(Workflow):
         cancelled = State(_(u"Cancelled"), update=False, delete=True)
 
     class Transitions:
-        start = Transition(_("Work on this task"), ["new", "hold", "open"], "started")
-        hold = Transition(_("Set this task on hold"), ["new", "open", "started"], "hold")
-        stop = Transition(_("Stop working on this task"), "started", "open")
+        start = Transition(
+            _("Work on this task"),
+            ["new", "hold", "open"],
+            "started",
+            condition=start_condition,
+        )
+        hold = Transition(
+            _("Set this task on hold"),
+            ["new", "open", "started"],
+            "hold",
+        )
+        stop = Transition(
+            _("Stop working on this task"),
+            "started",
+            "open",
+        )
         finish = Transition(
             _("Finish this task"),
             ["started", "open", "hold", "new", "review"],
@@ -87,6 +106,8 @@ class TaskWorkflow(Workflow):
 
     def start(self):
         self.instance.work_date = now()
+        if hasattr(self.instance, 'employee'):
+            self.instance.employee_id = self.user.pk
 
     def stop(self):
         if self.instance.work_date:
