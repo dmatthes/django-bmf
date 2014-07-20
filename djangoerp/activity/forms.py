@@ -33,4 +33,3 @@ class FollowForm(forms.Form):
     file = forms.BooleanField(required=False, initial=False)
     changed = forms.BooleanField(required=False, initial=False)
     workflow = forms.BooleanField(required=False, initial=False)
-

@@ -49,7 +49,7 @@ class GoalDetailView(ModuleDetailView):
             'done': [],
         }
         for task in self.object.task_set.all():
-            if task.state in ["open", "started","new"]:
+            if task.state in ["open", "started", "new"]:
                 tasks["open"].append(task)
             elif task.state in ["hold", "review"]:
                 tasks["hold"].append(task)
@@ -67,7 +67,7 @@ class TaskIndexView(ModuleIndexView):
 
     def get_queryset(self):
         qs = super(TaskIndexView, self).get_queryset()
-        related = ['goal',]
+        related = ['goal']
         if hasattr(Task, 'project'):
             related.append('project')
 

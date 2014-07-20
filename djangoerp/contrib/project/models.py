@@ -28,7 +28,7 @@ class BaseProject(ERPModel):
     is_bound = models.BooleanField(null=False, blank=True, editable=False, default=False)
     is_active = models.BooleanField(_("Is active"), null=False, blank=True, default=True)
 
-    class Meta: # only needed for abstract models
+    class Meta:  # only needed for abstract models
         verbose_name = _('Project')
         verbose_name_plural = _('Project')
         ordering = ['name']
@@ -45,6 +45,7 @@ class BaseProject(ERPModel):
 
     def erpget_project(self):
         return self
+
 
 class AbstractProject(BaseProject):
     """

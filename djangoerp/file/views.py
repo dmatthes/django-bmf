@@ -12,7 +12,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.forms.models import modelform_factory
 
 from ..utils import get_model_from_cfg
-from ..decorators import login_required
 from ..signals import activity_addfile
 from ..viewmixins import BaseMixin
 

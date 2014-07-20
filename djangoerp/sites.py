@@ -34,7 +34,7 @@ SETTING_KEY = "%s.%s"
 APP_LABEL = ERPConfig.label
 
 
-class DjangoERPSetting(object): #TODO move this to configuration.erpsite
+class DjangoERPSetting(object):  #TODO move this to configuration.erpsite
     def __init__(self, app_label, name, field):
         self.app_label = app_label
         self.name = name
@@ -71,7 +71,7 @@ class DjangoERPSetting(object): #TODO move this to configuration.erpsite
         return value
 
 
-class DjangoERPModule(object): # TODO move this to module.erpsite
+class DjangoERPModule(object):  # TODO move this to module.erpsite
     index = None
     create = None
     delete = None
@@ -95,7 +95,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
 
         add_patterns = self.urlpatterns or options.get('urlpatterns', None)
 
-        urlpatterns =  patterns(
+        urlpatterns = patterns(
             '',
             url(
                 r'^$',
@@ -166,7 +166,7 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                         form_view=create,
                     ),
                     name='form-api',
-              ),
+                ),
             )
 
         # workflow interactions
@@ -259,7 +259,10 @@ class DjangoERPSite(object):
 
     def register_model(self, model, admin=None):
         if not hasattr(model, '_erpmeta'):
-            raise ImproperlyConfigured('The model %s needs to be an ERP-Model in order to be registered with django ERP.' % model.__name__)
+            raise ImproperlyConfigured(
+                'The model %s needs to be an ERP-Model in order to be'
+                'registered with django ERP.' % model.__name__
+            )
 
         if model in self._registry:
             raise AlreadyRegistered('The model %s is already registered' % model.__name__)
@@ -422,9 +425,10 @@ class DjangoERPSite(object):
             urlpatterns += patterns(
                 '',
                 url(
-                r'^module/%s/%s/' % (
-                    ct.pk, info[1]),
-                    include((urls, self.app_name, "module_%s_%s" % info))
+                    r'^module/%s/%s/' % (
+                        ct.pk, info[1]),
+                        include((urls, self.app_name, "module_%s_%s" % info)
+                    )
                 )
             )
         return urlpatterns

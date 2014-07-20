@@ -15,14 +15,14 @@ class AbstractTeam(ERPModel):
     """
     """
     name = models.CharField(
-        max_length=255, null=False, blank=False, editable=True, 
+        max_length=255, null=False, blank=False, editable=True,
     )
     members = models.ManyToManyField(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, related_name="team_members",
         limit_choices_to={'user__isnull': False}, through='TeamMember',
     )
 
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Team')
         verbose_name_plural = _('Team')
         ordering = ['name']
@@ -44,8 +44,8 @@ class TeamMember(models.Model):
     )
     employee = models.ForeignKey(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, related_name="+", on_delete=models.CASCADE,
-     )
+    )
     is_manager = models.BooleanField(_("Is manager"), default=False)
-    
+
     class Meta:
         unique_together = ("team", "employee")

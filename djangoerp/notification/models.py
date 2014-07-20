@@ -3,12 +3,15 @@
 
 from __future__ import unicode_literals
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
+from django.db import models
 
+
+@python_2_unicode_compatible
 class Notification(models.Model):
     """
     Model which informs users about changes in the history
@@ -35,8 +38,7 @@ class Notification(models.Model):
         verbose_name = _('Notification')
         verbose_name_plural = _('Notifications')
         get_latest_by = "modified"
-        default_permissions=()
+        default_permissions = ()
 
     def __str__(self):
         return self.name
-

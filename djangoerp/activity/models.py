@@ -3,14 +3,15 @@
 
 from __future__ import unicode_literals
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db import models
 from django.db.models import signals
 from django.dispatch import receiver
-from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 import json
 
@@ -46,6 +47,8 @@ ACTION_TYPES = (
     (ACTION_FILE, _("File")),
 )
 
+
+@python_2_unicode_compatible
 class Activity(models.Model):
     """
     Model which is accessed by en ERPModel with history
@@ -83,12 +86,6 @@ class Activity(models.Model):
         get_latest_by = "modified"
 
     def __str__(self):
-        if self.topic:
-            return self.topic
-        else:
-            return '%s %s' % (self.user, self.pk)
-
-    def __unicode__(self):
         if self.topic:
             return self.topic
         else:

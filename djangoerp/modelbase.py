@@ -92,23 +92,24 @@ class ERPOptions(object):
         for key, value in options:
             # auto-set known options (no validation!)
             if key in [
-                    'category',
-                    'has_logging',
-                    'has_comments',
-                    'has_files',
-                    'search_fields',
-                    'number_cycle',
-                    'workflow',
-                    'workflow_field',
-                    'clean',
-                    'can_clone',
-                ]:
+                        'category',
+                        'has_logging',
+                        'has_comments',
+                        'has_files',
+                        'search_fields',
+                        'number_cycle',
+                        'workflow',
+                        'workflow_field',
+                        'clean',
+                        'can_clone',
+                    ]:
                 setattr(self, key, value)
 
             # only observe valid fields
             if key == "observed_fields":
                 for field in meta.local_fields:
-                    if not field.rel and field.name in value and field.name not in ['created', 'modified', 'created_by', 'modified_by']:
+                    if not field.rel and field.name in value \
+                            and field.name not in ['created', 'modified', 'created_by', 'modified_by']:
                         self.observed_fields.append(field.name)
 
         # determin if the model has an workflow
@@ -118,7 +119,8 @@ class ERPOptions(object):
         self.has_detectchanges = bool(self.observed_fields) and self.has_logging
 
         # determin if the model can be watched by a user
-        self.has_watchfunction = self.has_workflow or self.has_detectchanges or self.has_comments or self.has_files
+        self.has_watchfunction = self.has_workflow or self.has_detectchanges \
+                or self.has_comments or self.has_files
 
         # determin if the model has an activity
         self.has_activity = self.has_logging or self.has_comments or self.has_files

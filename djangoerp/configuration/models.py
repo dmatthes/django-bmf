@@ -4,11 +4,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 import json
 
 CONFIGURATION_CACHE = {}
+
 
 class ConfigurationManager(models.Manager):
     def get_value(self, app, name):
@@ -36,6 +38,8 @@ class ConfigurationManager(models.Manager):
         global CONFIGURATION_CACHE
         CONFIGURATION_CACHE = {}
 
+
+@python_2_unicode_compatible
 class Configuration(models.Model):
     """
     Model to store informations about settings

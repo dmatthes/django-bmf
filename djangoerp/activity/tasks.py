@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 
+
 def djangoerp_user_watch(activity):
     from djangoerp.models import Notification
     from djangoerp.models import Watch

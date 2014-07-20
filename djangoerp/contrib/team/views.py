@@ -3,8 +3,6 @@
 
 from __future__ import unicode_literals
 
-from .models import Team
-
 from djangoerp.views import ModuleCreateView
 from djangoerp.views import ModuleUpdateView
 from djangoerp.views import ModuleDetailView

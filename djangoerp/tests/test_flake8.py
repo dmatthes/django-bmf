@@ -41,4 +41,4 @@ class Flake8Test(TestCase):
         with open('flakes8.log', 'w') as file:
             for i in sorted(StyleGuide.options.report._log_messages):
                 file.write(i+'\n')
-        self.assertLess(count, 125)
+        self.assertLess(count, 90)

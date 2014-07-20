@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 from django.views.generic.base import TemplateView
 from django.template.loader import select_template
 from django.template import RequestContext
-from django.core.urlresolvers import resolve, NoReverseMatch
+from django.core.urlresolvers import resolve
 
 from ..dashboard.forms import ViewForm
 from ..viewmixins import AjaxMixin
