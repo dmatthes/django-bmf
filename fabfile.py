@@ -38,7 +38,7 @@ def static():
 @task
 def css():
   with lcd(BASEDIR):
-    local('lessc custom.less > bootstrap.css')
+    local('lessc less/custom.less > bootstrap.css')
     local('yui-compressor --type css -o djangoerp/static/djangoerp/css/bootstrap.min.css bootstrap.css')
 
 

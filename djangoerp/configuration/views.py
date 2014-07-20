@@ -46,7 +46,9 @@ class ConfigurationEdit(ViewMixin, FormView):
 
     def form_valid(self, form, *args, **kwargs):
         obj, created = Configuration.objects.get_or_create(
-                app_label=self.kwargs['app_label'], field_name=self.kwargs['name'])
+           app_label=self.kwargs['app_label'],
+           field_name=self.kwargs['name'],
+        )
         value = form.cleaned_data[self.kwargs['name']]
         # data = {
         #     'type': None,

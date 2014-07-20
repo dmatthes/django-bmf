@@ -7,6 +7,7 @@ from .models import Configuration
 
 SETTING_KEY = "%s.%s"
 
+
 class ERPConfig(object):
     def __init__(self, app_label, name, field):
         self.app_label = app_label

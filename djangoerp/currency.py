@@ -193,9 +193,9 @@ class Wallet(object):
                     keys.append(key)
             for key in keys:
                 if key not in self and key in other and other[key]:
-                    return False  # TODO untested
+                    return False
                 if key not in other and key in self and self[key]:
-                    return False  # TODO untested
+                    return False
                 if key in self and key in other and self[key] != other[key]:
                     return False
             return True
