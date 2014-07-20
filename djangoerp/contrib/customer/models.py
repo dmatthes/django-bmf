@@ -94,15 +94,15 @@ class BaseCustomer(ERPModel):
 
     @staticmethod
     def post_save(sender, instance, created, raw, *args, **kwargs):
-        Project = get_model_from_name(BASE_MODULE['PROJECT'])
+        project = get_model_from_name(BASE_MODULE['PROJECT'])
         if created:
             # create project
-            p = Project(name=instance.name, customer=instance, is_bound=True)
+            p = project(name=instance.name, customer=instance, is_bound=True)
             p.save()
 
         elif instance.pre_name != instance.name or instance.pre_active != instance.is_active or not instance.project:
             # update project
-            p, c = Project.objects.get_or_create(customer=instance, is_bound=True)
+            p, c = project.objects.get_or_create(customer=instance, is_bound=True)
             p.name = instance.name
             p.is_active = instance.is_active
             p.save()
@@ -114,7 +114,7 @@ class BaseCustomer(ERPModel):
 
 @python_2_unicode_compatible
 class AbstractCustomer(BaseCustomer):
-   #image = models.ImageField(null=True, blank=True, upload_to="test") # FIXME
+    # image = models.ImageField(null=True, blank=True, upload_to="test")  # FIXME
     name2 = models.CharField(_("Name 2"), max_length=255, null=True, blank=True, )
     job_position = models.CharField(_("Job position"), max_length=255, null=True, blank=True, )
     title = models.CharField(_("Title"), max_length=255, null=True, blank=True, )

@@ -24,7 +24,8 @@ RATE_CHOICES = (
 
 class PositionManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        return super(PositionManager, self).get_queryset(*args, **kwargs).select_related('project', 'product', 'employee')
+        return super(PositionManager, self).get_queryset(*args, **kwargs) \
+            .select_related('project', 'product', 'employee')
 
 
 @python_2_unicode_compatible

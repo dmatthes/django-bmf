@@ -32,7 +32,7 @@ class GoalWorkflow(Workflow):
 
 
 def start_condition(object, user):
-    if getattr(object, 'employee_id', False) and object.employee_id != user.pk: # TODO: untested
+    if getattr(object, 'employee_id', False) and object.employee_id != user.pk:  # TODO: untested
         return False
     return True
 
@@ -48,7 +48,7 @@ def finish_condition(object, user):
 
 
 class TaskWorkflow(Workflow):
-    bill_resolution = 5 # minutes
+    bill_resolution = 5  # minutes
 
     class States:
         new = State(_(u"New"), True, delete=False)
@@ -134,7 +134,7 @@ class TaskWorkflow(Workflow):
         self.instance.due_date = None
 
         # TODO remove this functionality IF timesheets are implemented
-        billable_time = ceil(self.instance.seconds_on/60.)
+        billable_time = ceil(self.instance.seconds_on / 60.)
 
         # get the project from
         if self.instance.project:  # TODO untested

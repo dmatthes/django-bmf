@@ -82,7 +82,7 @@ class Report(models.Model):
 
         file = generator.render(request, context)
 
-        response = HttpResponse(content_type=mimetype) # TODO depends on multiple options
+        response = HttpResponse(content_type=mimetype)  # TODO depends on multiple options
         if filename:
             response['Content-Disposition'] = 'attachment; filename="%s"' % filename
         response.write(file)

@@ -38,7 +38,7 @@ class AbstractGoal(ERPModel):
     billable = models.BooleanField(_("Is billable"), default=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Goal')
         verbose_name_plural = _('Goals')
         ordering = ['project__name', 'summary']

@@ -34,4 +34,3 @@ class ViewForm(ModelForm):
         for name in ['url', 'kwargs', 'search']:
             field = self.fields.get(name)
             field.widget = HiddenInput()
-

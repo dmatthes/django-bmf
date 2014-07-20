@@ -15,7 +15,7 @@ from xhtml2pdf import pisa
 from ConfigParser import RawConfigParser
 
 
-class xhtml2pdfReport(BaseReport):
+class Xhtml2PdfReport(BaseReport):
 
     def __init__(self, options):
         self.options = RawConfigParser(allow_no_value=True)
@@ -103,4 +103,4 @@ pdf_background_pk = None
         return pdf
 
 
-site.register_report('xhtml2pdf', xhtml2pdfReport)
+site.register_report('xhtml2pdf', Xhtml2PdfReport)

@@ -48,14 +48,34 @@ class NumberCycle(models.Model):
     def get_periods(self):
         month = bool(re.findall(match_m, self.name_template))
         if month:
-            start = datetime.datetime(self.current_period.year, self.current_period.month, 1, 0, 0, 0, tzinfo=get_default_timezone())
+            start = datetime.datetime(
+                self.current_period.year, self.current_period.month, 1,
+                0, 0, 0,
+                tzinfo=get_default_timezone()
+            )
             if self.current_period.month == 12:
-                end = datetime.datetime(self.current_period.year, 12, 31, 0, 0, 0, tzinfo=get_default_timezone())
+                end = datetime.datetime(
+                    self.current_period.year, 12, 31,
+                    0, 0, 0,
+                    tzinfo=get_default_timezone()
+                )
             else:
-                end = datetime.datetime(self.current_period.year, self.current_period.month + 1, 1, 0, 0, 0, tzinfo=get_default_timezone()) - datetime.timedelta(days=1)
+                end = datetime.datetime(
+                    self.current_period.year, self.current_period.month + 1, 1,
+                    0, 0, 0,
+                    tzinfo=get_default_timezone()
+                ) - datetime.timedelta(days=1)
         else:
-            start = datetime.datetime(self.current_period.year, 1, 1, 0, 0, 0, tzinfo=get_default_timezone())
-            end = datetime.datetime(self.current_period.year, 12, 31, 0, 0, 0, tzinfo=get_default_timezone())
+            start = datetime.datetime(
+                self.current_period.year, 1, 1,
+                0, 0, 0,
+                tzinfo=get_default_timezone()
+            )
+            end = datetime.datetime(
+                self.current_period.year, 12, 31,
+                0, 0, 0,
+                tzinfo=get_default_timezone()
+            )
         return start, end
 
     def generate_name(self, model, object):
@@ -66,7 +86,10 @@ class NumberCycle(models.Model):
                 self.current_period = object.created.date()
                 self.save()
                 start, end = self.get_periods()
-            counter = model.objects.filter(created__range=(start, end), pk__lt=object.pk).count() + self.counter_start
+            counter = model.objects.filter(
+                created__range=(start, end),
+                pk__lt=object.pk
+            ).count() + self.counter_start
         else:
             counter = object.pk
 

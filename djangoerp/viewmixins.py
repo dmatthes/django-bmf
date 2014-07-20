@@ -189,10 +189,12 @@ class ViewMixin(BaseMixin):
         # === NOTIFICATION ================================================
 
         if 'notification_last_update' in session_data:
-            diff = (datetime.datetime.utcnow() - datetime.datetime.strptime(
+            diff = (
+                datetime.datetime.utcnow() - datetime.datetime.strptime(
                     session_data['notification_last_update'],
                     '%Y-%m-%dT%H:%M:%S.%f'
-                )).total_seconds()
+                )
+            ).total_seconds()
             if diff >= 300:
                 self.update_notification(False)
         else:

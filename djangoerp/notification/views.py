@@ -20,14 +20,18 @@ class NotificationView(ViewMixin, ListView):
     paginate_by = 50
 
     def get_context_data(self, **kwargs):
-        navigation = super(NotificationView, self).get_queryset().filter(user=self.request.user).values('obj_ct').annotate(count=Count('unread')).order_by()
+        navigation = super(NotificationView, self).get_queryset() \
+            .filter(user=self.request.user).values('obj_ct') \
+            .annotate(count=Count('unread')).order_by()
 
         if not self.kwargs.get('filter', None):
             navigation = navigation.filter(unread=True)
 
         total = 0
         for data in navigation:
-            data['name'] = force_text(ContentType.objects.get_for_id(data['obj_ct']).model_class()._meta.verbose_name_plural)
+            data['name'] = force_text(
+                ContentType.objects.get_for_id(data['obj_ct']).model_class()._meta.verbose_name_plural
+            )
             total += data['count']
 
         kwargs.update({
@@ -45,5 +49,6 @@ class NotificationView(ViewMixin, ListView):
             qs = qs.filter(unread=True)
         if self.kwargs.get('ct', None):
             qs = qs.filter(obj_ct_id=self.kwargs.get('ct'))
-        return qs.filter(user=self.request.user).select_related('activity', 'ct', 'created_by').prefetch_related('obj')
-
+        return qs.filter(user=self.request.user) \
+            .select_related('activity', 'ct', 'created_by') \
+            .prefetch_related('obj')

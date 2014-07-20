@@ -92,17 +92,17 @@ class ERPOptions(object):
         for key, value in options:
             # auto-set known options (no validation!)
             if key in [
-                        'category',
-                        'has_logging',
-                        'has_comments',
-                        'has_files',
-                        'search_fields',
-                        'number_cycle',
-                        'workflow',
-                        'workflow_field',
-                        'clean',
-                        'can_clone',
-                    ]:
+                'category',
+                'has_logging',
+                'has_comments',
+                'has_files',
+                'search_fields',
+                'number_cycle',
+                'workflow',
+                'workflow_field',
+                'clean',
+                'can_clone',
+            ]:
                 setattr(self, key, value)
 
             # only observe valid fields
@@ -120,7 +120,7 @@ class ERPOptions(object):
 
         # determin if the model can be watched by a user
         self.has_watchfunction = self.has_workflow or self.has_detectchanges \
-                or self.has_comments or self.has_files
+            or self.has_comments or self.has_files
 
         # determin if the model has an activity
         self.has_activity = self.has_logging or self.has_comments or self.has_files
@@ -169,9 +169,17 @@ class ERPModelBase(ModelBase):
         if cls._erpmeta.has_workflow:
             try:
                 if not isinstance(cls.__dict__[cls._erpmeta.workflow_field].field, WorkflowField):
-                    raise ImproperlyConfigured('%s is not a WorkflowField in %s' % (cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__))
+                    raise ImproperlyConfigured(
+                        '%s is not a WorkflowField in %s' % (
+                            cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__
+                        )
+                    )
             except KeyError:
-                raise ImproperlyConfigured('%s is not a WorkflowField in %s' % (cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__))
+                raise ImproperlyConfigured(
+                    '%s is not a WorkflowField in %s' % (
+                        cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__
+                    )
+                )
 
         if cls._erpmeta.clean:
             if not hasattr(cls, 'erp_clean') and not cls._meta.abstract:
@@ -209,6 +217,7 @@ class ERPModelBase(ModelBase):
 
         return cls
 
+
 class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
     """
     Base class for ERP models.
@@ -236,8 +245,13 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         if self._erpmeta.workflow_field:
             if hasattr(self, self._erpmeta.workflow_field):
                 self._erpworkflow = self._erpmeta.workflow(getattr(self, self._erpmeta.workflow_field))
-                if getattr(self, self._erpmeta.workflow_field) == None:
-                    setattr(self, self._erpmeta.workflow_field, self._erpworkflow._current_state_key) # set default value in new objects
+                if getattr(self, self._erpmeta.workflow_field) is None:
+                    # set default value in new objects
+                    setattr(
+                        self,
+                        self._erpmeta.workflow_field,
+                        self._erpworkflow._current_state_key
+                    )
         if self.pk and len(self._erpmeta.observed_fields) > 0:
             self._erpmeta.changelog = self._get_observed_values()
 

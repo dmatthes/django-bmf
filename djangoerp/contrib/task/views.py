@@ -71,5 +71,7 @@ class TaskIndexView(ModuleIndexView):
         if hasattr(Task, 'project'):
             related.append('project')
 
-        qs = qs.annotate(null_count=Count('due_date')).order_by('-null_count', 'due_date', 'summary').select_related(*related)
+        qs = qs.annotate(null_count=Count('due_date')) \
+            .order_by('-null_count', 'due_date', 'summary') \
+            .select_related(*related)
         return qs

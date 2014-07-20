@@ -33,9 +33,9 @@ class QuotationWorkflow(Workflow):
 
     def invoice(self):
         if not self.instance.invoice:
-            Invoice = self.instance._meta.model.invoice.field.related_field.model
-            Products = Invoice.products.through
-            invoice = Invoice(
+            invoice_mdl = self.instance._meta.model.invoice.field.related_field.model
+            products = invoice_mdl.products.through
+            invoice = invoice_mdl(
                 customer=self.instance.customer,
                 project=self.instance.project,
                 employee=self.instance.employee,
@@ -52,7 +52,7 @@ class QuotationWorkflow(Workflow):
 
             # save the items from the quotation to the invoice
             for item in self.instance.quotation_products.select_related('product'):
-                invoice_item = Products(
+                invoice_item = products(
                     invoice=invoice,
                     product=item.product,
                     amount=item.amount,
@@ -62,4 +62,4 @@ class QuotationWorkflow(Workflow):
                 )
                 invoice_item.save()
             self.instance.invoice = invoice
-#     self.instance.save()
+            # self.instance.save()

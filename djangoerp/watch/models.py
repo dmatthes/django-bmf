@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+
 class Watch(models.Model):
     """
     Model which informs users about changes in the history
@@ -34,7 +35,7 @@ class Watch(models.Model):
         verbose_name = _('Watched activity')
         verbose_name_plural = _('Watched activities')
         get_latest_by = "modified"
-        default_permissions=()
+        default_permissions = ()
 
     def __str__(self):
         return '%s %s' % (self.user, self.watch_ct)

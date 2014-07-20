@@ -11,7 +11,16 @@ from .models import Customer
 class CompanyForm(ModelForm):
     class Meta:
         model = Customer
-        exclude = ['user', 'employee_at', 'is_company', 'use_company_addresses', 'job_position', 'title', 'phone_mobile', 'phone_privat']
+        exclude = [
+            'user',
+            'employee_at',
+            'is_company',
+            'use_company_addresses',
+            'job_position',
+            'title',
+            'phone_mobile',
+            'phone_privat',
+        ]
 
 
 class CustomerForm(ModelForm):

@@ -9,6 +9,7 @@ from djangoerp.workflows import Workflow, State, Transition
 
 
 class InvoiceWorkflow(Workflow):
+
     class States:
         draft = State(_(u"Draft"), True, delete=False)
         open = State(_(u"Open"), update=False, delete=False)
@@ -32,10 +33,10 @@ class InvoiceWorkflow(Workflow):
         a draft
         """
         if not self.instance.transaction:
-            Transaction = self.instance._meta.model.transaction.field.related_field.model
-            Account = Transaction.accounts.through
+            transaction_mdl = self.instance._meta.model.transaction.field.related_field.model
+            account_mdl = transaction_mdl.accounts.through
             items = self.instance.invoice_products.select_related('product').all()
-            transaction = Transaction(
+            transaction = transaction_mdl(
                 project=self.instance.project,
                 text=self.instance.invoice_number,
                 created_by=self.user,
@@ -78,7 +79,8 @@ class InvoiceWorkflow(Workflow):
                 else:
                     if data[3]:
                         arr = debit_execute
-                    else: # pragma: no cover
+                    else:  # pragma: no cover
+                        # i can't imagine a case where this list is filled
                         arr = debit_virtual
                 if data[0] in arr:
                     arr[data[0]] += data[1]
@@ -86,16 +88,40 @@ class InvoiceWorkflow(Workflow):
                     arr[data[0]] = data[1]
 
             for account, value in credit_execute.items():
-                account = Account(account_id=account, transaction=transaction, amount=value, credit=True, balanced=True)
+                account = account_mdl(
+                    account_id=account,
+                    transaction=transaction,
+                    amount=value,
+                    credit=True,
+                    balanced=True,
+                )
                 account.save()
             for account, value in debit_execute.items():
-                account = Account(account_id=account, transaction=transaction, amount=value, credit=False, balanced=True)
+                account = account_mdl(
+                    account_id=account,
+                    transaction=transaction,
+                    amount=value,
+                    credit=False,
+                    balanced=True,
+                )
                 account.save()
             for account, value in credit_virtual.items():
-                account = Account(account_id=account, transaction=transaction, amount=value, credit=True, balanced=False)
+                account = account_mdl(
+                    account_id=account,
+                    transaction=transaction,
+                    amount=value,
+                    credit=True,
+                    balanced=False,
+                )
                 account.save()
-            for account, value in debit_virtual.items(): # pragma: no cover
-                account = Account(account_id=account, transaction=transaction, amount=value, credit=False, balanced=False)
+            for account, value in debit_virtual.items():  # pragma: no cover / see above
+                account = account_mdl(
+                    account_id=account,
+                    transaction=transaction,
+                    amount=value,
+                    credit=False,
+                    balanced=False,
+                )
                 account.save()
 
             self.instance.transaction = transaction
@@ -114,7 +140,8 @@ class InvoiceWorkflow(Workflow):
         """
         pass
 
-# TODO an edit function has to copy the invoice, cancel it, update the related quotation (if any) and write a credit note - which is not supported yet
+# TODO an edit function has to copy the invoice, cancel it, update the related quotation
+# (if any) and write a credit note - which is not supported yet
 # def edit(self, instance, user):
 #   """
 #   calls cancel and then resets the invoice and payment transactions

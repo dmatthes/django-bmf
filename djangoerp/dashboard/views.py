@@ -14,6 +14,7 @@ from django.utils.encoding import force_text
 from ..models import Dashboard
 from ..viewmixins import ViewMixin
 
+
 class DashboardView(ViewMixin, DetailView):
     context_object_name = 'object'
     model = Dashboard
@@ -44,7 +45,12 @@ class DashboardView(ViewMixin, DetailView):
             if self.request.user.has_perms([perm, ]):
                 # key = unicode(model._erpmeta.category)
                 key = force_text(model._erpmeta.category)
-                models.append({'category': key, 'model': model, 'name': model._meta.verbose_name_plural, 'url': model._erpmeta.url_namespace + ':index'})
+                models.append({
+                    'category': key,
+                    'model': model,
+                    'name': model._meta.verbose_name_plural,
+                    'url': model._erpmeta.url_namespace + ':index'
+                })
 
         context['modules'] = models
         return context
@@ -61,7 +67,7 @@ class DashboardDelete(ViewMixin, DeleteView):
 
 class DashboardCreate(ViewMixin, CreateView):
     model = Dashboard
-    fields = ['name',]
+    fields = ['name']
     template_name = "djangoerp/dashboard/create.html"
 
     def form_valid(self, form):
@@ -75,7 +81,7 @@ class DashboardCreate(ViewMixin, CreateView):
 
 class DashboardUpdate(ViewMixin, UpdateView):
     model = Dashboard
-    fields = ['name',]
+    fields = ['name']
     template_name = "djangoerp/dashboard/update.html"
 
     def get_success_url(self):

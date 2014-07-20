@@ -4,11 +4,6 @@
 
 from __future__ import unicode_literals
 
-from django.test import LiveServerTestCase
-from django.core.urlresolvers import reverse
-
-import unittest
-
 from .models import Account
 from ...testcase import ERPModuleTestCase
 

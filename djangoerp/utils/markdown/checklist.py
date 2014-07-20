@@ -15,8 +15,9 @@ def makeExtension(configs=None):  # noqa
 class ChecklistExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):  # noqa
-        md.postprocessors.add('checklist', ChecklistPostprocessor(md),
-                '>raw_html')
+        md.postprocessors.add(
+            'checklist', ChecklistPostprocessor(md), '>raw_html'
+        )
 
 
 class ChecklistPostprocessor(Postprocessor):

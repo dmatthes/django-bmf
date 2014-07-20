@@ -98,8 +98,7 @@ class WorkflowMetaclass(type):
         parents = [
             b for b in bases if
             isinstance(b, WorkflowMetaclass)
-            and not (b.__name__ == 'NewBase'
-            and b.__mro__ == (b, object))
+            and not (b.__name__ == 'NewBase' and b.__mro__ == (b, object))
         ]
         if not parents:
             return super_new(cls, name, bases, attrs)

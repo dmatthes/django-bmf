@@ -15,7 +15,7 @@ from djangoerp.contrib.product.models import PRODUCT_SERVICE
 
 
 class BaseEmployee(ERPModel):
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Employee')
         verbose_name_plural = _('Employees')
         abstract = True

@@ -3,9 +3,11 @@
 
 from __future__ import unicode_literals
 
+from django.utils.encoding import force_text
 from django.views.generic.base import TemplateView
 
 from ..viewmixins import ViewMixin
+
 
 class ModuleView(ViewMixin, TemplateView):
     template_name = "djangoerp/modules.html"
@@ -18,7 +20,7 @@ class ModuleView(ViewMixin, TemplateView):
             info = model._meta.app_label, model._meta.model_name
             perm = '%s.view_%s' % info
             if self.request.user.has_perms([perm, ]):
-                key = unicode(model._erpmeta.category)
+                key = force_text(model._erpmeta.category)
                 modules.append({
                     'category': key,
                     'model': model,
@@ -29,6 +31,3 @@ class ModuleView(ViewMixin, TemplateView):
         context = super(ModuleView, self).get_context_data(**kwargs)
         context['modules'] = modules
         return context
-
-
-

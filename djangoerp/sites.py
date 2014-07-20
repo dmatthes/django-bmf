@@ -34,7 +34,7 @@ SETTING_KEY = "%s.%s"
 APP_LABEL = ERPConfig.label
 
 
-class DjangoERPSetting(object):  #TODO move this to configuration.erpsite
+class DjangoERPSetting(object):  # TODO move this to configuration.erpsite
     def __init__(self, app_label, name, field):
         self.app_label = app_label
         self.name = name
@@ -244,7 +244,7 @@ class DjangoERPSite(object):
         self.register_settings(APP_LABEL, {
             'company_name': forms.CharField(max_length=100, required=True,),
             'company_email': forms.EmailField(required=True,),
-            'currency': forms.CharField(max_length=10, required=True,), # TODO add validation / use dropdown
+            'currency': forms.CharField(max_length=10, required=True,),  # TODO add validation / use dropdown
         })
 
     def register(self, model, admin=None, **options):
@@ -425,10 +425,8 @@ class DjangoERPSite(object):
             urlpatterns += patterns(
                 '',
                 url(
-                    r'^module/%s/%s/' % (
-                        ct.pk, info[1]),
-                        include((urls, self.app_name, "module_%s_%s" % info)
-                    )
+                    r'^module/%s/%s/' % (ct.pk, info[1]),
+                    include((urls, self.app_name, "module_%s_%s" % info))
                 )
             )
         return urlpatterns

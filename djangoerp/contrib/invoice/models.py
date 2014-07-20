@@ -125,7 +125,6 @@ class AbstractInvoice(ERPModel):
                     t[tax] = value
         return t.items()
 
-
     def clean(self):
         # if self.project and not self.customer_id:
         #     self.customer = self.project.customer
@@ -142,6 +141,7 @@ class AbstractInvoice(ERPModel):
 
         if not self.date:
             self.date = datetime.datetime.now().date()
+
 
 class Invoice(AbstractInvoice):
     pass

@@ -84,13 +84,13 @@ class PositionAPI(ModuleViewMixin, View):
         return obj
 
     def create_invoice(self, project, qs):
-        Invoice = self.model._meta.get_field('invoice').rel.to
-        Products = Invoice.products.through
-        inv = Invoice(project=project)
+        invoice = self.model._meta.get_field('invoice').rel.to
+        products = invoice.products.through
+        inv = invoice(project=project)
         inv.clean()
         inv.save()
         for item in qs:
-            invitem = Products(invoice=inv, product=item.product, amount=item.amount, price=item.price)
+            invitem = products(invoice=inv, product=item.product, amount=item.amount, price=item.price)
             invitem = self.modify_invoice_item(invitem, item)
             invitem.save()
             item.invoice = inv

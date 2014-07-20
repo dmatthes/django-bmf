@@ -81,7 +81,8 @@ class ModuleActivityMixin(object):
             },
         })
         if self.model._erpmeta.has_history:
-            kwargs['erpactivity']['log_data'] = Activity.objects.select_related('user').filter(parent_ct=ct, parent_id=self.object.pk)
+            kwargs['erpactivity']['log_data'] = Activity.objects.select_related('user') \
+                .filter(parent_ct=ct, parent_id=self.object.pk)
         if self.model._erpmeta.has_comments:
             kwargs['erpactivity']['comment_form'] = HistoryCommentForm()
         return super(ModuleActivityMixin, self).get_context_data(**kwargs)
@@ -160,7 +161,8 @@ class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
         return super(ModuleIndexView, self).get_context_data(**kwargs)
 
 
-class ModuleDetailView(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
+class ModuleDetailView(
+        ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
     show the details of an entry
     """
@@ -169,7 +171,9 @@ class ModuleDetailView(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivi
 
     def get_template_names(self):
         self.update_notification()
-        return super(ModuleDetailView, self).get_template_names() + ["djangoerp/module_detail_default.html"]
+        return super(ModuleDetailView, self).get_template_names() \
+            + ["djangoerp/module_detail_default.html"]
+
 
 class ModuleAutoDetailView(ModuleFormMixin, ModuleDetailView):
     """
@@ -225,7 +229,8 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
     fields = []
 
     def get_template_names(self):
-        return super(ModuleCloneView, self).get_template_names() + ["djangoerp/module_clone_default.html"]
+        return super(ModuleCloneView, self).get_template_names() \
+            + ["djangoerp/module_clone_default.html"]
 
     def clone_object(self, formdata, instance):
         pass
@@ -239,7 +244,11 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
         self.clone_object(form.cleaned_data, form.instance)
         form.instance.pk = None
         if form.instance._erpmeta.workflow_field:
-            setattr(form.instance, form.instance._erpmeta.workflow_field, form.instance._erpmeta.workflow._default_state_key)
+            setattr(
+                form.instance,
+                form.instance._erpmeta.workflow_field,
+                form.instance._erpmeta.workflow._default_state_key
+            )
         form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
         self.object = form.save()
@@ -261,7 +270,8 @@ class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxM
     exclude = []
 
     def get_template_names(self):
-        return super(ModuleUpdateView, self).get_template_names() + ["djangoerp/module_update_default.html"]
+        return super(ModuleUpdateView, self).get_template_names() \
+            + ["djangoerp/module_update_default.html"]
 
     def form_valid(self, form):
         # messages.success(self.request, 'Object updated')
@@ -290,7 +300,8 @@ class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxM
         return super(ModuleCreateView, self).get_initial()
 
     def get_template_names(self):
-        return super(ModuleCreateView, self).get_template_names() + ["djangoerp/module_create_default.html"]
+        return super(ModuleCreateView, self).get_template_names() \
+            + ["djangoerp/module_create_default.html"]
 
     def form_valid(self, form):
         # messages.success(self.request, 'Object created')
@@ -312,7 +323,8 @@ class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, 
     template_name_suffix = '_erpdelete'
 
     def get_template_names(self):
-        return super(ModuleDeleteView, self).get_template_names() + ["djangoerp/module_delete_default.html"]
+        return super(ModuleDeleteView, self).get_template_names() \
+            + ["djangoerp/module_delete_default.html"]
 
     def get_success_url(self):
         messages.info(self.request, 'Object deleted')

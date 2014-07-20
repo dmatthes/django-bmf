@@ -62,4 +62,3 @@ class ModalSaveView(AjaxMixin, TemplateView):
             return self.render_to_json_response({'close': True})
 
         return self.render_to_json_response({'html': self.get_html(context), 'close': False})
-

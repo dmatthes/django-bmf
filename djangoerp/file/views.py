@@ -66,7 +66,11 @@ class FileAddView(BaseMixin, CreateView):
             form.instance.content_type = ct
             form.instance.content_id = pk
             self.object = form.save()
-            activity_addfile.send(sender=ct.model_class(), instance=ct.model_class().objects.get(pk=pk), file=self.object)
+            activity_addfile.send(
+                sender=ct.model_class(),
+                instance=ct.model_class().objects.get(pk=pk),
+                file=self.object,
+            )
         return HttpResponseRedirect(self.get_success_url())
 
     def get_rel_object(self):

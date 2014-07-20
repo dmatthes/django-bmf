@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 # ex:set fileencoding=utf-8:
 
 from __future__ import unicode_literals
@@ -24,11 +24,11 @@ def numbercycle_delete_object(object):
     nc = NumberCycle.objects.get(ct=ct)
 
     if not bool(re.findall(match_y, nc.name_template)):
-        return None # do nothing
+        return None  # do nothing
 
     start, end = nc.get_periods()
     if end < object.created:
-        return None # do nothing
+        return None  # do nothing
 
     nc.counter_start += 1
     nc.save()

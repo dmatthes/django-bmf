@@ -169,7 +169,8 @@ def erpfield(field, only_text):
             model = field.field.choices.queryset.model
             if hasattr(model, "_erpmeta"):
                 if field.value():
-                    text = field.field.choices.queryset.get(pk=field.value()) # FIXME FAILS IF QUERYSET IS INVALID
+                    # FIXME FAILS IF QUERYSET IS INVALID
+                    text = field.field.choices.queryset.get(pk=field.value())
                 else:
                     text = ""
                 data = '<div data-erp-search="1">'
@@ -190,7 +191,8 @@ def erpfield(field, only_text):
                 data += '</div>'
                 return data
             else:
-                # TODO: this manages relationsships to non-django models. it makes propably sense to implement a search-function for django models like user
+                # TODO: this manages relationsships to non-django models. it makes propably
+                # sense to implement a search-function for django models like user
                 return field.as_widget(attrs={'class': 'form-control'})
         elif isinstance(field.field, forms.DateTimeField):
             data = '<div class="input-group" data-erp-calendar="dt">'

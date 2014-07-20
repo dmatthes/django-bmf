@@ -135,7 +135,8 @@ class AbstractProduct(ERPModel):
     # meta_description
     # price   Product price   required
     # weight  Product weight  required
-    # visibility  Product visibility. Can have the following values: 1 - Not Visible Individually, 2 - Catalog, 3 - Search, 4 - Catalog, Search.  required
+    # visibility  Product visibility. Can have the following values:
+    #    1 - Not Visible Individually, 2 - Catalog, 3 - Search, 4 - Catalog, Search.  required
     # description   Product description.  required
     # short_description   Product short description.  required
     # UOM to UOS

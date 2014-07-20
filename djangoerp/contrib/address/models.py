@@ -58,15 +58,15 @@ class AbstractAddress(BaseAddress):
     def as_report(self):
         return _(
             "%(name)s %(name2)s\n%(street)s\n%(city)s, %(state)s, %(zip)s, %(country)s" % {
-                    'name': self.name,
-                    'name2': "\n"+self.name2,
-                    'street': self.street,
-                    'zip': self.zip,
-                    'city': self.city,
-                    'state': self.state,
-                    'country': self.country,
-                }
-            )
+                'name': self.name,
+                'name2': "\n" + self.name2,
+                'street': self.street,
+                'zip': self.zip,
+                'city': self.city,
+                'state': self.state,
+                'country': self.country,
+            }
+        )
 
     class ERPMeta(BaseAddress.ERPMeta):
         category = SALES

@@ -53,7 +53,10 @@ class WatchMixin(object):
             has_comments = model._erpmeta.has_comments
             has_workflow = model._erpmeta.has_workflow
 
-        glob = Watch.objects.filter(user=self.request.user, active=True).values('watch_ct').annotate(count=Count('watch_id')).order_by()
+        glob = Watch.objects.filter(
+            user=self.request.user,
+            active=True
+        ).values('watch_ct').annotate(count=Count('watch_id')).order_by()
 
         configured = {}
         for d in glob:
@@ -136,15 +139,27 @@ class WatchEdit(WatchMixin, NextMixin, ViewMixin, UpdateView):
             return self.object
         if self.kwargs.get('pk', 0):
             try:
-                self.object = self.model.objects.get(user=self.request.user, watch_ct_id=self.kwargs.get('ct'), watch_id=self.kwargs.get('pk'))
+                self.object = self.model.objects.get(
+                    user=self.request.user,
+                    watch_ct_id=self.kwargs.get('ct'),
+                    watch_id=self.kwargs.get('pk'),
+                )
             except self.model.DoesNotExist:
-                self.object, created = self.model.objects.get_or_create(user=self.request.user, watch_ct_id=self.kwargs.get('ct'), watch_id=0)
+                self.object, created = self.model.objects.get_or_create(
+                    user=self.request.user,
+                    watch_ct_id=self.kwargs.get('ct'),
+                    watch_id=0,
+                )
                 self.object.pk = None
                 self.object.watch_id = int(self.kwargs.get('pk'))
                 self.object.new_entry = False
                 self.object.save()
         else:
-            self.object, created = self.model.objects.get_or_create(user=self.request.user, watch_ct_id=self.kwargs.get('ct'), watch_id=0)
+            self.object, created = self.model.objects.get_or_create(
+                user=self.request.user,
+                watch_ct_id=self.kwargs.get('ct'),
+                watch_id=0,
+            )
         return self.object
 
     def get_success_url(self):
