@@ -1,4 +1,4 @@
-{% load sekizai_tags i18n %}<!DOCTYPE html>
+{% load sekizai_tags i18n staticfiles %}<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="Content-Language" content="{{ LANGUAGE_CODE }}" />
     <meta name="language" content="{{ LANGUAGE_CODE }}" />
-    <link href="{{ STATIC_URL }}djangoerp/css/bootstrap.min.css?{{ djangoerp.version }}" rel="stylesheet">{% render_block "css" %}
+    <link href="{% static "djangoerp/css/bootstrap.min.css" %}?v={{ djangoerp.version }}" rel="stylesheet">{% render_block "css" %}
   </head>
   <body>
     <div id="wrap">
@@ -102,17 +102,6 @@
       </div><!--/.container -->
     </nav>
     <div class="container">
-      {% comment %}
-      TODO we are trying to remove the breadcrumb navigation to enhance the user iterface
-      <div class="row">
-        <div class="col-lg-12">
-          <ul class="breadcrumb">
-            <li><a href="{% url 'djangoerp:dashboard' %}">{% trans "Start" %}</a></li>
-            {% block breadcrumb %}{% endblock %}
-          </ul>
-        </div>
-      </div>
-      {% endcomment %}
       {% if messages %}<div class="row">
         <div class="col-lg-12">
           {% for message in messages %}
@@ -137,12 +126,11 @@
           <p>django ERP {{ djangoerp.version }}</small></p>
       </div> <!-- /container -->
     </footer>
-    <script src="{% url "djangoerp:jsi18n" %}?{{ djangoerp.version }}"></script>
+    <script src="{% url "djangoerp:jsi18n" %}v=?{{ djangoerp.version }}"></script>
     {% if debug %}
-    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.js?{{ djangoerp.version }}"></script>
+    <script src="{% static "djangoerp/js/djangoerp.js" %}?v={{ djangoerp.version }}"></script>
     {% else %}
-    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.min.js?{{ djangoerp.version }}"></script>
-    {% endif %}
-    {% render_block "js" %}
+    <script src="{% static "djangoerp/js/djangoerp.min.js" %}?v={{ djangoerp.version }}"></script>
+    {% endif %}{% render_block "js" %}
   </body>
 </html>
