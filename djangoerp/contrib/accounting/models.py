@@ -9,15 +9,16 @@ models doctype
 
 from django.db import models
 from django.db.models import Sum
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.models import ERPMPTTModel
-from djangoerp.models import ERPModel
 from djangoerp.categories import ACCOUNTING
-from djangoerp.settings import BASE_MODULE
 from djangoerp.fields import CurrencyField
 from djangoerp.fields import MoneyField
 from djangoerp.fields import WorkflowField
+from djangoerp.models import ERPMPTTModel
+from djangoerp.models import ERPModel
+from djangoerp.settings import BASE_MODULE
 
 from .workflows import TransactionWorkflow
 
@@ -46,6 +47,7 @@ ACCOUNTING_TYPES = (
 # =============================================================================
 
 
+@python_2_unicode_compatible
 class BaseAccount(ERPMPTTModel):
     """
     """
@@ -91,7 +93,7 @@ class BaseAccount(ERPMPTTModel):
         category = ACCOUNTING
         observed_fields = ['name', ]
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s: %s' % (self.number, self.name)
 
 
@@ -115,6 +117,7 @@ class Account(AbstractAccount):
 # =============================================================================
 
 
+@python_2_unicode_compatible
 class AbstractTransaction(ERPModel):
     """
     Transaction
@@ -154,7 +157,7 @@ class AbstractTransaction(ERPModel):
         workflow = TransactionWorkflow
         workflow_field = 'state'
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s' % self.text
 
 

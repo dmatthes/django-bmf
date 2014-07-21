@@ -13,6 +13,8 @@
    * SEARCH
    *
    */
+
+  /*
           
   $.erp.search = function(el, options) {
     // To avoid scope issues, use 'base' instead of 'this'
@@ -144,6 +146,7 @@
     // Which filter options are submitted
     url: './form-api/',
   };
+  */
 
   /*
    * 
@@ -213,7 +216,7 @@
         this.name = this.name.replace(name_regex, name_replacement);
       });
       base.total_forms += 1;
-      row.find('div[data-erp-search=1]').erp_search();
+      row.find('div[data-erp-search=1]').erp_autocomplete();
 
       // Code adapted from http://djangosnippets.org/snippets/1389/
 //    function updateElementIndex(el, prefix, ndx) {
@@ -232,6 +235,7 @@
   };
 
   $.erp.inlineform.defaultOptions = {
+      debug: false
   };
 
   /*
@@ -239,12 +243,14 @@
    * REGISTER FUNCTIONS TO JQUERY
    *
    */
+  /*
   
    $.fn.erp_search = function(options){
      return this.each(function(){
        (new $.erp.search(this, options));
      });
    };
+   */
    $.fn.erp_inlineform = function(options){
      return this.each(function(){
        (new $.erp.inlineform(this, options));

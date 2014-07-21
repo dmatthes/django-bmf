@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangoerp.models import ERPModel
@@ -24,6 +25,7 @@ class BaseEmployee(ERPModel):
         category = HR
 
 
+@python_2_unicode_compatible
 class AbstractEmployee(BaseEmployee):
     """
     """
@@ -75,14 +77,14 @@ class AbstractEmployee(BaseEmployee):
         on_delete=models.SET_NULL,
     )
 
-    class Meta(BaseEmployee.Meta):  # only needed for abstract models
+    class Meta(BaseEmployee.Meta):
         ordering = ['name']
         abstract = True
 
     class ERPMeta(BaseEmployee.ERPMeta):
         search_fields = ['name', 'email', 'user__username']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 

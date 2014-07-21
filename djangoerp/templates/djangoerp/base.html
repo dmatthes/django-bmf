@@ -138,6 +138,11 @@
       </div> <!-- /container -->
     </footer>
     <script src="{% url "djangoerp:jsi18n" %}?{{ djangoerp.version }}"></script>
-    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.min.js?{{ djangoerp.version }}"></script>{% render_block "js" %}
+    {% if debug %}
+    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.js?{{ djangoerp.version }}"></script>
+    {% else %}
+    <script src="{{ STATIC_URL }}djangoerp/js/djangoerp.min.js?{{ djangoerp.version }}"></script>
+    {% endif %}
+    {% render_block "js" %}
   </body>
 </html>

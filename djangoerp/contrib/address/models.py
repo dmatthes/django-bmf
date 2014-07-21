@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangoerp.models import ERPModel
@@ -41,6 +42,7 @@ class BaseAddress(ERPModel):
         return self.customer
 
 
+@python_2_unicode_compatible
 class AbstractAddress(BaseAddress):
     """
     """
@@ -72,7 +74,7 @@ class AbstractAddress(BaseAddress):
         category = SALES
         observed_fields = ['name', 'name2', 'street', 'zip', 'city', 'state', 'country']
 
-    def __unicode__(self):
+    def __str__(self):
         if self.name2:
             return self.name + ", " + self.name2
         return self.name

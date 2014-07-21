@@ -48,16 +48,14 @@ def js(debug=None):
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
+            'js/erp-autocomplete.js',
             'js/erp-calendar.js',
             'js/erp-editform.js',
             'js/erp-buildform.js',
             'js/menu.js',
         ]
-        local('cat %s > js/djangoerp.js' % ' '.join(js))
-        if debug:
-            local('cp js/djangoerp.js djangoerp/static/djangoerp/js/djangoerp.min.js')
-        else:
-            local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js js/djangoerp.js')
+        local('cat %s > djangoerp/static/djangoerp/js/djangoerp.js' % ' '.join(js))
+        local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js djangoerp/static/djangoerp/js/djangoerp.js')
 
 
 @task

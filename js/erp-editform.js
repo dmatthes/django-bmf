@@ -68,7 +68,6 @@
             var form_object = parent_object.find('form');
             form_object.attr('action', base.options.href.split("?",1)[0]);
             // apply erp-form functions
-            form_object.find('div[data-erp-search=1]').erp_search();
             form_object.find('div[data-erp-inlineform=1]').erp_inlineform();
             form_object.erp_buildform();
 
@@ -107,7 +106,8 @@
 
     // default options
     $.erp.editform.defaultOptions = {
-        href: null
+        href: null,
+        debug: false
     };
 
     // register as jquery function

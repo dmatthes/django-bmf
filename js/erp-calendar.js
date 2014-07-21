@@ -17,7 +17,7 @@
             // load options
             base.options = $.extend({}, $.erp.editform.defaultOptions, options);
 
-            base.$el.append('<span class="input-group-btn"><button class="btn btn-default disabled" type="button"><span class="glyphicon glyphicon-calendar"></span></button></span></div>');
+            base.$el.append('<span class="input-group-btn"><button class="btn btn-default disabled" tabindex="-1" type="button"><span class="glyphicon glyphicon-calendar"></span></button></span>');
 
             // initialization logic
         }
@@ -28,7 +28,8 @@
 
     // default options
     $.erp.calendar.defaultOptions = {
-        href: null
+        href: null,
+        debug: false
     };
 
     // register as jquery function

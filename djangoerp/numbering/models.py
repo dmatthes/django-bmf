@@ -3,10 +3,11 @@
 
 from __future__ import unicode_literals
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now, get_default_timezone
+from django.utils.translation import ugettext_lazy as _
 
 from .validators import template_name_validator, match_y, match_m
 
@@ -31,6 +32,7 @@ def _generate_name(value, date, counter):
     })
 
 
+@python_2_unicode_compatible
 class NumberCycle(models.Model):
     ct = models.OneToOneField(
         ContentType, related_name="erp_numbercycle", null=True, blank=False, editable=False,
@@ -42,7 +44,7 @@ class NumberCycle(models.Model):
     counter_start = models.PositiveIntegerField(null=True, blank=False, default=1)
     current_period = models.DateField(null=True, blank=False, default=now)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name_template
 
     def get_periods(self):

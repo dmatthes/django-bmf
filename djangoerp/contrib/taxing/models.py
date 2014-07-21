@@ -4,17 +4,18 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.models import ERPModel
 from djangoerp.categories import SETTINGS
-from djangoerp.settings import BASE_MODULE
-
 from djangoerp.contrib.accounting.models import ACCOUNTING_LIABILITY
+from djangoerp.models import ERPModel
+from djangoerp.settings import BASE_MODULE
 
 from decimal import Decimal
 
 
+@python_2_unicode_compatible
 class AbstractTax(ERPModel):
     name = models.CharField(max_length=255, null=False, blank=False, )
     # invoice_name_long = models.CharField( max_length=255, null=False, blank=False, )
@@ -44,7 +45,7 @@ class AbstractTax(ERPModel):
         category = SETTINGS
         observed_fields = ['name', 'invoice_name', 'rate']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 

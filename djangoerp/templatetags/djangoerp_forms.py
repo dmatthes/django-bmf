@@ -165,6 +165,7 @@ def erpfield(field, only_text):
 
         if isinstance(field.field, forms.models.ModelMultipleChoiceField):
             return field.as_widget(attrs={'class': 'form-control'})
+
         elif isinstance(field.field, forms.models.ModelChoiceField):
             model = field.field.choices.queryset.model
             if hasattr(model, "_erpmeta"):
@@ -173,13 +174,7 @@ def erpfield(field, only_text):
                     text = field.field.choices.queryset.get(pk=field.value())
                 else:
                     text = ""
-                data = '<div data-erp-search="1">'
-                data += '<div class="hidden">'
-#               data += field.as_hidden()
-                data += field.as_text(attrs={
-                    'autocomplete': 'off',
-                })
-                data += '</div>'
+                data = '<div class="input-group" data-erp-autocomplete="1">'
                 data += field.as_text(attrs={
                     'class': 'form-control',
                     'id': '%s-value' % field.auto_id,
@@ -187,25 +182,30 @@ def erpfield(field, only_text):
                     'autocomplete': 'off',
                     'name': '',
                 })
-                data += '<ul class="dropdown-menu" style="display: none"></ul>'
                 data += '</div>'
+                if settings.DEBUG:
+                    data += field.as_text(attrs={'autocomplete': 'off'})
+                else:
+                    data += field.as_hidden(attrs={'autocomplete': 'off'})
                 return data
             else:
                 # TODO: this manages relationsships to non-django models. it makes propably
                 # sense to implement a search-function for django models like user
                 return field.as_widget(attrs={'class': 'form-control'})
+
         elif isinstance(field.field, forms.DateTimeField):
             data = '<div class="input-group" data-erp-calendar="dt">'
-            data += field.as_widget(attrs={'class': 'form-control'})
+            data += field.as_widget(attrs={'class': 'form-control', 'autocomplete': 'off'})
+            data += '</div>'
             return data
         elif isinstance(field.field, forms.DateField):
             data = '<div class="input-group" data-erp-calendar="d">'
-            data += field.as_widget(attrs={'class': 'form-control'})
+            data += field.as_widget(attrs={'class': 'form-control', 'autocomplete': 'off'})
             data += '</div>'
             return data
         elif isinstance(field.field, forms.TimeField):
             data = '<div class="input-group" data-erp-calendar="t">'
-            data += field.as_widget(attrs={'class': 'form-control'})
+            data += field.as_widget(attrs={'class': 'form-control', 'autocomplete': 'off'})
             data += '</div>'
             return data
         else:
