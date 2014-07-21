@@ -183,10 +183,7 @@ def erpfield(field, only_text):
                     'name': '',
                 })
                 data += '</div>'
-                if settings.DEBUG:
-                    data += field.as_text(attrs={'autocomplete': 'off'})
-                else:
-                    data += field.as_hidden(attrs={'autocomplete': 'off'})
+                data += field.as_hidden(attrs={'autocomplete': 'off'})
                 return data
             else:
                 # TODO: this manages relationsships to non-django models. it makes propably

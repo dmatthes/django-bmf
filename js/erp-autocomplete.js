@@ -42,8 +42,8 @@
             base.container.append('<ul class="dropdown-menu" style="display: none"></ul>');
 
             base.form = base.$el.parents('form').first();
-            base.input = base.$el.children('input[type="text"]').last();
-            base.hidden = base.container.children('input[type="text"]').first();
+            base.input = base.$el.children('input[type="text"]').first();
+            base.hidden = base.container.children('input[type="hidden"]').first();
             base.dropdown = base.container.children('ul').first();
             base.input.attr('value', base.input.attr('placeholder'));
             base.timeout = false;
