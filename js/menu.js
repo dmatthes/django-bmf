@@ -52,7 +52,7 @@ $(document).ready(function() {
         var search = $(location).attr('search');
         var pathname = $(location).attr('pathname');
         var url = $(this).attr('href');
-        dict = ERPAJAX;
+        dict = $.erp.AJAX;
         dict.type = 'GET';
         dict.data = { search: search, pathname: pathname };
         dict.url = url;
@@ -62,7 +62,7 @@ $(document).ready(function() {
                 $('#erpmodal_saveview').modal('show');
                 $('#erpmodal_saveview form').submit(function(event){
                     event.preventDefault();
-                    dict = ERPAJAX;
+                    dict = $.erp.AJAX;
                     dict.type = 'POST';
                     dict.data = $(this).serialize();
                     dict.url = url;
@@ -92,7 +92,7 @@ $(document).ready(function() {
             var ct = $(this).data('ct');
             var pk = $(this).data('pk');
             var url = $(this).attr('href');
-            dict = ERPAJAX;
+            dict = $.erp.AJAX;
             dict.type = 'GET';
             dict.data = { ct: ct, pk: pk };
             dict.url = url;
@@ -104,7 +104,7 @@ $(document).ready(function() {
 
                 $('#erpmodal_follow form').submit(function(event){
                     event.preventDefault();
-                    dict = ERPAJAX;
+                    dict = $.erp.AJAX;
                     dict.type = 'POST';
                     dict.data = $(this).serializeArray();
                     dict.data.push({name: 'ct', value: ct });
