@@ -126,7 +126,7 @@
           <p>django ERP {{ djangoerp.version }}</small></p>
       </div> <!-- /container -->
     </footer>
-    <script src="{% url "djangoerp:jsi18n" %}v=?{{ djangoerp.version }}"></script>
+    <script src="{% url "djangoerp:jsi18n" %}?v={{ djangoerp.version }}"></script>
     {% if debug %}
     <script src="{% static "djangoerp/js/djangoerp.js" %}?v={{ djangoerp.version }}"></script>
     {% else %}
