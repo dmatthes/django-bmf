@@ -34,7 +34,7 @@ SETTING_KEY = "%s.%s"
 APP_LABEL = ERPConfig.label
 
 
-class DjangoERPSetting(object):  # TODO move this to configuration.erpsite
+class DjangoERPSetting(object):
     def __init__(self, app_label, name, field):
         self.app_label = app_label
         self.name = name
@@ -71,7 +71,7 @@ class DjangoERPSetting(object):  # TODO move this to configuration.erpsite
         return value
 
 
-class DjangoERPModule(object):  # TODO move this to module.erpsite
+class DjangoERPModule(object):
     index = None
     create = None
     delete = None

@@ -8,9 +8,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from ..utils import get_model_from_cfg
-from ..testcase import ERPTestCase
+from ..testcase import ERPViewTestCase
 
-class WatchTests(ERPTestCase):
+class WatchTests(ERPViewTestCase):
 
     def test_watch(self):
         """

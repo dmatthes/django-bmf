@@ -12,9 +12,9 @@ from ..utils import get_model_from_cfg
 
 from ..models import Report
 
-from ..testcase import ERPTestCase
+from ..testcase import ERPViewTestCase
 
-class CoreTests(ERPTestCase):
+class CoreTests(ERPViewTestCase):
 
     def test_reports(self):
         """

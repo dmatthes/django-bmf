@@ -10,9 +10,6 @@ from django.test import TestCase
 
 import json
 
-import warnings
-from djangoerp.utils.deprecation import RemovedInNextERPVersionWarning
-
 
 class ERPViewTestCase(LiveServerTestCase):
     fixtures = [
@@ -25,15 +22,6 @@ class ERPViewTestCase(LiveServerTestCase):
         from . import sites
         sites.autodiscover()
         self.client.login(username='admin', password='admin')
-
-
-class ERPTestCase(ERPViewTestCase):
-    def __init__(self, *args, **kwargs):
-        super(ERPTestCase, self).__init__(*args, **kwargs)
-
-        warnings.warn(
-            "The is class is deprecated.",
-            RemovedInNextERPVersionWarning, stacklevel=2)
 
 
 class ERPModuleTestCase(ERPViewTestCase):
