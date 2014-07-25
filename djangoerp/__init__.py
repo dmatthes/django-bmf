@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-VERSION = ((0, 1, 3), ('a', 0))  # all alpha versions
+VERSION = ((0, 1, 3), ('a', 1))  # all alpha versions
 # VERSION = ((0, 2), ('b', 0)) # first beta
 # VERSION = ((0, 3), ('b', 0)) # second beta
 # VERSION = ((0, 9), ('rc', 0)) # first official release
