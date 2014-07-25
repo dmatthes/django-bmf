@@ -4,15 +4,16 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
-from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic import UpdateView
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.utils import six
+from django.utils.encoding import force_text
 
 from ..models import Dashboard
 from ..viewmixins import ViewMixin
+
 
 class DashboardView(ViewMixin, DetailView):
     context_object_name = 'object'
@@ -42,8 +43,14 @@ class DashboardView(ViewMixin, DetailView):
             info = model._meta.app_label, model._meta.model_name
             perm = '%s.view_%s' % info
             if self.request.user.has_perms([perm, ]):
-                key = unicode(model._erpmeta.category)
-                models.append({'category': key, 'model': model, 'name': model._meta.verbose_name_plural, 'url': model._erpmeta.url_namespace + ':index'})
+                # key = unicode(model._erpmeta.category)
+                key = force_text(model._erpmeta.category)
+                models.append({
+                    'category': key,
+                    'model': model,
+                    'name': model._meta.verbose_name_plural,
+                    'url': model._erpmeta.url_namespace + ':index'
+                })
 
         context['modules'] = models
         return context
@@ -60,7 +67,7 @@ class DashboardDelete(ViewMixin, DeleteView):
 
 class DashboardCreate(ViewMixin, CreateView):
     model = Dashboard
-    fields = ['name',]
+    fields = ['name']
     template_name = "djangoerp/dashboard/create.html"
 
     def form_valid(self, form):
@@ -74,7 +81,7 @@ class DashboardCreate(ViewMixin, CreateView):
 
 class DashboardUpdate(ViewMixin, UpdateView):
     model = Dashboard
-    fields = ['name',]
+    fields = ['name']
     template_name = "djangoerp/dashboard/update.html"
 
     def get_success_url(self):

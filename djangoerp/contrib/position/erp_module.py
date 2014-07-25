@@ -15,11 +15,12 @@ from .views import PositionCreateView
 from .views import PositionAPI
 
 site.register(Position, **{
-    'index':  PositionTableView,
+    'index': PositionTableView,
     'create': PositionCreateView,
     'update': PositionUpdateView,
     'detail': PositionDetailView,
-    'urlpatterns': patterns('',
+    'urlpatterns': patterns(
+        '',
         url(r'^api/$', PositionAPI.as_view(), name="api"),
     ),
 })

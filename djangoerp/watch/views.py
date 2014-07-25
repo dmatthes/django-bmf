@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 
 from ..models import Watch
 from ..viewmixins import ViewMixin
-from ..views import NextMixin
+from ..viewmixins import NextMixin
 from ..sites import site
 
 from ..settings import ACTIVITY_WORKFLOW
@@ -24,15 +24,15 @@ from ..settings import ACTIVITY_CREATED
 
 from .forms import WatchDefaultForm, WatchObjectForm
 
+
 class WatchMixin(object):
     model = Watch
 
     def get_parent_model(self):
         try:
-          return ContentType.objects.get_for_id(int(self.kwargs.get('ct', 0))).model_class()
+            return ContentType.objects.get_for_id(int(self.kwargs.get('ct', 0))).model_class()
         except ContentType.DoesNotExist:
-          return None
-
+            return None
 
     def get_context_data(self, **kwargs):
         model = self.get_parent_model()
@@ -43,7 +43,7 @@ class WatchMixin(object):
         has_workflow = None
 
         if model:
-            if not hasattr(model,'_erpmeta'):
+            if not hasattr(model, '_erpmeta'):
                 raise Http404
             if not model._erpmeta.has_activity:
                 raise Http404
@@ -53,12 +53,15 @@ class WatchMixin(object):
             has_comments = model._erpmeta.has_comments
             has_workflow = model._erpmeta.has_workflow
 
-        glob = Watch.objects.filter(user=self.request.user, active=True).values('watch_ct').annotate(count=Count('watch_id')).order_by()
+        glob = Watch.objects.filter(
+            user=self.request.user,
+            active=True
+        ).values('watch_ct').annotate(count=Count('watch_id')).order_by()
 
         configured = {}
         for d in glob:
             configured[d['watch_ct']] = d['count'] - 1
-        
+
         navigation = []
         for ct, model in site.models.items():
             if model._erpmeta.has_activity:
@@ -121,7 +124,7 @@ class WatchView(WatchMixin, ViewMixin, ListView):
                 'glob_settings': default,
             })
         return super(WatchView, self).get_context_data(**kwargs)
-        
+
 
 class WatchEdit(WatchMixin, NextMixin, ViewMixin, UpdateView):
     template_name = "djangoerp/watch/edit.html"
@@ -136,15 +139,27 @@ class WatchEdit(WatchMixin, NextMixin, ViewMixin, UpdateView):
             return self.object
         if self.kwargs.get('pk', 0):
             try:
-                self.object = self.model.objects.get(user=self.request.user, watch_ct_id=self.kwargs.get('ct'), watch_id=self.kwargs.get('pk'))
+                self.object = self.model.objects.get(
+                    user=self.request.user,
+                    watch_ct_id=self.kwargs.get('ct'),
+                    watch_id=self.kwargs.get('pk'),
+                )
             except self.model.DoesNotExist:
-                self.object, created = self.model.objects.get_or_create(user=self.request.user, watch_ct_id=self.kwargs.get('ct'), watch_id= 0)
+                self.object, created = self.model.objects.get_or_create(
+                    user=self.request.user,
+                    watch_ct_id=self.kwargs.get('ct'),
+                    watch_id=0,
+                )
                 self.object.pk = None
                 self.object.watch_id = int(self.kwargs.get('pk'))
                 self.object.new_entry = False
                 self.object.save()
         else:
-            self.object, created = self.model.objects.get_or_create(user=self.request.user, watch_ct_id=self.kwargs.get('ct'), watch_id= 0)
+            self.object, created = self.model.objects.get_or_create(
+                user=self.request.user,
+                watch_ct_id=self.kwargs.get('ct'),
+                watch_id=0,
+            )
         return self.object
 
     def get_success_url(self):

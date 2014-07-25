@@ -9,6 +9,7 @@ __all__ = (
     'ERPMPTTModel',
     'Activity',
     'Dashboard',
+    'Configuration',
     'Notification',
     'NumberCycle',
     'Report',

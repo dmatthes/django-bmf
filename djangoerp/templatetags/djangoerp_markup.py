@@ -20,7 +20,9 @@ def markdown_filter(text):
     """
     if not text:
         return ''
-    return mark_safe(markdown.markdown(text, extensions=[
+    return mark_safe(markdown.markdown(
+        text,
+        extensions=[
             UrlizeExtension(),
             ChecklistExtension(),
             'smart_strong',
@@ -28,8 +30,8 @@ def markdown_filter(text):
             'smarty',
         ],
         output_format="html5",
-        save_mode = 'escape',
-        smart_emphasis = True,
-        lazy_ol = True,
+        save_mode='escape',
+        smart_emphasis=True,
+        lazy_ol=True,
     ))
 markdown_filter.is_safe = True

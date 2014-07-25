@@ -4,14 +4,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponse, HttpResponseForbidden, Http404
 
 import json
 
 CONFIGURATION_CACHE = {}
+
 
 class ConfigurationManager(models.Manager):
     def get_value(self, app, name):
@@ -30,7 +29,7 @@ class ConfigurationManager(models.Manager):
         if app in CONFIGURATION_CACHE:
             CONFIGURATION_CACHE[app][name] = value
         else:
-            CONFIGURATION_CACHE[app] = {name: value,}
+            CONFIGURATION_CACHE[app] = {name: value}
 
         return value
 
@@ -39,13 +38,19 @@ class ConfigurationManager(models.Manager):
         global CONFIGURATION_CACHE
         CONFIGURATION_CACHE = {}
 
+
+@python_2_unicode_compatible
 class Configuration(models.Model):
     """
     Model to store informations about settings
     """
 
-    app_label = models.CharField(_("Application"), max_length=100, editable=False, null=True, blank=False)
-    field_name = models.CharField(_("Fieldname"), max_length=100, editable=False, null=True, blank=False)
+    app_label = models.CharField(
+        _("Application"), max_length=100, editable=False, null=True, blank=False,
+    )
+    field_name = models.CharField(
+        _("Fieldname"), max_length=100, editable=False, null=True, blank=False,
+    )
     value = models.TextField(_("Value"), null=True, blank=False)
 
     class Meta:

@@ -5,12 +5,12 @@ from __future__ import unicode_literals
 
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 
 from ..models import Watch
 
 
 class WatchDefaultForm(forms.ModelForm):
+
     class Meta:
         model = Watch
         fields = ['new_entry', 'comment', 'file', 'changed', 'workflow']
@@ -23,7 +23,9 @@ class WatchDefaultForm(forms.ModelForm):
 #       field = self.fields.get('text')
 #       field.widget = forms.Textarea(attrs={'rows': 8, 'class': 'form-control'})
 
+
 class WatchObjectForm(forms.ModelForm):
+
     class Meta:
         model = Watch
         fields = ['comment', 'file', 'changed', 'workflow']
@@ -35,4 +37,3 @@ class WatchObjectForm(forms.ModelForm):
 
 #       field = self.fields.get('text')
 #       field.widget = forms.Textarea(attrs={'rows': 8, 'class': 'form-control'})
-

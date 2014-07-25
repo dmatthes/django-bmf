@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='transaction',
             name='accounts',
-            field=models.ManyToManyField(to='djangoerp_accounting.Account', null=True, through='djangoerp_accounting.TransactionItem'),
+            field=models.ManyToManyField(to='djangoerp_accounting.Account', through='djangoerp_accounting.TransactionItem'),
             preserve_default=True,
         ),
         migrations.AddField(

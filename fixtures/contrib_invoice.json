@@ -1,0 +1,54 @@
+[
+{
+ "fields": {
+  "customer": 1,
+  "transaction": null,
+  "modified_by": 1,
+  "uuid": null,
+  "term_of_payment": "",
+  "created": "2014-07-19T15:45:34.066Z",
+  "notes": "",
+  "modified": "2014-07-19T15:45:34.066Z",
+  "created_by": 1,
+  "due": null,
+  "project": 1,
+  "date": "2014-07-19",
+  "state": "draft",
+  "invoice_address": 1,
+  "shipping_address": 1,
+  "employee": 1,
+  "invoice_number": "INV2014/07-0001",
+  "net": 173.94
+ },
+ "model": "djangoerp_invoice.invoice",
+ "pk": 1
+},
+{
+ "fields": {
+  "price_currency": "EUR",
+  "product": 1,
+  "name": "Installation",
+  "price": "69",
+  "price_precision": 0,
+  "amount": 1.0,
+  "invoice": 1,
+  "description": ""
+ },
+ "model": "djangoerp_invoice.invoiceproduct",
+ "pk": 1
+},
+{
+ "fields": {
+  "price_currency": "EUR",
+  "product": 1,
+  "name": "Configuration",
+  "price": "69",
+  "price_precision": 0,
+  "amount": 2.0,
+  "invoice": 1,
+  "description": ""
+ },
+ "model": "djangoerp_invoice.invoiceproduct",
+ "pk": 2
+}
+]

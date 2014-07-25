@@ -6,18 +6,13 @@ from __future__ import unicode_literals
 from django.db.models import get_models
 from django.db.models.signals import post_syncdb
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import Permission
-from django.conf import settings
-from django.utils.text import slugify
-from django.utils import translation
-from django.utils import six
 
 from . import models as erpcore
 from .numbering.models import NumberCycle
 
 
 def install(sender, created_models, **kwargs):
-    for model in get_models(): # TODO change to django.apps
+    for model in get_models():  # TODO change to django.apps
         if getattr(model, 'ERPMeta', False):
 
             kwargs = {

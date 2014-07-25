@@ -14,6 +14,14 @@ MANAGE = BASEDIR + "/sandbox/manage.py"
 
 LANGUAGES = ('en', 'de',)
 
+FIXTURES = (
+    'fixtures/users.json',
+    'fixtures/demodata.json',
+    'fixtures/contrib_invoice.json',
+    'fixtures/contrib_quotation.json',
+    'fixtures/contrib_task.json',
+)
+
 
 @task
 def static():
@@ -26,7 +34,7 @@ def static():
 @task
 def css():
   with lcd(BASEDIR):
-    local('lessc custom.less > bootstrap.css')
+    local('lessc less/custom.less > bootstrap.css')
     local('yui-compressor --type css -o djangoerp/static/djangoerp/css/bootstrap.min.css bootstrap.css')
 
 
@@ -40,25 +48,25 @@ def js(debug=None):
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
+            'js/erp-autocomplete.js',
+            'js/erp-calendar.js',
             'js/erp-editform.js',
+            'js/erp-buildform.js',
             'js/menu.js',
         ]
-        local('cat %s > js/djangoerp.js' % ' '.join(js))
-        if debug:
-            local('cp js/djangoerp.js djangoerp/static/djangoerp/js/djangoerp.min.js')
-        else:
-            local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js js/djangoerp.js')
+        local('cat %s > djangoerp/static/djangoerp/js/djangoerp.js' % ' '.join(js))
+        local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js djangoerp/static/djangoerp/js/djangoerp.js')
 
 
 @task
 def test():
-  """
-  Tests code with django unittests
-  """
-  with lcd(BASEDIR):
-    local('%s %s test djangoerp --liveserver=localhost:8001-9000' % (PYTHON, MANAGE))
-    local('find %s/sandbox/erp_documents -empty -delete' % BASEDIR)
-
+    """
+    Tests code with django unittests
+    """
+    with lcd(BASEDIR):
+        local('.virtenv/bin/coverage run %s test djangoerp --liveserver=localhost:8001-9000' % MANAGE)
+        local('find %s/sandbox/erp_documents -empty -delete' % BASEDIR)
+        local('.virtenv/bin/coverage report -m --include="djangoerp/*"')
 
 @task
 def test_contrib(app):
@@ -141,9 +149,9 @@ def make(data=''):
     local('rm -f sandbox/database.sqlite')
     local('%s %s migrate --noinput' % (PYTHON, MANAGE))
     if not data:
-        local('%s %s loaddata djangoerp/fixtures_demousers.json djangoerp/fixtures_demodata.json' % (PYTHON, MANAGE))
+        local('%s %s loaddata %s' % (PYTHON, MANAGE, ' '.join(FIXTURES)))
     else:
-        local('%s %s loaddata djangoerp/fixtures_demousers.json' % (PYTHON, MANAGE))
+        local('%s %s loaddata fixtures/users.json' % (PYTHON, MANAGE))
 
 
 @task

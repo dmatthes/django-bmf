@@ -4,8 +4,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 from djangoerp.models import ERPModel
 from djangoerp.fields import WorkflowField
@@ -18,41 +18,42 @@ from .workflows import TaskWorkflow
 
 from math import floor
 
+
 @python_2_unicode_compatible
 class AbstractGoal(ERPModel):
     """
     """
     state = WorkflowField()
 
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
-    referee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
-
-    summary = models.CharField(_("Summary"), max_length=255, null=True, blank=False, )
+    summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
+
+    project = models.ForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+    )
+    referee = models.ForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
 
     billable = models.BooleanField(_("Is billable"), default=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Goal')
         verbose_name_plural = _('Goals')
-        ordering = ['project__name','summary']
+        ordering = ['project__name', 'summary']
         abstract = True
-
 
     def erpget_customer(self):
         if self.project:
             return self.project.customer
         return None
 
-
     def erpget_project(self):
         return self.project
 
-
     def __str__(self):
-        return '#%s: %s' % (self.pk, self.summary)
-
+        return '%s' % (self.summary)
 
     def get_states(self):
         active_states = 0
@@ -63,30 +64,29 @@ class AbstractGoal(ERPModel):
         }
 
         for state, count in self.task_set.values_list('state').annotate(count=models.Count('state')).order_by():
-            if state in ["new","open","started"]:
+            if state in ["new", "open", "started", ]:
                 active_states += count
 
-            if state in ["hold",]:
+            if state in ["hold", ]:
                 states["hold"] += count
                 active_states += count
 
-            if state in ["review",]:
+            if state in ["review", ]:
                 states["review"] += count
                 active_states += count
 
-            if state in ["finished",]:
+            if state in ["finished", ]:
                 states["done"] += count
                 active_states += count
 
         if active_states == 0:
-          return states
+            return states
 
-        states['hold'] = '%4.2f' % (floor(10000*states["hold"]/active_states)/100)
-        states['done'] = '%4.2f' % (floor(10000*states["done"]/active_states)/100)
-        states['review'] = '%4.2f' % (floor(10000*states["review"]/active_states)/100)
+        states['hold'] = '%4.2f' % (floor(10000 * states["hold"] / active_states) / 100)
+        states['done'] = '%4.2f' % (floor(10000 * states["done"] / active_states) / 100)
+        states['review'] = '%4.2f' % (floor(10000 * states["review"] / active_states) / 100)
 
         return states
-
 
     class ERPMeta:
         has_logging = False
@@ -107,22 +107,26 @@ class AbstractTask(ERPModel):
 
     state = WorkflowField()
 
-    project = models.ForeignKey(BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE)
-    employee = models.ForeignKey(BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL)
-
-    goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
-
-    summary = models.CharField(_("Summary"), max_length=255, null=True, blank=False, )
+    summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
     due_date = models.DateField(_('Due date'), null=True, blank=True)
 
     work_date = models.DateTimeField(null=True, editable=False)
+
+    project = models.ForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+    )
+    employee = models.ForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
+
+    goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
+
     seconds_on = models.PositiveIntegerField(null=True, default=0, editable=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
-
-    class Meta(ERPModel.Meta): # only needed for abstract models
+    class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
         ordering = ['due_date', 'summary']

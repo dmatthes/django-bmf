@@ -7,33 +7,21 @@ from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse_lazy
-from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from django.forms.models import modelform_factory
-from django.http import HttpResponseRedirect, HttpResponse, Http404, QueryDict
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import never_cache
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from django.views.generic.base import TemplateView
-from django.views.generic.base import RedirectView
+from django.http import HttpResponseRedirect, Http404, QueryDict
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import DetailView
+from django.views.generic import UpdateView
 from django.views.generic.edit import BaseFormView
-from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
-from django.views.defaults import permission_denied
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils import formats
-from django.utils.encoding import force_text
-from django.utils.timezone import now
-
-from django_filters.views import FilterView
 
 from .activity.models import Activity
 from .watch.models import Watch
 from .models import Report
-from .models import Notification
-from .decorators import login_required
 from .activity.forms import HistoryCommentForm
 from .signals import activity_create
 from .signals import activity_update
@@ -41,30 +29,21 @@ from .signals import activity_workflow
 from .signals import djangoerp_post_save
 from .utils import get_model_from_cfg
 from .utils import form_class_factory
-
-from .viewmixins import ViewMixin
-from .viewmixins import AjaxMixin
-from .viewmixins import NextMixin
-
-from .viewmixins import ModuleViewPermissionMixin
-from .viewmixins import ModuleCreatePermissionMixin
-from .viewmixins import ModuleUpdatePermissionMixin
-from .viewmixins import ModuleDeletePermissionMixin
 from .viewmixins import ModuleClonePermissionMixin
-
+from .viewmixins import ModuleCreatePermissionMixin
+from .viewmixins import ModuleDeletePermissionMixin
+from .viewmixins import ModuleUpdatePermissionMixin
+from .viewmixins import ModuleViewPermissionMixin
+from .viewmixins import ModuleAjaxMixin
 from .viewmixins import ModuleBaseMixin
 from .viewmixins import ModuleViewMixin
-from .viewmixins import ModuleAjaxMixin
+from .viewmixins import NextMixin
 
-import json
 import re
 import operator
-import urlparse
-
+import copy
 from functools import reduce
-
-
-# Template Variables =========================================================
+from django_filters.views import FilterView
 
 
 class ModuleActivityMixin(object):
@@ -75,12 +54,17 @@ class ModuleActivityMixin(object):
     def get_context_data(self, **kwargs):
         ct = ContentType.objects.get_for_model(self.object)
 
-        watch = Watch.objects.filter(user=self.request.user, watch_ct=ct, watch_id__in=[self.object.pk,0]).order_by('-watch_id').first()
+        watch = Watch.objects.filter(
+            user=self.request.user,
+            watch_ct=ct,
+            watch_id__in=[self.object.pk, 0]
+        ).order_by('-watch_id').first()
+
         if watch:
             watching = watch.active
         else:
             watching = False
-        
+
         kwargs.update({
             'erpactivity': {
                 'qs': Activity.objects.filter(parent_ct=ct, parent_id=self.object.pk),
@@ -89,17 +73,16 @@ class ModuleActivityMixin(object):
                 'log': self.model._erpmeta.has_history,
                 'pk': self.object.pk,
                 'ct': ct.pk,
-
                 'watch': watching,
                 'log_data': None,
                 'comment_form': None,
-
                 'object_ct': ct,
                 'object_pk': self.object.pk,
             },
         })
         if self.model._erpmeta.has_history:
-            kwargs['erpactivity']['log_data'] = Activity.objects.select_related('user').filter(parent_ct=ct, parent_id=self.object.pk)
+            kwargs['erpactivity']['log_data'] = Activity.objects.select_related('user') \
+                .filter(parent_ct=ct, parent_id=self.object.pk)
         if self.model._erpmeta.has_comments:
             kwargs['erpactivity']['comment_form'] = HistoryCommentForm()
         return super(ModuleActivityMixin, self).get_context_data(**kwargs)
@@ -113,14 +96,14 @@ class ModuleFilesMixin(object):
     def get_context_data(self, **kwargs):
         if self.model._erpmeta.has_files:
             from .file.views import FileAddView
-            Document = get_model_from_cfg('DOCUMENT')
+            document = get_model_from_cfg('DOCUMENT')
 
             ct = ContentType.objects.get_for_model(self.object)
 
             kwargs.update({
                 'has_files': True,
                 'history_file_form': FileAddView.form_class(),
-                'files': Document.objects.filter(content_type=ct, content_id=self.object.pk),
+                'files': document.objects.filter(content_type=ct, content_id=self.object.pk),
             })
         return super(ModuleFilesMixin, self).get_context_data(**kwargs)
 
@@ -155,10 +138,8 @@ class ModuleFormMixin(object):
                 self.form_class = modelform_factory(model, exclude=self.exclude)
         return form_class_factory(self.form_class)
 
-# Actual Views ================================================================
 
-
-class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
+class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     """
     """
     context_object_name = 'objects'
@@ -166,7 +147,7 @@ class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     allow_empty = True
 
     def get_template_names(self):
-        return super(PluginIndex, self).get_template_names() + ["djangoerp/module_index_default.html"]
+        return super(ModuleIndexView, self).get_template_names() + ["djangoerp/module_index_default.html"]
 
     def get_context_data(self, **kwargs):
         if self.filterset_class:
@@ -177,10 +158,11 @@ class PluginIndex(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
             kwargs.update({
                 'has_filter': False,
             })
-        return super(PluginIndex, self).get_context_data(**kwargs)
+        return super(ModuleIndexView, self).get_context_data(**kwargs)
 
 
-class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
+class ModuleDetailView(
+        ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """
     show the details of an entry
     """
@@ -189,17 +171,18 @@ class PluginBaseDetail(ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivi
 
     def get_template_names(self):
         self.update_notification()
-        return super(PluginBaseDetail, self).get_template_names() + ["djangoerp/module_detail_default.html"]
+        return super(ModuleDetailView, self).get_template_names() \
+            + ["djangoerp/module_detail_default.html"]
 
 
-class PluginDetail(ModuleFormMixin, PluginBaseDetail):
+class ModuleAutoDetailView(ModuleFormMixin, ModuleDetailView):
     """
     show the details of an entry
     """
     form_class = None
 
     def get_form(self, **kwargs):
-        if self.form_class == None:
+        if self.form_class is None:
             self.get_form_class()
         form = self.form_class(instance=self.object)
         return form
@@ -208,10 +191,10 @@ class PluginDetail(ModuleFormMixin, PluginBaseDetail):
         kwargs.update({
             'form': self.get_form()
         })
-        return super(PluginDetail, self).get_context_data(**kwargs)
+        return super(ModuleAutoDetailView, self).get_context_data(**kwargs)
 
 
-class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
+class ModuleReportView(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
     """
     render a report
     """
@@ -221,7 +204,7 @@ class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
         return ["djangoerp/module_report.html"]
 
     def get(self, request, *args, **kwargs):
-        response = super(PluginReport, self).get(request, *args, **kwargs)
+        response = super(ModuleReportView, self).get(request, *args, **kwargs)
 
         ct = ContentType.objects.get_for_model(self.get_object())
         try:
@@ -232,7 +215,7 @@ class PluginReport(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
             return response
 
     def get_context_data(self, **kwargs):
-        context = super(PluginReport, self).get_context_data(**kwargs)
+        context = super(ModuleReportView, self).get_context_data(**kwargs)
         context['request'] = self.request
         return context
 
@@ -246,24 +229,30 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
     fields = []
 
     def get_template_names(self):
-        return super(ModuleCloneView, self).get_template_names() + ["djangoerp/module_clone_default.html"]
+        return super(ModuleCloneView, self).get_template_names() \
+            + ["djangoerp/module_clone_default.html"]
 
-    def clone_object(self, form, instance):
+    def clone_object(self, formdata, instance):
         pass
 
-    def clone_related_objects(self, object):
+    def clone_related_objects(self, formdata, old_object, new_object):
         pass
 
     def form_valid(self, form):
-       #messages.success(self.request, 'Object cloned')
-        self.clone_object(form, form.instance)
+        # messages.success(self.request, 'Object cloned')
+        old_object = copy.copy(self.object)
+        self.clone_object(form.cleaned_data, form.instance)
         form.instance.pk = None
         if form.instance._erpmeta.workflow_field:
-            setattr(form.instance, form.instance._erpmeta.workflow_field, None)
+            setattr(
+                form.instance,
+                form.instance._erpmeta.workflow_field,
+                form.instance._erpmeta.workflow._default_state_key
+            )
         form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
         self.object = form.save()
-        self.clone_related_objects(self.object)
+        self.clone_related_objects(form.cleaned_data, old_object, self.object)
         activity_create.send(sender=self.object.__class__, instance=self.object)
         return self.render_valid_form({
             'object_pk': self.object.pk,
@@ -271,19 +260,21 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
             'message': ugettext('Object copied'),
         })
 
-class PluginUpdate(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
+
+class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
     update an update
     """
     context_object_name = 'object'
     template_name_suffix = '_erpupdate'
-    exclude=[]
+    exclude = []
 
     def get_template_names(self):
-        return super(PluginUpdate, self).get_template_names() + ["djangoerp/module_update_default.html"]
+        return super(ModuleUpdateView, self).get_template_names() \
+            + ["djangoerp/module_update_default.html"]
 
     def form_valid(self, form):
-       #messages.success(self.request, 'Object updated')
+        # messages.success(self.request, 'Object updated')
         form.instance.modified_by = self.request.user
         self.object = form.save()
         activity_update.send(sender=self.object.__class__, instance=self.object)
@@ -293,7 +284,7 @@ class PluginUpdate(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin
         })
 
 
-class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
+class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin, CreateView):
     """
     create a new instance
     """
@@ -306,13 +297,14 @@ class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin
             if re.match(match, key):
                 field = re.match(match, key).groups()[0]
                 self.initial.update({field: self.request.GET.get(key)})
-        return super(PluginCreate, self).get_initial()
+        return super(ModuleCreateView, self).get_initial()
 
     def get_template_names(self):
-        return super(PluginCreate, self).get_template_names() + ["djangoerp/module_create_default.html"]
+        return super(ModuleCreateView, self).get_template_names() \
+            + ["djangoerp/module_create_default.html"]
 
     def form_valid(self, form):
-        #messages.success(self.request, 'Object created')
+        # messages.success(self.request, 'Object created')
         form.instance.modified_by = self.request.user
         form.instance.created_by = self.request.user
         self.object = form.save()
@@ -323,7 +315,7 @@ class PluginCreate(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxMixin
         })
 
 
-class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
+class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, DeleteView):
     """
     delete an instance
     """
@@ -331,26 +323,15 @@ class PluginDelete(ModuleDeletePermissionMixin, ModuleViewMixin, DeleteView):
     template_name_suffix = '_erpdelete'
 
     def get_template_names(self):
-        return super(PluginDelete, self).get_template_names() + ["djangoerp/module_delete_default.html"]
+        return super(ModuleDeleteView, self).get_template_names() \
+            + ["djangoerp/module_delete_default.html"]
 
     def get_success_url(self):
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
         messages.info(self.request, 'Object deleted')
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
+        return self.redirect_next('%s:index' % self.model._erpmeta.url_namespace)
 
 
-class PluginWorkflow(ModuleViewMixin, DetailView):
+class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
     """
     update the state of a workflow
     """
@@ -361,27 +342,16 @@ class PluginWorkflow(ModuleViewMixin, DetailView):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.update_%s' % info)
         perms.append('%s.view_%s' % info)
-        return super(PluginWorkflow, self).get_permissions(perms)
+        return super(ModuleWorkflowView, self).get_permissions(perms)
 
     def get_success_url(self):
-        redirect_to = self.request.GET.get('next', '')
-
-        netloc = urlparse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
-
-        if self.success_url:
-            return self.success_url
-        return reverse_lazy('%s:detail' % self.model._erpmeta.url_namespace, kwargs={'pk': self.object.pk})
+        return self.redirect_next('%s:index' % self.model._erpmeta.url_namespace)
 
     def get(self, request, transition='', *args, **kwargs):
         self.object = self.get_object()
 
         transitions = dict(self.object._erpworkflow._from_here())
-        if not transition in transitions:
+        if transition not in transitions:
             raise Http404
 
         try:
@@ -404,16 +374,12 @@ class PluginWorkflow(ModuleViewMixin, DetailView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
+class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFormView):
     """
     """
     model = None
     queryset = None
     form_view = None
-
-    @method_decorator(never_cache)
-    def dispatch(self, *args, **kwargs):
-         return super(PluginFormAPI, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         """
@@ -432,7 +398,9 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
         try:
             obj = queryset.get(pk=pk)
         except ObjectDoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the query") % {'verbose_name': queryset.model._meta.verbose_name})
+            raise Http404(_("No %(verbose_name)s found matching the query") % {
+                'verbose_name': queryset.model._meta.verbose_name
+            })
         return obj
 
     def get(self, request, *args, **kwargs):
@@ -441,7 +409,10 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
 
     def post(self, request, *args, **kwargs):
         form_class = self.form_view(model=self.model, object=self.get_object()).get_form_class()
-        form = form_class(prefix=self.get_prefix(), data=QueryDict(self.request.POST['form']), instance=self.get_object())
+        form = form_class(
+            prefix=self.get_prefix(),
+            data=QueryDict(self.request.POST['form']),
+            instance=self.get_object())
 
         if "search" in self.request.GET:
             # do form validation to fill form.instance with data
@@ -449,7 +420,7 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
 
             field = form.get_field(self.request.POST['field'])
             if not field:
-        # TODO ADD LOGGING
+                # TODO ADD LOGGING
                 raise Http404
             qs = field.field.choices.queryset
 
@@ -476,19 +447,21 @@ class PluginFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
         raise Http404
 
     def get_form_kwargs(self):
-        kwargs = super(PluginFormAPI, self).get_form_kwargs()
+        kwargs = super(ModuleFormAPI, self).get_form_kwargs()
         kwargs.update({
             'instance': self.get_object(),
         })
         return kwargs
 
-    def normalize_query(self, query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall, normspace=re.compile(r'\s{2,}').sub):
+    def normalize_query(
+            self, query_string, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+            normspace=re.compile(r'\s{2,}').sub):
         '''
         Splits the query string in invidual keywords, getting rid of unecessary spaces
         and grouping quoted words together.
 
         Example:
-        >>> normalize_query('  some random  words "with   quotes  " and   spaces')
+        > self.normalize_query('  some random  words "with   quotes  " and   spaces')
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
 
         '''

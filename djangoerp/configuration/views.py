@@ -6,12 +6,12 @@ from __future__ import unicode_literals
 from django import forms
 from django.core.urlresolvers import reverse
 from django.core.serializers.json import DjangoJSONEncoder
-from django.core import serializers
+# from django.core import serializers
 from django.db import models
 from django.views.generic import TemplateView
 from django.views.generic import FormView
 
-from ..views import ViewMixin
+from ..viewmixins import ViewMixin
 from ..models import Configuration
 from ..sites import site, SETTING_KEY
 
@@ -34,6 +34,7 @@ class ConfigurationEdit(ViewMixin, FormView):
     def get_form_class(self):
         key = SETTING_KEY % (self.kwargs['app_label'], self.kwargs['name'])
         name = self.kwargs['name']
+
         class ConfigForm(forms.Form):
             """
             dynamic generated form with all settings
@@ -44,16 +45,19 @@ class ConfigurationEdit(ViewMixin, FormView):
         return ConfigForm
 
     def form_valid(self, form, *args, **kwargs):
-        obj, created = Configuration.objects.get_or_create(app_label=self.kwargs['app_label'], field_name=self.kwargs['name'])
+        obj, created = Configuration.objects.get_or_create(
+            app_label=self.kwargs['app_label'],
+            field_name=self.kwargs['name'],
+        )
         value = form.cleaned_data[self.kwargs['name']]
-      # data = {
-      #     'type': None,
-      #     'value': value,
-      # }
-      # if isinstance(value, models.Model):
-      #     data['type'] = 'object'
-      #     data['value'] = value.pk
-      # obj.value = json.dumps(data, cls=DjangoJSONEncoder)
+        # data = {
+        #     'type': None,
+        #     'value': value,
+        # }
+        # if isinstance(value, models.Model):
+        #     data['type'] = 'object'
+        #     data['value'] = value.pk
+        # obj.value = json.dumps(data, cls=DjangoJSONEncoder)
         if isinstance(value, models.Model):
             value = value.pk
         obj.value = json.dumps(value, cls=DjangoJSONEncoder)

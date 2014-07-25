@@ -3,19 +3,18 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import PluginCreate, PluginUpdate
-
-from django.http import Http404
+from ...views import ModuleCreateView
+from ...views import ModuleUpdateView
 
 from .forms import CompanyForm
 from .forms import CustomerForm
 
 
-class BaseCreateView(PluginCreate):
+class BaseCreateView(ModuleCreateView):
     def get_initial(self):
         # TODO: read the configuration here
-#       self.initial.update({'asset_account': self.request.erpcore['company'].customer_account_id})
-#       self.initial.update({'liability_account': self.request.erpcore['company'].supplier_account_id})
+        # self.initial.update({'asset_account': self.request.erpcore['company'].customer_account_id})
+        # self.initial.update({'liability_account': self.request.erpcore['company'].supplier_account_id})
         return super(BaseCreateView, self).get_initial()
 
 
@@ -31,7 +30,7 @@ class CustomerCreateView(BaseCreateView):
     form_class = CustomerForm
 
 
-class UpdateView(PluginUpdate):
+class UpdateView(ModuleUpdateView):
     def get_form_class(self, *args, **kwargs):
         if self.object.is_company:
             return CompanyForm

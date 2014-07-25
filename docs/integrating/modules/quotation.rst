@@ -5,7 +5,7 @@ Quotation
 Models
 ==================================================
 
-.. automodule:: djangoerp_contrib.quotation.models
+.. automodule:: djangoerp.contrib.quotation.models
    :members:
    :show-inheritance:
 

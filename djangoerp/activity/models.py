@@ -3,14 +3,15 @@
 
 from __future__ import unicode_literals
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db import models
 from django.db.models import signals
 from django.dispatch import receiver
-from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 import json
 
@@ -46,22 +47,34 @@ ACTION_TYPES = (
     (ACTION_FILE, _("File")),
 )
 
+
+@python_2_unicode_compatible
 class Activity(models.Model):
     """
     Model which is accessed by en ERPModel with history
     """
 
-    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=True, null=True, on_delete=models.CASCADE)
-
+    user = models.ForeignKey(
+        getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+    )
     topic = models.CharField(_("Topic"), max_length=100, blank=True, null=True,)
     text = models.TextField(_("Text"), blank=True, null=True,)
-
-    action = models.PositiveSmallIntegerField(_("Action"), blank=False, null=True, editable=False, default=ACTION_COMMENT, choices=ACTION_TYPES)
-
+    action = models.PositiveSmallIntegerField(
+        _("Action"),
+        blank=False,
+        null=True,
+        editable=False,
+        default=ACTION_COMMENT,
+        choices=ACTION_TYPES,
+    )
     template = models.CharField(_("Template"), max_length=100, editable=False, blank=False, null=True)
-
     parent_id = models.PositiveIntegerField()
-    parent_ct = models.ForeignKey(ContentType, related_name="erp_history_parent", on_delete=models.CASCADE)
+    parent_ct = models.ForeignKey(
+        ContentType, related_name="erp_history_parent", on_delete=models.CASCADE,
+    )
     parent_object = GenericForeignKey('parent_ct', 'parent_id')
 
     modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False,)
@@ -78,37 +91,30 @@ class Activity(models.Model):
         else:
             return '%s %s' % (self.user, self.pk)
 
-    def __unicode__(self):
-        if self.topic:
-            return self.topic
-        else:
-            return '%s %s' % (self.user, self.pk)
-
-
     def get_symbol(self):
         if self.action == ACTION_WORKFLOW:
-          return ACTIVITY_WORKFLOW
+            return ACTIVITY_WORKFLOW
         elif self.action == ACTION_COMMENT:
-          return ACTIVITY_COMMENT
+            return ACTIVITY_COMMENT
         elif self.action == ACTION_UPDATED:
-          return ACTIVITY_UPDATED
+            return ACTIVITY_UPDATED
         elif self.action == ACTION_FILE:
-          return ACTIVITY_FILE
+            return ACTIVITY_FILE
         elif self.action == ACTION_CREATED:
-          return ACTIVITY_CREATED
+            return ACTIVITY_CREATED
         return ACTIVITY_UNKNOWN
 
     def get_template(self):
         if self.template:
             return self.template
         if self.action == ACTION_WORKFLOW:
-          return "djangoerp/activities/workflow.html"
+            return "djangoerp/activities/workflow.html"
         elif self.action == ACTION_FILE:
-          return "djangoerp/activities/file.html"
+            return "djangoerp/activities/file.html"
         elif self.action == ACTION_UPDATED:
-          return "djangoerp/activities/updated.html"
+            return "djangoerp/activities/updated.html"
         elif self.action == ACTION_CREATED:
-          return "djangoerp/activities/created.html"
+            return "djangoerp/activities/created.html"
         return "djangoerp/activities/message.html"
 
     def get_text(self):
@@ -123,7 +129,6 @@ class Activity(models.Model):
             return data
         return self.text
 
-
     def changes(self):
         if self.action == ACTION_UPDATED:
             data = json.loads(self.text)
@@ -136,6 +141,7 @@ class Activity(models.Model):
             return data
         return self.text
 
+
 @receiver(activity_create)
 def object_created(sender, instance, **kwargs):
     if instance._erpmeta.has_history:
@@ -146,6 +152,7 @@ def object_created(sender, instance, **kwargs):
             action=ACTION_CREATED,
         )
         history.save()
+
 
 @receiver(activity_update)
 def object_changed(sender, instance, **kwargs):
@@ -196,10 +203,11 @@ def new_file(sender, instance, file, **kwargs):
             text=json.dumps({
                 'pk': file.pk,
                 'size': file.size,
-                'name': '%s'%file,
+                'name': '%s' % file,
             }, cls=DjangoJSONEncoder),
         )
         history.save()
+
 
 def activity_post_save(sender, instance, *args, **kwargs):
     djangoerp_user_watch(instance)

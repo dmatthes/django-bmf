@@ -3,36 +3,26 @@
 
 from __future__ import unicode_literals
 
-# === VIEWS ===================================================================
+from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.views.generic import View
 
-from djangoerp.views import PluginIndex
-from djangoerp.views import PluginCreate
-from djangoerp.views import PluginUpdate
-from djangoerp.views import PluginDetail
-from djangoerp.views import PluginFormAPI
+import re
+import datetime
+
+from ...views import ModuleIndexView
+from ...views import ModuleCreateView
+from ...views import ModuleUpdateView
+from ...views import ModuleDetailView
+from ...viewmixins import ModuleViewMixin
 
 from .models import Position
 from .filters import PositionFilter
 from .forms import PositionForm
 
-import datetime
 
-# === API =====================================================================
-
-from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
-from django.http import HttpResponseRedirect
-#from django.utils.timezone import now
-from django.views.generic import View
-
-from djangoerp.viewmixins import ModuleViewMixin
-
-import re
-
-# === VIEWS ===================================================================
-
-
-class PositionCreateView(PluginCreate):
+class PositionCreateView(ModuleCreateView):
     form_class = PositionForm
 
     def get_initial(self):
@@ -44,27 +34,22 @@ class PositionCreateView(PluginCreate):
         return super(PositionCreateView, self).post(request, *args, **kwargs)
 
 
-class PositionUpdateView(PluginUpdate):
+class PositionUpdateView(ModuleUpdateView):
     form_class = PositionForm
 
 
-class PositionDetailView(PluginDetail):
+class PositionDetailView(ModuleDetailView):
     form_class = PositionForm
 
 
-class PositionTableView(PluginIndex):
+class PositionTableView(ModuleIndexView):
     filterset_class = PositionFilter
 
 
-# === API =====================================================================
-
 class PositionAPI(ModuleViewMixin, View):
     model = Position
-# success_url = None
 
     def get_success_url(self):
-#   if self.success_url:
-#     return self.success_url
         return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
 
     def get_permissions(self, perms):
@@ -99,13 +84,13 @@ class PositionAPI(ModuleViewMixin, View):
         return obj
 
     def create_invoice(self, project, qs):
-        Invoice = self.model._meta.get_field('invoice').rel.to
-        Products = Invoice.products.through
-        inv = Invoice(project=project)
+        invoice = self.model._meta.get_field('invoice').rel.to
+        products = invoice.products.through
+        inv = invoice(project=project)
         inv.clean()
         inv.save()
         for item in qs:
-            invitem = Products(invoice=inv, product=item.product, amount=item.amount, price=item.price)
+            invitem = products(invoice=inv, product=item.product, amount=item.amount, price=item.price)
             invitem = self.modify_invoice_item(invitem, item)
             invitem.save()
             item.invoice = inv

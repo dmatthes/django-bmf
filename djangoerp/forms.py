@@ -3,24 +3,17 @@
 
 from __future__ import unicode_literals
 
-from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ValidationError
 from django.forms.fields import CharField
 from django.forms.fields import FloatField
 from django.forms.fields import DecimalField
-#rom django.forms.fields import BooleanField
 from django.forms.models import BaseModelFormSet
 from django.forms.models import ModelChoiceField
 from django.forms.util import ErrorList
-from django.utils.datastructures import SortedDict, MultiValueDict
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.safestring import mark_safe
-from django.forms import TextInput, PasswordInput
-from django.utils.translation import ugettext_lazy as _
 from django.utils import six
 
-from .signals import djangoerp_post_save 
-from .activity.models import Activity, ACTION_CREATED, ACTION_UPDATED
+from .signals import djangoerp_post_save
 
 from collections import OrderedDict
 
@@ -33,7 +26,7 @@ class ERPFormMetaclass(type):
         new_cls.form_class = getattr(meta, 'form_class', None)
 
         if new_cls.form_class is None:
-            return new_cls # probably a normal formular
+            return new_cls  # probably a normal formular
 
         if hasattr(meta, 'inlines'):
             inlines = OrderedDict(
@@ -50,7 +43,10 @@ class ERPFormMetaclass(type):
 @python_2_unicode_compatible
 class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
 
-    def __init__(self, data=None, files=None, auto_id='erp_%s', prefix=None, initial=None, instance=None, initial_inlines=None, error_class=ErrorList, **kwargs):
+    def __init__(
+            self, data=None, files=None, auto_id='erp_%s', prefix=None,
+            initial=None, instance=None, initial_inlines=None,
+            error_class=ErrorList, **kwargs):
         self.is_bound = data is not None or files is not None
         self.prefix = prefix or self.get_default_prefix()
         self.auto_id = auto_id
@@ -89,7 +85,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
                 self.base_form.fields[form_prefix].required = False
                 self.base_form.fields[form_prefix].inlineformset = True
                 self.forms[form_prefix] = inlineform
-                if self.base_form._meta.exclude == None:
+                if self.base_form._meta.exclude is None:
                     self.base_form._meta.exclude = [form_prefix]
                 else:
                     if form_prefix not in self.base_form._meta.exclude:
@@ -147,7 +143,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
                     c = 0
                     for form in formset:
                         # check if form has a instane OR was changed
-                        if form.instance.pk or form.has_changed(): # TODO: check for deletions
+                        if form.instance.pk or form.has_changed():  # TODO: check for deletions
                             c += 1
                     # if formset is empty
                     if c == 0:
@@ -168,7 +164,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
         fields = []
         if self.base_form._meta.exclude:
             for field in self:
-                if not field.name in self.base_form._meta.exclude:
+                if field.name not in self.base_form._meta.exclude:
                     fields.append(field)
         else:
             for field in self:
@@ -200,12 +196,12 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
             # input-type fields
             val_instance = getattr(field.form.instance, field.name, None)
 
-            if isinstance(field.field, CharField) or isinstance(field.field, DecimalField) or isinstance(field.field, FloatField):
+            if isinstance(field.field, (CharField, DecimalField, FloatField)):
                 if not field.value() and val_instance:
                     data.append({'field': field.auto_id, 'value': val_instance})
                 continue
             if isinstance(field.field, ModelChoiceField):
-                try: # inline formsets cause a attribute errors
+                try:  # inline formsets cause a attribute errors
                     if val_instance and field.value() != str(val_instance.pk):
                         data.append({'field': field.auto_id, 'value': val_instance.pk, 'name': str(val_instance)})
                 except AttributeError:
@@ -307,7 +303,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
         if not kwargs.get('commit', True):
             raise ValueError("'%s' object must be commited when saved" % self.__class__.__name__)
 
-        obj = self.base_form.save(**kwargs) # this can only be done, if the manytomany field is excluded
+        obj = self.base_form.save(**kwargs)  # this can only be done, if the manytomany field is excluded
         for prefix, formset in self.forms.items():
             formset.instance = obj
             formset.save()

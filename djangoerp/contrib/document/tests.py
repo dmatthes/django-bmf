@@ -1,24 +1,20 @@
 #!/usr/bin/python
 # ex:set fileencoding=utf-8:
+# flake8: noqa
 
 from __future__ import unicode_literals
 
-from django.test import LiveServerTestCase
-from django.core.urlresolvers import reverse
-
 from .models import Document
-from ...testcase import ERPTestCase
+from ...testcase import ERPModuleTestCase
 
 
-class DocumentTests(ERPTestCase):
+class DocumentTests(ERPModuleTestCase):
 
     def test_urls_user(self):
         """
         """
-        namespace = Document._erpmeta.url_namespace
-
-        r = self.client.get(reverse(namespace + ':index'))
-        self.assertEqual(r.status_code, 200)
+        self.model = Document
+        self.autotest_get('index', 200)
 
 #   r = self.client.get(reverse(namespace+':create'))
 #   self.assertEqual(r.status_code, 200)

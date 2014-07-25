@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # ex:set fileencoding=utf-8:
+# flake8: noqa
 
 from __future__ import unicode_literals
 
-from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 

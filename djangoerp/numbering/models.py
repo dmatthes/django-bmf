@@ -3,10 +3,11 @@
 
 from __future__ import unicode_literals
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now, get_default_timezone
+from django.utils.translation import ugettext_lazy as _
 
 from .validators import template_name_validator, match_y, match_m
 
@@ -31,26 +32,52 @@ def _generate_name(value, date, counter):
     })
 
 
+@python_2_unicode_compatible
 class NumberCycle(models.Model):
-    ct = models.OneToOneField(ContentType, related_name="erp_numbercycle", null=True, blank=False, editable=False)
-    name_template = models.CharField(max_length=64, null=True, blank=False, validators=[template_name_validator])
+    ct = models.OneToOneField(
+        ContentType, related_name="erp_numbercycle", null=True, blank=False, editable=False,
+    )
+    name_template = models.CharField(
+        _("Template"),
+        max_length=64, null=True, blank=False, validators=[template_name_validator],
+    )
     counter_start = models.PositiveIntegerField(null=True, blank=False, default=1)
     current_period = models.DateField(null=True, blank=False, default=now)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name_template
 
     def get_periods(self):
         month = bool(re.findall(match_m, self.name_template))
         if month:
-            start = datetime.datetime(self.current_period.year, self.current_period.month, 1, 0, 0, 0, tzinfo=get_default_timezone())
+            start = datetime.datetime(
+                self.current_period.year, self.current_period.month, 1,
+                0, 0, 0,
+                tzinfo=get_default_timezone()
+            )
             if self.current_period.month == 12:
-                end = datetime.datetime(self.current_period.year, 12, 31, 0, 0, 0, tzinfo=get_default_timezone())
+                end = datetime.datetime(
+                    self.current_period.year, 12, 31,
+                    0, 0, 0,
+                    tzinfo=get_default_timezone()
+                )
             else:
-                end = datetime.datetime(self.current_period.year, self.current_period.month + 1, 1, 0, 0, 0, tzinfo=get_default_timezone()) - datetime.timedelta(days=1)
+                end = datetime.datetime(
+                    self.current_period.year, self.current_period.month + 1, 1,
+                    0, 0, 0,
+                    tzinfo=get_default_timezone()
+                ) - datetime.timedelta(days=1)
         else:
-            start = datetime.datetime(self.current_period.year, 1, 1, 0, 0, 0, tzinfo=get_default_timezone())
-            end = datetime.datetime(self.current_period.year, 12, 31, 0, 0, 0, tzinfo=get_default_timezone())
+            start = datetime.datetime(
+                self.current_period.year, 1, 1,
+                0, 0, 0,
+                tzinfo=get_default_timezone()
+            )
+            end = datetime.datetime(
+                self.current_period.year, 12, 31,
+                0, 0, 0,
+                tzinfo=get_default_timezone()
+            )
         return start, end
 
     def generate_name(self, model, object):
@@ -61,7 +88,10 @@ class NumberCycle(models.Model):
                 self.current_period = object.created.date()
                 self.save()
                 start, end = self.get_periods()
-            counter = model.objects.filter(created__range=(start, end), pk__lt=object.pk).count() + self.counter_start
+            counter = model.objects.filter(
+                created__range=(start, end),
+                pk__lt=object.pk
+            ).count() + self.counter_start
         else:
             counter = object.pk
 

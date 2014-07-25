@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
             name='Dashboard',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=100, null=True)),
+                ('name', models.CharField(max_length=100, null=True, verbose_name='Name')),
                 ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
@@ -90,7 +90,7 @@ class Migration(migrations.Migration):
             name='NumberCycle',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name_template', models.CharField(max_length=64, null=True, validators=[djangoerp.numbering.validators.template_name_validator])),
+                ('name_template', models.CharField(max_length=64, null=True, verbose_name='Template', validators=[djangoerp.numbering.validators.template_name_validator])),
                 ('counter_start', models.PositiveIntegerField(default=1, null=True)),
                 ('current_period', models.DateField(default=django.utils.timezone.now, null=True)),
                 ('ct', models.OneToOneField(null=True, editable=False, to='contenttypes.ContentType')),

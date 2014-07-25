@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # ex:set fileencoding=utf-8:
+# flake8: noqa
 
 from __future__ import unicode_literals
 
@@ -7,7 +8,7 @@ from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 
 class AccountTests(LiveServerTestCase):
-    fixtures = ["djangoerp/fixtures_demousers.json", ]
+    fixtures = ["fixtures/users.json", ]
 
     def test_views(self):
         """

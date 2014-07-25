@@ -1,7 +1,8 @@
 
 // BOOTSTRAP
 // -----------------------------------------------------
-@import "submodules/bootstrap/less/bootstrap.less";
+@import "../submodules/bootstrap/less/bootstrap.less";
+@import "../submodules/bootstrap/less/theme.less";
 
 // OVERWRITES
 // -----------------------------------------------------
@@ -13,6 +14,7 @@
 
 /* COLOR THEME
 -------------------------------------------------- */
+
 @brand-primary:         #DD4814; // #428bca;
 
 @brand-success:         #5cb85c;
@@ -45,15 +47,6 @@
 @breadcrumb-bg:                 @gray-lighter;
 @breadcrumb-color:              @gray-light;
 @breadcrumb-active-color:       @gray;
-
-/* Truncating long text
---------------------------------------------------
-.text-truncate {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-*/
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -171,3 +164,13 @@ footer {
     color: @brand-warning;
   }
 }
+
+/* Truncating long text (DOES NOT WORK)
+--------------------------------------------------
+
+.text-truncate {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+*/

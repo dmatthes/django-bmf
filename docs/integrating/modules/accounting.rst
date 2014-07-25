@@ -2,11 +2,11 @@
 Accounting
 ******************************************
 
-.. automodule:: djangoerp_contrib.accounting
+.. automodule:: djangoerp.contrib.accounting
 
 Models
 ===========================================
 
-.. automodule:: djangoerp_contrib.accounting.models
+.. automodule:: djangoerp.contrib.accounting.models
    :members:
    :show-inheritance:

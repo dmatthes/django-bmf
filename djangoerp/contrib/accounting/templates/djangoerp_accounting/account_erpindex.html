@@ -1,6 +1,22 @@
 {% extends "djangoerp/module_index.html" %}
 
+{% load mptt_tags %}
+
 {% block base_content %}
+
+<ul>
+    {% recursetree object_list %}
+    <li>
+        {{ node.number }} {{ node.name }}
+           {% if not node.is_leaf_node %}
+               <ul class="children">
+                   {{ children }}
+               </ul>
+           {% endif %}
+    </li>
+    {% endrecursetree %}
+</ul>
+
 <table class="table table-striped table-condensed table-hover">
   <thead>
     <tr>

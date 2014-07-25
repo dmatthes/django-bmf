@@ -4,13 +4,11 @@
 from __future__ import unicode_literals
 
 from django.forms import ModelForm
-from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
 
 from django.forms.models import inlineformset_factory
 
 from djangoerp.forms import ERPForm
-#rom djangoerp.layouts import Helper, Layout
+# rom djangoerp.layouts import Helper, Layout
 
 from .models import Quotation, QuotationProduct
 
@@ -25,6 +23,7 @@ class QuotationCreateForm(ModelForm):
     class Meta:
         model = Quotation
         exclude = ['quotation_number', 'state', 'shipping_address', 'invoice_address', 'valid_until']
+
 
 QuotationInlineFormset = inlineformset_factory(Quotation, QuotationProduct, extra=2, exclude=[])
 

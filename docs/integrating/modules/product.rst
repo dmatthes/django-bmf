@@ -5,7 +5,7 @@ Product
 Models
 ==================================================
 
-.. automodule:: djangoerp_contrib.product.models
+.. automodule:: djangoerp.contrib.product.models
    :members:
    :show-inheritance:
 

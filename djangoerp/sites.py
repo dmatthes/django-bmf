@@ -15,27 +15,26 @@ from django.utils.module_loading import import_module
 from django.utils import six
 from django.utils.text import slugify
 from django.apps import apps
-from django.utils.functional import SimpleLazyObject
 
 from .apps import ERPConfig
-from .modelbase import ERPSimpleModel
 from .models import Configuration
-from .views import PluginIndex as ModuleIndexView
-from .views import PluginReport as ModuleReportView
-from .views import PluginCreate as ModuleCreateView
-from .views import PluginDelete as ModuleDeleteView
+from .views import ModuleIndexView
+from .views import ModuleReportView
+from .views import ModuleCreateView
+from .views import ModuleDeleteView
 from .views import ModuleCloneView
-from .views import PluginDetail as ModuleDetailView
-from .views import PluginUpdate as ModuleUpdateView
-from .views import PluginWorkflow as ModuleWorkflowView
-from .views import PluginFormAPI as ModuleFormAPI
+from .views import ModuleAutoDetailView
+from .views import ModuleUpdateView
+from .views import ModuleWorkflowView
+from .views import ModuleFormAPI
 
 import copy
 
 SETTING_KEY = "%s.%s"
 APP_LABEL = ERPConfig.label
 
-class DjangoERPSetting(object): #TODO move this to configuration.erpsite
+
+class DjangoERPSetting(object):
     def __init__(self, app_label, name, field):
         self.app_label = app_label
         self.name = name
@@ -71,7 +70,8 @@ class DjangoERPSetting(object): #TODO move this to configuration.erpsite
             value = self.field.initial
         return value
 
-class DjangoERPModule(object): # TODO move this to module.erpsite
+
+class DjangoERPModule(object):
     index = None
     create = None
     delete = None
@@ -95,7 +95,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
 
         add_patterns = self.urlpatterns or options.get('urlpatterns', None)
 
-        urlpatterns =  patterns('',
+        urlpatterns = patterns(
+            '',
             url(
                 r'^$',
                 index.as_view(model=self.model),
@@ -134,7 +135,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     label = view[0]
                     view = view[1]
                 self.model._erpmeta.create_views.append((key, label))
-                urlpatterns += patterns('',
+                urlpatterns += patterns(
+                    '',
                     url(
                         r'^create/(?P<key>%s)/$' % key,
                         view.as_view(model=self.model),
@@ -150,7 +152,8 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                     ),
                 )
         else:
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
                     r'^create/$',
                     create.as_view(model=self.model),
@@ -163,23 +166,25 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
                         form_view=create,
                     ),
                     name='form-api',
-              ),
+                ),
             )
 
         # workflow interactions
         if bool(len(self.model._erpworkflow._transitions)):
-            urlpatterns += patterns('',
-              url(
-                  r'^(?P<pk>[0-9]+)/workflow/(?P<transition>\w+)/$',
-                  ModuleWorkflowView.as_view(model=self.model),
-                  name='workflow',
-              ),
+            urlpatterns += patterns(
+                '',
+                url(
+                    r'^(?P<pk>[0-9]+)/workflow/(?P<transition>\w+)/$',
+                    ModuleWorkflowView.as_view(model=self.model),
+                    name='workflow',
+                ),
             )
 
         # model reports
         if report:
             self.model._erpmeta.has_report = True
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
                     r'^(?P<pk>[0-9]+)/report/$',
                     report.as_view(model=self.model),
@@ -189,11 +194,20 @@ class DjangoERPModule(object): # TODO move this to module.erpsite
 
         # clone model
         if self.model._erpmeta.can_clone:
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
                     r'^(?P<pk>[0-9]+)/clone/$',
                     clone.as_view(model=self.model),
                     name='clone',
+                ),
+                url(
+                    r'^(?P<pk>[0-9]+)/clone/form-api/$',
+                    ModuleFormAPI.as_view(
+                        model=self.model,
+                        form_view=clone,
+                    ),
+                    name='clone-form-api',
                 ),
             )
 
@@ -230,7 +244,7 @@ class DjangoERPSite(object):
         self.register_settings(APP_LABEL, {
             'company_name': forms.CharField(max_length=100, required=True,),
             'company_email': forms.EmailField(required=True,),
-            'currency': forms.CharField(max_length=10, required=True,), # TODO add validation / use dropdown
+            'currency': forms.CharField(max_length=10, required=True,),  # TODO add validation / use dropdown
         })
 
     def register(self, model, admin=None, **options):
@@ -245,7 +259,10 @@ class DjangoERPSite(object):
 
     def register_model(self, model, admin=None):
         if not hasattr(model, '_erpmeta'):
-            raise ImproperlyConfigured('The model %s needs to be an ERP-Model in order to be registered with django ERP.' % model.__name__)
+            raise ImproperlyConfigured(
+                'The model %s needs to be an ERP-Model in order to be'
+                'registered with django ERP.' % model.__name__
+            )
 
         if model in self._registry:
             raise AlreadyRegistered('The model %s is already registered' % model.__name__)
@@ -254,7 +271,7 @@ class DjangoERPSite(object):
             'admin': (admin or DjangoERPModule)(model),
             'index': ModuleIndexView,
             'create': ModuleCreateView,
-            'detail': ModuleDetailView,
+            'detail': ModuleAutoDetailView,
             'update': ModuleUpdateView,
             'delete': ModuleDeleteView,
             'clone': ModuleCloneView,
@@ -271,7 +288,7 @@ class DjangoERPSite(object):
         del self._registry[model]
 
     def register_view(self, model, type, view):
-        if type in ['index','detail','update','delete','clone']:
+        if type in ['index', 'detail', 'update', 'delete', 'clone']:
             # TODO check if view is an erp-view
             # add the view
             self._registry[model][type] = view
@@ -370,17 +387,23 @@ class DjangoERPSite(object):
         installed, as well as the auth context processor.
         """
         if not apps.is_installed('django.contrib.admin'):
-            raise ImproperlyConfigured("Put 'django.contrib.admin' in "
-                "your INSTALLED_APPS setting in order to use the admin application.")
+            raise ImproperlyConfigured(
+                "Put 'django.contrib.admin' in "
+                "your INSTALLED_APPS setting in order to use the admin application."
+            )
         if not apps.is_installed('django.contrib.contenttypes'):
-            raise ImproperlyConfigured("Put 'django.contrib.contenttypes' in "
-                "your INSTALLED_APPS setting in order to use the admin application.")
+            raise ImproperlyConfigured(
+                "Put 'django.contrib.contenttypes' in "
+                "your INSTALLED_APPS setting in order to use the admin application."
+            )
         if 'django.contrib.auth.context_processors.auth' not in settings.TEMPLATE_CONTEXT_PROCESSORS:
-            raise ImproperlyConfigured("Put 'django.contrib.auth.context_processors.auth' "
-                "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application.")
+            raise ImproperlyConfigured(
+                "Put 'django.contrib.auth.context_processors.auth' "
+                "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application."
+            )
 
     def get_urls(self):
-        from djangoerp.urls import urlpatterns 
+        from djangoerp.urls import urlpatterns
 
         if settings.DEBUG:
             self.check_dependencies()
@@ -388,20 +411,21 @@ class DjangoERPSite(object):
         for model in self._registry:
             ct = ContentType.objects.get_for_model(model)
             data = self._registry[model]
-            urls = data['admin'].get_urls(
-                index = data['index'],
-                create = data['create'],
-                detail = data['detail'],
-                update = data['update'],
-                delete = data['delete'],
-                report = data['report'],
-                clone = data['clone'],
-                urlpatterns = data['urlpatterns'],
-            )
+            urls = data['admin'].get_urls(**{
+                "index": data['index'],
+                "create": data['create'],
+                "detail": data['detail'],
+                "update": data['update'],
+                "delete": data['delete'],
+                "report": data['report'],
+                "clone": data['clone'],
+                "urlpatterns": data['urlpatterns'],
+            })
             info = (model._meta.app_label, model._meta.model_name)
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url(
-                    r'^module/%s/%s/' % ( ct.pk, info[1] ),
+                    r'^module/%s/%s/' % (ct.pk, info[1]),
                     include((urls, self.app_name, "module_%s_%s" % info))
                 )
             )
@@ -409,11 +433,16 @@ class DjangoERPSite(object):
 
         # Add in each model's views
         for model, model_admin in six.iteritems(self._registry):
-            urlpatterns += patterns('',
-                url(r'^%s/%s/' % (model._meta.app_label, model._meta.model_name), include(model_admin.urls))
+            urlpatterns += patterns(
+                '',
+                url(
+                    r'^%s/%s/' % (model._meta.app_label, model._meta.model_name),
+                    include(model_admin.urls)
+                )
             )
 
 site = DjangoERPSite()
+
 
 def autodiscover():
     from django.apps import apps
@@ -437,4 +466,3 @@ def autodiscover():
             # Decide whether to bubble up this error
             if module_has_submodule(app_config.module, "erp_module"):
                 raise
-

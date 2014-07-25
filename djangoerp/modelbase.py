@@ -25,9 +25,11 @@ from .watch.models import Watch
 import types
 import inspect
 
+from mptt.managers import TreeManager
 from mptt.models import MPTTModelBase, MPTTModel
 
 APP_LABEL = ERPConfig.label
+
 
 def add_signals(cls):
     # cleanup history and follows
@@ -35,15 +37,15 @@ def add_signals(cls):
         Notification.objects.filter(
             obj_ct=ContentType.objects.get_for_model(sender),
             obj_id=instance.pk,
-            ).delete()
+        ).delete()
         Activity.objects.filter(
             parent_ct=ContentType.objects.get_for_model(sender),
             parent_id=instance.pk,
-            ).delete()
+        ).delete()
         Watch.objects.filter(
             watch_ct=ContentType.objects.get_for_model(sender),
             watch_id=instance.pk,
-            ).delete()
+        ).delete()
     signals.post_delete.connect(post_delete, sender=cls, weak=False)
 
 
@@ -89,13 +91,25 @@ class ERPOptions(object):
         # set options
         for key, value in options:
             # auto-set known options (no validation!)
-            if key in ['category', 'has_logging', 'has_comments', 'has_files', 'search_fields', 'number_cycle', 'workflow', 'workflow_field', 'clean', 'can_clone']:
+            if key in [
+                'category',
+                'has_logging',
+                'has_comments',
+                'has_files',
+                'search_fields',
+                'number_cycle',
+                'workflow',
+                'workflow_field',
+                'clean',
+                'can_clone',
+            ]:
                 setattr(self, key, value)
 
             # only observe valid fields
             if key == "observed_fields":
                 for field in meta.local_fields:
-                    if not field.rel and field.name in value and field.name not in ['created', 'modified', 'created_by', 'modified_by']:
+                    if not field.rel and field.name in value \
+                            and field.name not in ['created', 'modified', 'created_by', 'modified_by']:
                         self.observed_fields.append(field.name)
 
         # determin if the model has an workflow
@@ -105,12 +119,13 @@ class ERPOptions(object):
         self.has_detectchanges = bool(self.observed_fields) and self.has_logging
 
         # determin if the model can be watched by a user
-        self.has_watchfunction = self.has_workflow or self.has_detectchanges or self.has_comments or self.has_files
+        self.has_watchfunction = self.has_workflow or self.has_detectchanges \
+            or self.has_comments or self.has_files
 
         # determin if the model has an activity
         self.has_activity = self.has_logging or self.has_comments or self.has_files
 
-        self.has_history = self.has_logging # TODO OLD REMOVE ME
+        self.has_history = self.has_logging  # TODO OLD REMOVE ME
 
 
 class ERPModelBase(ModelBase):
@@ -118,8 +133,8 @@ class ERPModelBase(ModelBase):
     Metaclass for ERP models
     """
 
-    def __new__(meta, name, bases, attrs):
-        cls = super(ERPModelBase, meta).__new__(meta, name, bases, attrs)
+    def __new__(cls, name, bases, attrs):
+        cls = super(ERPModelBase, cls).__new__(cls, name, bases, attrs)
 
         parents = [b for b in bases if isinstance(b, ERPModelBase)]
         if not parents:
@@ -154,9 +169,17 @@ class ERPModelBase(ModelBase):
         if cls._erpmeta.has_workflow:
             try:
                 if not isinstance(cls.__dict__[cls._erpmeta.workflow_field].field, WorkflowField):
-                    raise ImproperlyConfigured('%s is not a WorkflowField in %s' % (cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__))
+                    raise ImproperlyConfigured(
+                        '%s is not a WorkflowField in %s' % (
+                            cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__
+                        )
+                    )
             except KeyError:
-                raise ImproperlyConfigured('%s is not a WorkflowField in %s' % (cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__))
+                raise ImproperlyConfigured(
+                    '%s is not a WorkflowField in %s' % (
+                        cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__
+                    )
+                )
 
         if cls._erpmeta.clean:
             if not hasattr(cls, 'erp_clean') and not cls._meta.abstract:
@@ -222,8 +245,13 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         if self._erpmeta.workflow_field:
             if hasattr(self, self._erpmeta.workflow_field):
                 self._erpworkflow = self._erpmeta.workflow(getattr(self, self._erpmeta.workflow_field))
-                if getattr(self, self._erpmeta.workflow_field) == None:
-                    setattr(self, self._erpmeta.workflow_field, self._erpworkflow._current_state_key) # set default value in new objects
+                if getattr(self, self._erpmeta.workflow_field) is None:
+                    # set default value in new objects
+                    setattr(
+                        self,
+                        self._erpmeta.workflow_field,
+                        self._erpworkflow._current_state_key
+                    )
         if self.pk and len(self._erpmeta.observed_fields) > 0:
             self._erpmeta.changelog = self._get_observed_values()
 
@@ -239,7 +267,6 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return self._erpworkflow._current_state
 
-
     def has_permissions(self, qs, user):
         """
         Overwrite this function to enable object bases permissions. It must return
@@ -248,7 +275,6 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         Default: queryset
         """
         return qs
-
 
     def erpget_project(self):
         """
@@ -259,7 +285,6 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return None
 
-
     def erpget_customer(self):
         """
         The result of this value is currently used by the document-management system
@@ -269,14 +294,12 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return None
 
-
     @models.permalink
     def erpmodule_detail(self):
         """
         A permalink to the default view of this model in the ERP-System
         """
         return ('%s:detail' % self._erpmeta.url_namespace, (), {"pk": self.pk})
-
 
     def get_absolute_url(self):
         return self.erpmodule_detail()
@@ -297,5 +320,7 @@ class ERPMPTTModelBase(MPTTModelBase, ERPModelBase):
 
 
 class ERPMPTTModel(six.with_metaclass(ERPMPTTModelBase, ERPModel, MPTTModel)):
+    objects = TreeManager()
+
     class Meta:
         abstract = True

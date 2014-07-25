@@ -8,7 +8,8 @@ from django.conf.urls import patterns, url
 from .views import WatchView
 from .views import WatchEdit
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', WatchView.as_view(), name="watch"),
     url(r'^(?P<ct>[0-9]+)/$', WatchView.as_view(), name="watch"),
     url(r'^(?P<ct>[0-9]+)/edit/$', WatchEdit.as_view(), name="watch_edit", kwargs={'pk': 0}),

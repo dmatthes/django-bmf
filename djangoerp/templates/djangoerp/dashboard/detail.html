@@ -3,12 +3,6 @@
 
 {% block title %}{% if object.name %}{% trans "Dashboard" %} - {{ object.name }}{% else %}{% trans "Dashboards" %}{% endif %}{% endblock %}
 
-{% block breadcrumb %}
-{% if object.name %}
-  <li><a href="{% url 'djangoerp:dashboard' djangoerp.dashboard_current.pk %}">{{ djangoerp.dashboard_current.name }}</a></li>
-{% endif %}
-{% endblock %}
-
 {% block base_headline %}
 <div class="page-header">
 {% if object.name %}

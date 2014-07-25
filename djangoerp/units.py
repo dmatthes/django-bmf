@@ -26,9 +26,9 @@ class UnitsMetaclass(type):
       return super_new(cls, name, bases, attrs)
 
     # excluding Model class itself
-    parents = [b for b in bases if 
-        isinstance(b, UnitsMetaclass) 
-        and not (b.__name__ == 'NewBase' 
+    parents = [b for b in bases if
+        isinstance(b, UnitsMetaclass)
+        and not (b.__name__ == 'NewBase'
         and b.__mro__ == (b, object))
       ]
     if not parents:

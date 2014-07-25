@@ -12,8 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 class ERPAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(AuthenticationForm, self).__init__(*args, **kwargs)
-        UserModel = get_user_model()
-        self.username_field = UserModel._meta.get_field(UserModel.USERNAME_FIELD)
+        usermodel = get_user_model()
+        self.username_field = usermodel._meta.get_field(usermodel.USERNAME_FIELD)
         field = self.fields.get('username')
         field.widget = TextInput(attrs={'placeholder': _('Username'), 'class': 'form-control'})
         field = self.fields.get('password')

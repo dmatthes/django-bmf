@@ -54,7 +54,7 @@ def main():
     failures = test_runner.suite_result(suite, result)
 
     cov.stop()
-    cov.report(cov_files)
+    # cov.report(cov_files)
     cov.xml_report(cov_files)
     cov.html_report(cov_files)
 

@@ -4,15 +4,15 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import NoReverseMatch
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.utils.decorators import method_decorator
 from django.utils.timezone import now
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.defaults import permission_denied
 
 from djangoerp import get_version
@@ -22,9 +22,11 @@ from djangoerp.utils import get_model_from_cfg
 
 import json
 import datetime
-import urlparse
+try:
+    from urllib import parse
+except ImportError:
+    import urlparse as parse
 
-# TO BE USED IN EVERY ERP-View
 
 class BaseMixin(object):
     """
@@ -39,7 +41,6 @@ class BaseMixin(object):
         """
         return permissions
 
-
     def check_permissions(self):
         """
         overwrite this function to add a custom permission check (i.e
@@ -47,10 +48,8 @@ class BaseMixin(object):
         """
         return True
 
-
     def read_session_data(self):
         return self.request.session.get("djangoerp", {'version': get_version()})
-    
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -66,11 +65,11 @@ class BaseMixin(object):
 
         # === EMPLOYEE ====================================================
 
-        Employee = get_model_from_cfg('EMPLOYEE')
-        if Employee:
+        employee = get_model_from_cfg('EMPLOYEE')
+        if employee:
             try:
-                self.request.djangoerp_employee = Employee.objects.get(user=self.request.user)
-            except Employee.DoesNotExist:
+                self.request.djangoerp_employee = employee.objects.get(user=self.request.user)
+            except employee.DoesNotExist:
                 # the user does not have permission to view the erp
                 if self.request.user.is_superuser:
                     return redirect('djangoerp:wizard', permanent=False)
@@ -109,7 +108,11 @@ class ViewMixin(BaseMixin):
         This function is used by django ERP to update the notifications
         used in the ERP-Framework
         """
-        if check_object and not self.object.djangoerp_notification.filter(user=self.request.user, unread=True).update(unread=None, changed=now()):
+        if check_object \
+                and not self.object.djangoerp_notification.filter(
+                    user=self.request.user,
+                    unread=True,
+                ).update(unread=None, changed=now()):
             return None
 
         # get all session data
@@ -121,7 +124,6 @@ class ViewMixin(BaseMixin):
 
         # update session
         self.write_session_data(session_data)
-
 
     def update_dashboard(self, pk=None):
         """
@@ -167,7 +169,7 @@ class ViewMixin(BaseMixin):
             try:
                 data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': d.get_absolute_url()}
             except NoReverseMatch:
-                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'} # TODO 
+                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'}  # TODO
                 continue
             session_data['views'].append(data)
 
@@ -187,7 +189,12 @@ class ViewMixin(BaseMixin):
         # === NOTIFICATION ================================================
 
         if 'notification_last_update' in session_data:
-            diff = (datetime.datetime.utcnow() - datetime.datetime.strptime(session_data['notification_last_update'], '%Y-%m-%dT%H:%M:%S.%f')).total_seconds()
+            diff = (
+                datetime.datetime.utcnow() - datetime.datetime.strptime(
+                    session_data['notification_last_update'],
+                    '%Y-%m-%dT%H:%M:%S.%f'
+                )
+            ).total_seconds()
             if diff >= 300:
                 self.update_notification(False)
         else:
@@ -199,7 +206,7 @@ class ViewMixin(BaseMixin):
 
         # === DASHBOARD AND VIEWS =========================================
 
-        if not 'dashboard' in session_data:
+        if 'dashboard' not in session_data:
             self.update_dashboard()
 
         return function
@@ -209,6 +216,10 @@ class AjaxMixin(BaseMixin):
     """
     add some basic function for ajax requests
     """
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super(AjaxMixin, self).dispatch(*args, **kwargs)
+
     def check_permissions(self):
         return self.request.is_ajax() and super(AjaxMixin, self).check_permissions()
 
@@ -226,7 +237,7 @@ class NextMixin(object):
     def redirect_next(self, reverse, *args, **kwargs):
         redirect_to = self.request.REQUEST.get('next', '')
 
-        netloc = urlparse.urlparse(redirect_to)[1]
+        netloc = parse.urlparse(redirect_to)[1]
         if netloc and netloc != self.request.get_host():
             redirect_to = None
 
@@ -282,7 +293,8 @@ class ModuleUpdatePermissionMixin(object):
     """
 
     def check_permissions(self):
-        return self.get_object()._erpworkflow._current_state.update and super(ModuleUpdatePermissionMixin, self).check_permissions()
+        return self.get_object()._erpworkflow._current_state.update \
+            and super(ModuleUpdatePermissionMixin, self).check_permissions()
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name
@@ -297,13 +309,15 @@ class ModuleDeletePermissionMixin(object):
     """
 
     def check_permissions(self):
-        return self.get_object()._erpworkflow._current_state.delete and super(ModuleDeletePermissionMixin, self).check_permissions()
+        return self.get_object()._erpworkflow._current_state.delete \
+            and super(ModuleDeletePermissionMixin, self).check_permissions()
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.delete_%s' % info)
         perms.append('%s.view_%s' % info)
         return super(ModuleDeletePermissionMixin, self).get_permissions(perms)
+
 
 # MODULES
 
@@ -316,7 +330,6 @@ class ModuleBaseMixin(object):
         return super(ModuleBaseMixin, self).get_object()
 
     def get_context_data(self, **kwargs):
-        ct = ContentType.objects.get_for_model(self.model)
         info = self.model._meta.app_label, self.model._meta.model_name
         kwargs.update({
             'erpmodule': {
@@ -325,9 +338,12 @@ class ModuleBaseMixin(object):
                 'create_views': self.model._erpmeta.create_views,
                 'model': self.model,
                 'has_report': self.model._erpmeta.has_report,
-                'can_clone': self.model._erpmeta.can_clone and self.request.user.has_perms(['%s.view_%s' % info,'%s.clone_%s' % info,]),
-#               'namespace': self.model._erpmeta.url_namespace, #unused
-#               'verbose_name': self.model._meta.verbose_name, # unused
+                'can_clone': self.model._erpmeta.can_clone and self.request.user.has_perms([
+                    '%s.view_%s' % info,
+                    '%s.clone_%s' % info,
+                ]),
+                # 'namespace': self.model._erpmeta.url_namespace,  # unused
+                # 'verbose_name': self.model._meta.verbose_name,  # unused
             },
         })
         if hasattr(self, 'object') and self.object:
@@ -335,10 +351,11 @@ class ModuleBaseMixin(object):
                 'erpworkflow': {
                     'enabled': bool(len(self.model._erpworkflow._transitions)),
                     'state': self.object._erpworkflow._current_state,
-                    'transitions': self.object._erpworkflow._from_here(),
+                    'transitions': self.object._erpworkflow._from_here(self.object, self.request.user),
                 },
             })
         return super(ModuleBaseMixin, self).get_context_data(**kwargs)
+
 
 class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
     """
@@ -346,11 +363,10 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
     and form-api
     """
 
-
     def get_ajax_context(self, context):
         ctx = {
             'object_pk': 0,
-            'status': 'ok', # "ok" for normal html, "valid" for valid forms, "error" if an error occured
+            'status': 'ok',  # "ok" for normal html, "valid" for valid forms, "error" if an error occured
             'html': '',
             'message': '',
             'redirect': '',
@@ -358,22 +374,22 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
         ctx.update(context)
         return ctx
 
-
     def render_to_response(self, context, **response_kwargs):
-        response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs) 
+        response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs)
         response.render()
         ctx = self.get_ajax_context({
-             'html': response.rendered_content,
+            'html': response.rendered_content,
         })
         return self.render_to_json_response(ctx)
 
     def render_valid_form(self, context):
         ctx = self.get_ajax_context({
             'status': 'valid',
-          # 'redirect': self.get_success_url(),
+            # 'redirect': self.get_success_url(),
         })
         ctx.update(context)
         return self.render_to_json_response(ctx)
+
 
 class ModuleViewMixin(ModuleBaseMixin, ViewMixin):
     """

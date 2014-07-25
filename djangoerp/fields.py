@@ -9,9 +9,6 @@ from django.utils.six import with_metaclass
 
 from .currency import BaseCurrency
 
-# Workflow
-# -----------------------------------------------------------------------------
-
 
 class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
     """
@@ -22,7 +19,7 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
 
     def __init__(self, **kwargs):
         defaults = {
-            'max_length': 32, # max length
+            'max_length': 32,  # max length
             'db_index': True,
         }
         defaults.update(kwargs)
@@ -36,7 +33,7 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
 # Currency and Money
 # -----------------------------------------------------------------------------
 
-#lass MoneyFieldProxy(object):
+# lass MoneyFieldProxy(object):
 # """
 # An equivalent to Django's default attribute descriptor class (enabled via
 # the SubfieldBase metaclass, see module doc for details). However, instead
@@ -87,19 +84,18 @@ class MoneyField(with_metaclass(models.SubfieldBase, models.DecimalField)):
             value = value.value
         return super(MoneyField, self).get_db_prep_save(value, *args, **kwargs)
 
-# def to_python(self, value)
 
 def get_default_currency():
     from .sites import site
-    return site.get_lazy_setting('djangoerp','currency')
+    return site.get_lazy_setting('djangoerp', 'currency')
+
 
 class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
     description = _("Currency Field")
 
     def __init__(self, *args, **kwargs):
-        from .sites import site
         defaults = {
-            'max_length': 4, # max length
+            'max_length': 4,
         }
         defaults.update(kwargs)
         defaults.update({
@@ -115,7 +111,7 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
             return value
         # The string case.
         from .sites import site
-        return site.currencies['%s'%value]()
+        return site.currencies['%s' % value]()
 
     def get_prep_value(self, obj):
         if hasattr(obj, 'iso'):

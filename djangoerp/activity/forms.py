@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 
 from .models import Activity
 
@@ -33,4 +33,3 @@ class FollowForm(forms.Form):
     file = forms.BooleanField(required=False, initial=False)
     changed = forms.BooleanField(required=False, initial=False)
     workflow = forms.BooleanField(required=False, initial=False)
-

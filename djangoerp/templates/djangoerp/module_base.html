@@ -1,13 +1,6 @@
 {% extends "djangoerp/base_sitebar_r.html" %}
 {% load sekizai_tags i18n %}
 
-{% block breadcrumb %}
-{% if djangoerp.dashboard_current %}
-  <li><a href="{% url 'djangoerp:dashboard' djangoerp.dashboard_current.pk %}">{{ djangoerp.dashboard_current.name }}</a></li>
-{% endif %}
-<li><a href="{% url erpmodule.namespace_index %}">{{ erpmodule.verbose_name_plural }}</a></li>
-{% endblock %}
-
 {% block base_footer %}
 {% if has_history and history or has_files or has_comments %}
 {% if has_files %}

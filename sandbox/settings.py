@@ -1,6 +1,8 @@
 # Django settings
 
 import os
+from django.utils import six
+
 gettext = lambda s: s
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -97,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
+    'django.core.context_processors.debug',
     'django.contrib.messages.context_processors.messages',
     'sekizai.context_processors.sekizai',
 )
@@ -121,8 +124,11 @@ TEST_PROJECT_APPS = (
 #   'djangoerp.contrib.timesheet',
     'djangoerp.currencies.EUR',
     'djangoerp.currencies.USD',
-    'djangoerp.reports.xhtml2pdf',
 )
+if six.PY2:
+    TEST_PROJECT_APPS += (
+        'djangoerp.reports.xhtml2pdf',
+    )
 
 INSTALLED_APPS = (
     'django.contrib.auth',

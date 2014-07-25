@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 
+
 def djangoerp_user_watch(activity):
     from djangoerp.models import Notification
     from djangoerp.models import Watch
@@ -36,7 +37,7 @@ def djangoerp_user_watch(activity):
 
     # Always add event to admin-user (pk=1) when in debug mode
     if settings.DEBUG:
-        if not 1 in user_list:
+        if 1 not in user_list:
             user_list.append(1)
 
     for user in user_list:

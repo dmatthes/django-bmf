@@ -2,9 +2,7 @@
 # ex:set fileencoding=utf-8:
 
 from __future__ import unicode_literals
-
-from django.core.files.storage import FileSystemStorage
-
+# from django.core.files.storage import FileSystemStorage
 from ..settings import STORAGE, STORAGE_OPTIONS, STORAGE_STATIC_PREFIX
 
 

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # ex:set fileencoding=utf-8:
+# flake8: noqa
 
 from __future__ import unicode_literals
 
@@ -32,7 +33,6 @@ class CustomerTests(ERPModuleTestCase):
         self.autotest_get('index', 200)
 
         obj = self.get_latest_object()
-
 
         self.autotest_get('detail', kwargs={'pk': obj.pk})
         data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})

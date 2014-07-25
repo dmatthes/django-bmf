@@ -5,14 +5,15 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponse, HttpResponseForbidden, Http404
+from django.http import HttpResponse
+
 
 MIME_TYPES = {
     'pdf': 'application/pdf',
     'html': 'text/html',
 }
+
 
 class BaseReport(object):
 
@@ -28,14 +29,29 @@ class BaseReport(object):
     def render(self, request, context):
         raise NotImplementedError('You need to implement a render function')
 
+
 class Report(models.Model):
     """
     Model to store informations to generate a report
     """
-    reporttype = models.CharField(_("Reporttype"), max_length=20, blank=False, null=False) # TODO replace with report field
-    mimetype = models.CharField(_("Mimetype"), max_length=20, blank=False, null=False, editable=False, default="pdf") # TODO 
-    contenttype = models.ForeignKey(ContentType, related_name="erp_report", null=True, blank=True, help_text="Connect a Report to an ERP-Model", on_delete=models.CASCADE)
-    options = models.TextField(_("Options"), blank=True, null=False, help_text=_("Options for the renderer. Empty this field to get all available options with default values")) # TODO needs validator
+    # TODO replace with report field
+    reporttype = models.CharField(
+        _("Reporttype"), max_length=20, blank=False, null=False,
+    )
+    mimetype = models.CharField(
+        _("Mimetype"), max_length=20, blank=False, null=False, editable=False, default="pdf",
+    )
+    contenttype = models.ForeignKey(
+        ContentType, related_name="erp_report", null=True, blank=True,
+        help_text="Connect a Report to an ERP-Model", on_delete=models.CASCADE,
+    )
+    # TODO needs validator
+    options = models.TextField(
+        _("Options"), blank=True, null=False,
+        help_text=_(
+            "Options for the renderer. Empty this field to get all available options with default values"
+        ),
+    )
     modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False,)
 
     class Meta:
@@ -66,7 +82,7 @@ class Report(models.Model):
 
         file = generator.render(request, context)
 
-        response = HttpResponse(content_type=mimetype) # TODO depends on multiple options
+        response = HttpResponse(content_type=mimetype)  # TODO depends on multiple options
         if filename:
             response['Content-Disposition'] = 'attachment; filename="%s"' % filename
         response.write(file)

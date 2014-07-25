@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 from django import template
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
 
 register = template.Library()
 

@@ -5,7 +5,7 @@ Position
 Models
 ==================================================
 
-.. automodule:: djangoerp_contrib.position.models
+.. automodule:: djangoerp.contrib.position.models
    :members:
    :show-inheritance:
 
