@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import LiveServerTestCase
 from django.test import TestCase
+from django.utils.translation import activate
 
 import json
 
@@ -25,6 +26,7 @@ class ERPViewTestCase(LiveServerTestCase):
         from . import sites
         sites.autodiscover()
         self.client.login(username='admin', password='admin')
+        activate('en')
 
 
 class ERPModuleTestCase(ERPViewTestCase):

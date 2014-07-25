@@ -30,6 +30,7 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
         })
         super(WorkflowField, self).__init__(**defaults)
 
+
 # Currency and Money
 # -----------------------------------------------------------------------------
 # see: http://blog.elsdoerfer.name/2008/01/08/fuzzydates-or-one-django-model-field-multiple-database-columns/
@@ -47,7 +48,7 @@ class MoneyProxy(object):
     def __get__(self, obj, type=None):
         if obj is None:
             raise AttributeError('Can only be accessed via an instance.')
-        return obj.__dict__[self.field.name]
+        return obj.__dict__[self.field.name].value
 
     def __set__(self, obj, value):
         currency = getattr(obj, self.field.get_currency_field_name())
@@ -128,6 +129,11 @@ class MoneyField(models.DecimalField):
         if not cls._meta.abstract:
             self.has_precision = hasattr(self, self.get_precision_field_name())
             setattr(cls, self.name, MoneyProxy(self))
+
+    def get_prep_value(self, value):
+        if isinstance(value, BaseCurrency):
+            value = value.value
+        super(MoneyField, self).get_prep_value(value)
 
     def get_db_prep_save(self, value, *args, **kwargs):
         if isinstance(value, BaseCurrency):

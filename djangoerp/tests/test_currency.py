@@ -127,9 +127,9 @@ class ClassTests(TestCase):
 
         # text output
         test = TestCurrency()
-        self.assertEqual(repr(wallet), "<TestCurrency object at 0x%x>" % id(test))
+        self.assertEqual(repr(test), "<TestCurrency object at 0x%x>" % id(test))
         test = DemoCurrency(1)
-        self.assertEqual(repr(wallet), "<DemoCurrency object at 0x%x>" % id(test))
+        self.assertEqual(repr(test), "<DemoCurrency object at 0x%x>" % id(test))
 
         obj1 = TestCurrency()
         self.assertEqual(str(obj1), "Currency")
