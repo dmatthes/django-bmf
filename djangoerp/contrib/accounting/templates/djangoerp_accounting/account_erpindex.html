@@ -1,61 +1,39 @@
 {% extends "djangoerp/module_index.html" %}
 
-{% load mptt_tags %}
+{% load mptt_tags sekizai_tags %}
 
 {% block base_content %}
-
-<ul>
-    {% recursetree object_list %}
-    <li>
-        {{ node.number }} {{ node.name }}
-           {% if not node.is_leaf_node %}
-               <ul class="children">
-                   {{ children }}
-               </ul>
-           {% endif %}
-    </li>
-    {% endrecursetree %}
-</ul>
-
-<table class="table table-striped table-condensed table-hover">
+{% addtoblock "js" %}<script type="text/javascript">
+$('.tree').treegrid({
+});
+</script>{% endaddtoblock %}
+<table class="table table-condensed table-hover tree">
   <thead>
     <tr>
-      <th></th>
       <th>Account</th>
-      <th>Balance</th>
-      <th>Type</th>
-      <th></th>
+      <th style="width: 90px;">Number</th>
+      <th style="width:160px;"></th>
+      <th style="width: 40px;"></th>
     </tr>
   </thead>
   <tbody>
-    {% for obj in object_list %}
-    <tr>
+    {% recursetree object_list %}
+    <tr class="treegrid-{{ node.pk }} {% if not node.is_root_node %}treegrid-parent-{{ node.parent_id }}{% else %}warning{% endif %}">
+      <td>{{ node.name }}</td>
       <td>
-        {% if obj.read_only %}
-        <span class="glyphicon glyphicon-lock"></span>
-        {% else %}
-        <span class="glyphicon glyphicon-pencil"></span>
-        {% endif %}
-        {{ obj.number }}
+        {{ node.number }}
+        {% if node.read_only %} <small><span class="glyphicon text-muted glyphicon-lock"></span></small>{% endif %}
+        {% if node.is_root_node %}<br><small class="text-muted">{{ node.get_type_display }}</small>{% endif %}
       </td>
-      <td>{{ obj.name }}</td>
-      <td>{{ obj.get_balance }} {{ obj.balance }} {{ obj.balance_currency }}</td>
-      <td>{{ obj.get_type_display }}</td>
+      <td class="text-right">{{ node.balance }} {{ node.balance_currency }}</td>
       <td class="text-right">
-        {% comment %}if not obj.read_only 
-        <a class="btn btn-xs btn-danger" href="{% url 'erp_plugin_accounting_transaction:create' %}?credit={{ obj.pk }}">
-          <span class="glyphicon glyphicon-circle-arrow-up"></span>
-        </a>
-        <a class="btn btn-xs btn-success" href="{% url 'erp_plugin_accounting_transaction:create' %}?debit={{ obj.pk }}">
-          <span class="glyphicon glyphicon-circle-arrow-down"></span>
-        </a>
-         endif {% endcomment %}
-        <a class="btn btn-xs btn-warning" href="{{ obj.erpmodule_detail }}">
+        <a class="btn btn-xs btn-primary" href="{{ node.erpmodule_detail }}">
           <span class="glyphicon glyphicon-list"></span>
         </a>
       </td>
     </tr>
-    {% endfor %}
+    {% if not node.is_leaf_node %}{{ children }}{% endif %}
+    {% endrecursetree %}
   </tbody>
 </table>
 
