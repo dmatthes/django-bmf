@@ -59,4 +59,4 @@ class FormTests(ERPModuleTestCase):
         self.assertEqual(data[0]["field"], "erp_name")
         self.assertEqual(data[0]["value"], "Service")
         self.assertEqual(data[1]["field"], "erp_price")
-        self.assertEqual(data[1]["value"], "69")
+        self.assertEqual(data[1]["value"], "69.00")

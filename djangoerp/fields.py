@@ -30,64 +30,38 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
         })
         super(WorkflowField, self).__init__(**defaults)
 
+
 # Currency and Money
 # -----------------------------------------------------------------------------
-
-# lass MoneyFieldProxy(object):
-# """
-# An equivalent to Django's default attribute descriptor class (enabled via
-# the SubfieldBase metaclass, see module doc for details). However, instead
-# of callig to_python() on our MoneyField class, it stores the two
-# different parts separately, and updates them whenever something is assigned.
-# If the attribute is read, it builds the instance "on-demand" with the
-# current data.
-# (see: http://blog.elsdoerfer.name/2008/01/08/fuzzydates-or-one-django-model-field-multiple-database-columns/)
-# """
-
-# def __init__(self, field):
-#   self.field = field
-#   self.currency_field_name = currency_field_name(self.field.name)
-
-# def _money_from_obj(self, obj):
-#   return Money(obj.__dict__[self.field.name], obj.__dict__[self.currency_field_name])
-
-# def __get__(self, obj, type=None):
-#   if obj is None:
-#     raise AttributeError('Can only be accessed via an instance.')
-#   if not isinstance(obj.__dict__[self.field.name], Money):
-#     obj.__dict__[self.field.name] = self._money_from_obj(obj)
-#   return obj.__dict__[self.field.name]
-
-# def __set__(self, obj, value):
-#   if isinstance(value, Money):
-#     obj.__dict__[self.field.name] = value.amount
-#     setattr(obj, self.currency_field_name, smart_unicode(value.currency))
-#   else:
-#     if value: value = str(value)
-#       obj.__dict__[self.field.name] = self.field.to_python(value)
-
-
-class MoneyField(with_metaclass(models.SubfieldBase, models.DecimalField)):
-    description = _("Money Field")
-
-    def __init__(self, *args, **kwargs):
-        defaults = {}
-        defaults.update(kwargs)
-        defaults.update({
-            'max_digits': 27,
-            'decimal_places': 9,
-        })
-        super(MoneyField, self).__init__(*args, **defaults)
-
-    def get_db_prep_save(self, value, *args, **kwargs):
-        if isinstance(value, BaseCurrency):
-            value = value.value
-        return super(MoneyField, self).get_db_prep_save(value, *args, **kwargs)
+# see: http://blog.elsdoerfer.name/2008/01/08/fuzzydates-or-one-django-model-field-multiple-database-columns/
 
 
 def get_default_currency():
     from .sites import site
     return site.get_lazy_setting('djangoerp', 'currency')
+
+
+class MoneyProxy(object):
+    def __init__(self, field):
+        self.field = field
+
+    def __get__(self, obj, type=None):
+        if obj is None:
+            raise AttributeError('Can only be accessed via an instance.')
+        return obj.__dict__[self.field.name].value
+
+    def __set__(self, obj, value):
+        currency = getattr(obj, self.field.get_currency_field_name())
+
+        if self.field.has_precision:
+            precision = getattr(obj, self.field.get_precision_field_name())
+        else:
+            precision = 0
+
+        if not isinstance(value, BaseCurrency):
+            value = currency.__class__(value, precision=precision)
+
+        obj.__dict__[self.field.name] = value
 
 
 class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
@@ -96,12 +70,12 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
     def __init__(self, *args, **kwargs):
         defaults = {
             'max_length': 4,
+            'editable': False,
         }
         defaults.update(kwargs)
         defaults.update({
             'null': True,
             'blank': False,
-            'editable': False,
             'default': get_default_currency,
         })
         super(CurrencyField, self).__init__(*args, **defaults)
@@ -121,3 +95,47 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return self.get_prep_value(value)
+
+
+class MoneyField(models.DecimalField):
+    description = _("Money Field")
+
+    def __init__(self, *args, **kwargs):
+        defaults = {
+            'default': '0',
+            'blank': True,
+        }
+        defaults.update(kwargs)
+        defaults.update({
+            'null': True,
+            'max_digits': 27,
+            'decimal_places': 9,
+        })
+        super(MoneyField, self).__init__(*args, **defaults)
+
+    def to_python(self, value):
+        if isinstance(value, BaseCurrency):
+            return value.value
+        return super(MoneyField, self).to_python(value)
+
+    def get_currency_field_name(self):
+        return '%s_currency' % self.name
+
+    def get_precision_field_name(self):
+        return '%s_precision' % self.name
+
+    def contribute_to_class(self, cls, name):
+        super(MoneyField, self).contribute_to_class(cls, name)
+        if not cls._meta.abstract:
+            self.has_precision = hasattr(self, self.get_precision_field_name())
+            setattr(cls, self.name, MoneyProxy(self))
+
+    def get_prep_value(self, value):
+        if isinstance(value, BaseCurrency):
+            value = value.value
+        super(MoneyField, self).get_prep_value(value)
+
+    def get_db_prep_save(self, value, *args, **kwargs):
+        if isinstance(value, BaseCurrency):
+            value = value.value
+        return super(MoneyField, self).get_db_prep_save(value, *args, **kwargs)

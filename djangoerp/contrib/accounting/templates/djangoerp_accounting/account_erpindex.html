@@ -39,7 +39,7 @@
         {{ obj.number }}
       </td>
       <td>{{ obj.name }}</td>
-      <td>{{ obj.get_balance }}</td>
+      <td>{{ obj.get_balance }} {{ obj.balance }} {{ obj.balance_currency }}</td>
       <td>{{ obj.get_type_display }}</td>
       <td class="text-right">
         {% comment %}if not obj.read_only 

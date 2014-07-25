@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
 from djangoerp.categories import SALES
+from djangoerp.currency import BaseCurrency
 from djangoerp.models import ERPModel
 from djangoerp.settings import BASE_MODULE
 from djangoerp.fields import CurrencyField
@@ -68,11 +69,11 @@ class AbstractProduct(ERPModel):
         _("Can be purchased"), null=False, blank=True, default=False, db_index=True,
     )
     description = models.TextField(_("Description"), null=False, blank=True)
-    price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
     price_precision = models.PositiveSmallIntegerField(
         default=0, blank=True, null=True, editable=False,
     )
+    price = MoneyField(_("Price"), blank=False)
     taxes = models.ManyToManyField(
         BASE_MODULE["TAX"],
         blank=True,
@@ -169,7 +170,9 @@ class AbstractProduct(ERPModel):
         # TODO add currency for calculation of taxes
         if not isinstance(amount, Decimal):
             amount = Decimal(str(amount))
-        if not isinstance(price, Decimal):
+        if isinstance(price, BaseCurrency):
+            price = price.value
+        elif not isinstance(price, Decimal):
             price = Decimal(str(price))
 
         if price.as_tuple().exponent > -2:

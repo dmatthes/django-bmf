@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import LiveServerTestCase
 from django.test import TestCase
+from django.utils.translation import activate
 
 import json
 
@@ -15,6 +16,9 @@ class ERPViewTestCase(LiveServerTestCase):
     fixtures = [
         "fixtures/users.json",
         "fixtures/demodata.json",
+        "fixtures/contrib_accounting.json",
+        "fixtures/contrib_invoice.json",
+        "fixtures/contrib_quotation.json",
         "fixtures/contrib_task.json",
     ]
 
@@ -22,6 +26,7 @@ class ERPViewTestCase(LiveServerTestCase):
         from . import sites
         sites.autodiscover()
         self.client.login(username='admin', password='admin')
+        activate('en')
 
 
 class ERPModuleTestCase(ERPViewTestCase):

@@ -55,9 +55,9 @@ class AbstractPosition(ERPModel):
     invoiceable = models.PositiveSmallIntegerField(
         _("Invoiceable"), null=True, blank=False, default=1, choices=RATE_CHOICES, editable=False,
     )
-    price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
     price_precision = models.PositiveSmallIntegerField(default=0, blank=True, null=True, editable=False)
+    price = MoneyField(_("Price"), blank=False)
     amount = models.FloatField(_("Amount"), null=True, blank=False, default=1.0)
     description = models.TextField(_("Description"), null=True, blank=True)
 
