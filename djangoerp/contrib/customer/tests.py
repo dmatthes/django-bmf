@@ -34,7 +34,6 @@ class CustomerTests(ERPModuleTestCase):
 
         obj = self.get_latest_object()
 
-
         self.autotest_get('detail', kwargs={'pk': obj.pk})
         data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
         self.autotest_get('delete', kwargs={'pk': obj.pk})

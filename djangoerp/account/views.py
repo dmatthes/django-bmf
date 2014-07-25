@@ -39,17 +39,16 @@ class LoginView(FormView, NextMixin):
         return super(LoginView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        # if self.request.session.test_cookie_worked():
-        #     self.request.session.delete_test_cookie()
-        login(self.request, form.get_user())
-        return super(LoginView, self).form_valid(form)
+        if self.request.session.test_cookie_worked():
+            self.request.session.delete_test_cookie()
+            login(self.request, form.get_user())
+            return super(LoginView, self).form_valid(form)
+        self.request.session.set_test_cookie()
+        return super(LoginView, self).form_invalid(form)
 
     def get_success_url(self):
         return self.redirect_next('djangoerp:dashboard')
 
-    #   self.request.session.set_test_cookie()
-    #   return super(LoginView, self).form_invalid(form)
-
-    # def get(self, request, *args, **kwargs):
-    #   self.request.session.set_test_cookie()
-    #   return super(LoginView, self).get(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        self.request.session.set_test_cookie()
+        return super(LoginView, self).get(request, *args, **kwargs)
