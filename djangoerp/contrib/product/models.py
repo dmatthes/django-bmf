@@ -68,11 +68,11 @@ class AbstractProduct(ERPModel):
         _("Can be purchased"), null=False, blank=True, default=False, db_index=True,
     )
     description = models.TextField(_("Description"), null=False, blank=True)
-    price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
     price_precision = models.PositiveSmallIntegerField(
         default=0, blank=True, null=True, editable=False,
     )
+    price = MoneyField(_("Price"), blank=False)
     taxes = models.ManyToManyField(
         BASE_MODULE["TAX"],
         blank=True,

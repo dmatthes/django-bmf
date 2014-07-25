@@ -157,11 +157,11 @@ class InvoiceProduct(models.Model):
         related_name="invoice_products", on_delete=models.PROTECT,
     )
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)
-    price = MoneyField(_("Price"), blank=False)
     price_currency = CurrencyField()
     price_precision = models.PositiveSmallIntegerField(
         default=0, blank=True, null=True, editable=False,
     )
+    price = MoneyField(_("Price"), blank=False)
     amount = models.FloatField(_("Amount"), null=True, blank=False, default=1.0)
     # unit = models.CharField() # TODO add units
     description = models.TextField(_("Description"), null=True, blank=True)

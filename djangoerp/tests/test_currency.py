@@ -46,7 +46,7 @@ class ClassTests(TestCase):
                 iso = "XTE"
                 name = 'Currency'
                 symbol = 'c'
-                precision = 'invalid'
+                base_precision = 'invalid'
 
         msg = "invalid precision (B)"
         with self.assertRaises(ImproperlyConfigured, msg=msg):
@@ -54,7 +54,7 @@ class ClassTests(TestCase):
                 iso = "XTE"
                 name = 'Currency'
                 symbol = 'c'
-                precision = -3
+                base_precision = -3
 
         # valid models
         class TestCurrency(BaseCurrency):
@@ -62,14 +62,14 @@ class ClassTests(TestCase):
             name = 'Currency'
             symbol = 'c'
             # symbol = six.u('¢') # LOOK test unicode-characters
-            precision = 3
+            base_precision = 3
 
         class DemoCurrency(BaseCurrency):
             iso = "XDL"
             name = 'Dollar'
             symbol = '$'
             # symbol = _('ł') # LOOK test translations
-            precision = 2
+            base_precision = 2
 
         # logic
 
@@ -126,9 +126,10 @@ class ClassTests(TestCase):
             TestCurrency(1) // DemoCurrency(1)
 
         # text output
-
-        self.assertEqual(repr(TestCurrency()), "<TestCurrency: 'Currency'>")
-        self.assertEqual(repr(DemoCurrency(1)), "<DemoCurrency: '1.00 $'>")
+        test = TestCurrency()
+        self.assertEqual(repr(wallet), "<TestCurrency object at 0x%x>" % id(test))
+        test = DemoCurrency(1)
+        self.assertEqual(repr(wallet), "<DemoCurrency object at 0x%x>" % id(test))
 
         obj1 = TestCurrency()
         self.assertEqual(str(obj1), "Currency")

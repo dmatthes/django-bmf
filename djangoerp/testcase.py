@@ -15,6 +15,9 @@ class ERPViewTestCase(LiveServerTestCase):
     fixtures = [
         "fixtures/users.json",
         "fixtures/demodata.json",
+        "fixtures/contrib_accounting.json",
+        "fixtures/contrib_invoice.json",
+        "fixtures/contrib_quotation.json",
         "fixtures/contrib_task.json",
     ]
 

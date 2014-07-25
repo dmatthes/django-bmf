@@ -55,10 +55,10 @@ class BaseAccount(ERPMPTTModel):
         'self', null=True, blank=True, related_name='children',
         on_delete=models.CASCADE,
     )
-    balance = MoneyField(editable=False, default="0")
-    balance_currency = CurrencyField()
-    number = models.CharField(_('Number'), max_length=30, null=True, blank=True, )
-    name = models.CharField(_('Name'), max_length=100, null=False, blank=False, )
+    balance_currency = CurrencyField(editable=False)
+    balance = MoneyField(editable=False)
+    number = models.CharField(_('Number'), max_length=30, null=True, blank=True, unique=True, db_index=True)
+    name = models.CharField(_('Name'), max_length=100, null=False, blank=False)
     type = models.PositiveSmallIntegerField(
         _('Type'), null=False, blank=False, choices=ACCOUNTING_TYPES,
     )
@@ -106,7 +106,7 @@ class AbstractAccount(BaseAccount):
         abstract = True
 
     class ERPMeta(BaseAccount.ERPMeta):
-        search_fields = ['name', 'number']
+        search_fields = ['name', '^number']
 
 
 class Account(AbstractAccount):
@@ -186,8 +186,8 @@ class AbstractTransactionItem(models.Model):
         BASE_MODULE["TRANSACTION"], null=True, blank=True,
         related_name="account_transactions", on_delete=models.CASCADE,
     )
-    amount = MoneyField()
     amount_currency = CurrencyField()
+    amount = MoneyField()
     credit = models.BooleanField(
         choices=((True, _('Credit')), (False, _('Debit'))),
         default=True,

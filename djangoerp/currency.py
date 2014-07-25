@@ -37,10 +37,10 @@ class CurrencyMetaclass(type):
             raise ImproperlyConfigured('Currency needs an "name" attribute')
         if not hasattr(new_cls, 'symbol'):
             raise ImproperlyConfigured('Currency needs an "symbol" attribute')
-        if not isinstance(new_cls.precision, six.integer_types):
-            raise ImproperlyConfigured('The currency precision must be an integer')
-        if new_cls.precision < 0:
-            raise ImproperlyConfigured('The currency precision must be zero or positive')
+        if not isinstance(new_cls.base_precision, six.integer_types):
+            raise ImproperlyConfigured('The currency basic precision must be an integer')
+        if new_cls.base_precision < 0:
+            raise ImproperlyConfigured('The currency basic precision must be zero or positive')
 
         # return class
         return new_cls
@@ -49,13 +49,14 @@ class CurrencyMetaclass(type):
 @python_2_unicode_compatible
 class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
     formatstr = _('%(val)s %(sym)s')
-    precision = 2
+    base_precision = 2
 
-    def __init__(self, value=None):
+    def __init__(self, value=None, precision=0):
         if value:
             self.set(value)
         else:
             self.value = None
+        self.precision = self.base_precision + precision
 
     def __str__(self):
         if self.value is None:
@@ -65,7 +66,7 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
         return force_text(value)
 
     def __repr__(self):
-        return force_text("<%s: '%s'>" % (self.__class__.__name__, str(self)))
+        return "<%s object at 0x%x>" % (self.__class__.__name__, id(self))
 
     # logic .....
 
@@ -155,8 +156,8 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
         else:
             self.value = Decimal(value)
 
-        if self.value.as_tuple().exponent > -self.precision:
-            self.value = self.value.quantize(Decimal('1E-%s' % self.precision))
+        if self.value.as_tuple().exponent > -self.base_precision:
+            self.value = self.value.quantize(Decimal('1E-%s' % self.base_precision))
 
 
 class Wallet(object):
