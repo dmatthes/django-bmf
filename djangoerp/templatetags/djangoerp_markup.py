@@ -10,6 +10,7 @@ import markdown
 
 from ..utils.markdown.urlize import UrlizeExtension
 from ..utils.markdown.checklist import ChecklistExtension
+from ..utils.markdown.strikethrough import StrikeThroughExtension
 
 register = template.Library()
 
@@ -24,6 +25,7 @@ def markdown_filter(text):
         text,
         extensions=[
             UrlizeExtension(),
+            StrikeThroughExtension(),
             ChecklistExtension(),
             'smart_strong',
             'sane_lists',

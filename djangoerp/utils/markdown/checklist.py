@@ -1,39 +1,64 @@
-# from https://github.com/FND/markdown-checklist
-# TODO change the style of the lists, don't use checkboxes
+from __future__ import unicode_literals
 
 import re
 
 from markdown.extensions import Extension
-# from markdown.preprocessors import Preprocessor
-from markdown.postprocessors import Postprocessor
+from markdown.blockprocessors import BlockProcessor
+from markdown.util import etree
 
 
-def makeExtension(configs=None):  # noqa
-    return ChecklistExtension(configs=configs)
+class ChecklistProcessor(BlockProcessor):
+    # Detect an item (``[X] item``). ``group(1)`` contains contents of item.
+    RE = re.compile(r'(^|\n) {0,3}\[([ xX])\] +(.+?)(\n|$)')
+    CSS = "checklist"
+    # Detect items on secondary lines. they can be of either list type.
+    # Detect indented (nested) items of either type
+
+    def test(self, parent, block):
+        return bool(self.RE.match(block))
+
+    def run(self, parent, blocks):
+        # Check for multiple items in one block.
+        items = self.get_items(blocks.pop(0))
+        sibling = self.lastChild(parent)
+
+        if sibling is not None and sibling.tag == "ul":
+            lst = sibling
+        else:
+            lst = etree.SubElement(parent, "ul")
+
+        # Loop through items in block, recursively parsing each with the
+        # appropriate parent.
+        self.parser.state.set('checklist')
+        for checked, item in items:
+            # New item. Create li and parse with it as parent
+            li = etree.SubElement(lst, 'li', **{"class": self.CSS})
+            if checked:
+                etree.SubElement(li, 'span', **{"class": "glyphicon glyphicon-check"})
+            else:
+                etree.SubElement(li, 'span', **{"class": "glyphicon glyphicon-unchecked"})
+            self.parser.parseBlocks(li, [item])
+        self.parser.state.reset()
+
+    def get_items(self, block):
+        """ Break a block into list items. """
+        items = []
+        for line in block.split('\n'):
+            m = self.RE.match(line)
+            if m:
+                # Append to the list
+                items.append([m.group(2) in ['x', 'X'], m.group(3)])
+            else:
+                # This is another line of previous item. Append to that item.
+                items[-1][1] = '%s\n%s' % (items[-1][1], line)
+        return items
 
 
 class ChecklistExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):  # noqa
-        md.postprocessors.add(
-            'checklist', ChecklistPostprocessor(md), '>raw_html'
+        md.parser.blockprocessors.add(
+            'checklist',
+            ChecklistProcessor(md.parser),
+            '>ulist',
         )
-
-
-class ChecklistPostprocessor(Postprocessor):
-    """
-    adds checklist class to list element
-    """
-
-    pattern = re.compile(r'<li>\[([ Xx])\]')
-
-    def run(self, html):
-        html = re.sub(self.pattern, self._convert_checkbox, html)
-        before = '<ul>\n<li><input type="checkbox"'
-        after = before.replace('<ul>', '<ul class="checklist">')
-        return html.replace(before, after)
-
-    def _convert_checkbox(self, match):
-        state = match.group(1)
-        checked = ' checked' if state != ' ' else ''
-        return '<li><input type="checkbox" disabled%s>' % checked

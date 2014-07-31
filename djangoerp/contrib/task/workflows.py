@@ -37,14 +37,10 @@ def start_condition(object, user):
     return True
 
 
-def review_condition(object, user):
-    if object.goal and object.goal.referee_id and user.pk != object.goal.referee_id:  # TODO: untested
-        return True
-    return False
-
-
 def finish_condition(object, user):
-    return not review_condition(object, user)
+    if object.goal and object.goal.referee_id and user.pk != object.goal.referee_id:  # TODO: untested
+        return False
+    return True
 
 
 class TaskWorkflow(Workflow):
@@ -86,7 +82,6 @@ class TaskWorkflow(Workflow):
             _("Set to review"),
             ["started", "open", "hold", "new"],
             "review",
-            condition=review_condition,
         )
         reopen = Transition(
             _("Reopen this task"),
