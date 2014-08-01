@@ -3,10 +3,7 @@
 {% load mptt_tags sekizai_tags %}
 
 {% block base_content %}
-{% addtoblock "js" %}<script type="text/javascript">
-$('.tree').treegrid({
-});
-</script>{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript">$('.tree').treegrid({initialState: 'collapsed'});</script>{% endaddtoblock %}
 <table class="table table-condensed table-hover tree">
   <thead>
     <tr>
