@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('level', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('balance', djangoerp.fields.MoneyField(default='0', editable=False, max_digits=27, decimal_places=9)),
                 ('balance_currency', djangoerp.fields.CurrencyField(default=djangoerp.fields.get_default_currency, max_length=4, null=True, editable=False)),
-                ('number', models.CharField(max_length=30, null=True, unique=True, verbose_name='Number', blank=True)),
+                ('number', models.CharField(max_length=30, null=True, unique=True, verbose_name='Number', blank=True, db_index=True)),
                 ('name', models.CharField(max_length=100, verbose_name='Name')),
                 ('type', models.PositiveSmallIntegerField(verbose_name='Type', choices=[(10, 'Income'), (20, 'Expense'), (30, 'Asset'), (40, 'Liability'), (50, 'Equity')])),
                 ('read_only', models.BooleanField(default=False, verbose_name='Read-only')),

@@ -16,6 +16,9 @@ from django.views.generic import DetailView
 from django.views.generic import UpdateView
 from django.views.generic.edit import BaseFormView
 from django.views.generic.detail import SingleObjectMixin
+from django.template.loader import get_template
+from django.template.loader import select_template
+from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
@@ -169,8 +172,47 @@ class ModuleDetailView(
     context_object_name = 'object'
     template_name_suffix = '_erpdetail'
 
-    def get_template_names(self):
+    def get_related_views(self):
+        # TODO: maybe cache this
+        if hasattr(self, '_related_views'):
+            return self._related_views
+        open = self.request.GET.get("open", None)
+        self._related_views = {}
+        for rel in self.model._meta.get_all_related_objects():
+            template = '%s/%s_erprelated_%s.html' % (
+                rel.model._meta.app_label,
+                rel.model._meta.model_name,
+                self.model._meta.model_name,
+            )
+            try:
+                self._related_views[rel.model._meta.model_name] = {
+                    'name': '%s' % rel.model._meta.verbose_name_plural,
+                    'key': rel.model._meta.model_name,
+                    'active': open == rel.model._meta.model_name,
+                    'objects': getattr(self.object, rel.get_accessor_name()),
+                    'template': get_template(template),
+                }
+            except TemplateDoesNotExist:
+                continue
+        return self._related_views
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            'related_views': self.get_related_views(),
+            'parent_template': select_template(self.get_template_names(related=False)),
+            'related_objects': self.get_related_objects(),  # TODO add pagination
+        })
+        return super(ModuleDetailView, self).get_context_data(**kwargs)
+
+    def get_related_objects(self):
+        if "open" in self.request.GET.keys() and self.request.GET["open"] in self.get_related_views().keys():
+            return self.get_related_views()[self.request.GET["open"]]["objects"]
+
+    def get_template_names(self, related=True):
         self.update_notification()
+        if related and "open" in self.request.GET.keys() and \
+                self.request.GET["open"] in self.get_related_views().keys():
+            return self.get_related_views()[self.request.GET["open"]]["template"]
         return super(ModuleDetailView, self).get_template_names() \
             + ["djangoerp/module_detail_default.html"]
 

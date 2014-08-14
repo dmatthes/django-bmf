@@ -97,3 +97,9 @@
 </div>
 <div class="clearfix"></div>
 {% endblock %}
+
+{% block base_content %}{{ block.super }}{% if related_views %}<ul class="nav nav-pills">
+    {% for data in related_views.values|dictsort:"name" %}
+    <li{% if data.active %} class="active"{% endif %}><a href="{% get_erp_url object "detail" %}{% if not data.active %}?open={{ data.key }}{% endif %}">{{ data.name }}</a></li>
+    {% endfor %}
+</ul>{% endif %}{% endblock %}
