@@ -37,5 +37,5 @@ class CustomerTests(ERPModuleTestCase):
         self.autotest_get('detail', kwargs={'pk': obj.pk})
         data = self.autotest_ajax_get('update', kwargs={'pk': obj.pk})
         self.autotest_get('delete', kwargs={'pk': obj.pk})
-        obj.project.delete()
+       #obj.project.delete()
         self.autotest_post('delete', status_code=302, kwargs={'pk': obj.pk})

@@ -17,7 +17,7 @@ class BaseProject(ERPModel):
     if BASE_MODULE["CUSTOMER"]:
         customer = models.ForeignKey(
             BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name='erp_projects',
-            on_delete=models.PROTECT,
+            on_delete=models.SET_NULL,
         )
     if BASE_MODULE["EMPLOYEE"]:
         employee = models.ForeignKey(
@@ -25,7 +25,7 @@ class BaseProject(ERPModel):
         )
 
     name = models.CharField(_("Name"), max_length=255, null=False, blank=False, editable=True, )
-    is_bound = models.BooleanField(null=False, blank=True, editable=False, default=False)
+    # is_bound = models.BooleanField(null=False, blank=True, editable=False, default=False)
     is_active = models.BooleanField(_("Is active"), null=False, blank=True, default=True)
 
     class Meta:  # only needed for abstract models

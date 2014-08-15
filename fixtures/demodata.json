@@ -188,7 +188,6 @@
  "fields": {
   "customer": 1, 
   "name": "Django ERP",
-  "is_bound": true, 
   "is_active": true
  }
 },
@@ -198,7 +197,6 @@
  "fields": {
   "customer": 2, 
   "name": "Sebastian Braun",
-  "is_bound": true, 
   "is_active": true
  }
 },

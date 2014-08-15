@@ -11,7 +11,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from djangoerp.models import ERPModel
 from djangoerp.categories import SALES
 from djangoerp.settings import BASE_MODULE
-from djangoerp.utils import get_model_from_name
+# from djangoerp.utils import get_model_from_name
 
 from djangoerp.contrib.accounting.models import ACCOUNTING_ASSET, ACCOUNTING_LIABILITY
 
@@ -33,7 +33,7 @@ class BaseCustomer(ERPModel):
             null=True,
             blank=True,
             related_name="+",
-            on_delete=models.SET_NULL,
+            on_delete=models.PROTECT,
             help_text=_("Projects function as cost-centers. This setting defines a default project for this customer."),
         )
     employee_at = models.ForeignKey(
@@ -92,24 +92,24 @@ class BaseCustomer(ERPModel):
     def erpget_customer(self):
         return self
 
-    @staticmethod
-    def post_save(sender, instance, created, raw, *args, **kwargs):
-        project = get_model_from_name(BASE_MODULE['PROJECT'])
-        if created:
-            # create project
-            p = project(name=instance.name, customer=instance, is_bound=True)
-            p.save()
+#   @staticmethod
+#   def post_save(sender, instance, created, raw, *args, **kwargs):
+#       project = get_model_from_name(BASE_MODULE['PROJECT'])
+#       if created:
+#           # create project
+#           p = project(name=instance.name, customer=instance, is_bound=True)
+#           p.save()
 
-        elif instance.pre_name != instance.name or instance.pre_active != instance.is_active or not instance.project:
-            # update project
-            p, c = project.objects.get_or_create(customer=instance, is_bound=True)
-            p.name = instance.name
-            p.is_active = instance.is_active
-            p.save()
+#       elif instance.pre_name != instance.name or instance.pre_active != instance.is_active or not instance.project:
+#           # update project
+#           p, c = project.objects.get_or_create(customer=instance, is_bound=True)
+#           p.name = instance.name
+#           p.is_active = instance.is_active
+#           p.save()
 
-        if not instance.project:
-            instance.project = p
-            instance.save()
+#       if not instance.project:
+#           instance.project = p
+#           instance.save()
 
 
 @python_2_unicode_compatible
