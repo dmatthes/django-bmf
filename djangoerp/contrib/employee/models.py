@@ -54,6 +54,7 @@ class AbstractEmployee(BaseEmployee):
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         blank=True,
         null=True,
+        unique=True,
         related_name="erp_employee",
         on_delete=models.SET_NULL,
     )

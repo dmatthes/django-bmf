@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('employee_at', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='djangoerp_customer.Customer', null=True)),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL, null=True, unique=True)),
             ],
             options={
                 'ordering': ['name'],

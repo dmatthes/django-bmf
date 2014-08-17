@@ -23,6 +23,7 @@ class BaseCustomer(ERPModel):
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         blank=True,
         null=True,
+        unique=True,
         related_name="erp_customer",
         on_delete=models.SET_NULL,
     )

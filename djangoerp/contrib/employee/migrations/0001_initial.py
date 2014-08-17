@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('supervisor', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, verbose_name='Supervisor', blank=True, to='djangoerp_employee.Employee', null=True)),
-                ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL, unique=True)),
             ],
             options={
                 'ordering': ['name'],
