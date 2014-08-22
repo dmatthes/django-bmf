@@ -10,7 +10,7 @@
 /reports
 /htmlcov
 /djangoERP.egg-info
-/\.virtenv
+/virtenv
 /docs/build
 /sandbox/static/
 /sandbox/database.sqlite
