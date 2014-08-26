@@ -19,6 +19,15 @@ from .workflows import TaskWorkflow
 from math import floor
 
 
+class GoalManager(models.Manager):
+
+    def get_queryset(self):
+
+        if BASE_MODULE["PROJECT"]:
+            return super(GoalManager, self).get_queryset().select_related('project')
+        return super(GoalManager, self).get_queryset()
+
+
 @python_2_unicode_compatible
 class AbstractGoal(ERPModel):
     """
@@ -38,6 +47,8 @@ class AbstractGoal(ERPModel):
     billable = models.BooleanField(_("Is billable"), default=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
+    objects = GoalManager()
+
     class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Goal')
         verbose_name_plural = _('Goals')
@@ -51,6 +62,10 @@ class AbstractGoal(ERPModel):
 
     def erpget_project(self):
         return self.project
+
+    @staticmethod
+    def erprelated_project_queryset(qs):
+        return qs.filter(completed=False)
 
     def __str__(self):
         return '%s' % (self.summary)
@@ -100,6 +115,20 @@ class Goal(AbstractGoal):
     pass
 
 
+class TaskManager(models.Manager):
+
+    def get_queryset(self):
+
+        related = ['goal']
+        if BASE_MODULE["PROJECT"]:
+            related.append('project')
+
+        return super(TaskManager, self).get_queryset() \
+            .annotate(due_count=models.Count('due_date')) \
+            .order_by('-due_count', 'due_date', 'summary') \
+            .select_related(*related)
+
+
 @python_2_unicode_compatible
 class AbstractTask(ERPModel):
     """
@@ -107,8 +136,8 @@ class AbstractTask(ERPModel):
 
     state = WorkflowField()
 
-    summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
-    description = models.TextField(_("Description"), null=True, blank=True, )
+    summary = models.CharField(_("Title"), max_length=255, null=True, blank=False)
+    description = models.TextField(_("Description"), null=True, blank=True)
 
     due_date = models.DateField(_('Due date'), null=True, blank=True)
 
@@ -125,6 +154,8 @@ class AbstractTask(ERPModel):
 
     seconds_on = models.PositiveIntegerField(null=True, default=0, editable=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
+
+    objects = TaskManager()
 
     class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Task')

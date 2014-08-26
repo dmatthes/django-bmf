@@ -3,13 +3,10 @@
 
 from __future__ import unicode_literals
 
-from django.db.models import Count
-
 from ...views import ModuleIndexView
 from ...views import ModuleDetailView
 from ...views import ModuleCloneView
 
-from .models import Task
 from .filters import TaskFilter
 from .filters import GoalFilter
 from .forms import ERPGoalCloneForm
@@ -64,14 +61,3 @@ class GoalDetailView(ModuleDetailView):
 
 class TaskIndexView(ModuleIndexView):
     filterset_class = TaskFilter
-
-    def get_queryset(self):
-        qs = super(TaskIndexView, self).get_queryset()
-        related = ['goal']
-        if hasattr(Task, 'project'):
-            related.append('project')
-
-        qs = qs.annotate(null_count=Count('due_date')) \
-            .order_by('-null_count', 'due_date', 'summary') \
-            .select_related(*related)
-        return qs

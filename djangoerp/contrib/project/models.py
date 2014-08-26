@@ -16,12 +16,12 @@ from djangoerp.settings import BASE_MODULE
 class BaseProject(ERPModel):
     if BASE_MODULE["CUSTOMER"]:
         customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name='erp_projects',
+            BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="erp_projects",
             on_delete=models.SET_NULL,
         )
     if BASE_MODULE["EMPLOYEE"]:
         employee = models.ForeignKey(
-            BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+            BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL, related_name="erp_projects",
         )
 
     name = models.CharField(_("Name"), max_length=255, null=False, blank=False, editable=True, )

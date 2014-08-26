@@ -33,10 +33,10 @@ class Migration(migrations.Migration):
                 ('price', djangoerp.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
                 ('price_currency', djangoerp.fields.CurrencyField(default=djangoerp.fields.get_default_currency, max_length=4, null=True, editable=False)),
                 ('price_precision', models.PositiveSmallIntegerField(default=0, null=True, editable=False, blank=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
                 ('expense_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"])),
                 ('income_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"])),
-                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
             ],
             options={
                 'ordering': ['name'],

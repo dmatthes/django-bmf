@@ -45,6 +45,7 @@ from .viewmixins import NextMixin
 import re
 import operator
 import copy
+import types
 from functools import reduce
 from django_filters.views import FilterView
 
@@ -184,12 +185,14 @@ class ModuleDetailView(
                 rel.model._meta.model_name,
                 self.model._meta.model_name,
             )
+            qs = getattr(self.object, rel.get_accessor_name())
+            qs_mod = getattr(rel.model, 'erprelated_%s_queryset' % self.model._meta.model_name, None)
             try:
                 self._related_views[rel.model._meta.model_name] = {
                     'name': '%s' % rel.model._meta.verbose_name_plural,
                     'key': rel.model._meta.model_name,
                     'active': open == rel.model._meta.model_name,
-                    'objects': getattr(self.object, rel.get_accessor_name()),
+                    'objects': qs if not isinstance(qs_mod, types.FunctionType) else qs_mod(qs),
                     'template': get_template(template),
                 }
             except TemplateDoesNotExist:
