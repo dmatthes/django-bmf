@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='members',
-            field=models.ManyToManyField(blank=True, through='djangoerp_team.TeamMember', to=BASE_MODULE["EMPLOYEE"], null=True, related_name='team_members'),
+            field=models.ManyToManyField(blank=True, through='djangoerp_team.TeamMember', to=BASE_MODULE["EMPLOYEE"], related_name='team_members'),
             preserve_default=True,
         ),
         migrations.AddField(

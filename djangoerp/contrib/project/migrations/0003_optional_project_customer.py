@@ -15,7 +15,7 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='project',
                 name='customer',
-                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["CUSTOMER"], null=True, blank=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="erp_projects"),
                 preserve_default=True,
             ),
         ]

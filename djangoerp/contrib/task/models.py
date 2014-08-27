@@ -41,11 +41,11 @@ class AbstractGoal(ERPModel):
         project = models.ForeignKey(
             BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
         )
+
     referee = models.ForeignKey(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
-        related_name="referee"
+        related_name="+"
     )
-
     team = models.ForeignKey(
         BASE_MODULE["TEAM"], null=True, blank=True, on_delete=models.SET_NULL,
     )
