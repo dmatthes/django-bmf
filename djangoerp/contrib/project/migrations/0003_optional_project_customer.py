@@ -8,7 +8,7 @@ import django
 if BASE_MODULE["PROJECT"]:
     class Migration(migrations.Migration):
         dependencies = [
-            ('djangoerp_project', '0002_optional_project_employee'),
+            ('djangoerp_project', '0001_initial'),
             migrations.swappable_dependency(BASE_MODULE["CUSTOMER"]),
         ]
         operations = [

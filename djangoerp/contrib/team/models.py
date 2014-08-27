@@ -18,7 +18,7 @@ class AbstractTeam(ERPModel):
         max_length=255, null=False, blank=False, editable=True,
     )
     members = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True, related_name="team_members",
+        BASE_MODULE["EMPLOYEE"], blank=True, related_name="team_members",
         limit_choices_to={'user__isnull': False}, through='TeamMember',
     )
 
@@ -34,10 +34,6 @@ class AbstractTeam(ERPModel):
         category = PROJECT
 
 
-class Team(AbstractTeam):
-    pass
-
-
 class TeamMember(models.Model):
     team = models.ForeignKey(
         BASE_MODULE["TEAM"], null=True, blank=True, related_name="+", on_delete=models.CASCADE,
@@ -49,3 +45,7 @@ class TeamMember(models.Model):
 
     class Meta:
         unique_together = ("team", "employee")
+
+
+class Team(AbstractTeam):
+    pass

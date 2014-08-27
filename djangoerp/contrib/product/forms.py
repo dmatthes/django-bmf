@@ -8,7 +8,8 @@ from django.forms.models import inlineformset_factory
 
 from djangoerp.forms import ERPForm
 
-from .models import Product, ProductTax
+from .models import Product
+from .models import ProductTax
 
 
 class ProductUpdateForm(ModelForm):

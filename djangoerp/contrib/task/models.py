@@ -37,11 +37,21 @@ class AbstractGoal(ERPModel):
     summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
-    project = models.ForeignKey(
-        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
-    )
+    if BASE_MODULE["PROJECT"]:
+        project = models.ForeignKey(
+            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+        )
     referee = models.ForeignKey(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="referee"
+    )
+
+    team = models.ForeignKey(
+        BASE_MODULE["TEAM"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
+    employees = models.ManyToManyField(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=True,
+        related_name="employees"
     )
 
     billable = models.BooleanField(_("Is billable"), default=False)

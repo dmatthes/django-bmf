@@ -10,7 +10,7 @@ if BASE_MODULE["PROJECT"]:
     class Migration(migrations.Migration):
 
         dependencies = [
-            ('djangoerp_task', '0002_optional_employee'),
+            ('djangoerp_task', '0001_initial'),
             migrations.swappable_dependency(BASE_MODULE["PROJECT"]),
         ]
 

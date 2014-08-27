@@ -120,7 +120,7 @@ TEST_PROJECT_APPS = (
 #   'djangoerp.contrib.stock',
     'djangoerp.contrib.task',
     'djangoerp.contrib.taxing',
-#   'djangoerp.contrib.team',
+    'djangoerp.contrib.team',
 #   'djangoerp.contrib.timesheet',
     'djangoerp.currencies.EUR',
     'djangoerp.currencies.USD',
