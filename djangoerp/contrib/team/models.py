@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangoerp.models import ERPModel
@@ -11,6 +12,7 @@ from djangoerp.settings import BASE_MODULE
 from djangoerp.categories import PROJECT
 
 
+@python_2_unicode_compatible
 class AbstractTeam(ERPModel):
     """
     """
@@ -32,6 +34,9 @@ class AbstractTeam(ERPModel):
         search_fields = ['name']
         has_logging = False
         category = PROJECT
+
+    def __str__(self):
+        return self.name
 
 
 class TeamMember(models.Model):

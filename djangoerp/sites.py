@@ -29,6 +29,7 @@ from .views import ModuleWorkflowView
 from .views import ModuleFormAPI
 
 import copy
+import sys
 
 SETTING_KEY = "%s.%s"
 APP_LABEL = ERPConfig.label
@@ -404,6 +405,8 @@ class DjangoERPSite(object):
 
     def get_urls(self):
         from djangoerp.urls import urlpatterns
+        if not apps.ready and "migrate" in sys.argv:
+            return urlpatterns
 
         if settings.DEBUG:
             self.check_dependencies()
@@ -431,22 +434,10 @@ class DjangoERPSite(object):
             )
         return urlpatterns
 
-        # Add in each model's views
-        for model, model_admin in six.iteritems(self._registry):
-            urlpatterns += patterns(
-                '',
-                url(
-                    r'^%s/%s/' % (model._meta.app_label, model._meta.model_name),
-                    include(model_admin.urls)
-                )
-            )
-
 site = DjangoERPSite()
 
 
 def autodiscover():
-    from django.apps import apps
-
     for app_config in apps.get_app_configs():
         try:
             # get a copy of old site configuration

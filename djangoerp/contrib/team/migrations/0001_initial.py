@@ -23,7 +23,8 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created', null=True)),
                 ('uuid', models.CharField(blank=True, verbose_name='UUID', db_index=True, max_length=100, editable=False, null=True)),
                 ('name', models.CharField(max_length=255)),
-                ('created_by', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL, null=True, editable=False)),
+                ('created_by', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, null=True, editable=False, related_name="+")),
+                ('modified_by', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, null=True, editable=False, related_name="+")),
             ],
             options={
                 'ordering': ['name'],
@@ -53,12 +54,6 @@ class Migration(migrations.Migration):
             model_name='team',
             name='members',
             field=models.ManyToManyField(blank=True, through='djangoerp_team.TeamMember', to=BASE_MODULE["EMPLOYEE"], related_name='team_members'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='team',
-            name='modified_by',
-            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL, null=True, editable=False),
             preserve_default=True,
         ),
     ]

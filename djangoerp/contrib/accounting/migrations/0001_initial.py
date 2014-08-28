@@ -32,8 +32,8 @@ class Migration(migrations.Migration):
                 ('type', models.PositiveSmallIntegerField(verbose_name='Type', choices=[(10, 'Income'), (20, 'Expense'), (30, 'Asset'), (40, 'Liability'), (50, 'Equity')])),
                 ('read_only', models.BooleanField(default=False, verbose_name='Read-only')),
                 ('comment', models.TextField(null=True, verbose_name='Comment', blank=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
+                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
                 ('parent', mptt.fields.TreeForeignKey(blank=True, to='djangoerp_accounting.Account', null=True)),
             ],
             options={
@@ -54,8 +54,8 @@ class Migration(migrations.Migration):
                 ('state', djangoerp.fields.WorkflowField(db_index=True, max_length=32, null=True, editable=False, blank=True)),
                 ('text', models.CharField(max_length=255, verbose_name='Posting text')),
                 ('balanced', models.BooleanField(default=False, verbose_name='Draft', editable=False)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
+                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
             ],
             options={
                 'abstract': False,

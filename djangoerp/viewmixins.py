@@ -78,6 +78,15 @@ class BaseMixin(object):
         else:
             self.request.djangoerp_employee = None
 
+        # === TEAM ========================================================
+
+        team = get_model_from_cfg('TEAM')
+        if team:
+            self.request.djangoerp_teams = \
+                team.objects.filter(members__employee=self.request.user).values_list("id", flat=1)
+        else:
+            self.request.djangoerp_teams = None
+
         return super(BaseMixin, self).dispatch(*args, **kwargs)
 
 
