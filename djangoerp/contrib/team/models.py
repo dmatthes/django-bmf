@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from djangoerp.models import ERPModel
 from djangoerp.settings import BASE_MODULE
-from djangoerp.categories import PROJECT
+from djangoerp.categories import HR
 
 
 @python_2_unicode_compatible
@@ -26,14 +26,14 @@ class AbstractTeam(ERPModel):
 
     class Meta(ERPModel.Meta):  # only needed for abstract models
         verbose_name = _('Team')
-        verbose_name_plural = _('Team')
+        verbose_name_plural = _('Teams')
         ordering = ['name']
         abstract = True
 
     class ERPMeta:
         search_fields = ['name']
         has_logging = False
-        category = PROJECT
+        category = HR
 
     def __str__(self):
         return self.name

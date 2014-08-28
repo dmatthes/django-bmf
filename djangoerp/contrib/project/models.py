@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -38,6 +39,9 @@ class BaseProject(ERPModel):
         verbose_name_plural = _('Project')
         ordering = ['name']
         abstract = True
+        permissions = (
+            ('can_manage', 'Can manage all projects'),
+        )
 
     class ERPMeta:
         category = PROJECT
@@ -50,6 +54,16 @@ class BaseProject(ERPModel):
 
     def erpget_project(self):
         return self
+
+    @classmethod
+    def has_permissions(cls, qs, user):
+        if user.has_perm('%s.can_manage' % cls._meta.app_label, cls):
+            return qs
+        return qs.filter(
+            Q(employees=getattr(user, 'djangoerp_employee', -1))
+            | 
+            Q(team__in=getattr(user, 'djangoerp_teams', []))
+        )
 
 
 class AbstractProject(BaseProject):
