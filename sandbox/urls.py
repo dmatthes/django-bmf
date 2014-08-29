@@ -16,9 +16,8 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += i18n_patterns('',
-    url(r'^$', RedirectView.as_view(url="/bm/", permanent=False)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^bm/', include(djangobmf.site.urls)),
+    url(r'^', include(djangobmf.site.urls)),
 )
 
 if settings.DEBUG or True:
