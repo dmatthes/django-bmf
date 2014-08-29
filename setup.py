@@ -25,22 +25,21 @@ CLASSIFIERS = [
 ]
 
 # Dynamically calculate the version based on djangoerp.VERSION.
-version = __import__('djangoerp').get_version()
+version = __import__('djangobmf').get_version()
 
 setup(
-    name='djangoERP',
+    name='djangoBMF',
     version=version,
     url="http://www.igelware.de/",
     license='BSD',
     platforms=['OS Independent'],
-    description='ERP solution and framework written for django',
+    description='Buisiness Management Framework with integrated ERP solution written for django',
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
     author=__author__,
     author_email=__contact__,
     packages=find_packages(exclude=['sandbox']),
     classifiers=CLASSIFIERS,
     install_requires=[
-       #'django>=1.7,<1.8',
         'django',
         'pytz',
         'Pillow',

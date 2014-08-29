@@ -11,7 +11,7 @@ ADMINS = (
 )
 
 INTERNAL_IPS = ('127.0.0.1', '85.25.139.15')
-ALLOWED_HOSTS = ["erp.igelware.de", "127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 MANAGERS = ADMINS
 
@@ -105,29 +105,29 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEST_PROJECT_APPS = (
-    'djangoerp',
-    'djangoerp.contrib.accounting',
-    'djangoerp.contrib.address',
-    'djangoerp.contrib.customer',
-    'djangoerp.contrib.document',
-    'djangoerp.contrib.employee',
-    'djangoerp.contrib.invoice',
-    'djangoerp.contrib.position',
-    'djangoerp.contrib.product',
-    'djangoerp.contrib.project',
-    'djangoerp.contrib.quotation',
-#   'djangoerp.contrib.shipment',
-#   'djangoerp.contrib.stock',
-    'djangoerp.contrib.task',
-    'djangoerp.contrib.taxing',
-    'djangoerp.contrib.team',
-#   'djangoerp.contrib.timesheet',
-    'djangoerp.currencies.EUR',
-    'djangoerp.currencies.USD',
+    'djangobmf',
+    'djangobmf.contrib.accounting',
+    'djangobmf.contrib.address',
+    'djangobmf.contrib.customer',
+    'djangobmf.contrib.document',
+    'djangobmf.contrib.employee',
+    'djangobmf.contrib.invoice',
+    'djangobmf.contrib.position',
+    'djangobmf.contrib.product',
+    'djangobmf.contrib.project',
+    'djangobmf.contrib.quotation',
+#   'djangobmf.contrib.shipment',
+#   'djangobmf.contrib.stock',
+    'djangobmf.contrib.task',
+    'djangobmf.contrib.taxing',
+    'djangobmf.contrib.team',
+#   'djangobmf.contrib.timesheet',
+    'djangobmf.currencies.EUR',
+    'djangobmf.currencies.USD',
 )
 if six.PY2:
     TEST_PROJECT_APPS += (
-        'djangoerp.reports.xhtml2pdf',
+        'djangobmf.reports.xhtml2pdf',
     )
 
 INSTALLED_APPS = (
@@ -168,10 +168,10 @@ JENKINS_TASKS = (
     'django_jenkins.tasks.run_pep8',
 )
 
-# ERP =============================================================================
+# BM ==============================================================================
 
-ERP_DOCUMENT_ROOT = os.path.join(PROJECT_PATH, "erp_documents")
-ERP_DOCUMENT_URL = '/erp_documents/'
+BMF_DOCUMENT_ROOT = os.path.join(PROJECT_PATH, "bmf_documents")
+BMF_DOCUMENT_URL = '/bmf_documents/'
 
 # CELERY ==========================================================================
 
