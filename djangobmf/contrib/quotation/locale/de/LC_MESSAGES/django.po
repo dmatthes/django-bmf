@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-12 20:21+0200\n"
 "PO-Revision-Date: 2014-01-26 06:35+0100\n"
-"Last-Translator: Admin User <admin@demo.django-erp.com>\n"
+"Last-Translator: Admin User <admin@demo.django-bmf.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -63,50 +63,50 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:4
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:18
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:4
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:18
 #, fuzzy, python-format
 #| msgid "Quotation number"
 msgid "Quotation %(name)s"
 msgstr "Angebotsnummer"
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:11
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:11
 msgid "Your contact person"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:24
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:24
 msgid "Dear Valued Customer,"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:30
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:30
 msgid "Quantity"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:31
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:31
 msgid "Article"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:32
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:32
 msgid "Tax"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:33
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:33
 msgid "Unit price"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:34
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:34
 msgid "Total price"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:60
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:60
 msgid "Subtotal"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:70
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:70
 msgid "Billing amount"
 msgstr ""
 
-#: contrib/quotation/templates/djangoerp_quotation/quotation_htmlreport.html:77
+#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:77
 msgid "With kind regards"
 msgstr ""
 

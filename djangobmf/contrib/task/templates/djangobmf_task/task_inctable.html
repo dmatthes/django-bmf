@@ -15,7 +15,7 @@
       <td></td>
       <td></td>
       <td class="text-right">
-          <a class="btn btn-xs erp-edit btn-success" href="{% url "djangoerp:module_djangoerp_task_task:create" %}?next={{ request.path }}&amp;data[goal]={{ object.pk }}&amp;data[project]={{ object.project_id|default:"" }}">
+          <a class="btn btn-xs bmf-edit btn-success" href="{% url "djangobmf:module_djangobmf_task_task:create" %}?next={{ request.path }}&amp;data[goal]={{ object.pk }}&amp;data[project]={{ object.project_id|default:"" }}">
           <span class="glyphicon glyphicon-plus"></span>
         </a>
       </td>
@@ -54,7 +54,7 @@
       </td>
       <td>{{ obj.get_workflow_state }}<br /><small>{{ obj.modified|date:"SHORT_DATE_FORMAT" }}</small></td>
       <td class="text-right">
-          <a class="btn btn-xs btn-primary" href="{{ obj.erpmodule_detail }}?next={{ request.path }}">
+          <a class="btn btn-xs btn-primary" href="{{ obj.bmfmodule_detail }}?next={{ request.path }}">
           <span class="glyphicon glyphicon-list"></span>
         </a>
       </td>

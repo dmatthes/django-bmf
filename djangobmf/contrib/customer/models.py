@@ -8,15 +8,15 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangoerp.models import ERPModel
-from djangoerp.categories import SALES
-from djangoerp.settings import BASE_MODULE
-# from djangoerp.utils import get_model_from_name
+from djangobmf.models import BMFModel
+from djangobmf.categories import SALES
+from djangobmf.settings import BASE_MODULE
+# from djangobmf.utils import get_model_from_name
 
-from djangoerp.contrib.accounting.models import ACCOUNTING_ASSET, ACCOUNTING_LIABILITY
+from djangobmf.contrib.accounting.models import ACCOUNTING_ASSET, ACCOUNTING_LIABILITY
 
 
-class BaseCustomer(ERPModel):
+class BaseCustomer(BMFModel):
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False, )
     number = models.CharField(_("Number"), max_length=255, null=True, blank=True, )
     user = models.ForeignKey(
@@ -24,7 +24,7 @@ class BaseCustomer(ERPModel):
         blank=True,
         null=True,
         unique=True,
-        related_name="erp_customer",
+        related_name="bmf_customer",
         on_delete=models.SET_NULL,
     )
     if BASE_MODULE["PROJECT"]:
@@ -78,7 +78,7 @@ class BaseCustomer(ERPModel):
         ordering = ['name']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = SALES
         search_fields = ['name', ]
         has_logging = True
@@ -90,7 +90,7 @@ class BaseCustomer(ERPModel):
         self.pre_name = self.name
         self.pre_active = self.is_active
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         return self
 
 #   @staticmethod
@@ -130,9 +130,9 @@ class AbstractCustomer(BaseCustomer):
     class Meta(BaseCustomer.Meta):
         abstract = True
 
-    class ERPMeta(BaseCustomer.ERPMeta):
+    class BMFMeta(BaseCustomer.BMFMeta):
         observed_fields = ['name', 'email', 'taxvat']
-        search_fields = BaseCustomer.ERPMeta.search_fields + ['number', 'email', 'user__username']
+        search_fields = BaseCustomer.BMFMeta.search_fields + ['number', 'email', 'user__username']
 
     def __str__(self):
         return self.name

@@ -13,7 +13,7 @@ from ..viewmixins import AjaxMixin
 
 
 class ModalSaveView(AjaxMixin, TemplateView):
-    template_name = 'djangoerp/modal/saveview.html'
+    template_name = 'djangobmf/modal/saveview.html'
 
     def get_html(self, context=None):
         if hasattr(self, 'html'):

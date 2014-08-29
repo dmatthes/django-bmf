@@ -6,22 +6,22 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 
-from ..testcase import ERPViewTestCase
+from ..testcase import BMFViewTestCase
 
 
-class NotificationTests(ERPViewTestCase):
+class NotificationTests(BMFViewTestCase):
 
     def test_notification(self):
         """
         """
-        r = self.client.get(reverse('djangoerp:notification'), {})
+        r = self.client.get(reverse('djangobmf:notification'), {})
         self.assertEqual(r.status_code, 200)
 
-        r = self.client.get(reverse('djangoerp:notification'), {'ct': 1})
+        r = self.client.get(reverse('djangobmf:notification'), {'ct': 1})
         self.assertEqual(r.status_code, 200)
 
-        r = self.client.get(reverse('djangoerp:notification'), {'filter': "all"})
+        r = self.client.get(reverse('djangobmf:notification'), {'filter': "all"})
         self.assertEqual(r.status_code, 200)
 
-        r = self.client.get(reverse('djangoerp:notification'), {'ct': 1, 'filter': "all"})
+        r = self.client.get(reverse('djangobmf:notification'), {'ct': 1, 'filter': "all"})
         self.assertEqual(r.status_code, 200)

@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: contrib/task/models.py:30 contrib/task/models.py:114
-#: contrib/task/templates/djangoerp_task/goal_erpindex.html:12
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:12
 msgid "Summary"
 msgstr "Zusammenfassung"
 
@@ -56,51 +56,51 @@ msgstr "Aufgabe"
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: contrib/task/templates/djangoerp_task/goal_erpdetail.html:26
+#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:26
 msgid "Open tasks"
 msgstr "Offene Aufgaben"
 
-#: contrib/task/templates/djangoerp_task/goal_erpdetail.html:27
+#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:27
 msgid "Tasks on hold"
 msgstr ""
 
-#: contrib/task/templates/djangoerp_task/goal_erpdetail.html:28
+#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:28
 msgid "Accomplished Tasks"
 msgstr "Abgeschlossene Aufgaben"
 
-#: contrib/task/templates/djangoerp_task/goal_erpindex.html:8
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:8
 msgid "Project"
 msgstr "Projekt"
 
-#: contrib/task/templates/djangoerp_task/goal_erpindex.html:13
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:13
 msgid "Current State"
 msgstr "Aktueller Status"
 
-#: contrib/task/templates/djangoerp_task/goal_erpindex.html:29
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:29
 msgid "completed"
 msgstr "abgeschlossen"
 
-#: contrib/task/templates/djangoerp_task/task_inctable.html:6
+#: contrib/task/templates/djangobmf_task/task_inctable.html:6
 msgid "Employee"
 msgstr "Mitarbeiter"
 
-#: contrib/task/templates/djangoerp_task/task_inctable.html:7
+#: contrib/task/templates/djangobmf_task/task_inctable.html:7
 msgid "State"
 msgstr "Status"
 
-#: contrib/task/templates/djangoerp_task/task_inctable.html:29
+#: contrib/task/templates/djangobmf_task/task_inctable.html:29
 msgid "review"
 msgstr ""
 
-#: contrib/task/templates/djangoerp_task/task_inctable.html:30
+#: contrib/task/templates/djangobmf_task/task_inctable.html:30
 msgid "started"
 msgstr "gestartet"
 
-#: contrib/task/templates/djangoerp_task/task_inctable.html:31
+#: contrib/task/templates/djangobmf_task/task_inctable.html:31
 msgid "hold"
 msgstr ""
 
-#: contrib/task/templates/djangoerp_task/task_inctable.html:38
+#: contrib/task/templates/djangobmf_task/task_inctable.html:38
 msgid "None"
 msgstr "Kein"
 

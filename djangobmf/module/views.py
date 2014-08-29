@@ -10,7 +10,7 @@ from ..viewmixins import ViewMixin
 
 
 class ModuleView(ViewMixin, TemplateView):
-    template_name = "djangoerp/modules.html"
+    template_name = "djangobmf/modules.html"
 
     def get_context_data(self, **kwargs):
         from ..sites import site
@@ -20,12 +20,12 @@ class ModuleView(ViewMixin, TemplateView):
             info = model._meta.app_label, model._meta.model_name
             perm = '%s.view_%s' % info
             if self.request.user.has_perms([perm, ]):
-                key = force_text(model._erpmeta.category)
+                key = force_text(model._bmfmeta.category)
                 modules.append({
                     'category': key,
                     'model': model,
                     'name': model._meta.verbose_name_plural,
-                    'url': model._erpmeta.url_namespace + ':index',
+                    'url': model._bmfmeta.url_namespace + ':index',
                 })
 
         context = super(ModuleView, self).get_context_data(**kwargs)

@@ -11,8 +11,8 @@ from factory.django import DjangoModelFactory
 
 from .models import Goal
 from .models import Task
-from ...testcase import ERPModuleTestCase
-from ...testcase import ERPWorkflowTestCase
+from ...testcase import BMFModuleTestCase
+from ...testcase import BMFWorkflowTestCase
 
 
 class GoalFactory(DjangoModelFactory):
@@ -27,7 +27,7 @@ class TaskFactory(DjangoModelFactory):
     summary = 'Test summary'
 
 
-class TaskModuleTests(ERPModuleTestCase):
+class TaskModuleTests(BMFModuleTestCase):
 
     def test_goal_views(self):
         self.model = Goal
@@ -74,14 +74,14 @@ class TaskModuleTests(ERPModuleTestCase):
         goal2.clean()
         goal2.save()
 
-        goal2.erpget_customer()
-        goal2.erpget_project()
+        goal2.bmfget_customer()
+        goal2.bmfget_project()
 
         goal3 = Goal(summary="Goal3")
         goal3.clean()
         goal3.save()
 
-        goal3.erpget_customer()
+        goal3.bmfget_customer()
 
         task1 = Task(summary="Task1", goal=goal1)
         task1.clean()
@@ -124,7 +124,7 @@ class TaskModuleTests(ERPModuleTestCase):
         task8.clean()
         task8.save()
 
-        namespace = Task._erpmeta.url_namespace
+        namespace = Task._bmfmeta.url_namespace
 
         r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': task1.pk, 'transition': 'start'}))
         self.assertEqual(r.status_code, 302)
@@ -165,7 +165,7 @@ class TaskModuleTests(ERPModuleTestCase):
         r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': task7.pk, 'transition': 'finish'}))
         self.assertEqual(r.status_code, 302)
 
-        namespace = Goal._erpmeta.url_namespace
+        namespace = Goal._bmfmeta.url_namespace
         r = self.client.get(reverse(namespace + ':index'))
         self.assertEqual(r.status_code, 200)
 
@@ -175,20 +175,20 @@ class TaskModuleTests(ERPModuleTestCase):
         r = self.client.get(reverse(namespace+':detail', None, None, {'pk': goal2.pk}))
         self.assertEqual(r.status_code, 200)
 
-        namespace = Task._erpmeta.url_namespace
+        namespace = Task._bmfmeta.url_namespace
         r = self.client.get(reverse(namespace + ':index'))
         self.assertEqual(r.status_code, 200)
 
  #      r = self.client.get(reverse(namespace + ':create'))
  #      self.assertEqual(r.status_code, 200)
 
-        namespace = Goal._erpmeta.url_namespace
+        namespace = Goal._bmfmeta.url_namespace
 
         r = self.client.get(reverse(namespace+':workflow', None, None, {'pk': goal1.pk, 'transition': 'complete'}))
         self.assertEqual(r.status_code, 200)
 
 
-class TaskWorkflowTests(ERPWorkflowTestCase):
+class TaskWorkflowTests(BMFWorkflowTestCase):
 
     def test_goal_workflow(self):
         self.object = GoalFactory()

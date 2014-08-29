@@ -5,9 +5,9 @@
 from __future__ import unicode_literals
 
 from .models import Employee
-from ...testcase import ERPModuleTestCase
+from ...testcase import BMFModuleTestCase
 
-class TaxTests(ERPModuleTestCase):
+class TaxTests(BMFModuleTestCase):
 
     def test_urls_user(self):
         """
@@ -17,7 +17,7 @@ class TaxTests(ERPModuleTestCase):
         data = self.autotest_ajax_get('create')
         data = self.autotest_ajax_post('create', data={
             'name': 'test',
-            'email': 'testing@django-erp.org',
+            'email': 'testing@django-bmf.org',
         })
         self.assertNotEqual(data["object_pk"], 0)
         self.autotest_get('index', 200)

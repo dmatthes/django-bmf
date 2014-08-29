@@ -268,7 +268,7 @@ jQuery.extend({
 
 	isNumeric: function( obj ) {
 		// parseFloat NaNs numeric-cast false positives (null|true|false|"")
-		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+		// ...but misintbmfrets leading-number strings, particularly hex literals ("0x...")
 		// subtraction forces infinities to NaN
 		return obj - parseFloat( obj ) >= 0;
 	},
@@ -732,7 +732,7 @@ var i,
 		var high = "0x" + escaped - 0x10000;
 		// NaN means non-codepoint
 		// Support: Firefox
-		// Workaround erroneous numeric interpretation of +"0x"
+		// Workaround erroneous numeric intbmfretation of +"0x"
 		return high !== high || escapedWhitespace ?
 			escaped :
 			high < 0 ?
@@ -2552,7 +2552,7 @@ support.sortDetached = assert(function( div1 ) {
 });
 
 // Support: IE<8
-// Prevent attribute/property "interpolation"
+// Prevent attribute/property "intbmfolation"
 // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
 if ( !assert(function( div ) {
 	div.innerHTML = "<a href='#'></a>";
@@ -13243,15 +13243,15 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
   })
 
 }(jQuery);
-/*! django ERP */
+/*! django BMF */
 
 (function($){
-    if(!$.erp){
-        $.erp = new Object();
+    if(!$.bmf){
+        $.bmf = new Object();
     };
 
     // Keys
-    $.erp.KEYS = {
+    $.bmf.KEYS = {
         ESC: 27,
         TAB: 9,
         RETURN: 13,
@@ -13259,7 +13259,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
         DOWN: 40
     };
 
-    $.erp.AJAX = {
+    $.bmf.AJAX = {
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
         },
@@ -13304,7 +13304,7 @@ $.extend($.fn.treegrid.defaults, {
 
   /*
           
-  $.erp.search = function(el, options) {
+  $.bmf.search = function(el, options) {
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -13314,10 +13314,10 @@ $.extend($.fn.treegrid.defaults, {
     base.el = el;
     
     // Add a reverse reference to the DOM object
-    base.$el.data("erp.search", base);
+    base.$el.data("bmf.search", base);
 
     base.init = function(){
-      base.options = $.extend({}, $.erp.search.defaultOptions, options);
+      base.options = $.extend({}, $.bmf.search.defaultOptions, options);
 
 //    base.input = base.$el.children('input[type="text"]').first();
 //    base.hidden = base.$el.find('input[type="hidden"]').first();
@@ -13428,7 +13428,7 @@ $.extend($.fn.treegrid.defaults, {
     base.init();
   };
   
-  $.erp.search.defaultOptions = {
+  $.bmf.search.defaultOptions = {
     // Wait 350 ms until the last key action until the request is send
     wait: 350, // TODO Not implemented
     // Which filter options are submitted
@@ -13442,7 +13442,7 @@ $.extend($.fn.treegrid.defaults, {
    *
    */
 
-  $.erp.inlineform = function(el, options){
+  $.bmf.inlineform = function(el, options){
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -13452,10 +13452,10 @@ $.extend($.fn.treegrid.defaults, {
     base.el = el;
     
     // Add a reverse reference to the DOM object
-    base.$el.data("erp.inlineform", base);
+    base.$el.data("bmf.inlineform", base);
 
     base.init = function() {
-      base.options = $.extend({}, $.erp.inlineform.defaultOptions, options);
+      base.options = $.extend({}, $.bmf.inlineform.defaultOptions, options);
       base.$el.css('position','relative');
       // Put your initialization code here
       var regex_max = /(.*)-MAX_NUM_FORMS$/;
@@ -13504,7 +13504,7 @@ $.extend($.fn.treegrid.defaults, {
         this.name = this.name.replace(name_regex, name_replacement);
       });
       base.total_forms += 1;
-      row.find('div[data-erp-search=1]').erp_autocomplete();
+      row.find('div[data-bmf-search=1]').bmf_autocomplete();
 
       // Code adapted from http://djangosnippets.org/snippets/1389/
 //    function updateElementIndex(el, prefix, ndx) {
@@ -13522,7 +13522,7 @@ $.extend($.fn.treegrid.defaults, {
     base.init();
   };
 
-  $.erp.inlineform.defaultOptions = {
+  $.bmf.inlineform.defaultOptions = {
       debug: false
   };
 
@@ -13533,15 +13533,15 @@ $.extend($.fn.treegrid.defaults, {
    */
   /*
   
-   $.fn.erp_search = function(options){
+   $.fn.bmf_search = function(options){
      return this.each(function(){
-       (new $.erp.search(this, options));
+       (new $.bmf.search(this, options));
      });
    };
    */
-   $.fn.erp_inlineform = function(options){
+   $.fn.bmf_inlineform = function(options){
      return this.each(function(){
-       (new $.erp.inlineform(this, options));
+       (new $.bmf.inlineform(this, options));
      });
    };
 })(jQuery);
@@ -13551,16 +13551,16 @@ $.extend($.fn.treegrid.defaults, {
 <div class="form-group">
     <label class="control-label">Employee</label>
     <div>
-        <div class="input-group" data-erp-autocomplete="1">
-            <input class="form-control" id="erp_NAME-value" placeholder="VALUE" type="text">
+        <div class="input-group" data-bmf-autocomplete="1">
+            <input class="form-control" id="bmf_NAME-value" placeholder="VALUE" type="text">
         </div>
-        <input autocomplete="off" id="erp_NAME" type="text">
+        <input autocomplete="off" id="bmf_NAME" type="text">
     </div>
 </div>
 */
 
 (function($){
-    $.erp.autocomplete = function(el, options){
+    $.bmf.autocomplete = function(el, options){
         // To avoid scope issues, use 'base' instead of 'this'
         // to reference this class from internal events and functions.
         var base = this;
@@ -13570,11 +13570,11 @@ $.extend($.fn.treegrid.defaults, {
         base.el = el;
       
         // Add a reverse reference to the DOM object
-        base.$el.data("erp.autocomplete", base);
+        base.$el.data("bmf.autocomplete", base);
 
         base.init = function() {
             // load options
-            base.options = $.extend({}, $.erp.autocomplete.defaultOptions, options);
+            base.options = $.extend({}, $.bmf.autocomplete.defaultOptions, options);
             if (base.options.debug) {console.log("init autocomplete")};
 
             // initialization logic
@@ -13614,7 +13614,7 @@ $.extend($.fn.treegrid.defaults, {
             });
    
             $(document).keydown(function(e){
-                if (e.keyCode == $.erp.KEYS.ESC) {
+                if (e.keyCode == $.bmf.KEYS.ESC) {
                     base.destroyList();
                 }
             });
@@ -13711,7 +13711,7 @@ $.extend($.fn.treegrid.defaults, {
     };
 
     // default options
-    $.erp.autocomplete.defaultOptions = {
+    $.bmf.autocomplete.defaultOptions = {
         // Wait 250 ms until the last key action until the request is send
         wait: 250,
         debug: true,
@@ -13720,16 +13720,16 @@ $.extend($.fn.treegrid.defaults, {
     };
 
     // register as jquery function
-    $.fn.erp_autocomplete = function(options){
-        return $(this).find('div.input-group[data-erp-autocomplete]').each(function(){
-            (new $.erp.autocomplete(this, options));
+    $.fn.bmf_autocomplete = function(options){
+        return $(this).find('div.input-group[data-bmf-autocomplete]').each(function(){
+            (new $.bmf.autocomplete(this, options));
         });
     };
 })(jQuery);
 /* calendar */
 
 (function($){
-    $.erp.calendar = function(el, options){
+    $.bmf.calendar = function(el, options){
         // To avoid scope issues, use 'base' instead of 'this'
         // to reference this class from internal events and functions.
         var base = this;
@@ -13739,11 +13739,11 @@ $.extend($.fn.treegrid.defaults, {
         base.el = el;
       
         // Add a reverse reference to the DOM object
-        base.$el.data("erp.calendar", base);
+        base.$el.data("bmf.calendar", base);
 
         base.init = function() {
             // load options
-            base.options = $.extend({}, $.erp.editform.defaultOptions, options);
+            base.options = $.extend({}, $.bmf.editform.defaultOptions, options);
 
             base.$el.append('<span class="input-group-btn"><button class="btn btn-default disabled" tabindex="-1" type="button"><span class="glyphicon glyphicon-calendar"></span></button></span>');
 
@@ -13755,22 +13755,22 @@ $.extend($.fn.treegrid.defaults, {
     };
 
     // default options
-    $.erp.calendar.defaultOptions = {
+    $.bmf.calendar.defaultOptions = {
         href: null,
         debug: false
     };
 
     // register as jquery function
-    $.fn.erp_calendar = function(options){
-        return $(this).find('div.input-group[data-erp-calendar]').each(function(){
-            (new $.erp.calendar(this, options));
+    $.fn.bmf_calendar = function(options){
+        return $(this).find('div.input-group[data-bmf-calendar]').each(function(){
+            (new $.bmf.calendar(this, options));
         });
     };
 })(jQuery);
 /* editform */
 
 (function($){
-    $.erp.editform = function(el, options){
+    $.bmf.editform = function(el, options){
         // To avoid scope issues, use 'base' instead of 'this'
         // to reference this class from internal events and functions.
         var base = this;
@@ -13780,11 +13780,11 @@ $.extend($.fn.treegrid.defaults, {
         base.el = el;
       
         // Add a reverse reference to the DOM object
-        base.$el.data("erp.editform", base);
+        base.$el.data("bmf.editform", base);
 
         base.init = function() {
             // load options
-            base.options = $.extend({}, $.erp.editform.defaultOptions, options);
+            base.options = $.extend({}, $.bmf.editform.defaultOptions, options);
 
             // initialization logic
             if (base.options.href == null) {
@@ -13800,19 +13800,19 @@ $.extend($.fn.treegrid.defaults, {
 
         base.initialize_modal = function () {
             // initialize the modal
-            $('#wrap').prepend('<div class="modal fade" id="erpmodal_edit" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-lg"></div></div>');
-            $('#erpmodal_edit').modal({
+            $('#wrap').prepend('<div class="modal fade" id="bmfmodal_edit" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-lg"></div></div>');
+            $('#bmfmodal_edit').modal({
                 keyboard: true,
                 show: false,
                 backdrop: 'static'
             });
             // delete the modals content, if closed
-            $('#erpmodal_edit').on('hidden.bs.modal', function (e) {
-                $('#erpmodal_edit div.modal-dialog').empty();
+            $('#bmfmodal_edit').on('hidden.bs.modal', function (e) {
+                $('#bmfmodal_edit div.modal-dialog').empty();
             });
             // reload the page if one save has appeared
-            $('#erpmodal_edit').on('hide.bs.modal', function (e) {
-                if ($('#erpmodal_edit > div.page-reload').length == 1) {
+            $('#bmfmodal_edit').on('hide.bs.modal', function (e) {
+                if ($('#bmfmodal_edit > div.page-reload').length == 1) {
                     location.reload(false);
                 }
             });
@@ -13820,48 +13820,48 @@ $.extend($.fn.treegrid.defaults, {
 
         base.open_formular = function () {
             // loads the formular data into the modal
-            if ($('#erpmodal_edit').length == 0) { base.initialize_modal() }
+            if ($('#bmfmodal_edit').length == 0) { base.initialize_modal() }
 
-            dict = $.erp.AJAX;
+            dict = $.bmf.AJAX;
             dict.type = "GET";
             dict.url = base.options.href;
             $.ajax(dict).done(function( data, textStatus, jqXHR ) {
-                $('#erpmodal_edit div.modal-dialog').prepend(data.html);
-                $('#erpmodal_edit').modal('show');
+                $('#bmfmodal_edit div.modal-dialog').prepend(data.html);
+                $('#bmfmodal_edit').modal('show');
 
                 // TODO ..............................................................................................
 
             // manipulate form url
             // cause the template-tag which generates the form is not aware of the url
-            var parent_object = $('#erpmodal_edit div.modal-dialog div:first-child');
+            var parent_object = $('#bmfmodal_edit div.modal-dialog div:first-child');
             var form_object = parent_object.find('form');
             form_object.attr('action', base.options.href.split("?",1)[0]);
-            // apply erp-form functions
-            form_object.find('div[data-erp-inlineform=1]').erp_inlineform();
-            form_object.erp_buildform();
+            // apply bmf-form functions
+            form_object.find('div[data-bmf-inlineform=1]').bmf_inlineform();
+            form_object.bmf_buildform();
 
-            parent_object.find('button.erpedit-cancel').click(function (event) {
+            parent_object.find('button.bmfedit-cancel').click(function (event) {
                 // TODO check if there are multile forms and close modal or show next form
-                $('#erpmodal_edit').modal('hide');
+                $('#bmfmodal_edit').modal('hide');
             });
-            parent_object.find('button.erpedit-submit').click(function (event) {
-            dict = $.erp.AJAX;
+            parent_object.find('button.bmfedit-submit').click(function (event) {
+            dict = $.bmf.AJAX;
             dict.type = "POST";
             dict.data = form_object.serialize();
             dict.url = form_object.attr('action');
             $.ajax(dict).done(function( data, textStatus, jqXHR ) {
                     if (data.status == "valid") {
                         // TODO check if there are multile forms and close modal or show next form
-                        if ($('#erpmodal_edit > div.page-reload').length == 0) {
-                            $('#erpmodal_edit > div').addClass('page-reload');
+                        if ($('#bmfmodal_edit > div.page-reload').length == 0) {
+                            $('#bmfmodal_edit > div').addClass('page-reload');
                         }
-                        $('#erpmodal_edit').modal('hide');
+                        $('#bmfmodal_edit').modal('hide');
                     }
                     else {
                         html = $($.parseHTML( data.html ));
                         form_object.html(html.find('form').html())
-                        form_object.find('div[data-erp-search=1]').erp_search();
-                        form_object.find('div[data-erp-inlineform=1]').erp_inlineform();
+                        form_object.find('div[data-bmf-search=1]').bmf_search();
+                        form_object.find('div[data-bmf-inlineform=1]').bmf_inlineform();
                     }
                 });
             });
@@ -13874,27 +13874,27 @@ $.extend($.fn.treegrid.defaults, {
     };
 
     // default options
-    $.erp.editform.defaultOptions = {
+    $.bmf.editform.defaultOptions = {
         href: null,
         debug: false
     };
 
     // register as jquery function
-    $.fn.erp_editform = function(options){
+    $.fn.bmf_editform = function(options){
         return this.each(function(){
-            (new $.erp.editform(this, options));
+            (new $.bmf.editform(this, options));
         });
     };
 })(jQuery);
-$(document).ready(function() {$('.erp-edit').erp_editform()});
+$(document).ready(function() {$('.bmf-edit').bmf_editform()});
 /* buildform */
 (function($){
     // register as jquery function
-    $.fn.erp_buildform = function(){
-      //$(this).erp_inlineform();
-      //$(this).erp_search();
-        $(this).erp_autocomplete();
-        $(this).erp_calendar();
+    $.fn.bmf_buildform = function(){
+      //$(this).bmf_inlineform();
+      //$(this).bmf_search();
+        $(this).bmf_autocomplete();
+        $(this).bmf_calendar();
     };
 })(jQuery);
 $(document).ready(function() {
@@ -13903,9 +13903,9 @@ $(document).ready(function() {
      * ----------------------------------------------------------------------- */
 
     function check_notification() {
-        var count = parseInt( $('#erp_notification').data('count') );
+        var count = parseInt( $('#bmf_notification').data('count') );
         if (count > 0) {
-            $('#erp_notification').removeClass("new").addClass("new");
+            $('#bmf_notification').removeClass("new").addClass("new");
         }
     }
     check_notification();
@@ -13913,65 +13913,65 @@ $(document).ready(function() {
     /* Message
      * ----------------------------------------------------------------------- */
     /*
-    $('#erp_message').click(function (event) {
+    $('#bmf_message').click(function (event) {
         event.preventDefault();
-        if ($('#erpmodal_logout').length == 0) {
+        if ($('#bmfmodal_logout').length == 0) {
             $.get($(this).attr('href'), function(data) {
-                $('#wrap').prepend('<div class="modal fade" id="erpmodal_logout" tabindex="-1" role="dialog" aria-hidden="true">'+data+'</div>');
-                $('#erpmodal_logout').modal('show');
+                $('#wrap').prepend('<div class="modal fade" id="bmfmodal_logout" tabindex="-1" role="dialog" aria-hidden="true">'+data+'</div>');
+                $('#bmfmodal_logout').modal('show');
             });
         }
         else {
-            $('#erpmodal_logout').modal('show');
+            $('#bmfmodal_logout').modal('show');
         }
     });
    
     /* LOGOUT
      * ----------------------------------------------------------------------- */
-    $('#erpapi_logout').click(function (event) {
+    $('#bmfapi_logout').click(function (event) {
         event.preventDefault();
-        if ($('#erpmodal_logout').length == 0) {
+        if ($('#bmfmodal_logout').length == 0) {
             $.get($(this).attr('href'), function(data) {
-                $('#wrap').prepend('<div class="modal fade" id="erpmodal_logout" tabindex="-1" role="dialog" aria-hidden="true">'+data+'</div>');
-                $('#erpmodal_logout').modal('show');
+                $('#wrap').prepend('<div class="modal fade" id="bmfmodal_logout" tabindex="-1" role="dialog" aria-hidden="true">'+data+'</div>');
+                $('#bmfmodal_logout').modal('show');
             });
         }
         else {
-            $('#erpmodal_logout').modal('show');
+            $('#bmfmodal_logout').modal('show');
         }
     });
    
     /* SAVE VIEW
      * ----------------------------------------------------------------------- */
-    $('#erpapi_saveview').click(function (event) {
+    $('#bmfapi_saveview').click(function (event) {
         event.preventDefault();
-        if ($('#erpmodal_saveview').length == 0) {
-            $('#wrap').prepend('<div class="modal fade" id="erpmodal_saveview" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+        if ($('#bmfmodal_saveview').length == 0) {
+            $('#wrap').prepend('<div class="modal fade" id="bmfmodal_saveview" tabindex="-1" role="dialog" aria-hidden="true"></div>');
         }
         var search = $(location).attr('search');
         var pathname = $(location).attr('pathname');
         var url = $(this).attr('href');
-        dict = $.erp.AJAX;
+        dict = $.bmf.AJAX;
         dict.type = 'GET';
         dict.data = { search: search, pathname: pathname };
         dict.url = url;
         $.ajax(dict)
             .done(function( data, textStatus, jqXHR ) {
-                $('#erpmodal_saveview').html(data.html);
-                $('#erpmodal_saveview').modal('show');
-                $('#erpmodal_saveview form').submit(function(event){
+                $('#bmfmodal_saveview').html(data.html);
+                $('#bmfmodal_saveview').modal('show');
+                $('#bmfmodal_saveview form').submit(function(event){
                     event.preventDefault();
-                    dict = $.erp.AJAX;
+                    dict = $.bmf.AJAX;
                     dict.type = 'POST';
                     dict.data = $(this).serialize();
                     dict.url = url;
                     $.ajax(dict)
                       .done(function( data, textStatus, jqXHR ) {
                           if (data.close == true) {
-                             $('#erpmodal_saveview .modal-body').html("TODO REFRESH PAGE");
+                             $('#bmfmodal_saveview .modal-body').html("TODO REFRESH PAGE");
                           }
                           else {
-                             $('#erpmodal_saveview .modal-body').html(data.html);
+                             $('#bmfmodal_saveview .modal-body').html(data.html);
                           }
                       })
                       .fail(function(jqXHR, textStatus, errorThrown) {
@@ -13985,25 +13985,25 @@ $(document).ready(function() {
     });
 
 
-    $('#erpapi_follow').click(function (event) {
+    $('#bmfapi_follow').click(function (event) {
         event.preventDefault();
-        if ($('#erpmodal_follow').length == 0) {
+        if ($('#bmfmodal_follow').length == 0) {
             var ct = $(this).data('ct');
             var pk = $(this).data('pk');
             var url = $(this).attr('href');
-            dict = $.erp.AJAX;
+            dict = $.bmf.AJAX;
             dict.type = 'GET';
             dict.data = { ct: ct, pk: pk };
             dict.url = url;
             $.ajax(dict)
             .done(function( data, textStatus, jqXHR ) {
-                $('#wrap').prepend('<div class="modal fade" id="erpmodal_follow" tabindex="-1" role="dialog" aria-hidden="true">'+data.html+'</div>');
+                $('#wrap').prepend('<div class="modal fade" id="bmfmodal_follow" tabindex="-1" role="dialog" aria-hidden="true">'+data.html+'</div>');
 
-                $('#erpmodal_follow').modal('show');
+                $('#bmfmodal_follow').modal('show');
 
-                $('#erpmodal_follow form').submit(function(event){
+                $('#bmfmodal_follow form').submit(function(event){
                     event.preventDefault();
-                    dict = $.erp.AJAX;
+                    dict = $.bmf.AJAX;
                     dict.type = 'POST';
                     dict.data = $(this).serializeArray();
                     dict.data.push({name: 'ct', value: ct });
@@ -14012,16 +14012,16 @@ $(document).ready(function() {
                     dict.url = url;
                     $.ajax(dict)
                       .done(function( data, textStatus, jqXHR ) {
-                          $('#erpapi_follow').removeClass('following');
-                          $('#erpapi_follow span').removeClass('glyphicon-star glyphicon-star-empty');
+                          $('#bmfapi_follow').removeClass('following');
+                          $('#bmfapi_follow span').removeClass('glyphicon-star glyphicon-star-empty');
                           if (data.active == true) {
-                            $('#erpapi_follow').addClass('following');
-                            $('#erpapi_follow span').addClass('glyphicon-star');
+                            $('#bmfapi_follow').addClass('following');
+                            $('#bmfapi_follow span').addClass('glyphicon-star');
                           }
                           else {
-                            $('#erpapi_follow span').addClass('glyphicon-star-empty');
+                            $('#bmfapi_follow span').addClass('glyphicon-star-empty');
                           }
-                          $('#erpmodal_follow').modal('hide');
+                          $('#bmfmodal_follow').modal('hide');
                       })
                       .fail(function(jqXHR, textStatus, errorThrown) {
                           console.log( errorThrown+" ("+textStatus+")" );
@@ -14033,7 +14033,7 @@ $(document).ready(function() {
             });
         }
         else {
-          $('#erpmodal_follow').modal('show');
+          $('#bmfmodal_follow').modal('show');
         }
     });
 });

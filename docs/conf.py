@@ -37,7 +37,7 @@ source_encoding = 'utf-8'
 master_doc = 'index'
 
 # General information about the project.
-project = u'django ERP'
+project = u'django BMF'
 copyright = u'2013, Sebastian Braun'
 
 # The version info for the project you're documenting, acts as replacement for

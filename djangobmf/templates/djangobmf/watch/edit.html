@@ -1,4 +1,4 @@
-{% extends "djangoerp/watch/base.html" %}
+{% extends "djangobmf/watch/base.html" %}
 
 {% load i18n %}
 
@@ -40,6 +40,6 @@
     </div>
     {% endif %}
     <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
-    <a href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'djangoerp:watch' ct=selected_ct %}{% endif %}" class="btn btn-default">{% trans "Back" %}</a>
+    <a href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'djangobmf:watch' ct=selected_ct %}{% endif %}" class="btn btn-default">{% trans "Back" %}</a>
 </form>
 {% endblock %}

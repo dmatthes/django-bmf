@@ -1,4 +1,4 @@
-{% extends "djangoerp/module_index.html" %}
+{% extends "djangobmf/module_index.html" %}
 
 {% block base_content %}
 <table class="table table-striped table-condensed table-hover">
@@ -13,7 +13,7 @@
     <tr>
       <td>{{ obj }}</td>
       <td class="text-right">
-        <a class="btn btn-xs btn-warning" href="{{ obj.erpmodule_detail }}">
+        <a class="btn btn-xs btn-warning" href="{{ obj.bmfmodule_detail }}">
           <span class="glyphicon glyphicon-list"></span>
         </a>
       </td>

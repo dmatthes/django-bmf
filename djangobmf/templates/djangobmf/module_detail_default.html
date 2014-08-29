@@ -1,8 +1,8 @@
-{% extends "djangoerp/module_detail.html" %}
+{% extends "djangobmf/module_detail.html" %}
 
-{% load djangoerp_forms %}
+{% load djangobmf_forms %}
 
 {% block base_content %}
-{% erpview %}
+{% bmfview %}
 {{ block.super }}
 {% endblock %}

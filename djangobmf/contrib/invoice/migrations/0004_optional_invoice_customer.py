@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.db.models.deletion
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 
 if BASE_MODULE["PROJECT"]:
     class Migration(migrations.Migration):
         dependencies = [
-            ('djangoerp_invoice', '0003_optional_invoice_employee'),
+            ('djangobmf_invoice', '0003_optional_invoice_employee'),
             migrations.swappable_dependency(BASE_MODULE["CUSTOMER"]),
         ]
         operations = [

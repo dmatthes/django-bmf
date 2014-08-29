@@ -1,6 +1,6 @@
-{% extends "djangoerp/module_base.html" %}
+{% extends "djangobmf/module_base.html" %}
 
-{% load djangoerp_core %}
+{% load djangobmf_core %}
 {% load i18n %}
 
 {% block base_buttons %}
@@ -13,19 +13,19 @@
   <input type="text" class="form-control">
   <div class="input-group-btn">
     &nbsp;
-    {% if erpmodule.create_views %}
+    {% if bmfmodule.create_views %}
     <div class="btn-group">
      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
       <span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
      </button>
      <ul class="dropdown-menu" role="menu">
-       {% for key, label in erpmodule.create_views %}
-       <li><a class="erp-edit" href="{% get_erp_url erpmodule.model "create" key %}">{{ label }}</a></li>
+       {% for key, label in bmfmodule.create_views %}
+       <li><a class="bmf-edit" href="{% get_bmf_url bmfmodule.model "create" key %}">{{ label }}</a></li>
        {% endfor %}
      </ul>
     </div>
     {% else %}
-    <a class="btn btn-success erp-edit" href="{% get_erp_url erpmodule.model "create" %}">
+    <a class="btn btn-success bmf-edit" href="{% get_bmf_url bmfmodule.model "create" %}">
       <span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
     </a>
     {% endif %}

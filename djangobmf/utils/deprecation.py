@@ -7,22 +7,22 @@ from __future__ import unicode_literals
 usage:
 
 import warnings
-from djangoerp.utils.deprecation import RemovedInNextERPVersionWarning
+from djangobmf.utils.deprecation import RemovedInNextBMFVersionWarning
 
 warnings.warn(
     "This feature is deprecated.",
-    RemovedInNextERPVersionWarning, stacklevel=2)
+    RemovedInNextBMFVersionWarning, stacklevel=2)
 
 """
 
 
-class RemovedInERP10Warning(PendingDeprecationWarning):
+class RemovedInBMF10Warning(PendingDeprecationWarning):
     pass
 
 
-class RemovedInERP09Warning(DeprecationWarning):
+class RemovedInBMF09Warning(DeprecationWarning):
     pass
 
 
-class RemovedInNextERPVersionWarning(FutureWarning):
+class RemovedInNextBMFVersionWarning(FutureWarning):
     pass

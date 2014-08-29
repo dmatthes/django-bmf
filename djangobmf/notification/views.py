@@ -16,7 +16,7 @@ from ..viewmixins import ViewMixin
 class NotificationView(ViewMixin, ListView):
     model = Notification
     allow_empty = True
-    template_name = "djangoerp/notification/index.html"
+    template_name = "djangobmf/notification/index.html"
     paginate_by = 50
 
     def get_context_data(self, **kwargs):

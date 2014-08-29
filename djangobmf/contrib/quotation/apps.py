@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from djangoerp.apps import ContribTemplate
+from djangobmf.apps import ContribTemplate
 
 
 class QuotationConfig(ContribTemplate):
-    name = 'djangoerp.contrib.quotation'
-    label = "djangoerp_quotation"
+    name = 'djangobmf.contrib.quotation'
+    label = "djangobmf_quotation"

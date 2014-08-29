@@ -11,10 +11,10 @@ from django.contrib.contenttypes.models import ContentType
 from ..utils import get_model_from_cfg
 
 from ..models import Report
-from ..testcase import ERPModuleTestCase
+from ..testcase import BMFModuleTestCase
 
 
-class CoreTests(ERPModuleTestCase):
+class CoreTests(BMFModuleTestCase):
 
     def test_history_files(self):
         """
@@ -28,19 +28,19 @@ class CoreTests(ERPModuleTestCase):
         })
 
         model = get_model_from_cfg("PROJECT")
-        namespace = model._erpmeta.url_namespace
+        namespace = model._bmfmeta.url_namespace
 
         obj = model.objects.order_by('pk').last()
         ct = ContentType.objects.get_for_model(model)
 
-        r = self.client.get(reverse('djangoerp:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}))
+        r = self.client.get(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}))
         self.assertEqual(r.status_code, 302)
 
-        r = self.client.post(reverse('djangoerp:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
+        r = self.client.post(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
         self.assertEqual(r.status_code, 302)
 
         file = open('README.rst', 'rb')
-        r = self.client.post(reverse('djangoerp:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
+        r = self.client.post(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
             'file': file,
         })
         self.assertEqual(r.status_code, 302)

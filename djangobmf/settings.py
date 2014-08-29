@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 """
-overwrites erp settings from django's settings
+overwrites bmf settings from django's settings
 """
 
 from django.conf import settings
@@ -30,48 +30,48 @@ ACTIVITY_UNKNOWN = "glyphicon-question-sign"
 
 # === modules =================================================================
 
-erp_modules = getattr(settings, 'ERP_MODULES', {})
+bmf_modules = getattr(settings, 'BMF_MODULES', {})
 BASE_MODULE = {
-    'ACCOUNT': 'djangoerp_accounting.Account',
-    'ADDRESS': 'djangoerp_address.Address',
-    'COMPANY': 'djangoerp_company.Company',
-    'CUSTOMER': 'djangoerp_customer.Customer',
-    'DOCUMENT': 'djangoerp_document.Document',
-    'EMPLOYEE': 'djangoerp_employee.Employee',
-    'GOAL': 'djangoerp_task.Goal',
-    'INVOICE': 'djangoerp_invoice.Invoice',
-    'TAX': 'djangoerp_taxing.Tax',
-    'TEAM': 'djangoerp_team.Team',
-    'POSITION': 'djangoerp_position.Position',
-    'PRODUCT': 'djangoerp_product.Product',
-    'PROJECT': 'djangoerp_project.Project',
-    'QUOTATION': 'djangoerp_quotation.Quotation',
-    'TIMESHEET': 'djangoerp_timesheet.Timesheet',
-    'TRANSACTION': 'djangoerp_accounting.Transaction',
-    'TRANSACTION_ITEM': 'djangoerp_accounting.TransactionItem',  # TODO: check if i am needed
+    'ACCOUNT': 'djangobmf_accounting.Account',
+    'ADDRESS': 'djangobmf_address.Address',
+    'COMPANY': 'djangobmf_company.Company',
+    'CUSTOMER': 'djangobmf_customer.Customer',
+    'DOCUMENT': 'djangobmf_document.Document',
+    'EMPLOYEE': 'djangobmf_employee.Employee',
+    'GOAL': 'djangobmf_task.Goal',
+    'INVOICE': 'djangobmf_invoice.Invoice',
+    'TAX': 'djangobmf_taxing.Tax',
+    'TEAM': 'djangobmf_team.Team',
+    'POSITION': 'djangobmf_position.Position',
+    'PRODUCT': 'djangobmf_product.Product',
+    'PROJECT': 'djangobmf_project.Project',
+    'QUOTATION': 'djangobmf_quotation.Quotation',
+    'TIMESHEET': 'djangobmf_timesheet.Timesheet',
+    'TRANSACTION': 'djangobmf_accounting.Transaction',
+    'TRANSACTION_ITEM': 'djangobmf_accounting.TransactionItem',  # TODO: check if i am needed
 }
-BASE_MODULE.update(erp_modules)
+BASE_MODULE.update(bmf_modules)
 
 # === storage =================================================================
 
-erp_storage = getattr(settings, 'ERP_STORAGE', {})
+bmf_storage = getattr(settings, 'BMF_STORAGE', {})
 CFG_STORAGE = {
     'ENGINE': 'django.core.files.storage.FileSystemStorage',
     'OPTIONS': {},
-    'SERVER': 'djangoerp.backends.DefaultServer',
+    'SERVER': 'djangobmf.backends.DefaultServer',
     'STATIC_PREFIX': 'static',
 }
-CFG_STORAGE.update(erp_storage)
+CFG_STORAGE.update(bmf_storage)
 
 if 'location' not in CFG_STORAGE['OPTIONS']:
-    CFG_STORAGE['OPTIONS']['location'] = getattr(settings, 'ERP_DOCUMENT_ROOT', None)
+    CFG_STORAGE['OPTIONS']['location'] = getattr(settings, 'BMF_DOCUMENT_ROOT', None)
 if 'base_url' not in CFG_STORAGE['OPTIONS']:
-    CFG_STORAGE['OPTIONS']['base_url'] = getattr(settings, 'ERP_DOCUMENT_URL', None)
+    CFG_STORAGE['OPTIONS']['base_url'] = getattr(settings, 'BMF_DOCUMENT_URL', None)
 
 if not CFG_STORAGE['OPTIONS']['location']:
-    raise RuntimeError("django ERP module needs a setting ERP_DOCUMENTS_ROOT")
+    raise RuntimeError("django BMF module needs a setting BMF_DOCUMENTS_ROOT")
 if not CFG_STORAGE['OPTIONS']['base_url']:
-    raise RuntimeError("django ERP module needs a setting ERP_DOCUMENTS_URL")
+    raise RuntimeError("django BMF module needs a setting BMF_DOCUMENTS_URL")
 
 DOCUMENT_ROOT = CFG_STORAGE['OPTIONS']['location']
 DOCUMENT_URL = CFG_STORAGE['OPTIONS']['base_url']

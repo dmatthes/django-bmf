@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from djangoerp.apps import ContribTemplate
+from djangobmf.apps import ContribTemplate
 
 
 class ProjectConfig(ContribTemplate):
-    name = 'djangoerp.contrib.project'
-    label = "djangoerp_project"
+    name = 'djangobmf.contrib.project'
+    label = "djangobmf_project"

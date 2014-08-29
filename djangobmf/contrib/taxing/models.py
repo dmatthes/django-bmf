@@ -7,16 +7,16 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.categories import SETTINGS
-from djangoerp.contrib.accounting.models import ACCOUNTING_LIABILITY
-from djangoerp.models import ERPModel
-from djangoerp.settings import BASE_MODULE
+from djangobmf.categories import SETTINGS
+from djangobmf.contrib.accounting.models import ACCOUNTING_LIABILITY
+from djangobmf.models import BMFModel
+from djangobmf.settings import BASE_MODULE
 
 from decimal import Decimal
 
 
 @python_2_unicode_compatible
-class AbstractTax(ERPModel):
+class AbstractTax(BMFModel):
     name = models.CharField(max_length=255, null=False, blank=False, )
     # invoice_name_long = models.CharField( max_length=255, null=False, blank=False, )
     # invoice_name_short = models.CharField( max_length=255, null=False, blank=False, )
@@ -41,7 +41,7 @@ class AbstractTax(ERPModel):
         ordering = ['name']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = SETTINGS
         observed_fields = ['name', 'invoice_name', 'rate']
 

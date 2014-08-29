@@ -16,7 +16,7 @@ from django.utils import six
 from django.utils.text import slugify
 from django.apps import apps
 
-from .apps import ERPConfig
+from .apps import BMFConfig
 from .models import Configuration
 from .views import ModuleIndexView
 from .views import ModuleReportView
@@ -32,10 +32,10 @@ import copy
 import sys
 
 SETTING_KEY = "%s.%s"
-APP_LABEL = ERPConfig.label
+APP_LABEL = BMFConfig.label
 
 
-class DjangoERPSetting(object):
+class DjangoBMFSetting(object):
     def __init__(self, app_label, name, field):
         self.app_label = app_label
         self.name = name
@@ -72,7 +72,7 @@ class DjangoERPSetting(object):
         return value
 
 
-class DjangoERPModule(object):
+class DjangoBMFModule(object):
     index = None
     create = None
     delete = None
@@ -135,7 +135,7 @@ class DjangoERPModule(object):
                 if isinstance(view, (list, tuple)):
                     label = view[0]
                     view = view[1]
-                self.model._erpmeta.create_views.append((key, label))
+                self.model._bmfmeta.create_views.append((key, label))
                 urlpatterns += patterns(
                     '',
                     url(
@@ -171,7 +171,7 @@ class DjangoERPModule(object):
             )
 
         # workflow interactions
-        if bool(len(self.model._erpworkflow._transitions)):
+        if bool(len(self.model._bmfworkflow._transitions)):
             urlpatterns += patterns(
                 '',
                 url(
@@ -183,7 +183,7 @@ class DjangoERPModule(object):
 
         # model reports
         if report:
-            self.model._erpmeta.has_report = True
+            self.model._bmfmeta.has_report = True
             urlpatterns += patterns(
                 '',
                 url(
@@ -194,7 +194,7 @@ class DjangoERPModule(object):
             )
 
         # clone model
-        if self.model._erpmeta.can_clone:
+        if self.model._bmfmeta.can_clone:
             urlpatterns += patterns(
                 '',
                 url(
@@ -219,12 +219,12 @@ class DjangoERPModule(object):
         return urlpatterns
 
 
-class DjangoERPSite(object):
+class DjangoBMFSite(object):
     """
     Handle this object like the AdminSite from django.contrib.admin.sites
     """
 
-    def __init__(self, name='djangoerp', app_name=APP_LABEL):
+    def __init__(self, name='djangobmf', app_name=APP_LABEL):
         self.name = name
         self.app_name = app_name
         self.clear()
@@ -259,17 +259,17 @@ class DjangoERPSite(object):
             self._registry[model]['urlpatterns'] = options['urlpatterns']
 
     def register_model(self, model, admin=None):
-        if not hasattr(model, '_erpmeta'):
+        if not hasattr(model, '_bmfmeta'):
             raise ImproperlyConfigured(
-                'The model %s needs to be an ERP-Model in order to be'
-                'registered with django ERP.' % model.__name__
+                'The model %s needs to be an BMF-Model in order to be'
+                'registered with django BMF.' % model.__name__
             )
 
         if model in self._registry:
             raise AlreadyRegistered('The model %s is already registered' % model.__name__)
 
         self._registry[model] = {
-            'admin': (admin or DjangoERPModule)(model),
+            'admin': (admin or DjangoBMFModule)(model),
             'index': ModuleIndexView,
             'create': ModuleCreateView,
             'detail': ModuleAutoDetailView,
@@ -290,7 +290,7 @@ class DjangoERPSite(object):
 
     def register_view(self, model, type, view):
         if type in ['index', 'detail', 'update', 'delete', 'clone']:
-            # TODO check if view is an erp-view
+            # TODO check if view is an bmf-view
             # add the view
             self._registry[model][type] = view
 
@@ -299,13 +299,13 @@ class DjangoERPSite(object):
                 if view:
                     self._registry[model][type] = ModuleReportView
             else:
-                # TODO check if view is an erp-view
+                # TODO check if view is an bmf-view
                 # add the view
                 self._registry[model][type] = view
 
         elif type == 'create':
             # if isinstance(create, dict):
-            # TODO check if view is an erp-view
+            # TODO check if view is an bmf-view
             # add the view
             self._registry[model][type] = view
 
@@ -337,7 +337,7 @@ class DjangoERPSite(object):
         name = SETTING_KEY % (app_label, setting_name)
         if name in self.settings:
             raise AlreadyRegistered('The setting %s is already registered' % name)
-        self.settings[name] = DjangoERPSetting(app_label, setting_name, options)
+        self.settings[name] = DjangoBMFSetting(app_label, setting_name, options)
 
     def unregister_setting(self, app_label, setting_name):
         name = SETTING_KEY % (app_label, setting_name)
@@ -404,7 +404,7 @@ class DjangoERPSite(object):
             )
 
     def get_urls(self):
-        from djangoerp.urls import urlpatterns
+        from djangobmf.urls import urlpatterns
         if not apps.ready and "migrate" in sys.argv:
             return urlpatterns
 
@@ -434,7 +434,7 @@ class DjangoERPSite(object):
             )
         return urlpatterns
 
-site = DjangoERPSite()
+site = DjangoBMFSite()
 
 
 def autodiscover():
@@ -445,7 +445,7 @@ def autodiscover():
             before_import_c = copy.copy(site.currencies)
             before_import_s = copy.copy(site.settings)
             before_import_p = copy.copy(site.reports)
-            import_module('%s.%s' % (app_config.name, "erp_module"))
+            import_module('%s.%s' % (app_config.name, "bmf_module"))
         except:
             # Reset the model registry to the state before the last import
             # skiping this may result in an AlreadyRegistered Error
@@ -455,5 +455,5 @@ def autodiscover():
             site.reports = before_import_p
 
             # Decide whether to bubble up this error
-            if module_has_submodule(app_config.module, "erp_module"):
+            if module_has_submodule(app_config.module, "bmf_module"):
                 raise

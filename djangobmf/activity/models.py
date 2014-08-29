@@ -29,9 +29,9 @@ from ..settings import ACTIVITY_UNKNOWN
 
 # celery should be optional!
 try:
-    from ..tasks.djangoerp_user_watch import async as djangoerp_user_watch
+    from ..tasks.djangobmf_user_watch import async as djangobmf_user_watch
 except ImportError:
-    from .tasks import djangoerp_user_watch
+    from .tasks import djangobmf_user_watch
 
 ACTION_COMMENT = 1
 ACTION_CREATED = 2
@@ -51,7 +51,7 @@ ACTION_TYPES = (
 @python_2_unicode_compatible
 class Activity(models.Model):
     """
-    Model which is accessed by en ERPModel with history
+    Model which is accessed by en BMFModel with history
     """
 
     user = models.ForeignKey(
@@ -73,7 +73,7 @@ class Activity(models.Model):
     template = models.CharField(_("Template"), max_length=100, editable=False, blank=False, null=True)
     parent_id = models.PositiveIntegerField()
     parent_ct = models.ForeignKey(
-        ContentType, related_name="erp_history_parent", on_delete=models.CASCADE,
+        ContentType, related_name="bmf_history_parent", on_delete=models.CASCADE,
     )
     parent_object = GenericForeignKey('parent_ct', 'parent_id')
 
@@ -108,21 +108,21 @@ class Activity(models.Model):
         if self.template:
             return self.template
         if self.action == ACTION_WORKFLOW:
-            return "djangoerp/activities/workflow.html"
+            return "djangobmf/activities/workflow.html"
         elif self.action == ACTION_FILE:
-            return "djangoerp/activities/file.html"
+            return "djangobmf/activities/file.html"
         elif self.action == ACTION_UPDATED:
-            return "djangoerp/activities/updated.html"
+            return "djangobmf/activities/updated.html"
         elif self.action == ACTION_CREATED:
-            return "djangoerp/activities/created.html"
-        return "djangoerp/activities/message.html"
+            return "djangobmf/activities/created.html"
+        return "djangobmf/activities/message.html"
 
     def get_text(self):
         if self.action == ACTION_WORKFLOW:
             data = json.loads(self.text)
             return {
-                'new': self.parent_object._erpmeta.workflow._states[data['new']],
-                'old': self.parent_object._erpmeta.workflow._states[data['old']],
+                'new': self.parent_object._bmfmeta.workflow._states[data['new']],
+                'old': self.parent_object._bmfmeta.workflow._states[data['old']],
             }
         elif self.action == ACTION_FILE:
             data = json.loads(self.text)
@@ -144,7 +144,7 @@ class Activity(models.Model):
 
 @receiver(activity_create)
 def object_created(sender, instance, **kwargs):
-    if instance._erpmeta.has_history:
+    if instance._bmfmeta.has_history:
         history = Activity(
             user=instance.created_by,
             parent_ct=ContentType.objects.get_for_model(sender),
@@ -156,13 +156,13 @@ def object_created(sender, instance, **kwargs):
 
 @receiver(activity_update)
 def object_changed(sender, instance, **kwargs):
-    if instance._erpmeta.has_history and len(instance._erpmeta.observed_fields) > 0:
+    if instance._bmfmeta.has_history and len(instance._bmfmeta.observed_fields) > 0:
         changes = []
         values = instance._get_observed_values()
-        for key in instance._erpmeta.observed_fields:
+        for key in instance._bmfmeta.observed_fields:
             try:
-                if instance._erpmeta.changelog[key] != values[key]:
-                    changes.append((key, instance._erpmeta.changelog[key], values[key]))
+                if instance._bmfmeta.changelog[key] != values[key]:
+                    changes.append((key, instance._bmfmeta.changelog[key], values[key]))
             except KeyError:
                 pass
         if len(changes) > 0:
@@ -178,15 +178,15 @@ def object_changed(sender, instance, **kwargs):
 
 @receiver(activity_workflow)
 def new_state(sender, instance, **kwargs):
-    if instance._erpmeta.has_history:
+    if instance._bmfmeta.has_history:
         history = Activity(
             user=instance.created_by,
             parent_ct=ContentType.objects.get_for_model(sender),
             parent_id=instance.pk,
             action=ACTION_WORKFLOW,
             text=json.dumps({
-                'old': instance._erpworkflow._initial_state_key,
-                'new': instance._erpworkflow._current_state_key,
+                'old': instance._bmfworkflow._initial_state_key,
+                'new': instance._bmfworkflow._current_state_key,
             }, cls=DjangoJSONEncoder),
         )
         history.save()
@@ -194,7 +194,7 @@ def new_state(sender, instance, **kwargs):
 
 @receiver(activity_addfile)
 def new_file(sender, instance, file, **kwargs):
-    if instance._erpmeta.has_history:
+    if instance._bmfmeta.has_history:
         history = Activity(
             user=instance.created_by,
             parent_ct=ContentType.objects.get_for_model(sender),
@@ -210,5 +210,5 @@ def new_file(sender, instance, file, **kwargs):
 
 
 def activity_post_save(sender, instance, *args, **kwargs):
-    djangoerp_user_watch(instance)
+    djangobmf_user_watch(instance)
 signals.post_save.connect(activity_post_save, sender=Activity)

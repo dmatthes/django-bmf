@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from djangoerp.apps import ContribTemplate
+from djangobmf.apps import ContribTemplate
 
 
 class InvoiceConfig(ContribTemplate):
-    name = 'djangoerp.contrib.invoice'
-    label = "djangoerp_invoice"
+    name = 'djangobmf.contrib.invoice'
+    label = "djangobmf_invoice"

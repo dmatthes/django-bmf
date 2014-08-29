@@ -3,21 +3,21 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import ModuleCreateView
-from djangoerp.views import ModuleUpdateView
-from djangoerp.views import ModuleDetailView
+from djangobmf.views import ModuleCreateView
+from djangobmf.views import ModuleUpdateView
+from djangobmf.views import ModuleDetailView
 
-from .forms import ERPInvoiceUpdateForm
-from .forms import ERPInvoiceCreateForm
+from .forms import BMFInvoiceUpdateForm
+from .forms import BMFInvoiceCreateForm
 
 
 class InvoiceCreateView(ModuleCreateView):
-    form_class = ERPInvoiceCreateForm
+    form_class = BMFInvoiceCreateForm
 
 
 class InvoiceUpdateView(ModuleUpdateView):
-    form_class = ERPInvoiceUpdateForm
+    form_class = BMFInvoiceUpdateForm
 
 
 class InvoiceDetailView(ModuleDetailView):
-    form_class = ERPInvoiceUpdateForm
+    form_class = BMFInvoiceUpdateForm

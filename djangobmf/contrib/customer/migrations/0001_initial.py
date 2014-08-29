@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 ('website', models.URLField(null=True, verbose_name='Website', blank=True)),
                 ('notes', models.TextField(null=True, verbose_name='Notes', blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
-                ('employee_at', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='djangoerp_customer.Customer', null=True)),
+                ('employee_at', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='djangobmf_customer.Customer', null=True)),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=settings.AUTH_USER_MODEL, null=True, unique=True)),
             ],

@@ -19,7 +19,7 @@ import json
 
 
 class ConfigurationView(ViewMixin, TemplateView):
-    template_name = "djangoerp/configuration/index.html"
+    template_name = "djangobmf/configuration/index.html"
 
     def get_context_data(self, **kwargs):
         kwargs.update({
@@ -29,7 +29,7 @@ class ConfigurationView(ViewMixin, TemplateView):
 
 
 class ConfigurationEdit(ViewMixin, FormView):
-    template_name = "djangoerp/configuration/edit.html"
+    template_name = "djangobmf/configuration/edit.html"
 
     def get_form_class(self):
         key = SETTING_KEY % (self.kwargs['app_label'], self.kwargs['name'])
@@ -65,4 +65,4 @@ class ConfigurationEdit(ViewMixin, FormView):
         return super(ConfigurationEdit, self).form_valid(form, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('djangoerp:configuration')
+        return reverse('djangobmf:configuration')

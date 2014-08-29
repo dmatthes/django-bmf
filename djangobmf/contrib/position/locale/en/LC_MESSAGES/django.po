@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: contrib/position/models.py:38
-#: contrib/position/templates/djangoerp_position/position_erpindex.html:13
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:13
 msgid "Date"
 msgstr ""
 
 #: contrib/position/models.py:39
-#: contrib/position/templates/djangoerp_position/position_erpindex.html:14
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:14
 msgid "Name"
 msgstr ""
 
@@ -51,14 +51,14 @@ msgstr ""
 msgid "Positions"
 msgstr ""
 
-#: contrib/position/templates/djangoerp_position/position_erpindex.html:15
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:15
 msgid "Product"
 msgstr ""
 
-#: contrib/position/templates/djangoerp_position/position_erpindex.html:16
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:16
 msgid "Project"
 msgstr ""
 
-#: contrib/position/templates/djangoerp_position/position_erpindex.html:17
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:17
 msgid "Employee"
 msgstr ""

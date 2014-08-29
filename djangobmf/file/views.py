@@ -30,7 +30,7 @@ def sendfile(request, fileobject, allowed=True):
   if not fileobject:
     return Http404
 
-  sendtype = getattr(settings,"ERP_DOCUMENTS_SEND",None)
+  sendtype = getattr(settings,"BMF_DOCUMENTS_SEND",None)
 
   if sendtype == "accelredirect" and not settings.DEBUG:
     response = HttpResponse()
@@ -41,11 +41,11 @@ def sendfile(request, fileobject, allowed=True):
   if sendtype == "sendfile" and not settings.DEBUG:
     response = HttpResponse()
     response['Content-Type'] = ''
-    response['X-Sendfile'] = (os.path.join(settings.ERP_DOCUMENTS_ROOT, fileobject.url)).encode('utf-8')
+    response['X-Sendfile'] = (os.path.join(settings.BMF_DOCUMENTS_ROOT, fileobject.url)).encode('utf-8')
     return response
 
   # serve with django
-  return serve(request,fileobject.url[len(settings.ERP_DOCUMENTS_URL):],document_root=settings.ERP_DOCUMENTS_ROOT)
+  return serve(request,fileobject.url[len(settings.BMF_DOCUMENTS_URL):],document_root=settings.BMF_DOCUMENTS_ROOT)
 '''
 
 
@@ -82,7 +82,7 @@ class FileAddView(BaseMixin, CreateView):
             raise Http404
 
         self.related_model = ct.model_class()
-        if not hasattr(self.related_model, '_erpmeta'):
+        if not hasattr(self.related_model, '_bmfmeta'):
             raise Http404
 
         return self.related_model
@@ -117,4 +117,4 @@ class FileAddView(BaseMixin, CreateView):
         return self.related_object
 
     def get_success_url(self):
-        return self.get_rel_object().erpmodule_detail()
+        return self.get_rel_object().bmfmodule_detail()

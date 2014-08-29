@@ -7,13 +7,13 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.models import ERPModel
-from djangoerp.settings import BASE_MODULE
-from djangoerp.categories import HR
+from djangobmf.models import BMFModel
+from djangobmf.settings import BASE_MODULE
+from djangobmf.categories import HR
 
 
 @python_2_unicode_compatible
-class AbstractTeam(ERPModel):
+class AbstractTeam(BMFModel):
     """
     """
     name = models.CharField(
@@ -24,13 +24,13 @@ class AbstractTeam(ERPModel):
         limit_choices_to={'user__isnull': False}, through='TeamMember',
     )
 
-    class Meta(ERPModel.Meta):  # only needed for abstract models
+    class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Team')
         verbose_name_plural = _('Teams')
         ordering = ['name']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         search_fields = ['name']
         has_logging = False
         category = HR

@@ -9,4 +9,4 @@ TEST DOCTYPE
 
 """
 
-default_app_config = 'djangoerp.contrib.task.apps.TaskConfig'
+default_app_config = 'djangobmf.contrib.task.apps.TaskConfig'

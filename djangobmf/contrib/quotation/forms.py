@@ -7,8 +7,8 @@ from django.forms import ModelForm
 
 from django.forms.models import inlineformset_factory
 
-from djangoerp.forms import ERPForm
-# rom djangoerp.layouts import Helper, Layout
+from djangobmf.forms import BMFForm
+# rom djangobmf.layouts import Helper, Layout
 
 from .models import Quotation, QuotationProduct
 
@@ -28,13 +28,13 @@ class QuotationCreateForm(ModelForm):
 QuotationInlineFormset = inlineformset_factory(Quotation, QuotationProduct, extra=2, exclude=[])
 
 
-class ERPQuotationUpdateForm(ERPForm):
+class BMFQuotationUpdateForm(BMFForm):
     class Meta:
         form_class = QuotationUpdateForm
         inlines = {'products': QuotationInlineFormset}
 
 
-class ERPQuotationCreateForm(ERPForm):
+class BMFQuotationCreateForm(BMFForm):
     class Meta:
         form_class = QuotationCreateForm
         inlines = {'products': QuotationInlineFormset}

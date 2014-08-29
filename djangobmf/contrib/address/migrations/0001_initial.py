@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import django.db.models.deletion
 from django.conf import settings
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 
 class Migration(migrations.Migration):
 

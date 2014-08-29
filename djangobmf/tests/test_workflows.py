@@ -164,10 +164,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from ..utils import get_model_from_cfg
-from ..testcase import ERPModuleTestCase
+from ..testcase import BMFModuleTestCase
 
 
-class ViewTests(ERPModuleTestCase):
+class ViewTests(BMFModuleTestCase):
 
     def test_views(self):
         """
@@ -179,17 +179,17 @@ class ViewTests(ERPModuleTestCase):
             'customer': 1,
             'date': '2012-01-01',
             'employee': 1,
-            'erp-products-TOTAL_FORMS': 1,
-            'erp-products-INITIAL_FORMS': 0,
-            'erp-products-MAX_NUM_FORMS': 1,
-            'erp-products-0-product': 1,
-            'erp-products-0-amount': 1,
-            'erp-products-0-price': 100,
-            'erp-products-0-name': "Service",
+            'bmf-products-TOTAL_FORMS': 1,
+            'bmf-products-INITIAL_FORMS': 0,
+            'bmf-products-MAX_NUM_FORMS': 1,
+            'bmf-products-0-product': 1,
+            'bmf-products-0-amount': 1,
+            'bmf-products-0-price': 100,
+            'bmf-products-0-name': "Service",
         })
 
         model = get_model_from_cfg("QUOTATION")
-        namespace = model._erpmeta.url_namespace
+        namespace = model._bmfmeta.url_namespace
 
         obj = self.model.objects.order_by('pk').last()
 

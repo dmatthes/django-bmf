@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from django.conf.urls import patterns, url
 
-from djangoerp.sites import site
+from djangobmf.sites import site
 
 from .models import Position
 from .views import PositionTableView

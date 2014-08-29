@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: static/djangoerp/js/djangoerp.min.js:39
+#: static/djangobmf/js/djangobmf.min.js:39
 msgid ""
 "Error 403\n"
 " You don't have permission to view this page"
@@ -26,7 +26,7 @@ msgstr ""
 "Fehler 403\n"
 " Sie haben eine rechte diese Seite zu betrachten"
 
-#: static/djangoerp/js/djangoerp.min.js:39
+#: static/djangobmf/js/djangobmf.min.js:39
 msgid ""
 "Error 404\n"
 " Page not found"
@@ -34,7 +34,7 @@ msgstr ""
 "Fehler 404\n"
 " Die Seite konnte nicht gefunden werden"
 
-#: static/djangoerp/js/djangoerp.min.js:39
+#: static/djangobmf/js/djangobmf.min.js:39
 msgid ""
 "Error 500\n"
 " An Error occured while rendering the page"

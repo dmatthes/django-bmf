@@ -5,7 +5,7 @@ Invoice
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.invoice.models
+.. automodule:: djangobmf.contrib.invoice.models
    :members:
    :show-inheritance:
 

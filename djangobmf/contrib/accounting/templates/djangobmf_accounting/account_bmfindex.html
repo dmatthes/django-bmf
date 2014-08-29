@@ -1,4 +1,4 @@
-{% extends "djangoerp/module_index.html" %}
+{% extends "djangobmf/module_index.html" %}
 
 {% load mptt_tags sekizai_tags %}
 
@@ -24,7 +24,7 @@
       </td>
       <td class="text-right">{{ node.balance }} {{ node.balance_currency }}</td>
       <td class="text-right">
-        <a class="btn btn-xs btn-primary" href="{{ node.erpmodule_detail }}">
+        <a class="btn btn-xs btn-primary" href="{{ node.bmfmodule_detail }}">
           <span class="glyphicon glyphicon-list"></span>
         </a>
       </td>

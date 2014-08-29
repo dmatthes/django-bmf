@@ -8,10 +8,10 @@ from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 
 from .models import Product
-from ...testcase import ERPModuleTestCase
+from ...testcase import BMFModuleTestCase
 
 
-class ProductTests(ERPModuleTestCase):
+class ProductTests(BMFModuleTestCase):
 
     def test_urls_user(self):
         """

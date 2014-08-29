@@ -14,15 +14,15 @@ from django.views.generic.edit import FormView
 from ..viewmixins import AjaxMixin
 from ..viewmixins import NextMixin
 
-from .forms import ERPAuthenticationForm
+from .forms import BMFAuthenticationForm
 
 
 class LogoutModal(AjaxMixin, TemplateView):
-    template_name = 'djangoerp/account/modal_logout.html'
+    template_name = 'djangobmf/account/modal_logout.html'
 
 
 class LogoutView(TemplateView):
-    template_name = "djangoerp/account/logout.html"
+    template_name = "djangobmf/account/logout.html"
 
     def get(self, *args, **kwargs):
         logout(self.request)
@@ -30,9 +30,9 @@ class LogoutView(TemplateView):
 
 
 class LoginView(FormView, NextMixin):
-    form_class = ERPAuthenticationForm
+    form_class = BMFAuthenticationForm
     redirect_field_name = REDIRECT_FIELD_NAME
-    template_name = 'djangoerp/account/login.html'
+    template_name = 'djangobmf/account/login.html'
 
     @method_decorator(never_cache)
     def dispatch(self, *args, **kwargs):
@@ -47,7 +47,7 @@ class LoginView(FormView, NextMixin):
         return super(LoginView, self).form_invalid(form)
 
     def get_success_url(self):
-        return self.redirect_next('djangoerp:dashboard')
+        return self.redirect_next('djangobmf:dashboard')
 
     def get(self, request, *args, **kwargs):
         self.request.session.set_test_cookie()

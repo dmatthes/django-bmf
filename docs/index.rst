@@ -1,7 +1,7 @@
-.. django ERP documentation master file
+.. django BMF documentation master file
 
 ####################################
-Welcome to django ERP documentation!
+Welcome to django BMF documentation!
 ####################################
 
 This document refers to version |release|

@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/customer/erp_module.py:18
+#: contrib/customer/bmf_module.py:18
 msgid "Company"
 msgstr ""
 
-#: contrib/customer/erp_module.py:19 contrib/customer/models.py:50
+#: contrib/customer/bmf_module.py:19 contrib/customer/models.py:50
 msgid "Customer"
 msgstr "Kunde"
 

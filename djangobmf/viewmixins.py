@@ -15,10 +15,10 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.defaults import permission_denied
 
-from djangoerp import get_version
-from djangoerp.decorators import login_required
-from djangoerp.models import Notification
-from djangoerp.utils import get_model_from_cfg
+from djangobmf import get_version
+from djangobmf.decorators import login_required
+from djangobmf.models import Notification
+from djangobmf.utils import get_model_from_cfg
 
 import json
 import datetime
@@ -49,14 +49,14 @@ class BaseMixin(object):
         return True
 
     def read_session_data(self):
-        return self.request.session.get("djangoerp", {'version': get_version()})
+        return self.request.session.get("djangobmf", {'version': get_version()})
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """
         checks permissions, requires a login and
         because we are using a generic view approach to the data-models
-        in django ERP, we can ditch a middleware (less configuration)
+        in django BMF, we can ditch a middleware (less configuration)
         and add the functionality to this function.
         """
 
@@ -68,24 +68,24 @@ class BaseMixin(object):
         employee = get_model_from_cfg('EMPLOYEE')
         if employee:
             try:
-                self.request.user.djangoerp_employee = employee.objects.get(user=self.request.user)
+                self.request.user.djangobmf_employee = employee.objects.get(user=self.request.user)
             except employee.DoesNotExist:
-                # the user does not have permission to view the erp
+                # the user does not have permission to view the bmf
                 if self.request.user.is_superuser:
-                    return redirect('djangoerp:wizard', permanent=False)
+                    return redirect('djangobmf:wizard', permanent=False)
                 else:
                     raise PermissionDenied
         else:
-            self.request.user.djangoerp_employee = None
+            self.request.user.djangobmf_employee = None
 
         # === TEAM ========================================================
 
         team = get_model_from_cfg('TEAM')
         if team:
-            self.request.user.djangoerp_teams = \
-                team.objects.filter(members=self.request.user.djangoerp_employee).values_list("id", flat=1)
+            self.request.user.djangobmf_teams = \
+                team.objects.filter(members=self.request.user.djangobmf_employee).values_list("id", flat=1)
         else:
-            self.request.user.djangoerp_teams = None
+            self.request.user.djangobmf_teams = None
 
         return super(BaseMixin, self).dispatch(*args, **kwargs)
 
@@ -99,26 +99,26 @@ class ViewMixin(BaseMixin):
         session_data.update(data)
 
         # update session
-        self.request.session["djangoerp"] = session_data
+        self.request.session["djangobmf"] = session_data
         if modify:
             self.request.session.modified = True
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            'djangoerp': self.read_session_data()
+            'djangobmf': self.read_session_data()
         })
         # allways read current version, if in development mode
         if settings.DEBUG:
-            kwargs["djangoerp"]['version'] = get_version()
+            kwargs["djangobmf"]['version'] = get_version()
         return super(BaseMixin, self).get_context_data(**kwargs)
 
     def update_notification(self, check_object=True):
         """
-        This function is used by django ERP to update the notifications
-        used in the ERP-Framework
+        This function is used by django BMF to update the notifications
+        used in the BMF-Framework
         """
         if check_object \
-                and not self.object.djangoerp_notification.filter(
+                and not self.object.djangobmf_notification.filter(
                     user=self.request.user,
                     unread=True,
                 ).update(unread=None, changed=now()):
@@ -136,7 +136,7 @@ class ViewMixin(BaseMixin):
 
     def update_dashboard(self, pk=None):
         """
-        This function is used by django ERP to update the dashboards.
+        This function is used by django BMF to update the dashboards.
         provide a primary key, if you don't want to set an active
         dashboard.
         """
@@ -163,7 +163,7 @@ class ViewMixin(BaseMixin):
 
     def update_views(self):
         """
-        This function is used by django ERP to update the views.
+        This function is used by django BMF to update the views.
         just call it, if you need it
         """
         session_data = self.read_session_data()
@@ -263,7 +263,7 @@ class NextMixin(object):
 
 class ModuleViewPermissionMixin(object):
     """
-    Checks view permissions of an erpmodule
+    Checks view permissions of an bmfmodule
     """
 
     def get_permissions(self, perms):
@@ -274,7 +274,7 @@ class ModuleViewPermissionMixin(object):
 
 class ModuleCreatePermissionMixin(object):
     """
-    Checks create permissions of an erpmodule
+    Checks create permissions of an bmfmodule
     """
 
     def get_permissions(self, perms):
@@ -286,7 +286,7 @@ class ModuleCreatePermissionMixin(object):
 
 class ModuleClonePermissionMixin(object):
     """
-    Checks create permissions of an erpmodule
+    Checks create permissions of an bmfmodule
     """
 
     def get_permissions(self, perms):
@@ -298,11 +298,11 @@ class ModuleClonePermissionMixin(object):
 
 class ModuleUpdatePermissionMixin(object):
     """
-    Checks update permissions of an erpmodule
+    Checks update permissions of an bmfmodule
     """
 
     def check_permissions(self):
-        return self.get_object()._erpworkflow._current_state.update \
+        return self.get_object()._bmfworkflow._current_state.update \
             and super(ModuleUpdatePermissionMixin, self).check_permissions()
 
     def get_permissions(self, perms):
@@ -314,11 +314,11 @@ class ModuleUpdatePermissionMixin(object):
 
 class ModuleDeletePermissionMixin(object):
     """
-    Checks delete permission of an erpmodule
+    Checks delete permission of an bmfmodule
     """
 
     def check_permissions(self):
-        return self.get_object()._erpworkflow._current_state.delete \
+        return self.get_object()._bmfworkflow._current_state.delete \
             and super(ModuleDeletePermissionMixin, self).check_permissions()
 
     def get_permissions(self, perms):
@@ -346,26 +346,26 @@ class ModuleBaseMixin(object):
     def get_context_data(self, **kwargs):
         info = self.model._meta.app_label, self.model._meta.model_name
         kwargs.update({
-            'erpmodule': {
-                'namespace_index': self.model._erpmeta.url_namespace + ':index',
+            'bmfmodule': {
+                'namespace_index': self.model._bmfmeta.url_namespace + ':index',
                 'verbose_name_plural': self.model._meta.verbose_name_plural,
-                'create_views': self.model._erpmeta.create_views,
+                'create_views': self.model._bmfmeta.create_views,
                 'model': self.model,
-                'has_report': self.model._erpmeta.has_report,
-                'can_clone': self.model._erpmeta.can_clone and self.request.user.has_perms([
+                'has_report': self.model._bmfmeta.has_report,
+                'can_clone': self.model._bmfmeta.can_clone and self.request.user.has_perms([
                     '%s.view_%s' % info,
                     '%s.clone_%s' % info,
                 ]),
-                # 'namespace': self.model._erpmeta.url_namespace,  # unused
+                # 'namespace': self.model._bmfmeta.url_namespace,  # unused
                 # 'verbose_name': self.model._meta.verbose_name,  # unused
             },
         })
         if hasattr(self, 'object') and self.object:
             kwargs.update({
-                'erpworkflow': {
-                    'enabled': bool(len(self.model._erpworkflow._transitions)),
-                    'state': self.object._erpworkflow._current_state,
-                    'transitions': self.object._erpworkflow._from_here(self.object, self.request.user),
+                'bmfworkflow': {
+                    'enabled': bool(len(self.model._bmfworkflow._transitions)),
+                    'state': self.object._bmfworkflow._current_state,
+                    'transitions': self.object._bmfworkflow._from_here(self.object, self.request.user),
                 },
             })
         return super(ModuleBaseMixin, self).get_context_data(**kwargs)
@@ -407,7 +407,7 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
 
 class ModuleViewMixin(ModuleBaseMixin, ViewMixin):
     """
-    Basic objects, includes erp-specific functions and context
-    variables for erp-views
+    Basic objects, includes bmf-specific functions and context
+    variables for bmf-views
     """
     pass

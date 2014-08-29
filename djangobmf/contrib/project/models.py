@@ -8,26 +8,26 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangoerp.models import ERPModel
-from djangoerp.categories import PROJECT
-from djangoerp.settings import BASE_MODULE
+from djangobmf.models import BMFModel
+from djangobmf.categories import PROJECT
+from djangobmf.settings import BASE_MODULE
 
 
 @python_2_unicode_compatible
-class BaseProject(ERPModel):
+class BaseProject(BMFModel):
     if BASE_MODULE["CUSTOMER"]:
         customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="erp_projects",
+            BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="bmf_projects",
             on_delete=models.SET_NULL,
         )
     team = models.ForeignKey(
         BASE_MODULE["TEAM"], null=True, blank=True,
         on_delete=models.SET_NULL,
-        related_name="erp_projects",
+        related_name="bmf_projects",
     )
     employees = models.ManyToManyField(
         BASE_MODULE["EMPLOYEE"], blank=True,
-        related_name="erp_projects",
+        related_name="bmf_projects",
     )
 
     name = models.CharField(_("Name"), max_length=255, null=False, blank=False, editable=True, )
@@ -43,16 +43,16 @@ class BaseProject(ERPModel):
             ('can_manage', 'Can manage all projects'),
         )
 
-    class ERPMeta:
+    class BMFMeta:
         category = PROJECT
 
     def __str__(self):
         return self.name
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         return self.customer
 
-    def erpget_project(self):
+    def bmfget_project(self):
         return self
 
     # TODO add validations and make it impossible that you can create a project which is hidden to yourself
@@ -62,9 +62,9 @@ class BaseProject(ERPModel):
         if user.has_perm('%s.can_manage' % cls._meta.app_label, cls):
             return qs
         return qs.filter(
-            Q(employees=getattr(user, 'djangoerp_employee', -1))
+            Q(employees=getattr(user, 'djangobmf_employee', -1))
             |
-            Q(team__in=getattr(user, 'djangoerp_teams', []))
+            Q(team__in=getattr(user, 'djangobmf_teams', []))
         )
 
 
@@ -76,7 +76,7 @@ class AbstractProject(BaseProject):
     class Meta(BaseProject.Meta):
         abstract = True
 
-    class ERPMeta(BaseProject.ERPMeta):
+    class BMFMeta(BaseProject.BMFMeta):
         search_fields = ['name']
         has_logging = True
         has_comments = True

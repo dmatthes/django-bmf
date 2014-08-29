@@ -9,23 +9,23 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from .storage import ERPStorage
+from .storage import BMFStorage
 
 from ..categories import DOCUMENT
 from ..utils import generate_filename
-from ..modelbase import ERPModel
+from ..modelbase import BMFModel
 
 
 @python_2_unicode_compatible
-class BaseDocument(ERPModel):
-    file = models.FileField(_('File'), upload_to=generate_filename, storage=ERPStorage())
+class BaseDocument(BMFModel):
+    file = models.FileField(_('File'), upload_to=generate_filename, storage=BMFStorage())
     size = models.PositiveIntegerField(null=True, blank=True, editable=False)
 
     is_static = models.BooleanField(default=False)
 
     content_type = models.ForeignKey(
         ContentType,
-        related_name="erp_document",
+        related_name="bmf_document",
         null=True,
         blank=True,
         editable=False,
@@ -47,20 +47,20 @@ class BaseDocument(ERPModel):
         if self.file:
             self.size = self.file.size
 
-        if hasattr(self, 'project') and hasattr(self.content_object, 'erpget_project'):
+        if hasattr(self, 'project') and hasattr(self.content_object, 'bmfget_project'):
             self.project = self.content_object.get_project
 
-        if hasattr(self, 'customer') and hasattr(self.content_object, 'erpget_customer'):
+        if hasattr(self, 'customer') and hasattr(self.content_object, 'bmfget_customer'):
             self.customer = self.content_object.get_customer
 
-    class ERPMeta:
+    class BMFMeta:
         category = DOCUMENT
         has_history = False
         has_file = False
 
     @models.permalink
-    def erpfile_download(self):
+    def bmffile_download(self):
         """
-        A permalink to the default view of this model in the ERP-System
+        A permalink to the default view of this model in the BMF-System
         """
-        return ('djangoerp:file_download', (), {"pk": self.pk})
+        return ('djangobmf:file_download', (), {"pk": self.pk})

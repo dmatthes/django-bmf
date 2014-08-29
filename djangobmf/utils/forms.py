@@ -3,16 +3,16 @@
 
 from __future__ import unicode_literals
 
-from ..forms import ERPForm
+from ..forms import BMFForm
 
 
 def form_class_factory(cls):
-    if issubclass(cls, ERPForm):
+    if issubclass(cls, BMFForm):
         return cls
 
-    class FactoryERPForm(ERPForm):
+    class FactoryBMFForm(BMFForm):
         class Meta:
             form_class = cls
 
-    FactoryERPForm.__name__ = cls.__name__ + str('ERP')
-    return FactoryERPForm
+    FactoryBMFForm.__name__ = cls.__name__ + str('BMF')
+    return FactoryBMFForm

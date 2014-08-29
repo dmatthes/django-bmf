@@ -57,4 +57,4 @@ __docformat__ = 'restructuredtext'
 
 # -eof meta-
 
-default_app_config = 'djangoerp.apps.ERPConfig'
+default_app_config = 'djangobmf.apps.BMFConfig'

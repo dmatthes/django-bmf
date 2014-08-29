@@ -15,7 +15,7 @@ from ..utils.markdown.strikethrough import StrikeThroughExtension
 register = template.Library()
 
 
-@register.filter(name="erpmarkup")
+@register.filter(name="bmfmarkup")
 def markdown_filter(text):
     """
     """

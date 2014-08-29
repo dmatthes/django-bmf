@@ -42,8 +42,8 @@ class Report(models.Model):
         _("Mimetype"), max_length=20, blank=False, null=False, editable=False, default="pdf",
     )
     contenttype = models.ForeignKey(
-        ContentType, related_name="erp_report", null=True, blank=True,
-        help_text="Connect a Report to an ERP-Model", on_delete=models.CASCADE,
+        ContentType, related_name="bmf_report", null=True, blank=True,
+        help_text="Connect a Report to an BMF-Model", on_delete=models.CASCADE,
     )
     # TODO needs validator
     options = models.TextField(
@@ -68,7 +68,7 @@ class Report(models.Model):
             self.options = generator.get_default_options().strip()
 
     def get_generator(self):
-        from djangoerp.sites import site
+        from djangobmf.sites import site
         return site.reports[self.reporttype](self.options)
 
     # response with generated file

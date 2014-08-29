@@ -9,4 +9,4 @@ TEST DOCTYPE
 
 """
 
-default_app_config = 'djangoerp.contrib.project.apps.ProjectConfig'
+default_app_config = 'djangobmf.contrib.project.apps.ProjectConfig'

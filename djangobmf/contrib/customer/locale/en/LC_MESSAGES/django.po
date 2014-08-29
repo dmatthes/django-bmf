@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contrib/customer/erp_module.py:18
+#: contrib/customer/bmf_module.py:18
 msgid "Company"
 msgstr ""
 
-#: contrib/customer/erp_module.py:19 contrib/customer/models.py:50
+#: contrib/customer/bmf_module.py:19 contrib/customer/models.py:50
 msgid "Customer"
 msgstr ""
 

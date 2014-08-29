@@ -35,7 +35,7 @@ class FormsetNode(Node):
 
     def render(self, context):
         field = self.field.resolve(context)
-        template = "djangoerp/forms/base_formset.html"
+        template = "djangobmf/forms/base_formset.html"
 
         context.update({
             'formset': context['form'].forms[field.name],
@@ -61,17 +61,17 @@ class LayoutNode(Node):
         if hasattr(layout, 'template'):
             template = layout.template
         else:
-            template = "djangoerp/forms/layout_field.html"
+            template = "djangobmf/forms/layout_field.html"
             if isinstance(field.field.widget, forms.CheckboxInput):
-                template = "djangoerp/forms/layout_checkbox.html"
+                template = "djangobmf/forms/layout_checkbox.html"
 #     if isinstance(field.field.widget, forms.CheckboxSelectMultiple):
-#       template = "erp/forms/layout_checkbox_multiple.html"
+#       template = "bmf/forms/layout_checkbox_multiple.html"
 #       return '<div>NOT IMPELEMTED</div>'
 #     if isinstance(field.field.widget, forms.RadioSelect):
-#       template = "erp/forms/layout_radio.html"
+#       template = "bmf/forms/layout_radio.html"
 #       return '<div>NOT IMPELEMTED</div>'
             if isinstance(field.field.widget, forms.FileInput):
-                template = "djangoerp/forms/layout_file.html"
+                template = "djangobmf/forms/layout_file.html"
 
 #   # look for detault templates, if the field does not provide a template information
 #   if isinstance(field.field,forms.models.ModelMultipleChoiceField):
@@ -98,11 +98,11 @@ class HelperNode(Node):
     def render(self, context):
         as_view = self.as_view.resolve(context)
         form = self.form.resolve(context)
-        return form.erphelper.render(form, as_view, context)
+        return form.bmfhelper.render(form, as_view, context)
 
 
-@register.tag('erphelper')
-def erphelper(parser, token):
+@register.tag('bmfhelper')
+def bmfhelper(parser, token):
     try:
         tag_name, as_view = token.split_contents()
     except ValueError:
@@ -110,26 +110,26 @@ def erphelper(parser, token):
     return HelperNode(as_view)
 
 
-@register.tag('erpform')
-def erpform(parser, token):
+@register.tag('bmfform')
+def bmfform(parser, token):
     bits = token.split_contents()
-    template = "djangoerp/forms/base_form.html"
+    template = "djangobmf/forms/base_form.html"
     if len(bits) == 2:
         template = bits[1]
     return FormNode(template, form_as_view=False)
 
 
-@register.tag('erpview')
-def erpview(parser, token):
+@register.tag('bmfview')
+def bmfview(parser, token):
     bits = token.split_contents()
-    template = "djangoerp/forms/base_view.html"
+    template = "djangobmf/forms/base_view.html"
     if len(bits) == 2:
         template = bits[1]
     return FormNode(template, form_as_view=True)
 
 
-@register.tag('erplayout')
-def erplayout(parser, token):
+@register.tag('bmflayout')
+def bmflayout(parser, token):
     try:
         tag_name, obj = token.split_contents()
     except ValueError:
@@ -137,8 +137,8 @@ def erplayout(parser, token):
     return LayoutNode(obj)
 
 
-@register.tag('erpformset')
-def erpformset(parser, token):
+@register.tag('bmfformset')
+def bmfformset(parser, token):
     try:
         tag_name, obj = token.split_contents()
     except ValueError:
@@ -147,7 +147,7 @@ def erpformset(parser, token):
 
 
 @register.simple_tag
-def erpfield(field, only_text):
+def bmffield(field, only_text):
     # TODO check if you can move this to templates
     if only_text:
         if not hasattr(field.field, 'choices'):
@@ -160,7 +160,7 @@ def erpfield(field, only_text):
             for choice in field.field.choices:
                 if choice[0] == field.value():
                     return '<p class="form-control-static">%s</p>' % choice[1]
-        return 'NOT IMPLEMENTED in erpcore/templatetags/djangoerp_form.py'
+        return 'NOT IMPLEMENTED in bmfcore/templatetags/djangobmf_form.py'
     else:
 
         if isinstance(field.field, forms.models.ModelMultipleChoiceField):
@@ -168,13 +168,13 @@ def erpfield(field, only_text):
 
         elif isinstance(field.field, forms.models.ModelChoiceField):
             model = field.field.choices.queryset.model
-            if hasattr(model, "_erpmeta"):
+            if hasattr(model, "_bmfmeta"):
                 if field.value():
                     # FIXME FAILS IF QUERYSET IS INVALID
                     text = field.field.choices.queryset.get(pk=field.value())
                 else:
                     text = ""
-                data = '<div class="input-group" data-erp-autocomplete="1">'
+                data = '<div class="input-group" data-bmf-autocomplete="1">'
                 data += field.as_text(attrs={
                     'class': 'form-control',
                     'id': '%s-value' % field.auto_id,
@@ -191,17 +191,17 @@ def erpfield(field, only_text):
                 return field.as_widget(attrs={'class': 'form-control'})
 
         elif isinstance(field.field, forms.DateTimeField):
-            data = '<div class="input-group" data-erp-calendar="dt">'
+            data = '<div class="input-group" data-bmf-calendar="dt">'
             data += field.as_widget(attrs={'class': 'form-control', 'autocomplete': 'off'})
             data += '</div>'
             return data
         elif isinstance(field.field, forms.DateField):
-            data = '<div class="input-group" data-erp-calendar="d">'
+            data = '<div class="input-group" data-bmf-calendar="d">'
             data += field.as_widget(attrs={'class': 'form-control', 'autocomplete': 'off'})
             data += '</div>'
             return data
         elif isinstance(field.field, forms.TimeField):
-            data = '<div class="input-group" data-erp-calendar="t">'
+            data = '<div class="input-group" data-bmf-calendar="t">'
             data += field.as_widget(attrs={'class': 'form-control', 'autocomplete': 'off'})
             data += '</div>'
             return data

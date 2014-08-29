@@ -4,9 +4,9 @@
 from __future__ import unicode_literals
 
 __all__ = (
-    'ERPSimpleModel',
-    'ERPModel',
-    'ERPMPTTModel',
+    'BMFSimpleModel',
+    'BMFModel',
+    'BMFMPTTModel',
     'Activity',
     'Dashboard',
     'Configuration',
@@ -17,9 +17,9 @@ __all__ = (
     'Watch',
 )
 
-from .modelbase import ERPSimpleModel
-from .modelbase import ERPModel
-from .modelbase import ERPMPTTModel
+from .modelbase import BMFSimpleModel
+from .modelbase import BMFModel
+from .modelbase import BMFMPTTModel
 
 from .activity.models import Activity
 from .dashboard.models import Dashboard

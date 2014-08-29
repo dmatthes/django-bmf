@@ -9,4 +9,4 @@ TEST DOCTYPE
 
 """
 
-default_app_config = 'djangoerp.contrib.document.apps.DocumentConfig'
+default_app_config = 'djangobmf.contrib.document.apps.DocumentConfig'

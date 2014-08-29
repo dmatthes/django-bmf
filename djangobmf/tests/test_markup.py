@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
-from ..templatetags.djangoerp_markup import markdown_filter
+from ..templatetags.djangobmf_markup import markdown_filter
 
 
 class MarkdownTests(TestCase):

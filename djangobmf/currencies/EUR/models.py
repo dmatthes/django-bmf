@@ -5,8 +5,8 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.sites import site
-from djangoerp.currency import BaseCurrency
+from djangobmf.sites import site
+from djangobmf.currency import BaseCurrency
 
 
 class EUR(BaseCurrency):

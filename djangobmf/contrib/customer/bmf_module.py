@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.sites import site
+from djangobmf.sites import site
 
 from .models import Customer
 

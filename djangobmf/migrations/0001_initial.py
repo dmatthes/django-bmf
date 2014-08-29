@@ -5,7 +5,7 @@ from django.db import models, migrations
 import django.utils.timezone
 import django.db.models.deletion
 from django.conf import settings
-import djangoerp.numbering.validators
+import djangobmf.numbering.validators
 
 
 class Migration(migrations.Migration):
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('template', models.CharField(verbose_name='Template', max_length=100, null=True, editable=False)),
                 ('parent_id', models.PositiveIntegerField()),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified')),
-                ('parent_ct', models.ForeignKey(to='contenttypes.ContentType', related_name='erp_history_parent')),
+                ('parent_ct', models.ForeignKey(to='contenttypes.ContentType', related_name='bmf_history_parent')),
                 ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                 ('unread', models.NullBooleanField(default=True)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
                 ('changed', models.DateTimeField(auto_now=True, verbose_name='Changed')),
-                ('activity', models.ForeignKey(to='djangoerp.Activity', null=True)),
+                ('activity', models.ForeignKey(to='djangobmf.Activity', null=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
                 ('obj_ct', models.ForeignKey(to='contenttypes.ContentType')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
@@ -90,7 +90,7 @@ class Migration(migrations.Migration):
             name='NumberCycle',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name_template', models.CharField(max_length=64, null=True, verbose_name='Template', validators=[djangoerp.numbering.validators.template_name_validator])),
+                ('name_template', models.CharField(max_length=64, null=True, verbose_name='Template', validators=[djangobmf.numbering.validators.template_name_validator])),
                 ('counter_start', models.PositiveIntegerField(default=1, null=True)),
                 ('current_period', models.DateField(default=django.utils.timezone.now, null=True)),
                 ('ct', models.OneToOneField(null=True, editable=False, to='contenttypes.ContentType')),
@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
                 ('mimetype', models.CharField(default='pdf', verbose_name='Mimetype', max_length=20, editable=False)),
                 ('options', models.TextField(help_text='Options for the renderer. Empty this field to get all available options with default values', verbose_name='Options', blank=True)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified')),
-                ('contenttype', models.ForeignKey(blank=True, to='contenttypes.ContentType', help_text='Connect a Report to an ERP-Model', null=True)),
+                ('contenttype', models.ForeignKey(blank=True, to='contenttypes.ContentType', help_text='Connect a Report to an BMF-Model', null=True)),
             ],
             options={
                 'get_latest_by': 'modified',
@@ -125,7 +125,7 @@ class Migration(migrations.Migration):
                 ('url', models.CharField(max_length=80, null=True)),
                 ('kwargs', models.CharField(max_length=255, null=True, blank=True)),
                 ('search', models.CharField(max_length=255, null=True, blank=True)),
-                ('dashboard', models.ForeignKey(to='djangoerp.Dashboard', null=True)),
+                ('dashboard', models.ForeignKey(to='djangobmf.Dashboard', null=True)),
             ],
             options={
                 'ordering': ('name',),

@@ -1,6 +1,6 @@
-{% extends "djangoerp/module_base.html" %}
+{% extends "djangobmf/module_base.html" %}
 
-{% load djangoerp_core %}
+{% load djangobmf_core %}
 {% load i18n %}
 
 {% block base_content %}
@@ -8,7 +8,7 @@
 <p>{% trans "This object is not valid. You need to edit it in order to change it's state."%}</p>
 <p>{{ error }}</p>
 <p>
-    <a href="{% get_erp_url object "detail" %}" class="btn btn-default">{% trans "Back" %}</a>
-    <a href="{% get_erp_url object "update" %}" class="btn btn-primary">{% trans "Edit" %}</a>
+    <a href="{% get_bmf_url object "detail" %}" class="btn btn-default">{% trans "Back" %}</a>
+    <a href="{% get_bmf_url object "update" %}" class="btn btn-primary">{% trans "Edit" %}</a>
 </p>
 {% endblock %}

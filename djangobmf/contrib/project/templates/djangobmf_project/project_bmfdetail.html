@@ -1,6 +1,6 @@
-{% extends "djangoerp/module_detail.html" %}
+{% extends "djangobmf/module_detail.html" %}
 
-{% load i18n djangoerp_markup %}
+{% load i18n djangobmf_markup %}
 
 {% block title %}{% trans "Project" %}: {{ object.name }}{% endblock %}
 
@@ -8,11 +8,11 @@
 <h1>{% trans "Project" %}: {{ object.name }}</h1>
 <ol class="breadcrumb">
   <li>{% if object.is_active %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}</li>
-  {% if object.customer_id %}<li><a href="{{ object.customer.erpmodule_detail }}">{{ object.customer }}</a> ({% trans "Customer" %})</li>{% endif %}
-  {% if object.employee_id %}<li><a href="{{ object.employee.erpmodule_detail }}">{{ object.employee }}</a> ({% trans "Employee" %})</li>{% endif %}
+  {% if object.customer_id %}<li><a href="{{ object.customer.bmfmodule_detail }}">{{ object.customer }}</a> ({% trans "Customer" %})</li>{% endif %}
+  {% if object.employee_id %}<li><a href="{{ object.employee.bmfmodule_detail }}">{{ object.employee }}</a> ({% trans "Employee" %})</li>{% endif %}
 </ol>
 {% if object.notes %}
-{{ object.notes|erpmarkup }}
+{{ object.notes|bmfmarkup }}
 {% endif %}
 {{ block.super }}
 {% endblock %}

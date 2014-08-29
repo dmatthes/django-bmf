@@ -12,7 +12,7 @@ from django.utils.translation import activate
 import json
 
 
-class ERPViewTestCase(LiveServerTestCase):
+class BMFViewTestCase(LiveServerTestCase):
     fixtures = [
         "fixtures/users.json",
         "fixtures/demodata.json",
@@ -31,7 +31,7 @@ class ERPViewTestCase(LiveServerTestCase):
         activate('en')
 
 
-class ERPModuleTestCase(ERPViewTestCase):
+class BMFModuleTestCase(BMFViewTestCase):
     model = None
 
     def get_latest_object(self):
@@ -43,7 +43,7 @@ class ERPModuleTestCase(ERPViewTestCase):
         """
         tests the POST request of a view, returns the response
         """
-        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         if parameter:
             url += '?' + parameter
         r = self.client.get(url, data)
@@ -56,7 +56,7 @@ class ERPModuleTestCase(ERPViewTestCase):
         """
         tests the GET request of a view, returns the response
         """
-        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         if parameter:
             url += '?' + parameter
         r = self.client.post(url, data)
@@ -69,7 +69,7 @@ class ERPModuleTestCase(ERPViewTestCase):
         """
         tests the GET request of an ajax-view, returns the serialized data
         """
-        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         if parameter:
             url += '?' + parameter
         r = self.client.get(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -84,7 +84,7 @@ class ERPModuleTestCase(ERPViewTestCase):
         """
         tests the POST request of an ajax-view, returns the serialized data
         """
-        url = reverse(self.model._erpmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
         if parameter:
             url += '?' + parameter
         r = self.client.post(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -94,7 +94,7 @@ class ERPModuleTestCase(ERPViewTestCase):
         return r
 
 
-class ERPWorkflowTestCase(TestCase):
+class BMFWorkflowTestCase(TestCase):
     object = None
 
     def setUp(self):  # noqa
@@ -135,4 +135,4 @@ class ERPWorkflowTestCase(TestCase):
                 self.workflow_test(i, f, data["instance"], data["user"])
 
     def workflow_get(self):
-        return self.object._erpworkflow
+        return self.object._bmfworkflow

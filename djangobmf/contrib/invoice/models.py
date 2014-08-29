@@ -7,13 +7,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangoerp.models import ERPModel
-from djangoerp.categories import ACCOUNTING
-from djangoerp.settings import BASE_MODULE
-from djangoerp.fields import WorkflowField
-from djangoerp.numbering.utils import numbercycle_get_name, numbercycle_delete_object
-from djangoerp.fields import CurrencyField
-from djangoerp.fields import MoneyField
+from djangobmf.models import BMFModel
+from djangobmf.categories import ACCOUNTING
+from djangobmf.settings import BASE_MODULE
+from djangobmf.fields import WorkflowField
+from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
+from djangobmf.fields import CurrencyField
+from djangobmf.fields import MoneyField
 
 import datetime
 from decimal import Decimal
@@ -22,7 +22,7 @@ from .workflows import InvoiceWorkflow
 
 
 @python_2_unicode_compatible
-class AbstractInvoice(ERPModel):
+class AbstractInvoice(BMFModel):
     """
     """
     state = WorkflowField()
@@ -70,7 +70,7 @@ class AbstractInvoice(ERPModel):
         ordering = ['invoice_number']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = ACCOUNTING
         number_cycle = "INV{year}/{month}-{counter:04d}"
         has_files = True
@@ -84,12 +84,12 @@ class AbstractInvoice(ERPModel):
             name = numbercycle_get_name(instance)
             instance._meta.model.objects.filter(pk=instance.pk).update(invoice_number=name)
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         if hasattr(self, 'customer'):
             return self.customer
         return None
 
-    def erpget_project(self):
+    def bmfget_project(self):
         if hasattr(self, 'project'):
             return self.project
         return None

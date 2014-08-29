@@ -9,4 +9,4 @@ TEST DOCTYPE
 
 """
 
-default_app_config = 'djangoerp.contrib.quotation.apps.QuotationConfig'
+default_app_config = 'djangobmf.contrib.quotation.apps.QuotationConfig'

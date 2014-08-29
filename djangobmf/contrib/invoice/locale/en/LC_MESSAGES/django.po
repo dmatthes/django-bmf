@@ -61,49 +61,49 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:4
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:18
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:4
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:18
 #, python-format
 msgid "Invoice %(name)s"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:11
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:11
 msgid "Your contact person"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:24
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:24
 msgid "Dear Valued Customer,"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:33
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:33
 msgid "Quantity"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:34
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:34
 msgid "Article"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:35
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:35
 msgid "Tax"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:36
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:36
 msgid "Unit price"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:37
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:37
 msgid "Total price"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:63
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:63
 msgid "Subtotal"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:73
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:73
 msgid "Billing amount"
 msgstr ""
 
-#: contrib/invoice/templates/djangoerp_invoice/invoice_htmlreport.html:81
+#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:81
 msgid "With kind regards"
 msgstr ""
 

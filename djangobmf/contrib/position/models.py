@@ -7,11 +7,11 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangoerp.models import ERPModel
-from djangoerp.categories import SALES
-from djangoerp.settings import BASE_MODULE
-from djangoerp.fields import CurrencyField
-from djangoerp.fields import MoneyField
+from djangobmf.models import BMFModel
+from djangobmf.categories import SALES
+from djangobmf.settings import BASE_MODULE
+from djangobmf.fields import CurrencyField
+from djangobmf.fields import MoneyField
 
 
 RATE_CHOICES = (
@@ -29,7 +29,7 @@ class PositionManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class AbstractPosition(ERPModel):
+class AbstractPosition(BMFModel):
     """
     """
     if BASE_MODULE["PROJECT"]:
@@ -69,13 +69,13 @@ class AbstractPosition(ERPModel):
     def has_invoice(self):
         return bool(self.invoice)
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         if BASE_MODULE["PROJECT"]:
             return self.project.customer
         else:
             return None
 
-    def erpget_project(self):
+    def bmfget_project(self):
         if BASE_MODULE["PROJECT"]:
             return self.project
         else:
@@ -92,7 +92,7 @@ class AbstractPosition(ERPModel):
         verbose_name_plural = _('Positions')
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = SALES
         has_logging = False
 

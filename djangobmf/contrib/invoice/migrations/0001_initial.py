@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import django.db.models.deletion
 from django.conf import settings
-import djangoerp.fields
-from djangoerp.settings import BASE_MODULE
+import djangobmf.fields
+from djangobmf.settings import BASE_MODULE
 
 class Migration(migrations.Migration):
 
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified', null=True)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created', null=True)),
                 ('uuid', models.CharField(editable=False, max_length=100, blank=True, null=True, verbose_name='UUID', db_index=True)),
-                ('state', djangoerp.fields.WorkflowField(db_index=True, max_length=32, null=True, editable=False, blank=True)),
+                ('state', djangobmf.fields.WorkflowField(db_index=True, max_length=32, null=True, editable=False, blank=True)),
                 ('invoice_number', models.CharField(max_length=255, null=True, verbose_name='Invoice number')),
                 ('net', models.FloatField(null=True, editable=False, blank=True)),
                 ('date', models.DateField(null=True, verbose_name='Date')),
@@ -50,8 +50,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, null=True, verbose_name='Name')),
-                ('price', djangoerp.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
-                ('price_currency', djangoerp.fields.CurrencyField(default=djangoerp.fields.get_default_currency, max_length=4, null=True, editable=False)),
+                ('price', djangobmf.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
+                ('price_currency', djangobmf.fields.CurrencyField(default=djangobmf.fields.get_default_currency, max_length=4, null=True, editable=False)),
                 ('price_precision', models.PositiveSmallIntegerField(default=0, null=True, editable=False, blank=True)),
                 ('amount', models.FloatField(default=1.0, null=True, verbose_name='Amount')),
                 ('description', models.TextField(null=True, verbose_name='Description', blank=True)),
@@ -63,19 +63,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='invoice',
             name='products',
-            field=models.ManyToManyField(to=BASE_MODULE["PRODUCT"], through='djangoerp_invoice.InvoiceProduct'),
+            field=models.ManyToManyField(to=BASE_MODULE["PRODUCT"], through='djangobmf_invoice.InvoiceProduct'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='invoiceproduct',
             name='invoice',
-            field=models.ForeignKey(blank=True, to='djangoerp_invoice.Invoice', null=True),
+            field=models.ForeignKey(blank=True, to='djangobmf_invoice.Invoice', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='invoiceproduct',
             name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='djangoerp_product.Product', null=True),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='djangobmf_product.Product', null=True),
             preserve_default=True,
         ),
     ]

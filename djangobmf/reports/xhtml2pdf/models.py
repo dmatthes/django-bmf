@@ -6,9 +6,9 @@ from __future__ import unicode_literals
 from django.template.loader import select_template
 from django.template import Context
 
-from djangoerp.sites import site
-from djangoerp.report.models import BaseReport
-from djangoerp.utils import get_model_from_cfg
+from djangobmf.sites import site
+from djangobmf.report.models import BaseReport
+from djangobmf.utils import get_model_from_cfg
 
 from io import BytesIO
 from xhtml2pdf import pisa
@@ -50,7 +50,7 @@ pdf_background_pk = None
 
     def render(self, request, context):
         buffer = BytesIO()
-        model = context['erpmodule']['model']._meta
+        model = context['bmfmodule']['model']._meta
         template_name = '%s/%s_htmlreport.html' % (model.app_label, model.model_name)
 
         document = get_model_from_cfg('DOCUMENT')
@@ -95,7 +95,7 @@ pdf_background_pk = None
         }
         context['options'] = options
 
-        template = select_template([template_name, 'djangoerp/report_html_base.html'])
+        template = select_template([template_name, 'djangobmf/report_html_base.html'])
         html = template.render(Context(context))
         pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), buffer)  # pdf won't be UTF-8
         pdf = buffer.getvalue()

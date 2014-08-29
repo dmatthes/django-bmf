@@ -9,4 +9,4 @@ TEST DOCTYPE
 
 """
 
-default_app_config = 'djangoerp.contrib.address.apps.AddressConfig'
+default_app_config = 'djangobmf.contrib.address.apps.AddressConfig'

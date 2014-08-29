@@ -9,4 +9,4 @@ TEST DOCTYPE
 
 """
 
-default_app_config = 'djangoerp.contrib.position.apps.PositionConfig'
+default_app_config = 'djangobmf.contrib.position.apps.PositionConfig'

@@ -1,7 +1,7 @@
 /* calendar */
 
 (function($){
-    $.erp.calendar = function(el, options){
+    $.bmf.calendar = function(el, options){
         // To avoid scope issues, use 'base' instead of 'this'
         // to reference this class from internal events and functions.
         var base = this;
@@ -11,11 +11,11 @@
         base.el = el;
       
         // Add a reverse reference to the DOM object
-        base.$el.data("erp.calendar", base);
+        base.$el.data("bmf.calendar", base);
 
         base.init = function() {
             // load options
-            base.options = $.extend({}, $.erp.editform.defaultOptions, options);
+            base.options = $.extend({}, $.bmf.editform.defaultOptions, options);
 
             base.$el.append('<span class="input-group-btn"><button class="btn btn-default disabled" tabindex="-1" type="button"><span class="glyphicon glyphicon-calendar"></span></button></span>');
 
@@ -27,15 +27,15 @@
     };
 
     // default options
-    $.erp.calendar.defaultOptions = {
+    $.bmf.calendar.defaultOptions = {
         href: null,
         debug: false
     };
 
     // register as jquery function
-    $.fn.erp_calendar = function(options){
-        return $(this).find('div.input-group[data-erp-calendar]').each(function(){
-            (new $.erp.calendar(this, options));
+    $.fn.bmf_calendar = function(options){
+        return $(this).find('div.input-group[data-bmf-calendar]').each(function(){
+            (new $.bmf.calendar(this, options));
         });
     };
 })(jQuery);

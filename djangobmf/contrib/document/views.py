@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 
 # === VIEWS ===================================================================
 
-from djangoerp.views import ModuleCreateView
-from djangoerp.views import ModuleUpdateView
-from djangoerp.views import ModuleDetailView
+from djangobmf.views import ModuleCreateView
+from djangobmf.views import ModuleUpdateView
+from djangobmf.views import ModuleDetailView
 
 from .forms import DocumentForm
 

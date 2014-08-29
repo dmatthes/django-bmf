@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 from django.db import models
 # from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.settings import BASE_MODULE
-from djangoerp.file.models import BaseDocument
+from djangobmf.settings import BASE_MODULE
+from djangobmf.file.models import BaseDocument
 
 
 class AbstractDocument(BaseDocument):

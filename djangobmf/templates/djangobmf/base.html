@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>django ERP - {% block title %}{% endblock %}</title>
+    <title>django BMF - {% block title %}{% endblock %}</title>
     <meta name="author" content="Igelware" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="Content-Language" content="{{ LANGUAGE_CODE }}" />
     <meta name="language" content="{{ LANGUAGE_CODE }}" />
-    <link href="{% static "djangoerp/css/bootstrap.min.css" %}?v={{ djangoerp.version }}" rel="stylesheet">{% render_block "css" %}
+    <link href="{% static "djangobmf/css/bootstrap.min.css" %}?v={{ djangobmf.version }}" rel="stylesheet">{% render_block "css" %}
   </head>
   <body>
     <div id="wrap">
@@ -22,57 +22,57 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'djangoerp:dashboard' %}">django ERP</a>
+          <a class="navbar-brand" href="{% url 'djangobmf:dashboard' %}">django BMF</a>
         </div><!--/.nav-header -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          {% if djangoerp.dashboard %}
+          {% if djangobmf.dashboard %}
           <ul class="nav navbar-nav dashboards">
             <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-dashboard"></span> {% trans "Dashboards" %} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                {% for dashboard in djangoerp.dashboard %}
-                <li{% if djangoerp.current_dashboard and dashboard.pk == djangoerp.current_dashboard.pk %} class="active"{% endif %}><a href="{% url "djangoerp:dashboard" pk=dashboard.pk %}">{{ dashboard.name }}</a></li>
+                {% for dashboard in djangobmf.dashboard %}
+                <li{% if djangobmf.current_dashboard and dashboard.pk == djangobmf.current_dashboard.pk %} class="active"{% endif %}><a href="{% url "djangobmf:dashboard" pk=dashboard.pk %}">{{ dashboard.name }}</a></li>
                 {% endfor %}
               </ul>
             </li>
-            {% if djangoerp.dashboard_current %}
-              {% if djangoerp.views  %}
+            {% if djangobmf.dashboard_current %}
+              {% if djangobmf.views  %}
               <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list"></span> {{ djangoerp.dashboard_current.name }} <b class="caret"></b></a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list"></span> {{ djangobmf.dashboard_current.name }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  {% for view in djangoerp.views %}
+                  {% for view in djangobmf.views %}
                   <li><a href="{{ view.url }}">{{ view.name }}</a></li>
                   {% endfor %}
                 </ul>
               </li>
               {% else %}
-              <li class="disabled"><a href="#"><span class="glyphicon glyphicon-list"></span> {{ djangoerp.dashboard_current.name }}</a></li>
+              <li class="disabled"><a href="#"><span class="glyphicon glyphicon-list"></span> {{ djangobmf.dashboard_current.name }}</a></li>
               {% endif %}
             {% endif %}
           </ul>
           {% endif %}
           <ul class="nav navbar-nav navbar-right">{% block navbar %}
-            <li data-count="{{ djangoerp.notification_count }}" id="erp_notification"><a href="{% url 'djangoerp:notification' %}">
+            <li data-count="{{ djangobmf.notification_count }}" id="bmf_notification"><a href="{% url 'djangobmf:notification' %}">
               <span class="glyphicon glyphicon-comment"></span>
               <span class="nav-text">{% trans "Notifications" %}</span>
             </a></li>
 
             {% comment %}
-            <li data-count="{{ djangoerp.message_count }}" id="erp_message"><a href="{% url 'djangoerp:message' %}">
+            <li data-count="{{ djangobmf.message_count }}" id="bmf_message"><a href="{% url 'djangobmf:message' %}">
               <span class="glyphicon glyphicon-envelope"></span>
               <span class="nav-text">{% trans "Messages" %}</span>
             </a></li>
             {% endcomment %}
 
             {% comment %}
-            <li class="disabled" id="erp_calendar"><a href="#">
+            <li class="disabled" id="bmf_calendar"><a href="#">
               <span class="glyphicon glyphicon-calendar"></span>
               <span class="nav-text">{% trans "Calendar" %}</span>
             </a></li>
             {% endcomment %}
 
             {% comment %}
-            <li class="disabled" id="erp_timesheet"><a href="#">
+            <li class="disabled" id="bmf_timesheet"><a href="#">
               <span class="glyphicon glyphicon-time"></span>
               <span class="nav-text">{% trans "Timesheet" %}</span>
             </a></li>
@@ -84,15 +84,15 @@
                 <span class="nav-text">{% trans "Settings" %} <b class="caret"></b></span>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="{% url 'djangoerp:modules' %}">{% trans "Module overview" %}</a></li>
-                {% if erpmodule %}
-                <li><a id="erpapi_saveview" href="{% url 'djangoerp:modal_saveview' %}">{% trans "Save current view" %}</a></li>
+                <li><a href="{% url 'djangobmf:modules' %}">{% trans "Module overview" %}</a></li>
+                {% if bmfmodule %}
+                <li><a id="bmfapi_saveview" href="{% url 'djangobmf:modal_saveview' %}">{% trans "Save current view" %}</a></li>
                 {% else %}
                 <li class="disabled"><a href="#">{% trans "Save current view" %}</a></li>
                 {% endif %}
               </ul>
             </li>
-            <li><a id="erpapi_logout" href="{% url 'djangoerp:modal_logout' %}">
+            <li><a id="bmfapi_logout" href="{% url 'djangobmf:modal_logout' %}">
               <span class="glyphicon glyphicon-off"></span>
               <span class="nav-text">{% trans "Logout" %}</span>
             </a></li>
@@ -123,14 +123,14 @@
     </div> <!-- /wrap -->
     <footer>
       <div class="container">
-          <p>django ERP {{ djangoerp.version }}</small></p>
+          <p>django BMF {{ djangobmf.version }}</small></p>
       </div> <!-- /container -->
     </footer>
-    <script src="{% url "djangoerp:jsi18n" %}?v={{ djangoerp.version }}"></script>
+    <script src="{% url "djangobmf:jsi18n" %}?v={{ djangobmf.version }}"></script>
     {% if debug %}
-    <script src="{% static "djangoerp/js/djangoerp.js" %}?v={{ djangoerp.version }}"></script>
+    <script src="{% static "djangobmf/js/djangobmf.js" %}?v={{ djangobmf.version }}"></script>
     {% else %}
-    <script src="{% static "djangoerp/js/djangoerp.min.js" %}?v={{ djangoerp.version }}"></script>
+    <script src="{% static "djangobmf/js/djangobmf.min.js" %}?v={{ djangobmf.version }}"></script>
     {% endif %}{% render_block "js" %}
   </body>
 </html>

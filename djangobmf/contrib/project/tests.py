@@ -5,9 +5,9 @@
 from __future__ import unicode_literals
 
 from .models import Project
-from ...testcase import ERPModuleTestCase
+from ...testcase import BMFModuleTestCase
 
-class ProjectTests(ERPModuleTestCase):
+class ProjectTests(BMFModuleTestCase):
 
     def test_urls_user(self):
         """

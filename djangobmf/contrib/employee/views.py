@@ -3,12 +3,12 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import ModuleCreateView
+from djangobmf.views import ModuleCreateView
 
 
 class EmployeeCreateView(ModuleCreateView):
     def get_initial(self):
         # TODO: ADD a default product to settings and read the configuration here
-        # if self.request.djangoerp_employee:
-        #     self.initial.update({'product': self.request.erpcore['company'].employee_product_id})
+        # if self.request.djangobmf_employee:
+        #     self.initial.update({'product': self.request.bmfcore['company'].employee_product_id})
         return super(EmployeeCreateView, self).get_initial()

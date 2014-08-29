@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.db.models.deletion
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 
 if BASE_MODULE["EMPLOYEE"]:
     class Migration(migrations.Migration):
         dependencies = [
-            ('djangoerp_quotation', '0002_optional_quotation_project'),
+            ('djangobmf_quotation', '0002_optional_quotation_project'),
             migrations.swappable_dependency(BASE_MODULE["EMPLOYEE"]),
         ]
         operations = [

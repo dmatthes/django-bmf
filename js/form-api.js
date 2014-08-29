@@ -16,7 +16,7 @@
 
   /*
           
-  $.erp.search = function(el, options) {
+  $.bmf.search = function(el, options) {
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -26,10 +26,10 @@
     base.el = el;
     
     // Add a reverse reference to the DOM object
-    base.$el.data("erp.search", base);
+    base.$el.data("bmf.search", base);
 
     base.init = function(){
-      base.options = $.extend({}, $.erp.search.defaultOptions, options);
+      base.options = $.extend({}, $.bmf.search.defaultOptions, options);
 
 //    base.input = base.$el.children('input[type="text"]').first();
 //    base.hidden = base.$el.find('input[type="hidden"]').first();
@@ -140,7 +140,7 @@
     base.init();
   };
   
-  $.erp.search.defaultOptions = {
+  $.bmf.search.defaultOptions = {
     // Wait 350 ms until the last key action until the request is send
     wait: 350, // TODO Not implemented
     // Which filter options are submitted
@@ -154,7 +154,7 @@
    *
    */
 
-  $.erp.inlineform = function(el, options){
+  $.bmf.inlineform = function(el, options){
     // To avoid scope issues, use 'base' instead of 'this'
     // to reference this class from internal events and functions.
     var base = this;
@@ -164,10 +164,10 @@
     base.el = el;
     
     // Add a reverse reference to the DOM object
-    base.$el.data("erp.inlineform", base);
+    base.$el.data("bmf.inlineform", base);
 
     base.init = function() {
-      base.options = $.extend({}, $.erp.inlineform.defaultOptions, options);
+      base.options = $.extend({}, $.bmf.inlineform.defaultOptions, options);
       base.$el.css('position','relative');
       // Put your initialization code here
       var regex_max = /(.*)-MAX_NUM_FORMS$/;
@@ -216,7 +216,7 @@
         this.name = this.name.replace(name_regex, name_replacement);
       });
       base.total_forms += 1;
-      row.find('div[data-erp-search=1]').erp_autocomplete();
+      row.find('div[data-bmf-search=1]').bmf_autocomplete();
 
       // Code adapted from http://djangosnippets.org/snippets/1389/
 //    function updateElementIndex(el, prefix, ndx) {
@@ -234,7 +234,7 @@
     base.init();
   };
 
-  $.erp.inlineform.defaultOptions = {
+  $.bmf.inlineform.defaultOptions = {
       debug: false
   };
 
@@ -245,15 +245,15 @@
    */
   /*
   
-   $.fn.erp_search = function(options){
+   $.fn.bmf_search = function(options){
      return this.each(function(){
-       (new $.erp.search(this, options));
+       (new $.bmf.search(this, options));
      });
    };
    */
-   $.fn.erp_inlineform = function(options){
+   $.fn.bmf_inlineform = function(options){
      return this.each(function(){
-       (new $.erp.inlineform(this, options));
+       (new $.bmf.inlineform(this, options));
      });
    };
 })(jQuery);

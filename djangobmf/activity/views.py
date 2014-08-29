@@ -25,7 +25,7 @@ class ActivityView(ListView):
     """
     model = Notification
     allow_empty = True
-    template_name = "djangoerp/activity_list.html"
+    template_name = "djangobmf/activity_list.html"
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -61,7 +61,7 @@ class HistoryCommentAddView(CreateView):
             raise Http404
 
         self.related_model = ct.model_class()
-        if not hasattr(self.related_model, '_erpmeta'):
+        if not hasattr(self.related_model, '_bmfmeta'):
             raise Http404
 
         return self.related_model
@@ -94,4 +94,4 @@ class HistoryCommentAddView(CreateView):
         return perms
 
     def get_success_url(self):
-        return self.get_rel_object().erpmodule_detail()
+        return self.get_rel_object().bmfmodule_detail()

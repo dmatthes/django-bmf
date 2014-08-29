@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from django import forms
 
-from djangoerp.sites import site
+from djangobmf.sites import site
 
 from .apps import AccountingConfig
 

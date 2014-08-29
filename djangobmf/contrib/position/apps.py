@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from djangoerp.apps import ContribTemplate
+from djangobmf.apps import ContribTemplate
 
 
 class PositionConfig(ContribTemplate):
-    name = 'djangoerp.contrib.position'
-    label = "djangoerp_position"
+    name = 'djangobmf.contrib.position'
+    label = "djangobmf_position"

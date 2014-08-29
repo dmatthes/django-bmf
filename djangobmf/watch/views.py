@@ -43,15 +43,15 @@ class WatchMixin(object):
         has_workflow = None
 
         if model:
-            if not hasattr(model, '_erpmeta'):
+            if not hasattr(model, '_bmfmeta'):
                 raise Http404
-            if not model._erpmeta.has_activity:
+            if not model._bmfmeta.has_activity:
                 raise Http404
 
-            has_detectchanges = model._erpmeta.has_detectchanges
-            has_files = model._erpmeta.has_files
-            has_comments = model._erpmeta.has_comments
-            has_workflow = model._erpmeta.has_workflow
+            has_detectchanges = model._bmfmeta.has_detectchanges
+            has_files = model._bmfmeta.has_files
+            has_comments = model._bmfmeta.has_comments
+            has_workflow = model._bmfmeta.has_workflow
 
         glob = Watch.objects.filter(
             user=self.request.user,
@@ -64,7 +64,7 @@ class WatchMixin(object):
 
         navigation = []
         for ct, model in site.models.items():
-            if model._erpmeta.has_activity:
+            if model._bmfmeta.has_activity:
                 navigation.append({
                     'name': force_text(model._meta.verbose_name_plural),
                     'count': configured.get(ct, 0),
@@ -94,7 +94,7 @@ class WatchMixin(object):
 
 class WatchView(WatchMixin, ViewMixin, ListView):
     allow_empty = True
-    template_name = "djangoerp/watch/index.html"
+    template_name = "djangobmf/watch/index.html"
     paginate_by = 50
 
     def get_queryset(self):
@@ -127,7 +127,7 @@ class WatchView(WatchMixin, ViewMixin, ListView):
 
 
 class WatchEdit(WatchMixin, NextMixin, ViewMixin, UpdateView):
-    template_name = "djangoerp/watch/edit.html"
+    template_name = "djangobmf/watch/edit.html"
 
     def get_form_class(self):
         if self.kwargs.get('pk', None):
@@ -163,7 +163,7 @@ class WatchEdit(WatchMixin, NextMixin, ViewMixin, UpdateView):
         return self.object
 
     def get_success_url(self):
-        return self.redirect_next('djangoerp:watch', ct=self.kwargs['ct'])
+        return self.redirect_next('djangobmf:watch', ct=self.kwargs['ct'])
 
     def form_valid(self, form):
         self.object = form.save()

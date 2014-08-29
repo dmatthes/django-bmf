@@ -1,11 +1,11 @@
-{% load djangoerp_forms %}
+{% load djangobmf_forms %}
 {% load i18n %}
 
 <div class="row">
   <div class="col-lg-2 col-md-3 text-right">
     <label class="control-label">{{ field.label }}</label>
   </div>
-  <div class="col-lg-8 col-md-7" data-erp-inlineform="1">
+  <div class="col-lg-8 col-md-7" data-bmf-inlineform="1">
     <div class="hidden">{{ formset.management_form }}</div>
     <div class="panel panel-primary">
       <div class="panel-heading">Panel heading</div>
@@ -28,7 +28,7 @@
             {% if field.is_hidden %}
               <div class="hidden">{{ field }}</div>
             {% else %}
-              {% erplayout field %}
+              {% bmflayout field %}
             {% endif %}
           {% endfor %}
         </div>

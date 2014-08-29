@@ -1,4 +1,4 @@
-{% extends "djangoerp/base.html" %}
+{% extends "djangobmf/base.html" %}
 
 {% load i18n %}
 
@@ -23,7 +23,7 @@
             <td>{{ object.value }}</td>
             <td>{{ object.required }}</td>
             <td>{{ object.changed }}</td>
-            <td><a href="{% url 'djangoerp:configuration' object.app_label object.name %}">edit</a></td>
+            <td><a href="{% url 'djangobmf:configuration' object.app_label object.name %}">edit</a></td>
         </tr>
         {% endfor %}
     </tbody>

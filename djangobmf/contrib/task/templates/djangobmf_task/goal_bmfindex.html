@@ -1,11 +1,11 @@
-{% extends "djangoerp/module_index.html" %}
+{% extends "djangobmf/module_index.html" %}
 
 {% load i18n %}
 
 {% block base_content %}
 {% regroup object_list by project as projects %}
 {% for project in projects %}
-{% if project.grouper %}<h3>{% trans "Project" %}: <a href="{{ project.grouper.erpmodule_detail }}">{{ project.grouper }}</a></h3>{% endif %}
+{% if project.grouper %}<h3>{% trans "Project" %}: <a href="{{ project.grouper.bmfmodule_detail }}">{{ project.grouper }}</a></h3>{% endif %}
 <table class="table table-striped table-condensed table-hover">
   <thead>
     <tr>
@@ -22,7 +22,7 @@
           {% else %}
           <span class="glyphicon glyphicon-unchecked"></span>
           {% endif %}
-          <a href="{{ obj.erpmodule_detail }}">{{ obj.summary }}</a>
+          <a href="{{ obj.bmfmodule_detail }}">{{ obj.summary }}</a>
       </td>
       <td class="text-center">
           {% if obj.completed %}

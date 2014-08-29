@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 """
-This is a normal urlconf. it is imported from djangoerp.sites.site.get_url, where
+This is a normal urlconf. it is imported from djangobmf.sites.site.get_url, where
 the module views get appended by an '^module/' expression
 """
 

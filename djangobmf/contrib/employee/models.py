@@ -8,20 +8,20 @@ from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.models import ERPModel
-from djangoerp.settings import BASE_MODULE
-from djangoerp.categories import HR
+from djangobmf.models import BMFModel
+from djangobmf.settings import BASE_MODULE
+from djangobmf.categories import HR
 
-from djangoerp.contrib.product.models import PRODUCT_SERVICE
+from djangobmf.contrib.product.models import PRODUCT_SERVICE
 
 
-class BaseEmployee(ERPModel):
-    class Meta(ERPModel.Meta):  # only needed for abstract models
+class BaseEmployee(BMFModel):
+    class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Employee')
         verbose_name_plural = _('Employees')
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = HR
 
 
@@ -35,7 +35,7 @@ class AbstractEmployee(BaseEmployee):
             verbose_name=("Contact"),
             blank=True,
             null=True,
-            related_name="erp_employee",
+            related_name="bmf_employee",
             limit_choices_to={'is_company': False},
             on_delete=models.PROTECT,
         )
@@ -45,7 +45,7 @@ class AbstractEmployee(BaseEmployee):
             verbose_name=("Product"),
             null=True,
             blank=True,
-            related_name="erp_employee",
+            related_name="bmf_employee",
             limit_choices_to={'type': PRODUCT_SERVICE},
             on_delete=models.PROTECT,
         )
@@ -55,7 +55,7 @@ class AbstractEmployee(BaseEmployee):
         blank=True,
         null=True,
         unique=True,
-        related_name="erp_employee",
+        related_name="bmf_employee",
         on_delete=models.SET_NULL,
     )
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False, )
@@ -82,7 +82,7 @@ class AbstractEmployee(BaseEmployee):
         ordering = ['name']
         abstract = True
 
-    class ERPMeta(BaseEmployee.ERPMeta):
+    class BMFMeta(BaseEmployee.BMFMeta):
         search_fields = ['name', 'email', 'user__username']
 
     def __str__(self):

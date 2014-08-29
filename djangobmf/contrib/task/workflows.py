@@ -8,8 +8,8 @@ from django.utils.timezone import now
 
 from math import ceil
 
-from djangoerp.workflows import Workflow, State, Transition
-from djangoerp.utils import get_model_from_cfg
+from djangobmf.workflows import Workflow, State, Transition
+from djangobmf.utils import get_model_from_cfg
 from django.core.exceptions import ValidationError
 
 
@@ -147,12 +147,12 @@ class TaskWorkflow(Workflow):
                     raise ValidationError(_("The employee's user-account needs a default product"))
                 position = get_model_from_cfg('POSITION')(
                     name=self.instance.summary, project=project,
-                    employee=self.user.erp_employee,
-                    date=now(), product=self.user.erp_employee.product,
+                    employee=self.user.bmf_employee,
+                    date=now(), product=self.user.bmf_employee.product,
                     amount=self.bill_resolution * ceil(billable_time / self.bill_resolution) / 60.)
                 position.clean()
                 position.save()
-                return position.erpmodule_detail()
+                return position.bmfmodule_detail()
 
     def cancel(self):
         self.finish()

@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.sites import site
+from djangobmf.sites import site
 
 from .models import Team
 

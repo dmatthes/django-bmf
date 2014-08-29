@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
 
-from djangoerp.forms import ERPForm
+from djangobmf.forms import BMFForm
 
 from .models import Team
 from .models import TeamMember
@@ -26,13 +26,13 @@ class TeamCreateForm(ModelForm):
 TeamInlineFormset = inlineformset_factory(Team, TeamMember, extra=2, exclude=[])
 
 
-class ERPTeamUpdateForm(ERPForm):
+class BMFTeamUpdateForm(BMFForm):
     class Meta:
         form_class = TeamUpdateForm
         inlines = {'members': TeamInlineFormset}
 
 
-class ERPTeamCreateForm(ERPForm):
+class BMFTeamCreateForm(BMFForm):
     class Meta:
         form_class = TeamCreateForm
         inlines = {'members': TeamInlineFormset}

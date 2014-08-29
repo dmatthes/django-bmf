@@ -4,16 +4,16 @@
 <div class="form-group">
     <label class="control-label">Employee</label>
     <div>
-        <div class="input-group" data-erp-autocomplete="1">
-            <input class="form-control" id="erp_NAME-value" placeholder="VALUE" type="text">
+        <div class="input-group" data-bmf-autocomplete="1">
+            <input class="form-control" id="bmf_NAME-value" placeholder="VALUE" type="text">
         </div>
-        <input autocomplete="off" id="erp_NAME" type="text">
+        <input autocomplete="off" id="bmf_NAME" type="text">
     </div>
 </div>
 */
 
 (function($){
-    $.erp.autocomplete = function(el, options){
+    $.bmf.autocomplete = function(el, options){
         // To avoid scope issues, use 'base' instead of 'this'
         // to reference this class from internal events and functions.
         var base = this;
@@ -23,11 +23,11 @@
         base.el = el;
       
         // Add a reverse reference to the DOM object
-        base.$el.data("erp.autocomplete", base);
+        base.$el.data("bmf.autocomplete", base);
 
         base.init = function() {
             // load options
-            base.options = $.extend({}, $.erp.autocomplete.defaultOptions, options);
+            base.options = $.extend({}, $.bmf.autocomplete.defaultOptions, options);
             if (base.options.debug) {console.log("init autocomplete")};
 
             // initialization logic
@@ -67,7 +67,7 @@
             });
    
             $(document).keydown(function(e){
-                if (e.keyCode == $.erp.KEYS.ESC) {
+                if (e.keyCode == $.bmf.KEYS.ESC) {
                     base.destroyList();
                 }
             });
@@ -164,7 +164,7 @@
     };
 
     // default options
-    $.erp.autocomplete.defaultOptions = {
+    $.bmf.autocomplete.defaultOptions = {
         // Wait 250 ms until the last key action until the request is send
         wait: 250,
         debug: true,
@@ -173,9 +173,9 @@
     };
 
     // register as jquery function
-    $.fn.erp_autocomplete = function(options){
-        return $(this).find('div.input-group[data-erp-autocomplete]').each(function(){
-            (new $.erp.autocomplete(this, options));
+    $.fn.bmf_autocomplete = function(options){
+        return $(this).find('div.input-group[data-bmf-autocomplete]').each(function(){
+            (new $.bmf.autocomplete(this, options));
         });
     };
 })(jQuery);

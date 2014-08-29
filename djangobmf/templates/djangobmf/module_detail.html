@@ -1,7 +1,7 @@
-{% extends "djangoerp/module_base.html" %}
+{% extends "djangobmf/module_base.html" %}
 
-{% load djangoerp_core %}
-{% load djangoerp_forms %}
+{% load djangobmf_core %}
+{% load djangobmf_forms %}
 {% load i18n %}
 
 {% block base_buttons %}
@@ -11,47 +11,47 @@
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span> {% trans "Files" %} {{ files.count }}</button>
     <ul class="dropdown-menu" role="menu">
       {% for file in files %}
-      <li><a href="{{ file.erpfile_download }}">{{ file }}<br /><small>{{ file.size|filesizeformat }}</small></a></li>
+      <li><a href="{{ file.bmffile_download }}">{{ file }}<br /><small>{{ file.size|filesizeformat }}</small></a></li>
       {% endfor %}
     </ul>
   </div>
 {% endif %}
 </div>
 <div class="btn-toolbar pull-right" role="toolbar">
-    {% if erpmodule.can_clone %}
+    {% if bmfmodule.can_clone %}
     <div class="btn-group">
-        <a class="btn btn-default btn-default erp-edit" href="{% get_erp_url object "clone" %}">
+        <a class="btn btn-default btn-default bmf-edit" href="{% get_bmf_url object "clone" %}">
             <span class="glyphicon glyphicon-transfer"></span>
         </a>
     </div>
     {% endif %}
 
-    {% if erpworkflow.enabled %}
-     {% if erpworkflow.transitions %}
+    {% if bmfworkflow.enabled %}
+     {% if bmfworkflow.transitions %}
        <div class="btn-group">
-         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ erpworkflow.state }} <span class="caret"></span></button>
+         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ bmfworkflow.state }} <span class="caret"></span></button>
          <ul class="dropdown-menu" role="menu">
-           {% for transition in erpworkflow.transitions %}
-           <li><a href="{% get_erp_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
+           {% for transition in bmfworkflow.transitions %}
+           <li><a href="{% get_bmf_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
            {% endfor %}
          </ul>
        </div>
      {% else %}
        <div class="btn-group">
-         <button type="button" class="btn btn-default disabled">{{ erpworkflow.state }} <span class="caret"></span></button>
+         <button type="button" class="btn btn-default disabled">{{ bmfworkflow.state }} <span class="caret"></span></button>
        </div>
      {% endif %}
     {% endif %}
-    {% if erpmodule.has_report %}
+    {% if bmfmodule.has_report %}
      <div class="btn-group">
-     <a class="btn btn-default btn-success" href="{% get_erp_url object "report" %}">
+     <a class="btn btn-default btn-success" href="{% get_bmf_url object "report" %}">
        <span class="glyphicon glyphicon-print"></span> {% trans "Print" %} 
      </a>
      </div>
     {% endif %}
-    {% if erpworkflow.state.update %}
+    {% if bmfworkflow.state.update %}
      <div class="btn-group">
-     <a class="btn btn-default btn-warning erp-edit" href="{% get_erp_url object "update" %}">
+     <a class="btn btn-default btn-warning bmf-edit" href="{% get_bmf_url object "update" %}">
        <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
      </a>
      </div>
@@ -64,12 +64,12 @@
     {% endif %}
 
     <div class="btn-group">
-        {% if erpactivity.watch %}
-            <a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-info following">
+        {% if bmfactivity.watch %}
+            <a href="{% url 'djangobmf:watch_edit' ct=bmfactivity.ct pk=object.pk %}?next={{ object.bmfmodule_detail }}" class="btn btn-info following">
                 <span class="glyphicon glyphicon-star"></span>
             </a>
         {% else %}
-            <a href="{% url 'djangoerp:watch_edit' ct=erpactivity.ct pk=object.pk %}?next={{ object.erpmodule_detail }}" class="btn btn-default">
+            <a href="{% url 'djangobmf:watch_edit' ct=bmfactivity.ct pk=object.pk %}?next={{ object.bmfmodule_detail }}" class="btn btn-default">
                 <span class="glyphicon glyphicon-star-empty"></span>
             </a>
         {% endif %}
@@ -84,8 +84,8 @@
             </a>
         {% endif %}
 
-        {% if erpworkflow.state.delete %}
-            <a class="btn btn-default btn-danger" href="{% get_erp_url object "delete" %}">
+        {% if bmfworkflow.state.delete %}
+            <a class="btn btn-default btn-danger" href="{% get_bmf_url object "delete" %}">
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
         {% else %}
@@ -100,6 +100,6 @@
 
 {% block base_content %}{{ block.super }}{% if related_views %}<ul class="nav nav-pills">
     {% for data in related_views.values|dictsort:"name" %}
-    <li{% if data.active %} class="active"{% endif %}><a href="{% get_erp_url object "detail" %}{% if not data.active %}?open={{ data.key }}{% endif %}">{{ data.name }}</a></li>
+    <li{% if data.active %} class="active"{% endif %}><a href="{% get_bmf_url object "detail" %}{% if not data.active %}?open={{ data.key }}{% endif %}">{{ data.name }}</a></li>
     {% endfor %}
 </ul>{% endif %}{% endblock %}

@@ -232,7 +232,7 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
         url = getattr(self, key)()
 
         # modify and return an redirect url (the instance is not saved here)
-        setattr(self.instance, self.instance._erpmeta.workflow_field, self._current_state_key)
+        setattr(self.instance, self.instance._bmfmeta.workflow_field, self._current_state_key)
         return url
 
 

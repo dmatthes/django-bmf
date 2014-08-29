@@ -3,13 +3,13 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import ModuleCreateView
-from djangoerp.views import ModuleUpdateView
-from djangoerp.views import ModuleIndexView
-from djangoerp.views import ModuleDetailView
+from djangobmf.views import ModuleCreateView
+from djangobmf.views import ModuleUpdateView
+from djangobmf.views import ModuleIndexView
+from djangobmf.views import ModuleDetailView
 
-from .forms import ERPQuotationUpdateForm
-from .forms import ERPQuotationCreateForm
+from .forms import BMFQuotationUpdateForm
+from .forms import BMFQuotationCreateForm
 
 from .filters import QuotationFilter
 
@@ -17,21 +17,21 @@ import datetime
 
 
 class QuotationCreateView(ModuleCreateView):
-    form_class = ERPQuotationCreateForm
+    form_class = BMFQuotationCreateForm
 
     def get_initial(self):
         self.initial.update({'date': datetime.datetime.now()})
         # LOOK ... this does not work in every case ?!?!
-        # self.initial.update({'employee': self.request.djangoerp_employee.pk})
+        # self.initial.update({'employee': self.request.djangobmf_employee.pk})
         return super(QuotationCreateView, self).get_initial()
 
 
 class QuotationUpdateView(ModuleUpdateView):
-    form_class = ERPQuotationUpdateForm
+    form_class = BMFQuotationUpdateForm
 
 
 class QuotationDetailView(ModuleDetailView):
-    form_class = ERPQuotationUpdateForm
+    form_class = BMFQuotationUpdateForm
 
 
 class QuotationTableView(ModuleIndexView):

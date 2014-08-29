@@ -7,4 +7,4 @@ from django.views.generic import TemplateView
 
 
 class WizardView(TemplateView):
-    template_name = "djangoerp/wizard/index.html"
+    template_name = "djangobmf/wizard/index.html"

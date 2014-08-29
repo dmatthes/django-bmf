@@ -13,8 +13,8 @@ from .forms import CustomerForm
 class BaseCreateView(ModuleCreateView):
     def get_initial(self):
         # TODO: read the configuration here
-        # self.initial.update({'asset_account': self.request.erpcore['company'].customer_account_id})
-        # self.initial.update({'liability_account': self.request.erpcore['company'].supplier_account_id})
+        # self.initial.update({'asset_account': self.request.bmfcore['company'].customer_account_id})
+        # self.initial.update({'liability_account': self.request.bmfcore['company'].supplier_account_id})
         return super(BaseCreateView, self).get_initial()
 
 

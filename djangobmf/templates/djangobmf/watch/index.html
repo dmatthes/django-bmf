@@ -1,4 +1,4 @@
-{% extends "djangoerp/watch/base.html" %}
+{% extends "djangobmf/watch/base.html" %}
 
 {% load i18n %}
 
@@ -21,7 +21,7 @@
     {% if has_files %}
     <button class="btn {% if glob_settings.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
     {% endif %}
-    <a class="btn btn-default btn-warning" href="{% url 'djangoerp:watch_edit' ct=selected_ct %}">
+    <a class="btn btn-default btn-warning" href="{% url 'djangobmf:watch_edit' ct=selected_ct %}">
         <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
     </a>
 </p>
@@ -38,7 +38,7 @@
             <td>
                 <span class="text-truncate" style="width:100%; display: block">
                     <span class="glyphicon {{ item.activity.get_symbol }}"></span>
-                    <a href="{{ item.watch_object.erpmodule_detail }}">{{ item.watch_object }}</a>
+                    <a href="{{ item.watch_object.bmfmodule_detail }}">{{ item.watch_object }}</a>
                 </span>
             </td>
             <td class="text-right">
@@ -56,7 +56,7 @@
                 <button class="btn btn btn-xs {% if item.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
                 {% endif %}
                 {% endif %}
-                <a class="btn btn-xs btn-warning" href="{% url "djangoerp:watch_edit" ct=selected_ct pk=item.watch_id %}">
+                <a class="btn btn-xs btn-warning" href="{% url "djangobmf:watch_edit" ct=selected_ct pk=item.watch_id %}">
                     <span class="glyphicon glyphicon-wrench"></span>
                 </a>
             </td>

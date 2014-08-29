@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import ModuleUpdateView
+from djangobmf.views import ModuleUpdateView
 
 
 class ProjectUpdateView(ModuleUpdateView):

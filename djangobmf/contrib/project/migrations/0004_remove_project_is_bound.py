@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('djangoerp_project', '0003_optional_project_customer'),
+        ('djangobmf_project', '0003_optional_project_customer'),
     ]
 
     operations = [

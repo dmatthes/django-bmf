@@ -7,7 +7,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.forms import ERPForm
+from djangobmf.forms import BMFForm
 
 from .models import Goal
 
@@ -20,6 +20,6 @@ class GoalCloneForm(ModelForm):
     clear_employee = forms.BooleanField(label=_("When copying unset the task's employee"), initial=True, required=False)
 
 
-class ERPGoalCloneForm(ERPForm):
+class BMFGoalCloneForm(BMFForm):
     class Meta:
         form_class = GoalCloneForm

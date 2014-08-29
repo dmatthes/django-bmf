@@ -14,7 +14,7 @@ class Flake8Test(TestCase):
             jobs='1',
         )
         styleguide.options.report.start()
-        styleguide.input_dir('djangoerp')
+        styleguide.input_dir('djangobmf')
         styleguide.options.report.stop()
         count = styleguide.options.report.get_count()
         self.assertEqual(count, 0)

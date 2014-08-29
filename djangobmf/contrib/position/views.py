@@ -28,7 +28,7 @@ class PositionCreateView(ModuleCreateView):
     def get_initial(self):
         self.initial.update({'date': datetime.datetime.now()})
         if "employee" in self.initial:
-            self.initial.update({'employee': self.request.user.djangoerp_employee.pk})
+            self.initial.update({'employee': self.request.user.djangobmf_employee.pk})
         return super(PositionCreateView, self).get_initial()
 
     def post(self, request, *args, **kwargs):
@@ -51,7 +51,7 @@ class PositionAPI(ModuleViewMixin, View):
     model = Position
 
     def get_success_url(self):
-        return reverse_lazy('%s:index' % self.model._erpmeta.url_namespace)
+        return reverse_lazy('%s:index' % self.model._bmfmeta.url_namespace)
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name

@@ -5,7 +5,7 @@ from django.db import models, migrations
 from django.conf import settings
 import django.db.models.deletion
 
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 
 class Migration(migrations.Migration):
 
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('is_manager', models.BooleanField(default=False, verbose_name='Is manager')),
                 ('employee', models.ForeignKey(blank=True, related_name='+', to=BASE_MODULE["EMPLOYEE"], null=True)),
-                ('team', models.ForeignKey(blank=True, related_name='+', to='djangoerp_team.Team', null=True)),
+                ('team', models.ForeignKey(blank=True, related_name='+', to='djangobmf_team.Team', null=True)),
             ],
             options={
             },
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='members',
-            field=models.ManyToManyField(blank=True, through='djangoerp_team.TeamMember', to=BASE_MODULE["EMPLOYEE"], related_name='team_members'),
+            field=models.ManyToManyField(blank=True, through='djangobmf_team.TeamMember', to=BASE_MODULE["EMPLOYEE"], related_name='team_members'),
             preserve_default=True,
         ),
     ]

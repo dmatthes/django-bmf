@@ -13,14 +13,14 @@ from django.forms.util import ErrorList
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import six
 
-from .signals import djangoerp_post_save
+from .signals import djangobmf_post_save
 
 from collections import OrderedDict
 
 
-class ERPFormMetaclass(type):
+class BMFFormMetaclass(type):
     def __new__(cls, name, bases, attrs):
-        new_cls = super(ERPFormMetaclass, cls).__new__(cls, name, bases, attrs)
+        new_cls = super(BMFFormMetaclass, cls).__new__(cls, name, bases, attrs)
 
         meta = attrs.get('Meta', None)
         new_cls.form_class = getattr(meta, 'form_class', None)
@@ -41,10 +41,10 @@ class ERPFormMetaclass(type):
 
 
 @python_2_unicode_compatible
-class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
+class BMFForm(six.with_metaclass(BMFFormMetaclass, object)):
 
     def __init__(
-            self, data=None, files=None, auto_id='erp_%s', prefix=None,
+            self, data=None, files=None, auto_id='bmf_%s', prefix=None,
             initial=None, instance=None, initial_inlines=None,
             error_class=ErrorList, **kwargs):
         self.is_bound = data is not None or files is not None
@@ -213,7 +213,7 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
 
     @classmethod
     def get_default_prefix(cls):
-        return 'erp'
+        return 'bmf'
 
     def get_field(self, auto_id):
         """
@@ -290,14 +290,14 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
         if len(self.forms) == 0:
             obj = self.base_form.save(**kwargs)
             if kwargs.get('commit', True):
-                djangoerp_post_save.send(sender=obj.__class__, instance=obj, new=new)
-#               if self.instance._erpmeta.has_history:
+                djangobmf_post_save.send(sender=obj.__class__, instance=obj, new=new)
+#               if self.instance._bmfmeta.has_history:
 #                   # the model has been saved, now send the signal and write a comment
 #                   if new:
 #                       history = write_history(obj, ACTION_CREATED)
 #                   else:
 #                       history = write_history(obj, ACTION_UPDATED)
-#                   erp_new_history.send(sender=obj.__class__, instance=history)
+#                   bmf_new_history.send(sender=obj.__class__, instance=history)
             return obj
 
         if not kwargs.get('commit', True):
@@ -309,21 +309,21 @@ class ERPForm(six.with_metaclass(ERPFormMetaclass, object)):
             formset.save()
 
         # Rerun model.clean and save the model. So it is possible to write clean methods on an model, which depend
-        # on related fields. The usage of these clean methods outside of the erp is probalby not simple anyway, because
-        # they don't need the ERPForm dependency
-        if self.instance._erpmeta.clean:
-            obj.erp_clean()
+        # on related fields. The usage of these clean methods outside of the bmf is probalby not simple anyway, because
+        # they don't need the BMFForm dependency
+        if self.instance._bmfmeta.clean:
+            obj.bmf_clean()
             obj.save()
 
-        djangoerp_post_save.send(sender=obj.__class__, instance=obj, new=new)
+        djangobmf_post_save.send(sender=obj.__class__, instance=obj, new=new)
 
         # the model has been saved, now send the signal and write a comment
-#       if self.instance._erpmeta.has_history:
+#       if self.instance._bmfmeta.has_history:
 #           if new:
 #               history = write_history(obj, ACTION_CREATED)
 #           else:
 #               history = write_history(obj, ACTION_UPDATED)
-#           erp_new_history.send(sender=obj.__class__, instance=history)
+#           bmf_new_history.send(sender=obj.__class__, instance=history)
         return obj
 
     # === LOOK AT ===============================================================

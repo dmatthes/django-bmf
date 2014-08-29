@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import django.db.models.deletion
 from django.conf import settings
-import djangoerp.fields
+import djangobmf.fields
 
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 
 class Migration(migrations.Migration):
 
@@ -30,8 +30,8 @@ class Migration(migrations.Migration):
                 ('can_sold', models.BooleanField(default=False, db_index=True, verbose_name='Can be sold')),
                 ('can_purchased', models.BooleanField(default=False, db_index=True, verbose_name='Can be purchased')),
                 ('description', models.TextField(verbose_name='Description', blank=True)),
-                ('price', djangoerp.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
-                ('price_currency', djangoerp.fields.CurrencyField(default=djangoerp.fields.get_default_currency, max_length=4, null=True, editable=False)),
+                ('price', djangobmf.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
+                ('price_currency', djangobmf.fields.CurrencyField(default=djangobmf.fields.get_default_currency, max_length=4, null=True, editable=False)),
                 ('price_precision', models.PositiveSmallIntegerField(default=0, null=True, editable=False, blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
                 ('expense_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"])),
@@ -59,13 +59,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='taxes',
-            field=models.ManyToManyField(to=BASE_MODULE["TAX"], through='djangoerp_product.ProductTax', blank=True),
+            field=models.ManyToManyField(to=BASE_MODULE["TAX"], through='djangobmf_product.ProductTax', blank=True),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='producttax',
             name='product',
-            field=models.ForeignKey(blank=True, to='djangoerp_product.Product', null=True),
+            field=models.ForeignKey(blank=True, to='djangobmf_product.Product', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

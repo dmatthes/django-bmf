@@ -3,14 +3,14 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 import django
 
 if BASE_MODULE["CUSTOMER"]:
     class Migration(migrations.Migration):
 
         dependencies = [
-            ('djangoerp_document', '0002_optional_document_project'),
+            ('djangobmf_document', '0002_optional_document_project'),
             migrations.swappable_dependency(BASE_MODULE["CUSTOMER"]),
         ]
 

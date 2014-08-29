@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import django.db.models.deletion
 from django.conf import settings
-import djangoerp.file.storage
-import djangoerp.file.models
+import djangobmf.file.storage
+import djangobmf.file.models
 
 
 class Migration(migrations.Migration):
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified', null=True)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created', null=True)),
                 ('uuid', models.CharField(editable=False, max_length=100, blank=True, null=True, verbose_name='UUID', db_index=True)),
-                ('file', models.FileField(upload_to=djangoerp.file.models.generate_filename, storage=djangoerp.file.storage.ERPStorage(), verbose_name='File')),
+                ('file', models.FileField(upload_to=djangobmf.file.models.generate_filename, storage=djangobmf.file.storage.BMFStorage(), verbose_name='File')),
                 ('size', models.PositiveIntegerField(null=True, editable=False, blank=True)),
                 ('is_static', models.BooleanField(default=False)),
                 ('content_id', models.PositiveIntegerField(null=True, editable=False, blank=True)),

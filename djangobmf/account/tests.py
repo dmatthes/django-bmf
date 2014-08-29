@@ -13,19 +13,19 @@ class AccountTests(LiveServerTestCase):
     def test_views(self):
         """
         """
-        r = self.client.get(reverse('djangoerp:login'), {})
+        r = self.client.get(reverse('djangobmf:login'), {})
         self.assertEqual(r.status_code, 200)
 
-        r = self.client.post(reverse('djangoerp:login'), {
+        r = self.client.post(reverse('djangobmf:login'), {
             'username': 'admin',
             'password': 'admin',
         })
         self.assertEqual(r.status_code, 302)
 
-        r = self.client.get(reverse('djangoerp:login'), {})
+        r = self.client.get(reverse('djangobmf:login'), {})
         self.assertEqual(r.status_code, 200)
 
-        r = self.client.post(reverse('djangoerp:login'), {
+        r = self.client.post(reverse('djangobmf:login'), {
             'username': 'admin',
             'password': 'wrong_password',
         })

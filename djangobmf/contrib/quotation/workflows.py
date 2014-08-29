@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.workflows import Workflow, State, Transition
+from djangobmf.workflows import Workflow, State, Transition
 
 import datetime
 

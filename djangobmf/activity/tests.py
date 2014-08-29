@@ -10,10 +10,10 @@ from django.contrib.contenttypes.models import ContentType
 from ..utils import get_model_from_cfg
 
 from ..models import Activity
-from ..testcase import ERPModuleTestCase
+from ..testcase import BMFModuleTestCase
 
 
-class CoreTests(ERPModuleTestCase):
+class CoreTests(BMFModuleTestCase):
 
     def test_history(self):
         """
@@ -31,30 +31,30 @@ class CoreTests(ERPModuleTestCase):
         self.assertEqual(obj.name, "Testproject")
         self.assertEqual(int(Activity.objects.filter(parent_ct=ct, parent_id=obj.pk).count()), 1)
 
-        r = self.client.get(reverse('djangoerp:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}))
+        r = self.client.get(reverse('djangobmf:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}))
         self.assertEqual(r.status_code, 302)
 
         # this should create a new entry
-        r = self.client.post(reverse('djangoerp:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
+        r = self.client.post(reverse('djangobmf:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
             'topic': "Testtopic",
             'text': 'Testtext',
         })
         self.assertEqual(r.status_code, 302)
 
         # this should create a new entry
-        r = self.client.post(reverse('djangoerp:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
+        r = self.client.post(reverse('djangobmf:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
             'topic': "Testtopic",
         })
         self.assertEqual(r.status_code, 302)
 
         # this should create a new entry
-        r = self.client.post(reverse('djangoerp:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
+        r = self.client.post(reverse('djangobmf:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
             'text': 'Testtext',
         })
         self.assertEqual(r.status_code, 302)
 
         # this should NOT create a new entry
-        r = self.client.post(reverse('djangoerp:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
+        r = self.client.post(reverse('djangobmf:activity_comment_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
         self.assertEqual(r.status_code, 302)
 
         # now, we should have 2 comments connected to our object

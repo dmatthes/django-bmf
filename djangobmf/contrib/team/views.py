@@ -3,21 +3,21 @@
 
 from __future__ import unicode_literals
 
-from djangoerp.views import ModuleCreateView
-from djangoerp.views import ModuleUpdateView
-from djangoerp.views import ModuleDetailView
+from djangobmf.views import ModuleCreateView
+from djangobmf.views import ModuleUpdateView
+from djangobmf.views import ModuleDetailView
 
-from .forms import ERPTeamUpdateForm
-from .forms import ERPTeamCreateForm
+from .forms import BMFTeamUpdateForm
+from .forms import BMFTeamCreateForm
 
 
 class TeamCreateView(ModuleCreateView):
-    form_class = ERPTeamCreateForm
+    form_class = BMFTeamCreateForm
 
 
 class TeamUpdateView(ModuleUpdateView):
-    form_class = ERPTeamUpdateForm
+    form_class = BMFTeamUpdateForm
 
 
 class TeamDetailView(ModuleDetailView):
-    form_class = ERPTeamUpdateForm
+    form_class = BMFTeamUpdateForm

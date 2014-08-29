@@ -12,28 +12,28 @@ from ..utils import get_model_from_cfg
 
 from ..models import Report
 
-from ..testcase import ERPViewTestCase
+from ..testcase import BMFViewTestCase
 
-class CoreTests(ERPViewTestCase):
+class CoreTests(BMFViewTestCase):
 
     def test_reports(self):
         """
         """
 #       model = get_model_from_cfg("QUOTATION")
-#       namespace = model._erpmeta.url_namespace
+#       namespace = model._bmfmeta.url_namespace
 
 #       r = self.client.post(reverse(namespace + ':create'), {
 #           'project': 1,
 #           'customer': 1,
 #           'date': '2012-01-01',
 #           'employee': 1,
-#           'erp-products-TOTAL_FORMS': 1,
-#           'erp-products-INITIAL_FORMS': 0,
-#           'erp-products-MAX_NUM_FORMS': 1,
-#           'erp-products-0-product': 1,
-#           'erp-products-0-amount': 1,
-#           'erp-products-0-price': 100,
-#           'erp-products-0-name': "Service",
+#           'bmf-products-TOTAL_FORMS': 1,
+#           'bmf-products-INITIAL_FORMS': 0,
+#           'bmf-products-MAX_NUM_FORMS': 1,
+#           'bmf-products-0-product': 1,
+#           'bmf-products-0-amount': 1,
+#           'bmf-products-0-price': 100,
+#           'bmf-products-0-name': "Service",
 #       })
 #       self.assertEqual(r.status_code, 302)
 

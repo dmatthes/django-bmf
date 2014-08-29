@@ -12,13 +12,13 @@ from django.db.models import Sum
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.categories import ACCOUNTING
-from djangoerp.fields import CurrencyField
-from djangoerp.fields import MoneyField
-from djangoerp.fields import WorkflowField
-from djangoerp.models import ERPMPTTModel
-from djangoerp.models import ERPModel
-from djangoerp.settings import BASE_MODULE
+from djangobmf.categories import ACCOUNTING
+from djangobmf.fields import CurrencyField
+from djangobmf.fields import MoneyField
+from djangobmf.fields import WorkflowField
+from djangobmf.models import BMFMPTTModel
+from djangobmf.models import BMFModel
+from djangobmf.settings import BASE_MODULE
 
 from .workflows import TransactionWorkflow
 
@@ -48,7 +48,7 @@ ACCOUNTING_TYPES = (
 
 
 @python_2_unicode_compatible
-class BaseAccount(ERPMPTTModel):
+class BaseAccount(BMFMPTTModel):
     """
     """
     parent = TreeForeignKey(
@@ -89,7 +89,7 @@ class BaseAccount(ERPMPTTModel):
         ordering = ['number', 'name', 'type']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = ACCOUNTING
         observed_fields = ['name', ]
 
@@ -105,7 +105,7 @@ class AbstractAccount(BaseAccount):
     class Meta(BaseAccount.Meta):
         abstract = True
 
-    class ERPMeta(BaseAccount.ERPMeta):
+    class BMFMeta(BaseAccount.BMFMeta):
         search_fields = ['name', '^number']
 
 
@@ -118,7 +118,7 @@ class Account(AbstractAccount):
 
 
 @python_2_unicode_compatible
-class AbstractTransaction(ERPModel):
+class AbstractTransaction(BMFModel):
     """
     Transaction
 
@@ -150,7 +150,7 @@ class AbstractTransaction(ERPModel):
         verbose_name_plural = _('Transactions')
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = ACCOUNTING
         observed_fields = ['expensed', 'text']
         has_files = True

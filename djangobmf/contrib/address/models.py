@@ -7,12 +7,12 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.models import ERPModel
-from djangoerp.settings import BASE_MODULE
-from djangoerp.categories import SALES
+from djangobmf.models import BMFModel
+from djangobmf.settings import BASE_MODULE
+from djangobmf.categories import SALES
 
 
-class BaseAddress(ERPModel):
+class BaseAddress(BMFModel):
     customer = models.ForeignKey(
         BASE_MODULE["CUSTOMER"], null=False, blank=False,
         related_name="customer_address", on_delete=models.CASCADE,
@@ -35,10 +35,10 @@ class BaseAddress(ERPModel):
         ordering = ['name']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = SALES
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         return self.customer
 
 
@@ -70,7 +70,7 @@ class AbstractAddress(BaseAddress):
             }
         )
 
-    class ERPMeta(BaseAddress.ERPMeta):
+    class BMFMeta(BaseAddress.BMFMeta):
         category = SALES
         observed_fields = ['name', 'name2', 'street', 'zip', 'city', 'state', 'country']
 

@@ -7,13 +7,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangoerp.models import ERPModel
-from djangoerp.categories import SALES
-from djangoerp.settings import BASE_MODULE
-from djangoerp.fields import WorkflowField
-from djangoerp.numbering.utils import numbercycle_get_name, numbercycle_delete_object
-from djangoerp.fields import CurrencyField
-from djangoerp.fields import MoneyField
+from djangobmf.models import BMFModel
+from djangobmf.categories import SALES
+from djangobmf.settings import BASE_MODULE
+from djangobmf.fields import WorkflowField
+from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
+from djangobmf.fields import CurrencyField
+from djangobmf.fields import MoneyField
 
 import datetime
 from decimal import Decimal
@@ -22,7 +22,7 @@ from .workflows import QuotationWorkflow
 
 
 @python_2_unicode_compatible
-class AbstractQuotation(ERPModel):
+class AbstractQuotation(BMFModel):
     """
     """
     state = WorkflowField()
@@ -84,12 +84,12 @@ class AbstractQuotation(ERPModel):
     def __str__(self):
         return '%s' % self.quotation_number
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         if hasattr(self, 'customer'):
             return self.customer
         return None
 
-    def erpget_project(self):
+    def bmfget_project(self):
         if hasattr(self, 'project'):
             return self.project
         return None
@@ -110,7 +110,7 @@ class AbstractQuotation(ERPModel):
         if not self.date:
             self.date = datetime.datetime.now().date()
 
-    def erp_clean(self):
+    def bmf_clean(self):
         self.net = self.calc_net()
 
     @staticmethod
@@ -156,7 +156,7 @@ class AbstractQuotation(ERPModel):
         ordering = ['-pk']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = SALES
         observed_fields = ['quotation_number', 'net', 'state']
         has_files = True

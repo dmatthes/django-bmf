@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.contenttypes.fields import GenericRelation
 
-from .apps import ERPConfig
+from .apps import BMFConfig
 
 from .workflows import DefaultWorkflow
 from .fields import WorkflowField
@@ -28,7 +28,7 @@ import inspect
 from mptt.managers import TreeManager
 from mptt.models import MPTTModelBase, MPTTModel
 
-APP_LABEL = ERPConfig.label
+APP_LABEL = BMFConfig.label
 
 
 def add_signals(cls):
@@ -54,16 +54,16 @@ def add_signals(cls):
 # probably unneccesary options
 
 # TODO:
-# we also should move the "permission" to an erpacl manager to access the queryset
+# we also should move the "permission" to an bmfacl manager to access the queryset
 # from related objects
 
 
-class ERPOptions(object):
+class BMFOptions(object):
     """
-    Options class for ERP models. Use this as an inner class called ``ERPMeta``::
+    Options class for BMF models. Use this as an inner class called ``BMFMeta``::
 
-      class MyModel(ERPModel):
-        class ERPMeta:
+      class MyModel(BMFModel):
+        class BMFMeta:
           category = 'mycategory'
     """
 
@@ -93,7 +93,7 @@ class ERPOptions(object):
         self.create_views = []
 
         if options:
-            options = inspect.getmembers(cls.ERPMeta)
+            options = inspect.getmembers(cls.BMFMeta)
         else:
             options = []
 
@@ -137,15 +137,15 @@ class ERPOptions(object):
         self.has_history = self.has_logging  # TODO OLD REMOVE ME
 
 
-class ERPModelBase(ModelBase):
+class BMFModelBase(ModelBase):
     """
-    Metaclass for ERP models
+    Metaclass for BMF models
     """
 
     def __new__(cls, name, bases, attrs):
-        cls = super(ERPModelBase, cls).__new__(cls, name, bases, attrs)
+        cls = super(BMFModelBase, cls).__new__(cls, name, bases, attrs)
 
-        parents = [b for b in bases if isinstance(b, ERPModelBase)]
+        parents = [b for b in bases if isinstance(b, BMFModelBase)]
         if not parents:
             # If this is the ModelBase-Class itself - do nothing
             return cls
@@ -153,8 +153,8 @@ class ERPModelBase(ModelBase):
             # Don't do anything on abstract models
             return cls
 
-        # make erp-attributes
-        cls._erpmeta = ERPOptions(cls, cls._meta, getattr(cls, 'ERPMeta', None))
+        # make bmf-attributes
+        cls._bmfmeta = BMFOptions(cls, cls._meta, getattr(cls, 'BMFMeta', None))
 
         if type(cls._meta.permissions) is not tuple:
             cls._meta.permissions = tuple(cls._meta.permissions)
@@ -163,39 +163,39 @@ class ERPModelBase(ModelBase):
         cls._meta.permissions += (
             ('view_' + cls._meta.model_name, u'Can view %s' % cls.__name__),
         )
-        if cls._erpmeta.can_clone:
+        if cls._bmfmeta.can_clone:
             cls._meta.permissions += (
                 ('clone_' + cls._meta.model_name, u'Can clone %s' % cls.__name__),
             )
-        if cls._erpmeta.has_comments:
+        if cls._bmfmeta.has_comments:
             cls._meta.permissions += (
                 ('comment_' + cls._meta.model_name, u'Can comment on %s' % cls.__name__),
             )
-        if cls._erpmeta.has_files:
+        if cls._bmfmeta.has_files:
             cls._meta.permissions += (
                 ('addfile_' + cls._meta.model_name, u'Can add files to %s' % cls.__name__),
             )
 
         # make workflow
-        cls._erpworkflow = cls._erpmeta.workflow()
-        if cls._erpmeta.has_workflow:
+        cls._bmfworkflow = cls._bmfmeta.workflow()
+        if cls._bmfmeta.has_workflow:
             try:
-                if not isinstance(cls.__dict__[cls._erpmeta.workflow_field].field, WorkflowField):
+                if not isinstance(cls.__dict__[cls._bmfmeta.workflow_field].field, WorkflowField):
                     raise ImproperlyConfigured(
                         '%s is not a WorkflowField in %s' % (
-                            cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__
+                            cls._bmfmeta.workflow_field, cls._meta.model.__class__.__name__
                         )
                     )
             except KeyError:
                 raise ImproperlyConfigured(
                     '%s is not a WorkflowField in %s' % (
-                        cls._erpmeta.workflow_field, cls._meta.model.__class__.__name__
+                        cls._bmfmeta.workflow_field, cls._meta.model.__class__.__name__
                     )
                 )
 
-        if cls._erpmeta.clean:
-            if not hasattr(cls, 'erp_clean') and not cls._meta.abstract:
-                raise ImproperlyConfigured('%s has not a erp_clean method' % (cls.__name__))
+        if cls._bmfmeta.clean:
+            if not hasattr(cls, 'bmf_clean') and not cls._meta.abstract:
+                raise ImproperlyConfigured('%s has not a bmf_clean method' % (cls.__name__))
 
         # add history signals for this model
         add_signals(cls)
@@ -230,9 +230,9 @@ class ERPModelBase(ModelBase):
         return cls
 
 
-class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
+class BMFSimpleModel(six.with_metaclass(BMFModelBase, models.Model)):
     """
-    Base class for ERP models.
+    Base class for BMF models.
     """
     modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False, null=True, blank=False)
     created = models.DateTimeField(_("Created"), auto_now_add=True, editable=False, null=True, blank=False)
@@ -244,40 +244,40 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         null=True, blank=True, editable=False,
         related_name="+", on_delete=models.SET_NULL)
-    djangoerp_activity = GenericRelation(Activity, content_type_field='parent_ct', object_id_field='parent_id')
-    djangoerp_notification = GenericRelation(Notification, content_type_field='obj_ct', object_id_field='obj_id')
+    djangobmf_activity = GenericRelation(Activity, content_type_field='parent_ct', object_id_field='parent_id')
+    djangobmf_notification = GenericRelation(Notification, content_type_field='obj_ct', object_id_field='obj_id')
 
     class Meta:
         abstract = True
         default_permissions = ('add', 'change', 'delete', 'view')
 
     def __init__(self, *args, **kwargs):
-        super(ERPSimpleModel, self).__init__(*args, **kwargs)
+        super(BMFSimpleModel, self).__init__(*args, **kwargs)
         # update the state of the workflow with object data
-        if self._erpmeta.workflow_field:
-            if hasattr(self, self._erpmeta.workflow_field):
-                self._erpworkflow = self._erpmeta.workflow(getattr(self, self._erpmeta.workflow_field))
-                if getattr(self, self._erpmeta.workflow_field) is None:
+        if self._bmfmeta.workflow_field:
+            if hasattr(self, self._bmfmeta.workflow_field):
+                self._bmfworkflow = self._bmfmeta.workflow(getattr(self, self._bmfmeta.workflow_field))
+                if getattr(self, self._bmfmeta.workflow_field) is None:
                     # set default value in new objects
                     setattr(
                         self,
-                        self._erpmeta.workflow_field,
-                        self._erpworkflow._current_state_key
+                        self._bmfmeta.workflow_field,
+                        self._bmfworkflow._current_state_key
                     )
-        if self.pk and len(self._erpmeta.observed_fields) > 0:
-            self._erpmeta.changelog = self._get_observed_values()
+        if self.pk and len(self._bmfmeta.observed_fields) > 0:
+            self._bmfmeta.changelog = self._get_observed_values()
 
     def _get_observed_values(self):
         """
-        returns the values of every field in self._erpmeta.observed_fields as a dictionary
+        returns the values of every field in self._bmfmeta.observed_fields as a dictionary
         """
-        return dict([(field, getattr(self, field)) for field in self._erpmeta.observed_fields])
+        return dict([(field, getattr(self, field)) for field in self._bmfmeta.observed_fields])
 
     def get_workflow_state(self):
         """
         Returns the current state of the workflow attached to this model
         """
-        return self._erpworkflow._current_state
+        return self._bmfworkflow._current_state
 
     @classmethod
     def has_permissions(cls, qs, user):  # DRAFT!!
@@ -289,7 +289,7 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return qs
 
-    def erpget_project(self):
+    def bmfget_project(self):
         """
         The result of this value is currently used by the document-management system
         to connect the file uploaded to this model with a project instance
@@ -298,7 +298,7 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return None
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         """
         The result of this value is currently used by the document-management system
         to connect the file uploaded to this model with a customer instance
@@ -308,19 +308,19 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         return None
 
     @models.permalink
-    def erpmodule_detail(self):
+    def bmfmodule_detail(self):
         """
-        A permalink to the default view of this model in the ERP-System
+        A permalink to the default view of this model in the BMF-System
         """
-        return ('%s:detail' % self._erpmeta.url_namespace, (), {"pk": self.pk})
+        return ('%s:detail' % self._bmfmeta.url_namespace, (), {"pk": self.pk})
 
     def get_absolute_url(self):
-        return self.erpmodule_detail()
+        return self.bmfmodule_detail()
 
 
-class ERPModel(ERPSimpleModel):
+class BMFModel(BMFSimpleModel):
     """
-    ERPModel with uuid. A uuid is used to identify an entry in an syncronisation
+    BMFModel with uuid. A uuid is used to identify an entry in an syncronisation
     """
     uuid = models.CharField("UUID", max_length=100, null=True, blank=True, editable=False, db_index=True)
 
@@ -328,11 +328,11 @@ class ERPModel(ERPSimpleModel):
         abstract = True
 
 
-class ERPMPTTModelBase(MPTTModelBase, ERPModelBase):
+class BMFMPTTModelBase(MPTTModelBase, BMFModelBase):
     pass
 
 
-class ERPMPTTModel(six.with_metaclass(ERPMPTTModelBase, ERPModel, MPTTModel)):
+class BMFMPTTModel(six.with_metaclass(BMFMPTTModelBase, BMFModel, MPTTModel)):
     objects = TreeManager()
 
     class Meta:

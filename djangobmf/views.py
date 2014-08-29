@@ -29,7 +29,7 @@ from .activity.forms import HistoryCommentForm
 from .signals import activity_create
 from .signals import activity_update
 from .signals import activity_workflow
-from .signals import djangoerp_post_save
+from .signals import djangobmf_post_save
 from .utils import get_model_from_cfg
 from .utils import form_class_factory
 from .viewmixins import ModuleClonePermissionMixin
@@ -70,11 +70,11 @@ class ModuleActivityMixin(object):
             watching = False
 
         kwargs.update({
-            'erpactivity': {
+            'bmfactivity': {
                 'qs': Activity.objects.filter(parent_ct=ct, parent_id=self.object.pk),
-                'enabled': (self.model._erpmeta.has_comments or self.model._erpmeta.has_history),
-                'comments': self.model._erpmeta.has_comments,
-                'log': self.model._erpmeta.has_history,
+                'enabled': (self.model._bmfmeta.has_comments or self.model._bmfmeta.has_history),
+                'comments': self.model._bmfmeta.has_comments,
+                'log': self.model._bmfmeta.has_history,
                 'pk': self.object.pk,
                 'ct': ct.pk,
                 'watch': watching,
@@ -84,11 +84,11 @@ class ModuleActivityMixin(object):
                 'object_pk': self.object.pk,
             },
         })
-        if self.model._erpmeta.has_history:
-            kwargs['erpactivity']['log_data'] = Activity.objects.select_related('user') \
+        if self.model._bmfmeta.has_history:
+            kwargs['bmfactivity']['log_data'] = Activity.objects.select_related('user') \
                 .filter(parent_ct=ct, parent_id=self.object.pk)
-        if self.model._erpmeta.has_comments:
-            kwargs['erpactivity']['comment_form'] = HistoryCommentForm()
+        if self.model._bmfmeta.has_comments:
+            kwargs['bmfactivity']['comment_form'] = HistoryCommentForm()
         return super(ModuleActivityMixin, self).get_context_data(**kwargs)
 
 
@@ -98,7 +98,7 @@ class ModuleFilesMixin(object):
     """
 
     def get_context_data(self, **kwargs):
-        if self.model._erpmeta.has_files:
+        if self.model._bmfmeta.has_files:
             from .file.views import FileAddView
             document = get_model_from_cfg('DOCUMENT')
 
@@ -114,7 +114,7 @@ class ModuleFilesMixin(object):
 
 class ModuleFormMixin(object):
     """
-    make an ERP-Form
+    make an BMF-Form
     """
     fields = None
     exclude = []
@@ -147,11 +147,11 @@ class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     """
     """
     context_object_name = 'objects'
-    template_name_suffix = '_erpindex'
+    template_name_suffix = '_bmfindex'
     allow_empty = True
 
     def get_template_names(self):
-        return super(ModuleIndexView, self).get_template_names() + ["djangoerp/module_index_default.html"]
+        return super(ModuleIndexView, self).get_template_names() + ["djangobmf/module_index_default.html"]
 
     def get_context_data(self, **kwargs):
         if self.filterset_class:
@@ -171,7 +171,7 @@ class ModuleDetailView(
     show the details of an entry
     """
     context_object_name = 'object'
-    template_name_suffix = '_erpdetail'
+    template_name_suffix = '_bmfdetail'
 
     def get_related_views(self):
         # TODO: maybe cache this
@@ -180,13 +180,13 @@ class ModuleDetailView(
         open = self.request.GET.get("open", None)
         self._related_views = {}
         for rel in self.model._meta.get_all_related_objects():
-            template = '%s/%s_erprelated_%s.html' % (
+            template = '%s/%s_bmfrelated_%s.html' % (
                 rel.model._meta.app_label,
                 rel.model._meta.model_name,
                 self.model._meta.model_name,
             )
             qs = getattr(self.object, rel.get_accessor_name())
-            qs_mod = getattr(rel.model, 'erprelated_%s_queryset' % self.model._meta.model_name, None)
+            qs_mod = getattr(rel.model, 'bmfrelated_%s_queryset' % self.model._meta.model_name, None)
             try:
                 self._related_views[rel.model._meta.model_name] = {
                     'name': '%s' % rel.model._meta.verbose_name_plural,
@@ -217,7 +217,7 @@ class ModuleDetailView(
                 self.request.GET["open"] in self.get_related_views().keys():
             return self.get_related_views()[self.request.GET["open"]]["template"]
         return super(ModuleDetailView, self).get_template_names() \
-            + ["djangoerp/module_detail_default.html"]
+            + ["djangobmf/module_detail_default.html"]
 
 
 class ModuleAutoDetailView(ModuleFormMixin, ModuleDetailView):
@@ -246,7 +246,7 @@ class ModuleReportView(ModuleViewPermissionMixin, ModuleBaseMixin, DetailView):
     context_object_name = 'object'
 
     def get_template_names(self):
-        return ["djangoerp/module_report.html"]
+        return ["djangobmf/module_report.html"]
 
     def get(self, request, *args, **kwargs):
         response = super(ModuleReportView, self).get(request, *args, **kwargs)
@@ -270,12 +270,12 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
     clone a object
     """
     context_object_name = 'object'
-    template_name_suffix = '_erpclone'
+    template_name_suffix = '_bmfclone'
     fields = []
 
     def get_template_names(self):
         return super(ModuleCloneView, self).get_template_names() \
-            + ["djangoerp/module_clone_default.html"]
+            + ["djangobmf/module_clone_default.html"]
 
     def clone_object(self, formdata, instance):
         pass
@@ -288,11 +288,11 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
         old_object = copy.copy(self.object)
         self.clone_object(form.cleaned_data, form.instance)
         form.instance.pk = None
-        if form.instance._erpmeta.workflow_field:
+        if form.instance._bmfmeta.workflow_field:
             setattr(
                 form.instance,
-                form.instance._erpmeta.workflow_field,
-                form.instance._erpmeta.workflow._default_state_key
+                form.instance._bmfmeta.workflow_field,
+                form.instance._bmfmeta.workflow._default_state_key
             )
         form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
@@ -311,12 +311,12 @@ class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxM
     update an update
     """
     context_object_name = 'object'
-    template_name_suffix = '_erpupdate'
+    template_name_suffix = '_bmfupdate'
     exclude = []
 
     def get_template_names(self):
         return super(ModuleUpdateView, self).get_template_names() \
-            + ["djangoerp/module_update_default.html"]
+            + ["djangobmf/module_update_default.html"]
 
     def form_valid(self, form):
         # messages.success(self.request, 'Object updated')
@@ -334,7 +334,7 @@ class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxM
     create a new instance
     """
     context_object_name = 'object'
-    template_name_suffix = '_erpcreate'
+    template_name_suffix = '_bmfcreate'
 
     def get_initial(self):
         for key in self.request.GET.keys():
@@ -346,7 +346,7 @@ class ModuleCreateView(ModuleFormMixin, ModuleCreatePermissionMixin, ModuleAjaxM
 
     def get_template_names(self):
         return super(ModuleCreateView, self).get_template_names() \
-            + ["djangoerp/module_create_default.html"]
+            + ["djangobmf/module_create_default.html"]
 
     def form_valid(self, form):
         # messages.success(self.request, 'Object created')
@@ -365,15 +365,15 @@ class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, 
     delete an instance
     """
     context_object_name = 'object'
-    template_name_suffix = '_erpdelete'
+    template_name_suffix = '_bmfdelete'
 
     def get_template_names(self):
         return super(ModuleDeleteView, self).get_template_names() \
-            + ["djangoerp/module_delete_default.html"]
+            + ["djangobmf/module_delete_default.html"]
 
     def get_success_url(self):
         messages.info(self.request, 'Object deleted')
-        return self.redirect_next('%s:index' % self.model._erpmeta.url_namespace)
+        return self.redirect_next('%s:index' % self.model._bmfmeta.url_namespace)
 
 
 class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
@@ -390,31 +390,31 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
         return super(ModuleWorkflowView, self).get_permissions(perms)
 
     def get_success_url(self):
-        return self.redirect_next('%s:index' % self.model._erpmeta.url_namespace)
+        return self.redirect_next('%s:index' % self.model._bmfmeta.url_namespace)
 
     def get(self, request, transition='', *args, **kwargs):
         self.object = self.get_object()
 
-        transitions = dict(self.object._erpworkflow._from_here())
+        transitions = dict(self.object._bmfworkflow._from_here())
         if transition not in transitions:
             raise Http404
 
         try:
-            self.success_url = self.object._erpworkflow._call(transition, self.object, self.request.user)
+            self.success_url = self.object._bmfworkflow._call(transition, self.object, self.request.user)
         except ValidationError as e:
             # the objects gets checks with full_clean
             # if a validation error is raised, show an error page and don't save the object
             return self.response_class(
                 request=self.request,
-                template=['djangoerp/module_workflow.html'],
+                template=['djangobmf/module_workflow.html'],
                 context=self.get_context_data(error=e),
             )
-        self.object = self.object._erpworkflow.instance
+        self.object = self.object._bmfworkflow.instance
         self.object.save()
 
         # generate a history object and signal
         activity_workflow.send(sender=self.object.__class__, instance=self.object)
-        djangoerp_post_save.send(sender=self.object.__class__, instance=self.object, new=False)
+        djangobmf_post_save.send(sender=self.object.__class__, instance=self.object, new=False)
         messages.success(self.request, 'Workflow-State changed')
         return HttpResponseRedirect(self.get_success_url())
 
@@ -475,7 +475,7 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
 
             if self.request.POST['string']:
                 for bit in self.normalize_query(self.request.POST['string']):
-                    lookups = [self.construct_search(str(f)) for f in qs.model._erpmeta.search_fields]
+                    lookups = [self.construct_search(str(f)) for f in qs.model._bmfmeta.search_fields]
                     queries = [Q(**{l: bit}) for l in lookups]
                     qs = qs.filter(reduce(operator.or_, queries))
             data = []

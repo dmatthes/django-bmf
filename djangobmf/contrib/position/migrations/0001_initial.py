@@ -4,9 +4,9 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 import django.db.models.deletion
 from django.conf import settings
-import djangoerp.fields
+import djangobmf.fields
 
-from djangoerp.settings import BASE_MODULE
+from djangobmf.settings import BASE_MODULE
 
 class Migration(migrations.Migration):
 
@@ -27,8 +27,8 @@ class Migration(migrations.Migration):
                 ('date', models.DateField(null=True, verbose_name='Date')),
                 ('name', models.CharField(max_length=255, null=True, verbose_name='Name')),
                 ('invoiceable', models.PositiveSmallIntegerField(default=1, verbose_name='Invoiceable', null=True, editable=False, choices=[(1, '100%'), (2, '80%'), (3, '50%'), (4, '0%')])),
-                ('price', djangoerp.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
-                ('price_currency', djangoerp.fields.CurrencyField(default=djangoerp.fields.get_default_currency, max_length=4, null=True, editable=False)),
+                ('price', djangobmf.fields.MoneyField(verbose_name='Price', max_digits=27, decimal_places=9)),
+                ('price_currency', djangobmf.fields.CurrencyField(default=djangobmf.fields.get_default_currency, max_length=4, null=True, editable=False)),
                 ('price_precision', models.PositiveSmallIntegerField(default=0, null=True, editable=False, blank=True)),
                 ('amount', models.FloatField(default=1.0, null=True, verbose_name='Amount')),
                 ('description', models.TextField(null=True, verbose_name='Description', blank=True)),

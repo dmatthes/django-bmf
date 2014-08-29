@@ -9,7 +9,7 @@ from django.forms import TextInput, PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 
-class ERPAuthenticationForm(AuthenticationForm):
+class BMFAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(AuthenticationForm, self).__init__(*args, **kwargs)
         usermodel = get_user_model()

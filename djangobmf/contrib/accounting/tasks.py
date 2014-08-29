@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 from celery.task import task
 
-from .erp_tasks import account_balance as _account_balance
+from .bmf_tasks import account_balance as _account_balance
 
 
 @task

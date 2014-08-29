@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from djangoerp.apps import ContribTemplate
+from djangobmf.apps import ContribTemplate
 
 
 class CustomerConfig(ContribTemplate):
-    name = 'djangoerp.contrib.customer'
-    label = "djangoerp_customer"
+    name = 'djangobmf.contrib.customer'
+    label = "djangobmf_customer"

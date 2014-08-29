@@ -5,15 +5,15 @@
 from __future__ import unicode_literals
 
 from .models import Position
-from ...testcase import ERPModuleTestCase
+from ...testcase import BMFModuleTestCase
 
-class PositionModuleTests(ERPModuleTestCase):
+class PositionModuleTests(BMFModuleTestCase):
 
     def test_urls_user(self):
         """
         """
         self.model = Position
-        namespace = Position._erpmeta.url_namespace
+        namespace = Position._bmfmeta.url_namespace
 
         data = self.autotest_ajax_get('create')
         self.autotest_get('api', status_code=404)

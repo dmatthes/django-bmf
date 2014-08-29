@@ -8,11 +8,11 @@ from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from djangoerp.models import ERPModel
-from djangoerp.fields import WorkflowField
-from djangoerp.settings import BASE_MODULE
+from djangobmf.models import BMFModel
+from djangobmf.fields import WorkflowField
+from djangobmf.settings import BASE_MODULE
 from django.utils.timezone import now
-from djangoerp.categories import PROJECT
+from djangobmf.categories import PROJECT
 
 from .workflows import GoalWorkflow
 from .workflows import TaskWorkflow
@@ -30,7 +30,7 @@ class GoalManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class AbstractGoal(ERPModel):
+class AbstractGoal(BMFModel):
     """
     """
     state = WorkflowField()
@@ -60,7 +60,7 @@ class AbstractGoal(ERPModel):
 
     objects = GoalManager()
 
-    class Meta(ERPModel.Meta):  # only needed for abstract models
+    class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Goal')
         verbose_name_plural = _('Goals')
         ordering = ['project__name', 'summary']
@@ -69,16 +69,16 @@ class AbstractGoal(ERPModel):
             ('can_manage', 'Can manage all goals'),
         )
 
-    def erpget_customer(self):
+    def bmfget_customer(self):
         if self.project:
             return self.project.customer
         return None
 
-    def erpget_project(self):
+    def bmfget_project(self):
         return self.project
 
     @staticmethod
-    def erprelated_project_queryset(qs):
+    def bmfrelated_project_queryset(qs):
         return qs.filter(completed=False)
 
     def __str__(self):
@@ -89,17 +89,17 @@ class AbstractGoal(ERPModel):
         if user.has_perm('%s.can_manage' % cls._meta.app_label, cls):
             return qs
 
-        qs_filter = Q(referee=getattr(user, 'djangoerp_employee', -1))
-        qs_filter |= Q(employees=getattr(user, 'djangoerp_employee', -1))
-        qs_filter |= Q(team__in=getattr(user, 'djangoerp_teams', []))
+        qs_filter = Q(referee=getattr(user, 'djangobmf_employee', -1))
+        qs_filter |= Q(employees=getattr(user, 'djangobmf_employee', -1))
+        qs_filter |= Q(team__in=getattr(user, 'djangobmf_teams', []))
 
         if hasattr(cls, "project"):
             project = cls._meta.get_field_by_name("project")[0].model
             if user.has_perm('%s.can_manage' % project._meta.app_label, project):
                 qs_filter |= Q(project__isnull=False)
             else:
-                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangoerp_employee', -1))
-                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangoerp_teams', []))
+                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangobmf_employee', -1))
+                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangobmf_teams', []))
         return qs.filter(qs_filter)
 
     def get_states(self):
@@ -135,7 +135,7 @@ class AbstractGoal(ERPModel):
 
         return states
 
-    class ERPMeta:
+    class BMFMeta:
         has_logging = False
         category = PROJECT
         workflow = GoalWorkflow
@@ -162,7 +162,7 @@ class TaskManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class AbstractTask(ERPModel):
+class AbstractTask(BMFModel):
     """
     """
 
@@ -189,7 +189,7 @@ class AbstractTask(ERPModel):
 
     objects = TaskManager()
 
-    class Meta(ERPModel.Meta):  # only needed for abstract models
+    class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
         ordering = ['due_date', 'summary']
@@ -201,24 +201,24 @@ class AbstractTask(ERPModel):
     @classmethod
     def has_permissions(cls, qs, user, obj=None):
         qs_filter = Q(project__isnull=True, goal__isnull=True)
-        qs_filter |= Q(employee=getattr(user, 'djangoerp_employee', -1))
+        qs_filter |= Q(employee=getattr(user, 'djangobmf_employee', -1))
 
         if hasattr(cls, "goal"):
             goal = cls._meta.get_field_by_name("goal")[0].model
             if user.has_perm('%s.can_manage' % goal._meta.app_label, goal):
                 qs_filter |= Q(goal__isnull=False)
             else:
-                qs_filter |= Q(goal__isnull=False, goal__referee=getattr(user, 'djangoerp_employee', -1))
-                qs_filter |= Q(goal__isnull=False, goal__employees=getattr(user, 'djangoerp_employee', -1))
-                qs_filter |= Q(goal__isnull=False, goal__team__in=getattr(user, 'djangoerp_teams', []))
+                qs_filter |= Q(goal__isnull=False, goal__referee=getattr(user, 'djangobmf_employee', -1))
+                qs_filter |= Q(goal__isnull=False, goal__employees=getattr(user, 'djangobmf_employee', -1))
+                qs_filter |= Q(goal__isnull=False, goal__team__in=getattr(user, 'djangobmf_teams', []))
 
         if hasattr(cls, "project"):
             project = cls._meta.get_field_by_name("project")[0].model
             if user.has_perm('%s.can_manage' % project._meta.app_label, project):
                 qs_filter |= Q(project__isnull=False)
             else:
-                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangoerp_employee', -1))
-                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangoerp_teams', []))
+                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangobmf_employee', -1))
+                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangobmf_teams', []))
 
         return qs.filter(qs_filter)
 
@@ -246,7 +246,7 @@ class AbstractTask(ERPModel):
                 return 0
             return (self.due_date - time).days
 
-    class ERPMeta:
+    class BMFMeta:
         has_files = True
         has_comments = True
         workflow = TaskWorkflow

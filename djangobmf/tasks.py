@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 
 from celery.task import task
 
-from djangoerp.activity.tasks import djangoerp_user_watch as _djangoerp_user_watch
+from djangobmf.activity.tasks import djangobmf_user_watch as _djangobmf_user_watch
 
 
 @task
-def djangoerp_user_watch(*args, **kwargs):
-    return _djangoerp_user_watch(*args, **kwargs)
+def djangobmf_user_watch(*args, **kwargs):
+    return _djangobmf_user_watch(*args, **kwargs)

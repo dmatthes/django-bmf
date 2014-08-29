@@ -7,14 +7,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangoerp.categories import SALES
-from djangoerp.currency import BaseCurrency
-from djangoerp.models import ERPModel
-from djangoerp.settings import BASE_MODULE
-from djangoerp.fields import CurrencyField
-from djangoerp.fields import MoneyField
+from djangobmf.categories import SALES
+from djangobmf.currency import BaseCurrency
+from djangobmf.models import BMFModel
+from djangobmf.settings import BASE_MODULE
+from djangobmf.fields import CurrencyField
+from djangobmf.fields import MoneyField
 
-from djangoerp.contrib.accounting.models import ACCOUNTING_INCOME, ACCOUNTING_EXPENSE
+from djangobmf.contrib.accounting.models import ACCOUNTING_INCOME, ACCOUNTING_EXPENSE
 
 from decimal import Decimal
 
@@ -39,7 +39,7 @@ PRODUCT_NO = (
 
 
 @python_2_unicode_compatible
-class AbstractProduct(ERPModel):
+class AbstractProduct(BMFModel):
     """
     """
     name = models.CharField(
@@ -150,13 +150,13 @@ class AbstractProduct(ERPModel):
     # Categories  empty
     # Tags  empty
 
-    class Meta(ERPModel.Meta):  # only needed for abstract models
+    class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
         ordering = ['name']
         abstract = True
 
-    class ERPMeta:
+    class BMFMeta:
         category = SALES
         search_fields = ['name', 'code']
 

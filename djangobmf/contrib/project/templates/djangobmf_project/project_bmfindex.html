@@ -1,4 +1,4 @@
-{% extends "djangoerp/module_index.html" %}
+{% extends "djangobmf/module_index.html" %}
 
 {% load i18n %}
 
@@ -25,12 +25,12 @@
           {% else %}
           <span class="glyphicon glyphicon-check"></span>
           {% endif %}
-          <a href="{{ obj.erpmodule_detail }}">{{ obj.name }}</a>
+          <a href="{{ obj.bmfmodule_detail }}">{{ obj.name }}</a>
       </td>
       <td>{{ obj.customer }}</td>
       <td>{{ obj.employee }}</td>
       <td class="text-right">
-        <a class="btn btn-xs btn-primary" href="{{ obj.erpmodule_detail }}">
+        <a class="btn btn-xs btn-primary" href="{{ obj.bmfmodule_detail }}">
           <span class="glyphicon glyphicon-list"></span>
         </a>
       </td>

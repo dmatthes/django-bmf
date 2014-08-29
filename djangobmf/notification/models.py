@@ -20,7 +20,7 @@ class Notification(models.Model):
         getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=False,
         null=True, on_delete=models.CASCADE,
     )
-    activity = models.ForeignKey("djangoerp.Activity", blank=False, null=True, on_delete=models.CASCADE)
+    activity = models.ForeignKey("djangobmf.Activity", blank=False, null=True, on_delete=models.CASCADE)
     obj_ct = models.ForeignKey(ContentType, related_name=False)
     obj_id = models.PositiveIntegerField()
     obj = GenericForeignKey('obj_ct', 'obj_id')

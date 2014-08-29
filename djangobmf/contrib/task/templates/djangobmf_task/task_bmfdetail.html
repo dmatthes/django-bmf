@@ -1,5 +1,5 @@
-{% extends "djangoerp/module_detail.html" %}
-{% load djangoerp_markup %}
+{% extends "djangobmf/module_detail.html" %}
+{% load djangobmf_markup %}
 
 {% block base_content %}
 <div class="panel panel-default">
@@ -12,7 +12,7 @@
         Fällig: {{ object.due_date }} ({{ object.due_date|timeuntil }})
       </div>
     {% endif %}
-    {{ object.description|erpmarkup }}
+    {{ object.description|bmfmarkup }}
   </div>
   <div class="panel-footer">
     {% if object.start_date %}

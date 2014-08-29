@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load djangoerp_markup %}
+{% load djangobmf_markup %}
 <div>
   <p>
     {% if item.topic %}
@@ -10,7 +10,7 @@
     </small>
   </p>
   {% if item.text %}
-    {{ item.text|erpmarkup }}
+    {{ item.text|bmfmarkup }}
   {% endif %}
   <hr />
 </div>

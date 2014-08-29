@@ -6,15 +6,15 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 
-def djangoerp_user_watch(activity):
-    from djangoerp.models import Notification
-    from djangoerp.models import Watch
+def djangobmf_user_watch(activity):
+    from djangobmf.models import Notification
+    from djangobmf.models import Watch
 
-    from djangoerp.activity.models import ACTION_COMMENT
-    from djangoerp.activity.models import ACTION_CREATED
-    from djangoerp.activity.models import ACTION_UPDATED
-    from djangoerp.activity.models import ACTION_WORKFLOW
-    from djangoerp.activity.models import ACTION_FILE
+    from djangobmf.activity.models import ACTION_COMMENT
+    from djangobmf.activity.models import ACTION_CREATED
+    from djangobmf.activity.models import ACTION_UPDATED
+    from djangobmf.activity.models import ACTION_WORKFLOW
+    from djangobmf.activity.models import ACTION_FILE
 
     qs = Watch.objects.filter(watch_ct=activity.parent_ct, watch_id__in=[0, activity.parent_id])
     if activity.action == ACTION_COMMENT:

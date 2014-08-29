@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import django_filters
 
-from djangoerp.filters import HasValueFilter
+from djangobmf.filters import HasValueFilter
 
 from .models import Position
 

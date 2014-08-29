@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
-from djangoerp.apps import ContribTemplate
+from djangobmf.apps import ContribTemplate
 
 
 class ProductConfig(ContribTemplate):
-    name = 'djangoerp.contrib.product'
-    label = "djangoerp_product"
+    name = 'djangobmf.contrib.product'
+    label = "djangobmf_product"

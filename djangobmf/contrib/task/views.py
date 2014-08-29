@@ -9,7 +9,7 @@ from ...views import ModuleCloneView
 
 from .filters import TaskFilter
 from .filters import GoalFilter
-from .forms import ERPGoalCloneForm
+from .forms import BMFGoalCloneForm
 
 
 class GoalIndexView(ModuleIndexView):
@@ -17,7 +17,7 @@ class GoalIndexView(ModuleIndexView):
 
 
 class GoalCloneView(ModuleCloneView):
-    form_class = ERPGoalCloneForm
+    form_class = BMFGoalCloneForm
 
     def clone_object(self, formdata, instance):
         instance.completed = False
@@ -34,7 +34,7 @@ class GoalCloneView(ModuleCloneView):
                 task.completed = False
                 task.work_date = None
                 task.seconds_on = 0
-                setattr(task, task._erpmeta.workflow_field, task._erpmeta.workflow._default_state_key)
+                setattr(task, task._bmfmeta.workflow_field, task._bmfmeta.workflow._default_state_key)
                 task.save()
 
 

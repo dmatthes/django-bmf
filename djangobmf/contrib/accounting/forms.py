@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
 
-from djangoerp.forms import ERPForm
+from djangobmf.forms import BMFForm
 
 from .models import Transaction, TransactionItem
 
@@ -25,13 +25,13 @@ class TransactionCreateForm(ModelForm):
 TransactionInlineFormset = inlineformset_factory(Transaction, TransactionItem, extra=3, exclude=[])
 
 
-class ERPTransactionUpdateForm(ERPForm):
+class BMFTransactionUpdateForm(BMFForm):
     class Meta:
         form_class = TransactionUpdateForm
         inlines = {'accounts': TransactionInlineFormset}
 
 
-class ERPTransactionCreateForm(ERPForm):
+class BMFTransactionCreateForm(BMFForm):
     class Meta:
         form_class = TransactionCreateForm
         inlines = {'accounts': TransactionInlineFormset}

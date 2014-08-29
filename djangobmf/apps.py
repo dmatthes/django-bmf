@@ -6,11 +6,11 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class ERPConfig(AppConfig):
-    name = 'djangoerp'
-    label = 'djangoerp'
-    verbose_name = "Django ERP"
+class BMFConfig(AppConfig):
+    name = 'djangobmf'
+    label = 'djangobmf'
+    verbose_name = "Django BMF"
 
 
 class ContribTemplate(AppConfig):
-    verbose_name = "Django ERP Contrib"
+    verbose_name = "Django BMF Contrib"

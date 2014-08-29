@@ -5,10 +5,10 @@
 from __future__ import unicode_literals
 
 from .models import Tax
-from ...testcase import ERPModuleTestCase
+from ...testcase import BMFModuleTestCase
 
 
-class TaxModuleTests(ERPModuleTestCase):
+class TaxModuleTests(BMFModuleTestCase):
 
     def test_urls_user(self):
         """

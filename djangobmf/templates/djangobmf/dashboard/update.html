@@ -1,16 +1,16 @@
-{% extends "djangoerp/base_sitebar_l.html" %}
+{% extends "djangobmf/base_sitebar_l.html" %}
 {% load sekizai_tags i18n %}
 
 {% block base_headline %}
 <div class="page-header">
 {% if object.name %}
   <h1>{{ object.name }}<span class="pull-right">
-    <a href="{% url "djangoerp:dashboard_update" pk=object.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}</a>
-    <a href="{% url "djangoerp:dashboard_delete" pk=object.pk %}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+    <a href="{% url "djangobmf:dashboard_update" pk=object.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}</a>
+    <a href="{% url "djangobmf:dashboard_delete" pk=object.pk %}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
   </h1>
 {% else %}
   <h1>{% trans "Dashboards" %}<span class="pull-right">
-      <a href="{% url "djangoerp:dashboard_create" %}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</a>
+      <a href="{% url "djangobmf:dashboard_create" %}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</a>
     </span> 
   </h1>
 {% endif %}
@@ -31,25 +31,25 @@
 {% addtoblock "js" %}
 <script>
 $(function() {
-    $( ".erplist_sortable" ).sortable({
+    $( ".bmflist_sortable" ).sortable({
         distance: 15,
         cursor: "move"
     }).disableSelection();
 });
 </script>{% endaddtoblock %}
 
-<ul id="sortable1" class="list-group erplist_sortable">
+<ul id="sortable1" class="list-group bmflist_sortable">
     <li class="list-group-item">Item 1 <a href="#">edit</a></li>
     <li class="list-group-item">Item 2 <a href="#">edit</a></li>
     <li class="list-group-item">Item 3 <a href="#">edit</a></li>
 </ul>
-<ul id="sortable2" class="list-group erplist_sortable">
+<ul id="sortable2" class="list-group bmflist_sortable">
     <li class="list-group-item">Item 1</li>
     <li class="list-group-item">Item 2</li>
     <li class="list-group-item">Item 3</li>
 </ul>
 
-  {% regroup djangoerp.views|dictsort:"category" by category as view_list %}
+  {% regroup djangobmf.views|dictsort:"category" by category as view_list %}
   {% for view in view_list %}
   <div class="panel panel-default">
       {% if view.grouper %}
@@ -62,7 +62,7 @@ $(function() {
       </ul>
   </div>
   {% endfor %}
-{% else %}{% include "djangoerp/dashboard/sitebar.html" %}
+{% else %}{% include "djangobmf/dashboard/sitebar.html" %}
 {% endif %}
 {% endblock %}
 

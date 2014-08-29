@@ -38,7 +38,7 @@ class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
 
 def get_default_currency():
     from .sites import site
-    return site.get_lazy_setting('djangoerp', 'currency')
+    return site.get_lazy_setting('djangobmf', 'currency')
 
 
 class MoneyProxy(object):

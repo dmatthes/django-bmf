@@ -1,4 +1,4 @@
-{% extends "djangoerp/module_index.html" %}
+{% extends "djangobmf/module_index.html" %}
 
 {% block base_content %}
 <table class="table table-striped table-condensed table-hover">
@@ -17,7 +17,7 @@
       <td>{{ obj.project }}</td>
       <td>{{ obj.get_workflow_state }}</td>
       <td class="text-right">
-        <a class="btn btn-xs btn-primary" href="{{ obj.erpmodule_detail }}">
+        <a class="btn btn-xs btn-primary" href="{{ obj.bmfmodule_detail }}">
           <span class="glyphicon glyphicon-list"></span>
         </a>
       </td>

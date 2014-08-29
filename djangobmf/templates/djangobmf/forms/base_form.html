@@ -1,4 +1,4 @@
-{% load djangoerp_forms %}
+{% load djangobmf_forms %}
 {% load i18n %}
 <form class="form-horizontal" role="form" method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="">
   {% if form.non_field_errors %}
@@ -14,9 +14,9 @@
     {% if field.is_hidden %}
       <div class="hidden">{{ field }}</div>
     {% elif field.field.inlineformset %}
-      {% erpformset field %}
+      {% bmfformset field %}
     {% else %}
-      {% erplayout field %}
+      {% bmflayout field %}
     {% endif %}
   {% endfor %}
   {% comment %}

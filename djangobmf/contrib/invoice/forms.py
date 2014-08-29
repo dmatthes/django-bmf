@@ -7,7 +7,7 @@ from django.forms import ModelForm
 
 from django.forms.models import inlineformset_factory
 
-from djangoerp.forms import ERPForm
+from djangobmf.forms import BMFForm
 
 from .models import Invoice, InvoiceProduct
 
@@ -27,13 +27,13 @@ class InvoiceCreateForm(ModelForm):
 InvoiceInlineFormset = inlineformset_factory(Invoice, InvoiceProduct, extra=2, exclude=[])
 
 
-class ERPInvoiceUpdateForm(ERPForm):
+class BMFInvoiceUpdateForm(BMFForm):
     class Meta:
         form_class = InvoiceUpdateForm
         inlines = {'products': InvoiceInlineFormset}
 
 
-class ERPInvoiceCreateForm(ERPForm):
+class BMFInvoiceCreateForm(BMFForm):
     class Meta:
         form_class = InvoiceCreateForm
         inlines = {'products': InvoiceInlineFormset}

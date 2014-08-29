@@ -6,23 +6,23 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 
-from ..testcase import ERPViewTestCase
+from ..testcase import BMFViewTestCase
 
-class DashboardTests(ERPViewTestCase):
+class DashboardTests(BMFViewTestCase):
 
     def test_dashboard(self):
         """
         """
-        r = self.client.get(reverse('djangoerp:dashboard'))
+        r = self.client.get(reverse('djangobmf:dashboard'))
         self.assertEqual(r.status_code, 200)
 
-        r = self.client.get(reverse('djangoerp:dashboard_create'))
+        r = self.client.get(reverse('djangobmf:dashboard_create'))
         self.assertEqual(r.status_code, 200)
 
- #      r = self.client.get(reverse('djangoerp:dashboard_update'))
+ #      r = self.client.get(reverse('djangobmf:dashboard_update'))
  #      self.assertEqual(r.status_code, 200)
 
- #      r = self.client.get(reverse('djangoerp:dashboard_delete'))
+ #      r = self.client.get(reverse('djangobmf:dashboard_delete'))
  #      self.assertEqual(r.status_code, 200)
 
     def test_views(self):

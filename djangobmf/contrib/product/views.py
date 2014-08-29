@@ -7,17 +7,17 @@ from ...views import ModuleCreateView
 from ...views import ModuleUpdateView
 from ...views import ModuleDetailView
 
-from .forms import ERPProductUpdateForm
-from .forms import ERPProductCreateForm
+from .forms import BMFProductUpdateForm
+from .forms import BMFProductCreateForm
 
 
 class ProductCreateView(ModuleCreateView):
-    form_class = ERPProductCreateForm
+    form_class = BMFProductCreateForm
 
 
 class ProductUpdateView(ModuleUpdateView):
-    form_class = ERPProductUpdateForm
+    form_class = BMFProductUpdateForm
 
 
 class ProductDetailView(ModuleDetailView):
-    form_class = ERPProductUpdateForm
+    form_class = BMFProductUpdateForm

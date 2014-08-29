@@ -35,7 +35,7 @@ def _generate_name(value, date, counter):
 @python_2_unicode_compatible
 class NumberCycle(models.Model):
     ct = models.OneToOneField(
-        ContentType, related_name="erp_numbercycle", null=True, blank=False, editable=False,
+        ContentType, related_name="bmf_numbercycle", null=True, blank=False, editable=False,
     )
     name_template = models.CharField(
         _("Template"),

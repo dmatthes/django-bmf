@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from django import forms
 
-# from djangoerp.documents.widgets import FileWidget
+# from djangobmf.documents.widgets import FileWidget
 
 from .models import Document
 

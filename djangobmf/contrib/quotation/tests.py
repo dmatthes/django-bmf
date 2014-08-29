@@ -8,10 +8,10 @@ from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 
 from .models import Quotation, QuotationProduct
-from ...testcase import ERPModuleTestCase
+from ...testcase import BMFModuleTestCase
 
 
-class QuotationModuleTests(ERPModuleTestCase):
+class QuotationModuleTests(BMFModuleTestCase):
 
     def test_urls_user(self):
         """
@@ -24,26 +24,26 @@ class QuotationModuleTests(ERPModuleTestCase):
             'customer': 1,
             'date': '2012-01-01',
             'employee': 1,
-            'erp-products-TOTAL_FORMS': 1,
-            'erp-products-INITIAL_FORMS': 0,
-            'erp-products-MAX_NUM_FORMS': 1,
-            'erp-products-0-product': 1,
-            'erp-products-0-amount': 1,
-            'erp-products-0-price': 100,
-            'erp-products-0-name': "Service",
+            'bmf-products-TOTAL_FORMS': 1,
+            'bmf-products-INITIAL_FORMS': 0,
+            'bmf-products-MAX_NUM_FORMS': 1,
+            'bmf-products-0-product': 1,
+            'bmf-products-0-amount': 1,
+            'bmf-products-0-price': 100,
+            'bmf-products-0-name': "Service",
         })
         data = self.autotest_ajax_post('create', data={
             'project': 2,
             'customer': 2,
             'date': '2012-01-01',
             'employee': 1,
-            'erp-products-TOTAL_FORMS': 1,
-            'erp-products-INITIAL_FORMS': 0,
-            'erp-products-MAX_NUM_FORMS': 1,
-            'erp-products-0-product': 1,
-            'erp-products-0-amount': 10,
-            'erp-products-0-price': 10,
-            'erp-products-0-name': "Service",
+            'bmf-products-TOTAL_FORMS': 1,
+            'bmf-products-INITIAL_FORMS': 0,
+            'bmf-products-MAX_NUM_FORMS': 1,
+            'bmf-products-0-product': 1,
+            'bmf-products-0-amount': 10,
+            'bmf-products-0-price': 10,
+            'bmf-products-0-name': "Service",
         })
         self.autotest_get('index', 200)
 
