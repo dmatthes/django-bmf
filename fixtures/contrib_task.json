@@ -1,101 +1,421 @@
 [
 {
  "fields": {
-  "referee": null,
-  "modified_by": 1,
-  "uuid": null,
+  "billable": false,
+  "employees": [],
   "created": "2014-07-19T15:33:44.772Z",
-  "completed": false,
-  "modified": "2014-07-19T15:33:44.772Z",
-  "created_by": 1,
   "summary": "Example Target",
-  "project": 1,
-  "state": "open",
-  "billable": false,
-  "description": ""
- },
- "model": "djangoerp_task.goal",
- "pk": 1
-},
-{
- "fields": {
   "referee": null,
-  "modified_by": 1,
-  "uuid": null,
-  "created": "2014-07-19T15:33:59.733Z",
+  "modified": "2014-07-19T15:33:44.772Z",
+  "project": 1,
   "completed": false,
-  "modified": "2014-07-19T15:33:59.733Z",
-  "created_by": 1,
-  "summary": "Target without Project",
-  "project": null,
+  "team": null,
   "state": "open",
-  "billable": false,
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
   "description": ""
  },
- "model": "djangoerp_task.goal",
- "pk": 2
+ "pk": 1,
+ "model": "djangoerp_task.goal"
 },
 {
  "fields": {
-  "seconds_on": 0,
-  "due_date": null,
-  "modified_by": 1,
-  "uuid": null,
-  "created": "2014-07-19T15:34:22.501Z",
-  "description": "",
-  "modified": "2014-07-19T15:34:22.501Z",
-  "created_by": 1,
-  "summary": "New Task",
+  "billable": false,
+  "employees": [],
+  "created": "2014-07-19T15:33:59.733Z",
+  "summary": "Target without Project",
+  "referee": null,
+  "modified": "2014-07-19T15:33:59.733Z",
   "project": null,
-  "state": "new",
-  "employee": null,
-  "work_date": null,
   "completed": false,
-  "goal": null
+  "team": null,
+  "state": "open",
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
  },
- "model": "djangoerp_task.task",
- "pk": 1
+ "pk": 2,
+ "model": "djangoerp_task.goal"
 },
 {
  "fields": {
-  "seconds_on": 0,
-  "due_date": null,
-  "modified_by": 1,
-  "uuid": null,
-  "created": "2014-07-19T15:34:35.757Z",
-  "description": "",
-  "modified": "2014-07-19T15:34:35.756Z",
-  "created_by": 1,
-  "summary": "Do something",
+  "billable": false,
+  "employees": [],
+  "created": "2014-08-29T13:36:13.619Z",
+  "summary": "Goal no project, employee and team",
+  "referee": null,
+  "modified": "2014-08-29T13:36:13.619Z",
   "project": null,
-  "state": "new",
-  "employee": null,
-  "work_date": null,
   "completed": false,
-  "goal": 2
+  "team": null,
+  "state": "open",
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
  },
- "model": "djangoerp_task.task",
- "pk": 2
+ "pk": 3,
+ "model": "djangoerp_task.goal"
 },
 {
  "fields": {
-  "seconds_on": 0,
-  "due_date": null,
-  "modified_by": 1,
+  "billable": false,
+  "employees": [
+   2
+  ],
+  "created": "2014-08-29T13:36:29.674Z",
+  "summary": "Goal no project and team",
+  "referee": null,
+  "modified": "2014-08-29T13:37:07.488Z",
+  "project": null,
+  "completed": false,
+  "team": null,
+  "state": "open",
   "uuid": null,
-  "created": "2014-07-19T15:34:53.908Z",
-  "description": "",
-  "modified": "2014-07-19T15:34:53.908Z",
-  "created_by": 1,
-  "summary": "Do nothing",
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 4,
+ "model": "djangoerp_task.goal"
+},
+{
+ "fields": {
+  "billable": false,
+  "employees": [],
+  "created": "2014-08-29T13:36:55.947Z",
+  "summary": "Goal no project and employee",
+  "referee": null,
+  "modified": "2014-08-29T13:36:55.947Z",
+  "project": null,
+  "completed": false,
+  "team": 1,
+  "state": "open",
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 5,
+ "model": "djangoerp_task.goal"
+},
+{
+ "fields": {
+  "billable": false,
+  "employees": [],
+  "created": "2014-08-29T13:37:41.116Z",
+  "summary": "Goal no employee and team",
+  "referee": null,
+  "modified": "2014-08-29T13:37:41.116Z",
   "project": 1,
-  "state": "new",
-  "employee": null,
-  "work_date": null,
   "completed": false,
-  "goal": 1
+  "team": null,
+  "state": "open",
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
  },
- "model": "djangoerp_task.task",
- "pk": 3
+ "pk": 6,
+ "model": "djangoerp_task.goal"
+},
+{
+ "fields": {
+  "billable": false,
+  "employees": [],
+  "created": "2014-08-29T13:37:50.437Z",
+  "summary": "Goal no employee and team",
+  "referee": null,
+  "modified": "2014-08-29T13:37:50.436Z",
+  "project": 2,
+  "completed": false,
+  "team": null,
+  "state": "open",
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 7,
+ "model": "djangoerp_task.goal"
+},
+{
+ "fields": {
+  "billable": false,
+  "employees": [],
+  "created": "2014-08-29T13:38:14.028Z",
+  "summary": "Goal only referee",
+  "referee": 2,
+  "modified": "2014-08-29T13:38:14.028Z",
+  "project": null,
+  "completed": false,
+  "team": null,
+  "state": "open",
+  "uuid": null,
+  "modified_by": [
+   "admin"
+  ],
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 8,
+ "model": "djangoerp_task.goal"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": null,
+  "due_date": null,
+  "created": "2014-07-19T15:34:22.501Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "New Task",
+  "employee": null,
+  "modified": "2014-07-19T15:34:22.501Z",
+  "project": null,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 1,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 2,
+  "due_date": null,
+  "created": "2014-07-19T15:34:35.757Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Do something",
+  "employee": null,
+  "modified": "2014-07-19T15:34:35.756Z",
+  "project": null,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 2,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 1,
+  "due_date": null,
+  "created": "2014-07-19T15:34:53.908Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Do nothing",
+  "employee": null,
+  "modified": "2014-07-19T15:34:53.908Z",
+  "project": 1,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 3,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 5,
+  "due_date": null,
+  "created": "2014-08-29T14:30:05.174Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Task no project and employee",
+  "employee": null,
+  "modified": "2014-08-29T14:30:05.174Z",
+  "project": null,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 4,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 4,
+  "due_date": null,
+  "created": "2014-08-29T14:30:20.259Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Task no project and team",
+  "employee": null,
+  "modified": "2014-08-29T14:30:20.259Z",
+  "project": null,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 5,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 3,
+  "due_date": null,
+  "created": "2014-08-29T14:30:33.650Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Task no project, employee and team",
+  "employee": null,
+  "modified": "2014-08-29T14:30:33.650Z",
+  "project": null,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 6,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 8,
+  "due_date": null,
+  "created": "2014-08-29T14:30:49.917Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Task only referee",
+  "employee": null,
+  "modified": "2014-08-29T14:30:49.917Z",
+  "project": null,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 7,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 6,
+  "due_date": null,
+  "created": "2014-08-29T14:31:04.775Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Task no employee and team",
+  "employee": null,
+  "modified": "2014-08-29T14:31:04.775Z",
+  "project": 1,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 8,
+ "model": "djangoerp_task.task"
+},
+{
+ "fields": {
+  "seconds_on": 0,
+  "goal": 7,
+  "due_date": null,
+  "created": "2014-08-29T14:31:18.160Z",
+  "modified_by": [
+   "admin"
+  ],
+  "summary": "Task no employee and team",
+  "employee": null,
+  "modified": "2014-08-29T14:31:18.160Z",
+  "project": 2,
+  "completed": false,
+  "state": "new",
+  "uuid": null,
+  "work_date": null,
+  "created_by": [
+   "admin"
+  ],
+  "description": ""
+ },
+ "pk": 9,
+ "model": "djangoerp_task.task"
 }
 ]

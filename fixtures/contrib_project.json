@@ -1,0 +1,42 @@
+[
+{
+ "pk": 1,
+ "model": "djangoerp_project.project",
+ "fields": {
+  "created_by": null,
+  "created": null,
+  "modified_by": [
+   "admin"
+  ],
+  "name": "Django ERP",
+  "modified": "2014-08-29T14:24:21.252Z",
+  "notes": "",
+  "team": null,
+  "customer": 1,
+  "uuid": null,
+  "is_active": true,
+  "employees": [
+   2
+  ]
+ }
+},
+{
+ "pk": 2,
+ "model": "djangoerp_project.project",
+ "fields": {
+  "created_by": null,
+  "created": null,
+  "modified_by": [
+   "admin"
+  ],
+  "name": "Sebastian Braun",
+  "modified": "2014-08-29T14:24:35.547Z",
+  "notes": "",
+  "team": 1,
+  "customer": 2,
+  "uuid": null,
+  "is_active": true,
+  "employees": []
+ }
+}
+]

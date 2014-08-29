@@ -19,6 +19,7 @@ FIXTURES = (
     'fixtures/demodata.json',
     'fixtures/contrib_accounting.json',
     'fixtures/contrib_invoice.json',
+    'fixtures/contrib_project.json',
     'fixtures/contrib_quotation.json',
     'fixtures/contrib_task.json',
     'fixtures/contrib_team.json',
