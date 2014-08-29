@@ -38,7 +38,7 @@ def static():
 def css():
   with lcd(BASEDIR):
     local('lessc less/custom.less > bootstrap.css')
-    local('yui-compressor --type css -o djangobmf/static/djangobmf/css/bootstrap.min.css bootstrap.css')
+    local('yui-compressor --type css -o djangobmf/static/djangobmf/css/djangobmf.min.css bootstrap.css')
 
 
 @task
