@@ -51,10 +51,10 @@ def js(debug=None):
            #'js/jquery-ui-1.10.4.custom.js',
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
-            'js/form-api.js',
             'js/bmf-autocomplete.js',
             'js/bmf-calendar.js',
             'js/bmf-editform.js',
+            'js/bmf-inlineform.js',
             'js/bmf-buildform.js',
             'js/menu.js',
         ]

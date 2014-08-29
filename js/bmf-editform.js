@@ -68,7 +68,6 @@
             var form_object = parent_object.find('form');
             form_object.attr('action', base.options.href.split("?",1)[0]);
             // apply bmf-form functions
-            form_object.find('div[data-bmf-inlineform=1]').bmf_inlineform();
             form_object.bmf_buildform();
 
             parent_object.find('button.bmfedit-cancel').click(function (event) {
@@ -91,8 +90,7 @@
                     else {
                         html = $($.parseHTML( data.html ));
                         form_object.html(html.find('form').html())
-                        form_object.find('div[data-bmf-search=1]').bmf_search();
-                        form_object.find('div[data-bmf-inlineform=1]').bmf_inlineform();
+                        form_object.bmf_buildform();
                     }
                 });
             });
