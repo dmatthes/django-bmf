@@ -26,7 +26,7 @@ class BaseProject(ERPModel):
         related_name="erp_projects",
     )
     employees = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True,
+        BASE_MODULE["EMPLOYEE"], blank=True,
         related_name="erp_projects",
     )
 
@@ -63,7 +63,7 @@ class BaseProject(ERPModel):
             return qs
         return qs.filter(
             Q(employees=getattr(user, 'djangoerp_employee', -1))
-            | 
+            |
             Q(team__in=getattr(user, 'djangoerp_teams', []))
         )
 

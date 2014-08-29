@@ -51,7 +51,7 @@ class AbstractGoal(ERPModel):
         BASE_MODULE["TEAM"], null=True, blank=True, on_delete=models.SET_NULL,
     )
     employees = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True,
+        BASE_MODULE["EMPLOYEE"], blank=True,
         related_name="employees"
     )
 

@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='employees',
-            field=models.ManyToManyField(related_name='erp_projects', blank=True, to='djangoerp_employee.Employee', null=True),
+            field=models.ManyToManyField(related_name='erp_projects', blank=True, to='djangoerp_employee.Employee'),
             preserve_default=True,
         ),
         migrations.AddField(

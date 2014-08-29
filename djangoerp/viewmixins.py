@@ -336,7 +336,7 @@ class ModuleBaseMixin(object):
     def get_queryset(self):
         if hasattr(self, 'object'):
             return self.queryset
-        return self.model.has_permissions( super(ModuleBaseMixin, self).get_queryset(), self.request.user)
+        return self.model.has_permissions(super(ModuleBaseMixin, self).get_queryset(), self.request.user)
 
     def get_object(self):
         if hasattr(self, 'object'):
