@@ -1,0 +1,177 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: contrib/task/models.py:30 contrib/task/models.py:114
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:12
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+#: contrib/task/models.py:31 contrib/task/models.py:115
+msgid "Description"
+msgstr "Beschreibung"
+
+#: contrib/task/models.py:33
+msgid "Is billable"
+msgstr ""
+
+#: contrib/task/models.py:34 contrib/task/models.py:121
+#: contrib/task/workflows.py:19
+msgid "Completed"
+msgstr "Abgeschlossen"
+
+#: contrib/task/models.py:37
+msgid "Goal"
+msgstr "Ziel"
+
+#: contrib/task/models.py:38
+msgid "Goals"
+msgstr "Ziele"
+
+#: contrib/task/models.py:117
+msgid "Due date"
+msgstr "Fällig"
+
+#: contrib/task/models.py:125
+msgid "Task"
+msgstr "Aufgabe"
+
+#: contrib/task/models.py:126
+msgid "Tasks"
+msgstr "Aufgaben"
+
+#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:26
+msgid "Open tasks"
+msgstr "Offene Aufgaben"
+
+#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:27
+msgid "Tasks on hold"
+msgstr ""
+
+#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:28
+msgid "Accomplished Tasks"
+msgstr "Abgeschlossene Aufgaben"
+
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:8
+msgid "Project"
+msgstr "Projekt"
+
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:13
+msgid "Current State"
+msgstr "Aktueller Status"
+
+#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:29
+msgid "completed"
+msgstr "abgeschlossen"
+
+#: contrib/task/templates/djangobmf_task/task_inctable.html:6
+msgid "Employee"
+msgstr "Mitarbeiter"
+
+#: contrib/task/templates/djangobmf_task/task_inctable.html:7
+msgid "State"
+msgstr "Status"
+
+#: contrib/task/templates/djangobmf_task/task_inctable.html:29
+msgid "review"
+msgstr ""
+
+#: contrib/task/templates/djangobmf_task/task_inctable.html:30
+msgid "started"
+msgstr "gestartet"
+
+#: contrib/task/templates/djangobmf_task/task_inctable.html:31
+msgid "hold"
+msgstr ""
+
+#: contrib/task/templates/djangobmf_task/task_inctable.html:38
+msgid "None"
+msgstr "Kein"
+
+#: contrib/task/workflows.py:18 contrib/task/workflows.py:42
+msgid "Open"
+msgstr "Offen"
+
+#: contrib/task/workflows.py:23
+msgid "Complete this Goal"
+msgstr "Schließe das Ziel ab"
+
+#: contrib/task/workflows.py:24
+msgid "Reopen this Goal"
+msgstr "Öffne das Ziel"
+
+#: contrib/task/workflows.py:29
+msgid "You can not complete a goal which has open tasks"
+msgstr ""
+
+#: contrib/task/workflows.py:41
+msgid "New"
+msgstr "Neu"
+
+#: contrib/task/workflows.py:43
+msgid "Started"
+msgstr "Gestartet"
+
+#: contrib/task/workflows.py:44
+msgid "Hold"
+msgstr ""
+
+#: contrib/task/workflows.py:45
+msgid "Review"
+msgstr ""
+
+#: contrib/task/workflows.py:46
+msgid "Finished"
+msgstr "Abgeschlossen"
+
+#: contrib/task/workflows.py:47
+msgid "Cancelled"
+msgstr "Abgebrochen"
+
+#: contrib/task/workflows.py:50
+msgid "Work on this task"
+msgstr "Arbeite an dieser Aufgabe"
+
+#: contrib/task/workflows.py:51
+msgid "Set this task on hold"
+msgstr ""
+
+#: contrib/task/workflows.py:52
+msgid "Stop working on this task"
+msgstr ""
+
+#: contrib/task/workflows.py:53
+msgid "Finish this task"
+msgstr "Schließe diese Aufgabe ab"
+
+#: contrib/task/workflows.py:54 contrib/task/workflows.py:55
+msgid "Reopen this task"
+msgstr ""
+
+#: contrib/task/workflows.py:56
+msgid "Cancel this task"
+msgstr "Breche diese Aufgabe ab"
+
+#: contrib/task/workflows.py:95
+msgid "Your need to be a referee to this goal to change the state"
+msgstr ""
+
+#: contrib/task/workflows.py:104
+msgid "The employee's user-account needs a default product"
+msgstr ""

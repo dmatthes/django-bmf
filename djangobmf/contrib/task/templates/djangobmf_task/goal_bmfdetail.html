@@ -1,0 +1,31 @@
+{% extends "djangobmf/module_detail.html" %}
+
+{% load i18n djangobmf_markup %}
+
+{% block base_content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ object.summary }}</h3>
+  </div>
+  <div class="panel-body">
+    {{ object.description|bmfmarkup }}
+  </div>
+  <div class="panel-footer">
+    {% if object.start_date %}
+      {% if object.completed %}
+        Beendet: {{ object.completed }} ({{ object.start_date|timesince:object.completed }})
+      {% else %}
+        Gestartet: {{ object.start_date }} ({{ object.start_date|timesince }})
+      {% endif %}
+    {% else %}
+      Erstellt: {{ object.created }} von {{ object.created_by }}
+    {% endif %}
+  </div>
+</div>
+
+{% include "djangobmf_task/task_inctable.html" with object_list=tasks.open title=_("Open tasks") add=True %}
+{% include "djangobmf_task/task_inctable.html" with object_list=tasks.hold title=_("Tasks on hold") %}
+{% include "djangobmf_task/task_inctable.html" with object_list=tasks.done title=_("Accomplished Tasks") %}
+
+{{ block.super }}
+{% endblock %}

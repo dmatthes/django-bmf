@@ -1,12 +1,12 @@
-/*! django ERP */
+/*! django BMF */
 
 (function($){
-    if(!$.erp){
-        $.erp = new Object();
+    if(!$.bmf){
+        $.bmf = new Object();
     };
 
     // Keys
-    $.erp.KEYS = {
+    $.bmf.KEYS = {
         ESC: 27,
         TAB: 9,
         RETURN: 13,
@@ -14,7 +14,7 @@
         DOWN: 40
     };
 
-    $.erp.AJAX = {
+    $.bmf.AJAX = {
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
         },
@@ -36,3 +36,8 @@
         }
     };
 })(jQuery);
+
+$.extend($.fn.treegrid.defaults, {
+    expanderExpandedClass: 'glyphicon glyphicon-minus',
+    expanderCollapsedClass: 'glyphicon glyphicon-plus'
+});

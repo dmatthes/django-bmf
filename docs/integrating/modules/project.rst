@@ -5,7 +5,7 @@ Project
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.project.models
+.. automodule:: djangobmf.contrib.project.models
    :members:
    :show-inheritance:
 

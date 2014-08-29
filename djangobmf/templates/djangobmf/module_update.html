@@ -1,0 +1,11 @@
+{% extends "djangobmf/module_modal_base.html" %}
+
+{% load djangobmf_core %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with object=block.super %}Change {{ object }}{% endblocktrans %}{% endblock %}
+
+{% block base_buttons %}
+<button type="button" class="btn bmfedit-cancel btn-danger">{% trans "Cancel" %}</button>
+<button type="button" class="btn bmfedit-submit btn-primary">{% trans "Save Changes" %}</button>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "djangobmf/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Watching" %}{% endblock %}
+
+{% block full_content %}
+<div class="row">
+    <div class="col-lg-9 col-sm-8">
+        <ul class="nav nav-tabs">
+            <li><a href="{% url 'djangobmf:notification' filter=None %}">{% trans "Unread notifications" %}</a></li>
+            <li><a href="{% url 'djangobmf:notification' filter="all" %}">{% trans "All notifications" %}</a></li>
+            <li class="active"><a href="{% url 'djangobmf:watch' %}">{% trans "Watching" %}</a></li>
+        </ul>
+        {% block watch_content %}{% endblock %}
+    </div>
+    <div class="col-lg-3 col-sm-4">
+        <ul class="nav nav-pills nav-stacked">
+            {% for item in navigation|dictsort:"name" %}
+            <li{% if item.ct == selected_ct %} class="active"{% endif %}>
+                <a href="{% url 'djangobmf:watch' ct=item.ct %}">
+                    {% if item.count %}<span class="badge pull-right">{{ item.count }}</span>{% endif %}
+                    {{ item.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+

@@ -5,7 +5,7 @@ Team
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.team.models
+.. automodule:: djangobmf.contrib.team.models
    :members:
    :show-inheritance:
 

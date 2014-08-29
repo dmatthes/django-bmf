@@ -14,7 +14,7 @@ Requirements
 * `django-mptt`_
 * An installed and working instance of one of the databases listed in the `Databases`_ section.
 
-.. note:: When installing the django ERP using pip all requirements are installed automatically.
+.. note:: When installing the django BMF using pip all requirements are installed automatically.
 
 .. _Python: http://www.python.org
 .. _Django: http://www.djangoproject.com
@@ -63,12 +63,12 @@ You can switch to your virtualenv at the command line by typing:
   source env/bin/activate
   
 Next, you can install packages one at a time using `pip`_, but we recommend using a `requirements.txt`_ file. The
-following is an example requirements.txt file that can be used with pip to install django ERP and its dependencies:
+following is an example requirements.txt file that can be used with pip to install django BMF and its dependencies:
 
 ::
 
     # Bare minimum
-    django-erp
+    django-bmf
 
     
 for Postgresql you would also add:
@@ -96,14 +96,14 @@ and install libmysqlclient-dev (on Debian-based distro)
 Databases
 *********
 
-We recommend using `PostgreSQL`_ or `MySQL`_ with django ERP. Installing and
+We recommend using `PostgreSQL`_ or `MySQL`_ with django BMF. Installing and
 maintaining database systems is outside the scope of this documentation, but
 is very well documented on the systems' respective websites.
 
-To use django ERP efficiently, we recommend:
+To use django BMF efficiently, we recommend:
 
-* Creating a separate set of credentials for django ERP.
-* Creating a separate database for django ERP to use.
+* Creating a separate set of credentials for django BMF.
+* Creating a separate database for django BMF to use.
 
 .. _PostgreSQL: http://www.postgresql.org/
 .. _MySQL: http://www.mysql.com

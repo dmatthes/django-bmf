@@ -1,0 +1,53 @@
+[
+{
+ "model": "djangobmf_team.teammember",
+ "pk": 1,
+ "fields": {
+  "team": 1,
+  "employee": 1,
+  "is_manager": true
+ }
+},
+{
+ "model": "djangobmf_team.teammember",
+ "pk": 2,
+ "fields": {
+  "team": 1,
+  "employee": 2,
+  "is_manager": false
+ }
+},
+{
+ "model": "djangobmf_team.teammember",
+ "pk": 3,
+ "fields": {
+  "team": 2,
+  "employee": 2,
+  "is_manager": false
+ }
+},
+{
+ "model": "djangobmf_team.team",
+ "pk": 1,
+ "fields": {
+  "modified": "2014-08-28T09:00:48.739Z",
+  "name": "All Users",
+  "modified_by": 1,
+  "created_by": 1,
+  "created": "2014-08-28T08:58:01.720Z",
+  "uuid": null
+ }
+},
+{
+ "model": "djangobmf_team.team",
+ "pk": 2,
+ "fields": {
+  "modified": "2014-08-28T09:01:10.048Z",
+  "name": "Not Admin",
+  "modified_by": 1,
+  "created_by": 1,
+  "created": "2014-08-28T08:58:49.337Z",
+  "uuid": null
+ }
+}
+]

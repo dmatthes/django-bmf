@@ -1,15 +1,15 @@
 =========================
-Model ``ERPMeta`` options
+Model ``BMFMeta`` options
 =========================
 
 This document explains all the possible 
-ERPMeta-options that you can give your model in its internal
-``class ERPMeta``.
+BMFMeta-options that you can give your model in its internal
+``class BMFMeta``.
 
-Available ``ERPMeta`` options
+Available ``BMFMeta`` options
 =============================
 
-.. currentmodule:: djangoerp.basemodels
+.. currentmodule:: djangobmf.basemodels
 
 ``category``
 ---------------
@@ -19,8 +19,8 @@ Default: ``None``
 .. attribute:: Options.category
 
     Set the name of the Category visible in the Module-overview and within
-    the breadcrumb navigation. Django ERP ships with some predefined categories
-    in `~djangoerp.categories`
+    the breadcrumb navigation. Django BMF ships with some predefined categories
+    in `~djangobmf.categories`
 
 ``has_logging``
 ---------------
@@ -71,7 +71,7 @@ Default: ``False``
 
     It has something to do with the model-forms and the saving of data. In some
     special cases the call of an additional clean-method is neccesary. This
-    attribute enables the call of an ``erp_clean``-method, which needs to be
+    attribute enables the call of an ``bmf_clean``-method, which needs to be
     definied at model level
 
 ``observed_fields``

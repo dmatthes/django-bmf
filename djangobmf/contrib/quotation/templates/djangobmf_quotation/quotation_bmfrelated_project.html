@@ -1,0 +1,9 @@
+{% extends parent_template %}
+
+{% load i18n %}
+
+{% block base_content %}
+{{ block.super }}
+<h1>Angebote</h1>
+{{ related_objects.all }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "djangobmf/module_delete.html" %}
+
+{% load i18n %}
+
+{% block base_content %}
+<form action="" method="post">{% csrf_token %}
+  <p>Are you sure you want to delete "{{ object }}"?</p>
+  <a class="btn btn-default" href="{{ parent_object.get_absolute_url }}">{% trans "Back" %}</a>
+  <input class="btn btn-primary" type="submit" value="{% trans "Confirm" %}" />
+</form>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "djangobmf/base_sitebar_r.html" %}
+{% load sekizai_tags i18n %}
+
+{% block base_footer %}
+{% if has_history and history or has_files or has_comments %}
+{% if has_files %}
+{% addtoblock "js" %}<script src="{{ STATIC_URL }}djangobmf/js/jquery.filedrop.min.js"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script><!--
+$('html').fileDrop({
+  onFileRead: function(fileCollection) {
+    $.each(fileCollection, function(){
+      console.log(this);
+    });
+  },
+  removeDataUriScheme: false
+});
+--></script>{% endaddtoblock %}
+{% endif %}
+<div class="panel panel-default" id="bmf_message_box">
+  {% if has_files or has_comments %}
+  <div class="panel-heading text-right">
+    {% if has_files %}
+    <button type="button" data-toggle="collapse" data-target="#bmf_message_file" data-parent="#bmf_message_box" class="btn btn-default">
+      <span class="glyphicon glyphicon-paperclip"></span> {% trans "Append file" %}</button>
+    {% endif %}
+    {% if bmfactivity.comments %}
+    <button type="button" data-toggle="collapse" data-target="#bmf_message_form" data-parent="#bmf_message_box" class="btn btn-default">
+      <span class="glyphicon glyphicon-pencil"></span> {% trans "Write message" %}</button>
+    {% endif %}
+  </div>
+  {% endif %}
+  <div class="panel-body">
+    {% if bmfactivity.comments %}
+    <div id="bmf_message_form" class="collapse out">
+      <form class="form" role="form" action="{% url "djangobmf:activity_comment_add" pk=object.pk ct=bmfactivity.ct %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ bmfactivity.comment_form.topic }}
+        </div>
+        <div class="form-group">
+          {{ bmfactivity.comment_form.text }}
+        </div>{% comment %}
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value=""> Soll diese Nachricht gleichzeitig eine Email generieren?
+            </label>
+          </div>
+        </div>{% endcomment %}
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">{% trans "Write message" %}</button>
+        </div>
+      </form>
+      <hr />
+    </div>
+    {% endif %}
+    {% if has_files %}
+    <div id="bmf_message_file" class="collapse out">
+      <form class="form" role="form" action="{% url "djangobmf:file_add" pk=object.pk ct=bmfactivity.ct %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-xs-7">
+            {{ history_file_form.file }}
+          </div>
+          <div class="col-xs-5 text-right">
+            <button type="submit" class="btn btn-success">{% trans "Append file" %}</button>
+          </div>
+        </div>
+      </form>
+      TODO: Make it possible to drop files into the browser window
+      <hr />
+    </div>
+    {% endif %}
+    {% for item in bmfactivity.qs %}{% include item.get_template with item=item %}{% endfor %}
+    <button type="button" class="btn btn-primary btn-block disabled">{% trans "Load more items" %}</button>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -5,7 +5,7 @@ Document
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.document.models
+.. automodule:: djangobmf.contrib.document.models
    :members:
    :show-inheritance:
 

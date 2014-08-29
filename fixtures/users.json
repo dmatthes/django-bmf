@@ -1,42 +1,79 @@
 [
 {
- "pk": 1, 
- "model": "auth.user", 
+ "model": "auth.user",
  "fields": {
-  "username": "admin", 
-  "first_name": "Admin", 
-  "last_name": "User", 
-  "is_active": true, 
-  "is_superuser": true, 
-  "is_staff": true, 
-  "groups": [], 
-  "user_permissions": [], 
-  "password": "pbkdf2_sha256$10000$k1NQrouLkRhg$CxVBxnI6NGBYo1OdhB71laKxpRFWQOjsFU89U4hXSPE=", 
-  "email": "admin@demo.django-erp.com"
- }
+  "user_permissions": [],
+  "last_name": "User",
+  "date_joined": "2014-08-28T13:40:30.025Z",
+  "email": "admin@demo.django-bmf.com",
+  "password": "pbkdf2_sha256$12000$fVcloDTw1dvO$FUjNo8ZOka3DCHv3CCMhcipzDN3st+M8dzIZnLKEJCA=",
+  "is_staff": true,
+  "username": "admin",
+  "is_superuser": true,
+  "groups": [],
+  "last_login": "2014-08-29T13:31:58.551Z",
+  "is_active": true,
+  "first_name": "Admin"
+ },
+ "pk": 1
 },
 {
- "pk": 2, 
- "model": "auth.user", 
+ "model": "auth.user",
  "fields": {
-  "username": "demo", 
-  "first_name": "Demo", 
-  "last_name": "User", 
-  "is_active": true, 
-  "is_superuser": false, 
-  "is_staff": false, 
-  "groups": [], 
-  "user_permissions": [], 
-  "password": "pbkdf2_sha256$10000$GXmQqpbVn7Se$YE57G4aUByk5kdKWP3r+rwjFaZXDmJee7yiE7z+JSr4=", 
-  "email": "demo@demo.django-erp.com"
- }
-},
-{
- "pk": 1, 
- "model": "sites.site", 
- "fields": {
-  "domain": "demo.djangoerp.com", 
-  "name": "djangoERP demo"
- }
+  "user_permissions": [
+   [
+    "view_project",
+    "djangobmf_project",
+    "project"
+   ],
+   [
+    "add_goal",
+    "djangobmf_task",
+    "goal"
+   ],
+   [
+    "change_goal",
+    "djangobmf_task",
+    "goal"
+   ],
+   [
+    "view_goal",
+    "djangobmf_task",
+    "goal"
+   ],
+   [
+    "add_task",
+    "djangobmf_task",
+    "task"
+   ],
+   [
+    "change_task",
+    "djangobmf_task",
+    "task"
+   ],
+   [
+    "comment_task",
+    "djangobmf_task",
+    "task"
+   ],
+   [
+    "view_task",
+    "djangobmf_task",
+    "task"
+   ]
+  ],
+  "last_name": "User",
+  "date_joined": "2014-08-28T13:40:30Z",
+  "email": "demo@demo.django-bmf.com",
+  "password": "pbkdf2_sha256$12000$M5YeRaOdI3Xy$FGDuvyjXCXomuvXSUv+mnphWtwHw52s+VVSEu4RdEEs=",
+  "is_staff": false,
+  "username": "demo",
+  "is_superuser": false,
+  "groups": [],
+  "last_login": "2014-08-29T13:12:40Z",
+  "is_active": true,
+  "first_name": "Demo"
+ },
+ "pk": 2
 }
 ]

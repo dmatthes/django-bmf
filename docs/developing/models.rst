@@ -2,31 +2,31 @@
 Model
 *****
 
-.. autoclass:: djangoerp.models.ERPSimpleModel
+.. autoclass:: djangobmf.models.BMFSimpleModel
    :members:
 
-.. autoclass:: djangoerp.models.ERPModel
+.. autoclass:: djangobmf.models.BMFModel
    :members:
    :show-inheritance:
 
-.. autoclass:: djangoerp.models.ERPMPTTModel
+.. autoclass:: djangobmf.models.BMFMPTTModel
    :members:
 
 
-How to setup an erp-model
+How to setup an bmf-model
 ===========================================
 
-Create a django model and add the ERPMeta-class to your model:
+Create a django model and add the BMFMeta-class to your model:
 
   class MyModel(models.models):
     myfield = models...
 
-    class ERPMeta:
+    class BMFMeta:
       pass
 
 Run '''manage.py syncdb''' or '''manage.py migrate''' - that's it.
 
-Options of ERPMeta
+Options of BMFMeta
 ------------------------------------------
 
   has_history = Boolean
