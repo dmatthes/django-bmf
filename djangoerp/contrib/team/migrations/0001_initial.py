@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             options={
                 'ordering': ['name'],
                 'verbose_name': 'Team',
-                'verbose_name_plural': 'Team',
+                'verbose_name_plural': 'Teams',
                 'abstract': False,
             },
             bases=(models.Model,),

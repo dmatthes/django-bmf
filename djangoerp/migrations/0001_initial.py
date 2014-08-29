@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('template', models.CharField(verbose_name='Template', max_length=100, null=True, editable=False)),
                 ('parent_id', models.PositiveIntegerField()),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified')),
-                ('parent_ct', models.ForeignKey(to='contenttypes.ContentType')),
+                ('parent_ct', models.ForeignKey(to='contenttypes.ContentType', related_name='erp_history_parent')),
                 ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
                 ('changed', models.DateTimeField(auto_now=True, verbose_name='Changed')),
                 ('activity', models.ForeignKey(to='djangoerp.Activity', null=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
                 ('obj_ct', models.ForeignKey(to='contenttypes.ContentType')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],

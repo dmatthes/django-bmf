@@ -198,6 +198,30 @@ class AbstractTask(ERPModel):
     def __str__(self):
         return '#%s: %s' % (self.pk, self.summary)
 
+    @classmethod
+    def has_permissions(cls, qs, user, obj=None):
+        qs_filter = Q(project__isnull=True, goal__isnull=True)
+        qs_filter |= Q(employee=getattr(user, 'djangoerp_employee', -1))
+
+        if hasattr(cls, "goal"):
+            goal = cls._meta.get_field_by_name("goal")[0].model
+            if user.has_perm('%s.can_manage' % goal._meta.app_label, goal):
+                qs_filter |= Q(goal__isnull=False)
+            else:
+                qs_filter |= Q(goal__isnull=False, goal__referee=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(goal__isnull=False, goal__employees=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(goal__isnull=False, goal__team__in=getattr(user, 'djangoerp_teams', []))
+
+        if hasattr(cls, "project"):
+            project = cls._meta.get_field_by_name("project")[0].model
+            if user.has_perm('%s.can_manage' % project._meta.app_label, project):
+                qs_filter |= Q(project__isnull=False)
+            else:
+                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangoerp_teams', []))
+
+        return qs.filter(qs_filter)
+
     def clean(self):
         # overwrite the project with the goals project
         if self.goal:
