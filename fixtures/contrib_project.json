@@ -1,7 +1,7 @@
 [
 {
  "pk": 1,
- "model": "djangoerp_project.project",
+ "model": "djangobmf_project.project",
  "fields": {
   "created_by": null,
   "created": null,
@@ -22,7 +22,7 @@
 },
 {
  "pk": 2,
- "model": "djangoerp_project.project",
+ "model": "djangobmf_project.project",
  "fields": {
   "created_by": null,
   "created": null,

@@ -5,7 +5,7 @@
   "user_permissions": [],
   "last_name": "User",
   "date_joined": "2014-08-28T13:40:30.025Z",
-  "email": "admin@demo.django-erp.com",
+  "email": "admin@demo.django-bmf.com",
   "password": "pbkdf2_sha256$12000$fVcloDTw1dvO$FUjNo8ZOka3DCHv3CCMhcipzDN3st+M8dzIZnLKEJCA=",
   "is_staff": true,
   "username": "admin",
@@ -23,48 +23,48 @@
   "user_permissions": [
    [
     "view_project",
-    "djangoerp_project",
+    "djangobmf_project",
     "project"
    ],
    [
     "add_goal",
-    "djangoerp_task",
+    "djangobmf_task",
     "goal"
    ],
    [
     "change_goal",
-    "djangoerp_task",
+    "djangobmf_task",
     "goal"
    ],
    [
     "view_goal",
-    "djangoerp_task",
+    "djangobmf_task",
     "goal"
    ],
    [
     "add_task",
-    "djangoerp_task",
+    "djangobmf_task",
     "task"
    ],
    [
     "change_task",
-    "djangoerp_task",
+    "djangobmf_task",
     "task"
    ],
    [
     "comment_task",
-    "djangoerp_task",
+    "djangobmf_task",
     "task"
    ],
    [
     "view_task",
-    "djangoerp_task",
+    "djangobmf_task",
     "task"
    ]
   ],
   "last_name": "User",
   "date_joined": "2014-08-28T13:40:30Z",
-  "email": "demo@demo.django-erp.com",
+  "email": "demo@demo.django-bmf.com",
   "password": "pbkdf2_sha256$12000$M5YeRaOdI3Xy$FGDuvyjXCXomuvXSUv+mnphWtwHw52s+VVSEu4RdEEs=",
   "is_staff": false,
   "username": "demo",

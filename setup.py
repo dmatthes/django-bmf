@@ -6,7 +6,7 @@ import sys
 
 from setuptools import setup, find_packages, Command
 
-from djangoerp import __author__, __contact__, __homepage__
+from djangobmf import __author__, __contact__, __homepage__
 
 CLASSIFIERS = [
     'Environment :: Web Environment',
@@ -30,7 +30,7 @@ version = __import__('djangobmf').get_version()
 setup(
     name='djangoBMF',
     version=version,
-    url="http://www.igelware.de/",
+    url=__homepage__,
     license='BSD',
     platforms=['OS Independent'],
     description='Buisiness Management Framework with integrated ERP solution written for django',

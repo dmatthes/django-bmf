@@ -7,7 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from djangobmf import sites as djangobmf
-djangoerp.autodiscover()
+djangobmf.autodiscover()
 
 from django.views.generic.base import RedirectView
 
