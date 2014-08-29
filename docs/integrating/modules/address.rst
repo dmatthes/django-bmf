@@ -5,7 +5,7 @@ Address
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.address.models
+.. automodule:: djangobmf.contrib.address.models
    :members:
    :show-inheritance:
 

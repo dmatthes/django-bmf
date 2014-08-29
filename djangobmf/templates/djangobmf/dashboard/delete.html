@@ -1,0 +1,11 @@
+{% extends "djangobmf/base_full.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Delete dashboard" %}{% endblock %}
+
+{% block base_content %}
+<form action="{{ action_link }}" method="post">
+  {% csrf_token %}
+<input type="submit" value="Send" />
+</form>
+{% endblock %}

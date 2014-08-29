@@ -17,7 +17,7 @@ import time
 
 from discover_jenkins.results import XMLTestResult
 
-DIRS = ['djangoerp',] 
+DIRS = ['djangobmf',] 
 
 def main():
 

@@ -9,7 +9,7 @@ function unityReady() {
 }
 var Unity = external.getUnityObject(1.0);
 Unity.init({
-    name: "Django ERP",
-    homepage: 'http://127.0.0.1:8000/erp/',
+    name: "Django BMF",
+    homepage: 'http://127.0.0.1:8000/bmf/',
     onInit: unityReady
 });

@@ -1,0 +1,22 @@
+{% extends "djangobmf/base_full.html" %}
+
+{% load i18n %}
+{% block title %}{% trans "Module overview" %}{% endblock %}
+
+{% block base_headline %}{% endblock %}
+{% block base_content %}
+<div class="page-header">
+<h1>{% trans "Module overview" %}</h1>
+</div>
+{% regroup modules|dictsort:"category" by category as module_list %}
+{% for module in module_list %}
+<h2>{{ module.grouper }}</h2>
+<ul>
+  {% for item in module.list|dictsort:"name" %}
+    <li><a href="{% url item.url %}">{{ item.name }}</a></li>
+  {% endfor %}
+</ul>
+{% empty %}
+  <p>{% trans "You don't have access to any modules" %}</p>
+{% endfor %}
+{% endblock %}

@@ -4,7 +4,7 @@ Employee
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.employee.models
+.. automodule:: djangobmf.contrib.employee.models
    :members:
    :show-inheritance:
 

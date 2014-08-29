@@ -1,0 +1,30 @@
+{% extends "djangobmf/module_index.html" %}
+
+{% load i18n %}
+
+{% block base_content %}
+<table class="table table-striped table-condensed table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th class="text-right">
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for obj in object_list %}
+    <tr>
+      <td><span class="glyphicon glyphicon-{% if obj.is_company %}home{% else %}user{% endif %}"></span></td>
+      <td>{{ obj.name }}</td>
+      <td class="text-right">
+        <a class="btn btn-xs btn-primary" href="{{ obj.bmfmodule_detail }}">
+          <span class="glyphicon glyphicon-list"></span>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

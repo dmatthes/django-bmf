@@ -1,6 +1,6 @@
 
 ***********************
-Evolving the ERP-Core
+Evolving the BMF-Core
 ***********************
 
 .. include:: ../../CONTRIBUTING.rst

@@ -31,14 +31,14 @@ def static():
   js()
   css()
   with lcd(BASEDIR):
-    local('cp submodules/bootstrap/fonts/glyphicons* djangoerp/static/djangoerp/fonts/')
+    local('cp submodules/bootstrap/fonts/glyphicons* djangobmf/static/djangobmf/fonts/')
 
 
 @task
 def css():
   with lcd(BASEDIR):
     local('lessc less/custom.less > bootstrap.css')
-    local('yui-compressor --type css -o djangoerp/static/djangoerp/css/bootstrap.min.css bootstrap.css')
+    local('yui-compressor --type css -o djangobmf/static/djangobmf/css/djangobmf.min.css bootstrap.css')
 
 
 @task
@@ -52,14 +52,14 @@ def js(debug=None):
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/form-api.js',
-            'js/erp-autocomplete.js',
-            'js/erp-calendar.js',
-            'js/erp-editform.js',
-            'js/erp-buildform.js',
+            'js/bmf-autocomplete.js',
+            'js/bmf-calendar.js',
+            'js/bmf-editform.js',
+            'js/bmf-buildform.js',
             'js/menu.js',
         ]
-        local('cat %s > djangoerp/static/djangoerp/js/djangoerp.js' % ' '.join(js))
-        local('yui-compressor --type js -o djangoerp/static/djangoerp/js/djangoerp.min.js djangoerp/static/djangoerp/js/djangoerp.js')
+        local('cat %s > djangobmf/static/djangobmf/js/djangobmf.js' % ' '.join(js))
+        local('yui-compressor --type js -o djangobmf/static/djangobmf/js/djangobmf.min.js djangobmf/static/djangobmf/js/djangobmf.js')
 
 
 @task
@@ -68,43 +68,23 @@ def test():
     Tests code with django unittests
     """
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run %s test djangoerp --liveserver=localhost:8001-9000' % MANAGE)
-        local('find %s/sandbox/erp_documents -empty -delete' % BASEDIR)
-        local('virtenv/bin/coverage report -m --include="djangoerp/*"')
+        local('virtenv/bin/coverage run %s test djangobmf --liveserver=localhost:8001-9000' % MANAGE)
+        local('find %s/sandbox/bmf_documents -empty -delete' % BASEDIR)
+        local('virtenv/bin/coverage report -m --include="djangobmf/*"')
 
 @task
 def test_contrib(app):
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s' % {'app': app})
-        local('virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
+        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangobmf.contrib.%(app)s' % {'app': app})
+        local('virtenv/bin/coverage report -m --include="djangobmf/contrib/%(app)s/*"' % {'app': app})
 
 
 @task
 def locale():
-  with lcd(BASEDIR + '/djangoerp'):
+  with lcd(BASEDIR + '/djangobmf'):
     for lang in LANGUAGES:
       local('%s makemessages -l %s --domain django' % (DJANGO, lang))
       local('%s makemessages -l %s --domain djangojs' % (DJANGO, lang))
-
- #for i in os.listdir(BASEDIR + '/djangoerp/contrib'):
- #  path = BASEDIR + '/djangoerp/contrib/' + i
-
- #  if not os.path.isdir(path):
- #    continue
- #  with lcd(path):
- #    with settings(warn_only=True):
- #      for lang in LANGUAGES:
- #        local('%s makemessages -l %s' % (DJANGO, lang))
-
- #for i in os.listdir(BASEDIR + '/djangoerp/currencies'):
- #  path = BASEDIR + '/djangoerp/currencies/' + i
-
- #  if not os.path.isdir(path):
- #    continue
- #  with lcd(path):
- #    with settings(warn_only=True):
- #      for lang in LANGUAGES:
- #        local('%s makemessages -l %s' % (DJANGO, lang))
 
 @task
 def docs():

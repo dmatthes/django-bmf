@@ -1,0 +1,8 @@
+{% extends "djangobmf/module_detail.html" %}
+
+{% load djangobmf_forms %}
+
+{% block base_content %}
+{% bmfview %}
+{{ block.super }}
+{% endblock %}

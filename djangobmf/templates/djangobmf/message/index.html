@@ -1,0 +1,83 @@
+{% extends "djangobmf/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Messages" %}{% endblock %}
+
+{% block full_content %}
+
+<div class="alert alert-danger" style="font-size: 150%">
+  <span class="glyphicon glyphicon-cog"></span>
+  No function yet :( {# TODO #}
+</div>
+
+<div class="row">
+    <div class="col-lg-3 col-sm-4">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active">
+                <a href="#">
+                    <span class="badge pull-right">42</span>
+                    Inbox
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="badge pull-right">42</span>
+                    Outbox
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="badge pull-right">42</span>
+                    Send
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-9 col-sm-8">
+        <table class="table table-condensed table-hover">
+              <thead>
+                      <tr>
+                                <th class="span1"><input type="checkbox"></th>
+                                      <th class="span2"></th>
+                                            <th class="span2"></th>
+                                                  <th class="span9"></th>
+                                                        <th class="span2"></th>
+                                                            </tr>
+                                                              </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                              <td><input type="checkbox"> <a href="#"><i class="icon-star-empty"></i></a></td>
+                                                                                    <td><strong>John Doe</strong></td>
+                                                                                          <td><span class="label pull-right">Notifications</span></td>
+                                                                                                <td><strong>Message body goes here</strong></td>
+                                                                                                      <td><strong>11:23 PM</strong></td>
+                                                                                                          </tr>
+                                                                                                              <tr>
+                                                                                                                        <td><input type="checkbox"> <a href="#"><i class="icon-star-empty"></i></a></td>
+                                                                                                                              <td>John Doe</td>
+                                                                                                                                    <td><span class="label pull-right">Notifications</span></td>
+                                                                                                                                          <td>Message body goes here</td>
+                                                                                                                                                <td>Sept4</td>
+                                                                                                                                                    </tr>
+                                                                                                                                                        <tr>
+                                                                                                                                                                  <td><input type="checkbox"> <a href="#"><i class="icon-star"></i></a></td>
+                                                                                                                                                                        <td><strong>John Doe</strong></td>
+                                                                                                                                                                              <td><span class="label pull-right">Notifications</span></td>
+                                                                                                                                                                                    <td><strong>Message body goes here</strong></td>
+                                                                                                                                                                                          <td><strong>Sept3</strong></td>
+                                                                                                                                                                                              </tr>
+                                                                                                                                                                                                  <tr>
+                                                                                                                                                                                                            <td><input type="checkbox"> <a href="#"><i class="icon-star"></i></a></td>
+                                                                                                                                                                                                                  <td><strong>John Doe</strong></td>
+                                                                                                                                                                                                                        <td><span class="label pull-right">Notifications</span></td>
+                                                                                                                                                                                                                              <td><strong>Message body goes here</strong></td>
+                                                                                                                                                                                                                                    <td><strong>Sept3</strong></td>
+                                                                                                                                                                                                                                        </tr>
+                                                                                                                                                                                                                                          </tbody>
+                                                                                                                                                                                                                                      </table>
+    </div>
+</div>
+
+
+{% endblock %}

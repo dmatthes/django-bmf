@@ -1,0 +1,17 @@
+{% extends parent_template %}
+
+{% load i18n %}
+
+{% block base_content %}
+{{ block.super }}
+<h2>{% trans "Current goals" %}</h2>
+
+<p>all</p>
+
+{{ related_objects.all }}
+
+{% if related_objects.all %}<ul>{% for obj in related_objects.all %}
+    <li class="checklist"><span class="glyphicon glyphicon-unchecked"></span><p><a href="{{ obj.bmfmodule_detail }}">{{ obj }}</a></p></li>
+{% endfor %}</ul>{% endif %}
+
+{% endblock %}

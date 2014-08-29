@@ -1,6 +1,6 @@
 [
 {
- "model": "djangoerp_team.teammember",
+ "model": "djangobmf_team.teammember",
  "pk": 1,
  "fields": {
   "team": 1,
@@ -9,7 +9,7 @@
  }
 },
 {
- "model": "djangoerp_team.teammember",
+ "model": "djangobmf_team.teammember",
  "pk": 2,
  "fields": {
   "team": 1,
@@ -18,7 +18,7 @@
  }
 },
 {
- "model": "djangoerp_team.teammember",
+ "model": "djangobmf_team.teammember",
  "pk": 3,
  "fields": {
   "team": 2,
@@ -27,7 +27,7 @@
  }
 },
 {
- "model": "djangoerp_team.team",
+ "model": "djangobmf_team.team",
  "pk": 1,
  "fields": {
   "modified": "2014-08-28T09:00:48.739Z",
@@ -39,7 +39,7 @@
  }
 },
 {
- "model": "djangoerp_team.team",
+ "model": "djangobmf_team.team",
  "pk": 2,
  "fields": {
   "modified": "2014-08-28T09:01:10.048Z",

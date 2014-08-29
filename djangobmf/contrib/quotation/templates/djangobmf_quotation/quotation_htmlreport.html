@@ -1,0 +1,80 @@
+{% extends "djangobmf/report_html_base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with name=object.name %}Quotation {{ name }}{% endblocktrans %}{% endblock %}
+
+{% block address %}
+{{ object.invoice_address.as_report|linebreaksbr }}
+{% endblock %}
+
+{% block extra %}
+{% trans "Your contact person" %}:<br>
+{{ block.super }}
+{% endblock %}
+
+{% block document %}
+<table width="100%">
+  <tr>
+    <td style="padding:0;"><strong>{% blocktrans with name=object.name %}Quotation {{ name }}{% endblocktrans %}</strong></td>
+    <td style="padding:0;" align="right">{{ object.created|date:"DATE_FORMAT" }}</td>
+  </tr>
+</table>
+<div>
+  <p>
+  {% trans "Dear Valued Customer," %}<br>
+  </p>
+</div>
+
+<table style="font-size: 9pt" width="100%" repeat="1">
+  <tr>
+    <th width="10%" align="center">{% trans "Quantity" %}</th>
+    <th width="50%" align="center">{% trans "Article" %}</th>
+    <th width="10%" align="center">{% trans "Tax" %}</th>
+    <th width="15%" align="center">{% trans "Unit price" %}</th>
+    <th width="15%" align="center">{% trans "Total price" %}</th>
+  </tr>
+
+  {% for item in object.get_products %}
+  <tr>
+    <td valign="top" align="center">
+      <p style="line-height:0.8">{{ item.amount }}<br><span style="color:#555; font-size: 70%">&nbsp;</span></p></td>
+    <td valign="top">
+      <p style="line-height:0.8">
+        {{ item.name }}
+        {% if item.description %}<br><span style="color:#555; font-size: 70%">{{ item.description|linebreaksbr }}</span>{% endif %}
+      </p>
+    </td>
+    <td valign="top" align="center" style="font-size: 80%">
+    {% for tax, value in item.calc_taxes %}
+    {{ tax }}{% if not forloop.first %}<br />{% endif %}
+    {% endfor %}
+    </td>
+    <td valign="top" align="right">{{ item.calc_net_unit }} &euro;</td>
+    <td valign="top" align="right">{{ item.calc_net }} &euro;</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<table style="-pdf-keep-with-next: true;">
+  <tr>
+      <td align="right" valign="top">{% trans "Subtotal" %}</td>
+    <td align="right" valign="top">{{ object.calc_net }} &euro;</td>
+  </tr>
+  {% for tax, value in object.calc_taxes %}
+  <tr>
+    <td align="right" valign="top">{{ tax }}</td>
+    <td align="right" valign="top">{{ value }} &euro;</td>
+  </tr>
+  {% endfor %}
+  <tr>
+      <td align="right" valign="top">{% trans "Billing amount" %}</td>
+    <td align="right" valign="top">{{ object.calc_gross }} &euro;</td>
+  </tr>
+</table>
+<p style="line-height: 0.0;-pdf-keep-with-next: false;">&nbsp;</p>
+
+<div>
+  <p>{% trans "With kind regards" %}</p>
+  <p>{{ object.employee }}</p>
+</div>
+{% endblock %}

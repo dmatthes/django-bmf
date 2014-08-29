@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"PO-Revision-Date: 2014-01-26 06:34+0100\n"
+"Last-Translator: Admin User <admin@demo.django-bmf.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.7.3\n"
+
+#: contrib/position/models.py:38
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:13
+msgid "Date"
+msgstr "Datum"
+
+#: contrib/position/models.py:39
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:14
+msgid "Name"
+msgstr "Name"
+
+#: contrib/position/models.py:43
+msgid "Invoiceable"
+msgstr "Berechenbar"
+
+#: contrib/position/models.py:47
+msgid "Price"
+msgstr "Preis"
+
+#: contrib/position/models.py:50
+msgid "Amount"
+msgstr "Menge"
+
+#: contrib/position/models.py:51
+msgid "Description"
+msgstr "Beschreibung"
+
+#: contrib/position/models.py:81
+msgid "Position"
+msgstr "Position"
+
+#: contrib/position/models.py:82
+msgid "Positions"
+msgstr "Positionen"
+
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:15
+msgid "Product"
+msgstr "Produkt"
+
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:16
+msgid "Project"
+msgstr "Projekt"
+
+#: contrib/position/templates/djangobmf_position/position_bmfindex.html:17
+msgid "Employee"
+msgstr "Mitarbeiter"
+
+#~ msgid "Topic"
+#~ msgstr "Betreff"

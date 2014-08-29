@@ -1,0 +1,32 @@
+{% extends "djangobmf/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Configuration" %}{% endblock %}
+
+{% block full_content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Required</th>
+            <th>Changed</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item, object in settings.items %}
+        <tr>
+            <td>{{ object.label }}</td>
+            <td>{{ object.value }}</td>
+            <td>{{ object.required }}</td>
+            <td>{{ object.changed }}</td>
+            <td><a href="{% url 'djangobmf:configuration' object.app_label object.name %}">edit</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

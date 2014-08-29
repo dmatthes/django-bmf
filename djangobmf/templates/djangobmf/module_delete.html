@@ -1,0 +1,15 @@
+{% extends "djangobmf/module_base.html" %}
+
+{% load djangobmf_core %}
+{% load i18n %}
+
+{% block base_buttons %}
+<div class="btn-toolbar pull-right" role="toolbar">
+  <div class="btn-group">
+  <a class="btn btn-default btn-sm btn-warning" href="{% get_bmf_url object "detail" %}">
+    <span class="glyphicon glyphicon-hand-left"></span> {% trans "Back" %}
+  </a>
+  </div>
+</div>
+<div class="clearfix"></div>
+{% endblock %}

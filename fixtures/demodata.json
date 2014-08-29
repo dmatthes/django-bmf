@@ -1,9 +1,9 @@
 [
 {
  "pk": 1, 
- "model": "djangoerp.configuration", 
+ "model": "djangobmf.configuration", 
  "fields": {
-  "app_label": "djangoerp", 
+  "app_label": "djangobmf", 
   "field_name": "currency", 
   "value": "\"EUR\""
  }
@@ -11,7 +11,7 @@
 
 {
  "pk": 1, 
- "model": "djangoerp_employee.employee", 
+ "model": "djangobmf_employee.employee", 
  "fields": {
   "product": 1, 
   "phone_mobile": "", 
@@ -22,13 +22,13 @@
    "admin"
   ], 
   "supervisor": null, 
-  "email": "admin@django-erp.org", 
+  "email": "admin@django-bmf.org", 
   "name": "Administrator"
  }
 },
 {
  "pk": 2, 
- "model": "djangoerp_employee.employee", 
+ "model": "djangobmf_employee.employee", 
  "fields": {
   "product": 1, 
   "phone_mobile": "+49 177 789654", 
@@ -39,14 +39,14 @@
    "demo"
   ], 
   "supervisor": 1, 
-  "email": "demo@django-erp.com", 
+  "email": "demo@django-bmf.com", 
   "name": "Demouser"
  }
 },
 
 {
  "pk": 1, 
- "model": "djangoerp_taxing.tax", 
+ "model": "djangobmf_taxing.tax", 
  "fields": {
   "account": 10,
   "is_active": true, 
@@ -56,7 +56,7 @@
 },
 {
  "pk": 2, 
- "model": "djangoerp_taxing.tax", 
+ "model": "djangobmf_taxing.tax", 
  "fields": {
   "account": 9, 
   "is_active": true, 
@@ -67,7 +67,7 @@
 
 {
  "pk": 1, 
- "model": "djangoerp_product.product", 
+ "model": "djangobmf_product.product", 
  "fields": {
   "can_purchased": false, 
   "code": "", 
@@ -82,7 +82,7 @@
 },
 {
  "pk": 2, 
- "model": "djangoerp_product.product", 
+ "model": "djangobmf_product.product", 
  "fields": {
   "can_purchased": false, 
   "code": "", 
@@ -97,7 +97,7 @@
 },
 {
  "pk": 1, 
- "model": "djangoerp_product.producttax", 
+ "model": "djangobmf_product.producttax", 
  "fields": {
   "included": true, 
   "product": 1, 
@@ -106,7 +106,7 @@
 },
 {
  "pk": 2, 
- "model": "djangoerp_product.producttax", 
+ "model": "djangobmf_product.producttax", 
  "fields": {
   "included": false, 
   "product": 1, 
@@ -115,7 +115,7 @@
 },
 {
  "pk": 3, 
- "model": "djangoerp_product.producttax", 
+ "model": "djangobmf_product.producttax", 
  "fields": {
   "included": true, 
   "product": 2, 
@@ -125,7 +125,7 @@
 
 {
  "pk": 1, 
- "model": "djangoerp_customer.customer", 
+ "model": "djangobmf_customer.customer", 
  "fields": {
   "use_company_addresses": true, 
   "supplier_payment_term": 1, 
@@ -154,7 +154,7 @@
 },
 {
  "pk": 2, 
- "model": "djangoerp_customer.customer", 
+ "model": "djangobmf_customer.customer", 
  "fields": {
   "use_company_addresses": true, 
   "supplier_payment_term": 1, 
@@ -184,7 +184,7 @@
 
 {
  "pk": 1, 
- "model": "djangoerp_address.address", 
+ "model": "djangobmf_address.address", 
  "fields": {
   "customer": 1, 
   "city": "Bottrop", 
@@ -204,7 +204,7 @@
 
 {
  "pk": 1, 
- "model": "djangoerp_document.document", 
+ "model": "djangobmf_document.document", 
  "fields": {
   "is_static": true, 
   "file": "static/pdf-template1-letter.pdf"
@@ -212,7 +212,7 @@
 },
 {
  "pk": 2, 
- "model": "djangoerp_document.document", 
+ "model": "djangobmf_document.document", 
  "fields": {
   "is_static": true, 
   "file": "static/pdf-template1.pdf"
@@ -220,10 +220,10 @@
 },
 {
  "pk": 1, 
- "model": "djangoerp.report", 
+ "model": "djangobmf.report", 
  "fields": {
   "contenttype": [
-   "djangoerp_quotation", 
+   "djangobmf_quotation", 
    "quotation"
   ], 
   "mimetype": "pdf", 
@@ -234,10 +234,10 @@
 },
 {
  "pk": 2, 
- "model": "djangoerp.report", 
+ "model": "djangobmf.report", 
  "fields": {
   "contenttype": [
-   "djangoerp_invoice", 
+   "djangobmf_invoice", 
    "invoice"
   ], 
   "mimetype": "pdf", 
@@ -251,72 +251,72 @@
  "fields": {
   "field_name": "currency",
   "value": "\"EUR\"",
-  "app_label": "djangoerp"
+  "app_label": "djangobmf"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 1
 },
 {
  "fields": {
   "field_name": "income",
   "value": "4",
-  "app_label": "djangoerp_accounting"
+  "app_label": "djangobmf_accounting"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 2
 },
 {
  "fields": {
   "field_name": "company_name",
   "value": "\"Django ERP Demo\"",
-  "app_label": "djangoerp"
+  "app_label": "djangobmf"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 3
 },
 {
  "fields": {
   "field_name": "customer",
   "value": "2",
-  "app_label": "djangoerp_accounting"
+  "app_label": "djangobmf_accounting"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 4
 },
 {
  "fields": {
   "field_name": "default",
   "value": "1",
-  "app_label": "djangoerp_product"
+  "app_label": "djangobmf_product"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 5
 },
 {
  "fields": {
   "field_name": "supplier",
   "value": "3",
-  "app_label": "djangoerp_accounting"
+  "app_label": "djangobmf_accounting"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 6
 },
 {
  "fields": {
   "field_name": "company_email",
-  "value": "\"team@djangoerp.org\"",
-  "app_label": "djangoerp"
+  "value": "\"team@djangobmf.org\"",
+  "app_label": "djangobmf"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 7
 },
 {
  "fields": {
   "field_name": "expense",
   "value": "5",
-  "app_label": "djangoerp_accounting"
+  "app_label": "djangobmf_accounting"
  },
- "model": "djangoerp.configuration",
+ "model": "djangobmf.configuration",
  "pk": 8
 }
 ]

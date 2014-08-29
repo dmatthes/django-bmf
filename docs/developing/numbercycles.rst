@@ -6,10 +6,10 @@ A numbercycle can be used by any model, which needs a unique automatically gener
 
 .. code-block:: python
 
-  from djangoerp.erpcore.numbering.utils import numbercycle_get_name, numbercycle_delete_object
+  from djangobmf.bmfcore.numbering.utils import numbercycle_get_name, numbercycle_delete_object
 
-  class MyModel(ERPModel):
-    class ERPMeta:
+  class MyModel(BMFModel):
+    class BMFMeta:
       # activate the cycle with this
       number_cycle = '{counter:01d}'
 

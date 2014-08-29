@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load djangobmf_markup %}
+<div>
+  <p>
+    {% if item.topic %}
+      <strong>{{ item.topic }}</strong><br />
+    {% endif %}
+    <small class="text-muted">
+      {{ item.user.get_full_name|default:_("Unknown") }} {% trans "before" %} {{ item.modified|timesince }}
+    </small>
+  </p>
+  {% if item.text %}
+    {{ item.text|bmfmarkup }}
+  {% endif %}
+  <hr />
+</div>

@@ -1,0 +1,10 @@
+{% load djangobmf_forms %}
+{% load i18n %}
+
+<div class="form-horizontal">
+  {% if form.bmfhelper %}
+    {% bmfhelper True %}
+  {% else %}
+    {% for field in form.visible_fields %}{% bmflayout field %}{% endfor %}
+  {% endif %}
+</div>

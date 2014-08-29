@@ -2,5 +2,5 @@
 Accounting
 ******************************************
 
-.. automodule:: djangoerp.contrib.accounting
+.. automodule:: djangobmf.contrib.accounting
 

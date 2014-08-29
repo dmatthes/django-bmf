@@ -5,7 +5,7 @@ Task
 Models
 ==================================================
 
-.. automodule:: djangoerp.contrib.task.models
+.. automodule:: djangobmf.contrib.task.models
    :members:
    :show-inheritance:
 

@@ -20,7 +20,7 @@
   "tree_id": 1
  },
  "pk": 1,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -43,7 +43,7 @@
   "tree_id": 2
  },
  "pk": 2,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -66,7 +66,7 @@
   "tree_id": 3
  },
  "pk": 3,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -89,7 +89,7 @@
   "tree_id": 4
  },
  "pk": 4,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -112,7 +112,7 @@
   "tree_id": 5
  },
  "pk": 5,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -135,7 +135,7 @@
   "tree_id": 2
  },
  "pk": 6,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -158,7 +158,7 @@
   "tree_id": 2
  },
  "pk": 7,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -181,7 +181,7 @@
   "tree_id": 3
  },
  "pk": 8,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -204,7 +204,7 @@
   "tree_id": 3
  },
  "pk": 9,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -227,7 +227,7 @@
   "tree_id": 3
  },
  "pk": 10,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -250,7 +250,7 @@
   "tree_id": 4
  },
  "pk": 11,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -273,7 +273,7 @@
   "tree_id": 4
  },
  "pk": 12,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -296,7 +296,7 @@
   "tree_id": 2
  },
  "pk": 13,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -319,7 +319,7 @@
   "tree_id": 2
  },
  "pk": 14,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -342,7 +342,7 @@
   "tree_id": 2
  },
  "pk": 15,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 },
 {
  "fields": {
@@ -365,6 +365,6 @@
   "tree_id": 3
  },
  "pk": 16,
- "model": "djangoerp_accounting.account"
+ "model": "djangobmf_accounting.account"
 }
 ]
