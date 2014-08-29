@@ -24,7 +24,7 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
-# Dynamically calculate the version based on djangoerp.VERSION.
+# Dynamically calculate the version
 version = __import__('djangobmf').get_version()
 
 setup(

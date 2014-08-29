@@ -1,5 +1,5 @@
 
-Django ERP understands itself as a ERP-Framework with the following design concepts:
+Django BMF understands itself as a ERP-Framework with the following design concepts:
 
 * KISS-Principe for endusers
 * Fast and easy configuration for people with medium know-how
@@ -25,7 +25,7 @@ Features
 * Workflows attached to models
   - easy configureable as classes (Workflow, states and transitions)
   - custom functions for transitions
-  - integrated into the ERP (i.e you can delete or update a model instance only if the State allows you to do so)
+  - integrated into the BMF (i.e you can delete or update a model instance only if the State allows you to do so)
 * Each option should be activated and deactivated in die model definition (how needs to append files or write comments to a tax-model?)
 
 
