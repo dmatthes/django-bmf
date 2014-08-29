@@ -18,7 +18,7 @@ if BASE_MODULE["CUSTOMER"]:
             migrations.AddField(
                 model_name='employee',
                 name='contact',
-                field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='Contact', blank=True, to=BASE_MODULE["CUSTOMER"], null=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='Contact', blank=True, to=BASE_MODULE["CUSTOMER"], null=True, related_name='erp_employee'),
                 preserve_default=True,
             ),
         ]

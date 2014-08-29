@@ -45,7 +45,7 @@ class AbstractEmployee(BaseEmployee):
             verbose_name=("Product"),
             null=True,
             blank=True,
-            related_name="employee_product",
+            related_name="erp_employee",
             limit_choices_to={'type': PRODUCT_SERVICE},
             on_delete=models.PROTECT,
         )

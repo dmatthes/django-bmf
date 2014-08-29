@@ -120,7 +120,7 @@ TEST_PROJECT_APPS = (
 #   'djangoerp.contrib.stock',
     'djangoerp.contrib.task',
     'djangoerp.contrib.taxing',
-#   'djangoerp.contrib.team',
+    'djangoerp.contrib.team',
 #   'djangoerp.contrib.timesheet',
     'djangoerp.currencies.EUR',
     'djangoerp.currencies.USD',
@@ -200,17 +200,16 @@ except ImportError:
   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
   CELERY_ALWAYS_EAGER=True # deactivate celery
 
-
   INSTALLED_APPS += (
     'discover_jenkins',
 #   'django_extensions',
-#   'debug_toolbar',
+    'debug_toolbar',
   )
   TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 # TEST_RUNNER = 'discover_jenkins.runner.DiscoverCIRunner'
-# MIDDLEWARE_CLASSES += (
-#   'debug_toolbar.middleware.DebugToolbarMiddleware',
-# )
+  MIDDLEWARE_CLASSES += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+  )
   DEBUG_TOOLBAR_CONFIG = {
       'INTERCEPT_REDIRECTS': False,
   }

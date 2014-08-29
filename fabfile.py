@@ -19,8 +19,10 @@ FIXTURES = (
     'fixtures/demodata.json',
     'fixtures/contrib_accounting.json',
     'fixtures/contrib_invoice.json',
+    'fixtures/contrib_project.json',
     'fixtures/contrib_quotation.json',
     'fixtures/contrib_task.json',
+    'fixtures/contrib_team.json',
 )
 
 
@@ -66,15 +68,15 @@ def test():
     Tests code with django unittests
     """
     with lcd(BASEDIR):
-        local('.virtenv/bin/coverage run %s test djangoerp --liveserver=localhost:8001-9000' % MANAGE)
+        local('virtenv/bin/coverage run %s test djangoerp --liveserver=localhost:8001-9000' % MANAGE)
         local('find %s/sandbox/erp_documents -empty -delete' % BASEDIR)
-        local('.virtenv/bin/coverage report -m --include="djangoerp/*"')
+        local('virtenv/bin/coverage report -m --include="djangoerp/*"')
 
 @task
 def test_contrib(app):
     with lcd(BASEDIR):
-        local('.virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s' % {'app': app})
-        local('.virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
+        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangoerp.contrib.%(app)s' % {'app': app})
+        local('virtenv/bin/coverage report -m --include="djangoerp/contrib/%(app)s/*"' % {'app': app})
 
 
 @task

@@ -43,7 +43,7 @@ class BaseMixin(object):
 
     def check_permissions(self):
         """
-        overwrite this function to add a custom permission check (i.e
+        overwrite this function to add a view permission check (i.e
         one which depends on the object or on the request)
         """
         return True
@@ -68,7 +68,7 @@ class BaseMixin(object):
         employee = get_model_from_cfg('EMPLOYEE')
         if employee:
             try:
-                self.request.djangoerp_employee = employee.objects.get(user=self.request.user)
+                self.request.user.djangoerp_employee = employee.objects.get(user=self.request.user)
             except employee.DoesNotExist:
                 # the user does not have permission to view the erp
                 if self.request.user.is_superuser:
@@ -76,7 +76,16 @@ class BaseMixin(object):
                 else:
                     raise PermissionDenied
         else:
-            self.request.djangoerp_employee = None
+            self.request.user.djangoerp_employee = None
+
+        # === TEAM ========================================================
+
+        team = get_model_from_cfg('TEAM')
+        if team:
+            self.request.user.djangoerp_teams = \
+                team.objects.filter(members=self.request.user.djangoerp_employee).values_list("id", flat=1)
+        else:
+            self.request.user.djangoerp_teams = None
 
         return super(BaseMixin, self).dispatch(*args, **kwargs)
 
@@ -323,6 +332,11 @@ class ModuleDeletePermissionMixin(object):
 
 class ModuleBaseMixin(object):
     model = None
+
+    def get_queryset(self):
+        if hasattr(self, 'object'):
+            return self.queryset
+        return self.model.has_permissions(super(ModuleBaseMixin, self).get_queryset(), self.request.user)
 
     def get_object(self):
         if hasattr(self, 'object'):

@@ -11,6 +11,7 @@ from .views import TeamCreateView
 from .views import TeamDetailView
 from .views import TeamUpdateView
 
+
 site.register(Team, **{
     'create': TeamCreateView,
     'detail': TeamDetailView,

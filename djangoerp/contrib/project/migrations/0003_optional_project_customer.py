@@ -8,14 +8,14 @@ import django
 if BASE_MODULE["PROJECT"]:
     class Migration(migrations.Migration):
         dependencies = [
-            ('djangoerp_project', '0002_optional_project_employee'),
+            ('djangoerp_project', '0001_initial'),
             migrations.swappable_dependency(BASE_MODULE["CUSTOMER"]),
         ]
         operations = [
             migrations.AddField(
                 model_name='project',
                 name='customer',
-                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["CUSTOMER"], null=True, blank=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="erp_projects"),
                 preserve_default=True,
             ),
         ]

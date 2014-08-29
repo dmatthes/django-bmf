@@ -184,25 +184,6 @@
 
 {
  "pk": 1, 
- "model": "djangoerp_project.Project", 
- "fields": {
-  "customer": 1, 
-  "name": "Django ERP",
-  "is_active": true
- }
-},
-{
- "pk": 2, 
- "model": "djangoerp_project.Project", 
- "fields": {
-  "customer": 2, 
-  "name": "Sebastian Braun",
-  "is_active": true
- }
-},
-
-{
- "pk": 1, 
  "model": "djangoerp_address.address", 
  "fields": {
   "customer": 1, 

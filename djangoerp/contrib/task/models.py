@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
@@ -37,11 +38,21 @@ class AbstractGoal(ERPModel):
     summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
-    project = models.ForeignKey(
-        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
-    )
+    if BASE_MODULE["PROJECT"]:
+        project = models.ForeignKey(
+            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+        )
+
     referee = models.ForeignKey(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="+"
+    )
+    team = models.ForeignKey(
+        BASE_MODULE["TEAM"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
+    employees = models.ManyToManyField(
+        BASE_MODULE["EMPLOYEE"], blank=True,
+        related_name="employees"
     )
 
     billable = models.BooleanField(_("Is billable"), default=False)
@@ -54,6 +65,9 @@ class AbstractGoal(ERPModel):
         verbose_name_plural = _('Goals')
         ordering = ['project__name', 'summary']
         abstract = True
+        permissions = (
+            ('can_manage', 'Can manage all goals'),
+        )
 
     def erpget_customer(self):
         if self.project:
@@ -69,6 +83,24 @@ class AbstractGoal(ERPModel):
 
     def __str__(self):
         return '%s' % (self.summary)
+
+    @classmethod
+    def has_permissions(cls, qs, user, obj=None):
+        if user.has_perm('%s.can_manage' % cls._meta.app_label, cls):
+            return qs
+
+        qs_filter = Q(referee=getattr(user, 'djangoerp_employee', -1))
+        qs_filter |= Q(employees=getattr(user, 'djangoerp_employee', -1))
+        qs_filter |= Q(team__in=getattr(user, 'djangoerp_teams', []))
+
+        if hasattr(cls, "project"):
+            project = cls._meta.get_field_by_name("project")[0].model
+            if user.has_perm('%s.can_manage' % project._meta.app_label, project):
+                qs_filter |= Q(project__isnull=False)
+            else:
+                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangoerp_teams', []))
+        return qs.filter(qs_filter)
 
     def get_states(self):
         active_states = 0
@@ -165,6 +197,30 @@ class AbstractTask(ERPModel):
 
     def __str__(self):
         return '#%s: %s' % (self.pk, self.summary)
+
+    @classmethod
+    def has_permissions(cls, qs, user, obj=None):
+        qs_filter = Q(project__isnull=True, goal__isnull=True)
+        qs_filter |= Q(employee=getattr(user, 'djangoerp_employee', -1))
+
+        if hasattr(cls, "goal"):
+            goal = cls._meta.get_field_by_name("goal")[0].model
+            if user.has_perm('%s.can_manage' % goal._meta.app_label, goal):
+                qs_filter |= Q(goal__isnull=False)
+            else:
+                qs_filter |= Q(goal__isnull=False, goal__referee=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(goal__isnull=False, goal__employees=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(goal__isnull=False, goal__team__in=getattr(user, 'djangoerp_teams', []))
+
+        if hasattr(cls, "project"):
+            project = cls._meta.get_field_by_name("project")[0].model
+            if user.has_perm('%s.can_manage' % project._meta.app_label, project):
+                qs_filter |= Q(project__isnull=False)
+            else:
+                qs_filter |= Q(project__isnull=False, project__employees=getattr(user, 'djangoerp_employee', -1))
+                qs_filter |= Q(project__isnull=False, project__team__in=getattr(user, 'djangoerp_teams', []))
+
+        return qs.filter(qs_filter)
 
     def clean(self):
         # overwrite the project with the goals project

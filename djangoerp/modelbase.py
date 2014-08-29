@@ -49,6 +49,15 @@ def add_signals(cls):
     signals.post_delete.connect(post_delete, sender=cls, weak=False)
 
 
+# TODO:
+# we should create a workflow-enabled model with a fixes workflow field (also in db) and skip the
+# probably unneccesary options
+
+# TODO:
+# we also should move the "permission" to an erpacl manager to access the queryset
+# from related objects
+
+
 class ERPOptions(object):
     """
     Options class for ERP models. Use this as an inner class called ``ERPMeta``::
@@ -147,21 +156,24 @@ class ERPModelBase(ModelBase):
         # make erp-attributes
         cls._erpmeta = ERPOptions(cls, cls._meta, getattr(cls, 'ERPMeta', None))
 
+        if type(cls._meta.permissions) is not tuple:
+            cls._meta.permissions = tuple(cls._meta.permissions)
+
         # generate permissions
-        cls._meta.permissions.append(
-            ('view_' + cls._meta.model_name, u'Can view %s' % cls.__name__)
+        cls._meta.permissions += (
+            ('view_' + cls._meta.model_name, u'Can view %s' % cls.__name__),
         )
         if cls._erpmeta.can_clone:
-            cls._meta.permissions.append(
-                ('clone_' + cls._meta.model_name, u'Can clone %s' % cls.__name__)
+            cls._meta.permissions += (
+                ('clone_' + cls._meta.model_name, u'Can clone %s' % cls.__name__),
             )
         if cls._erpmeta.has_comments:
-            cls._meta.permissions.append(
-                ('comment_' + cls._meta.model_name, u'Can comment on %s' % cls.__name__)
+            cls._meta.permissions += (
+                ('comment_' + cls._meta.model_name, u'Can comment on %s' % cls.__name__),
             )
         if cls._erpmeta.has_files:
-            cls._meta.permissions.append(
-                ('addfile_' + cls._meta.model_name, u'Can add files to %s' % cls.__name__)
+            cls._meta.permissions += (
+                ('addfile_' + cls._meta.model_name, u'Can add files to %s' % cls.__name__),
             )
 
         # make workflow
@@ -267,7 +279,8 @@ class ERPSimpleModel(six.with_metaclass(ERPModelBase, models.Model)):
         """
         return self._erpworkflow._current_state
 
-    def has_permissions(self, qs, user):
+    @classmethod
+    def has_permissions(cls, qs, user):  # DRAFT!!
         """
         Overwrite this function to enable object bases permissions. It must return
         a queryset.

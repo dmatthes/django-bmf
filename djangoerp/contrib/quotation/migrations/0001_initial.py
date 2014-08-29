@@ -31,10 +31,10 @@ class Migration(migrations.Migration):
                 ('valid_until', models.DateField(null=True, verbose_name='Valid until', blank=True)),
                 ('notes', models.TextField(null=True, verbose_name='Notes', blank=True)),
                 ('term_of_payment', models.TextField(null=True, verbose_name='Term of payment', blank=True)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
                 ('invoice', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, null=True, blank=True, editable=False, to=BASE_MODULE["INVOICE"])),
                 ('invoice_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["ADDRESS"], null=True)),
-                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
                 ('shipping_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["ADDRESS"], null=True)),
             ],
             options={
