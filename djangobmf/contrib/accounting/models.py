@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 models doctype
 """
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Sum
 from django.utils.encoding import python_2_unicode_compatible
@@ -60,7 +61,7 @@ class BaseAccount(BMFMPTTModel):
     number = models.CharField(_('Number'), max_length=30, null=True, blank=True, unique=True, db_index=True)
     name = models.CharField(_('Name'), max_length=100, null=False, blank=False)
     type = models.PositiveSmallIntegerField(
-        _('Type'), null=False, blank=False, choices=ACCOUNTING_TYPES,
+        _('Type'), null=True, blank=True, choices=ACCOUNTING_TYPES,
     )
     read_only = models.BooleanField(_('Read-only'), default=False)
 
@@ -92,6 +93,28 @@ class BaseAccount(BMFMPTTModel):
     class BMFMeta:
         category = ACCOUNTING
         observed_fields = ['name', ]
+
+    class MPTTMeta:
+        order_insertion_by = ['number', 'name', 'type']
+
+    def __init__(self, *args, **kwargs):
+        super(BaseAccount, self).__init__(*args, **kwargs)
+        self.initial_number = self.number
+
+    @staticmethod
+    def post_save(sender, instance, created, *args, **kwargs):
+        if not created and instance.initial_number != instance.number:
+            # TODO this get's the job done, but there might be a more efficient way to do this
+            instance._meta.model.objects.partial_rebuild(instance.tree_id)
+
+    def clean(self):
+        if self.parent:
+            if not self.type:
+                self.type = self.parent.type
+            elif self.type != self.parent.type:
+                raise ValidationError(_('The type does not match the model parents type'))
+        elif not self.type:
+            raise ValidationError(_('Root accounts must define a type'))
 
     def __str__(self):
         return '%s: %s' % (self.number, self.name)

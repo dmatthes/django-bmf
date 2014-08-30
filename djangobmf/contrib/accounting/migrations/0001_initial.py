@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('comment', models.TextField(null=True, verbose_name='Comment', blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
-                ('parent', mptt.fields.TreeForeignKey(blank=True, to='djangobmf_accounting.Account', null=True)),
+                ('parent', mptt.fields.TreeForeignKey(blank=True, to='djangobmf_accounting.Account', null=True, related_name='children')),
             ],
             options={
                 'ordering': ['number', 'name', 'type'],
@@ -73,7 +73,8 @@ class Migration(migrations.Migration):
                 ('credit', models.BooleanField(default=True, choices=[(True, 'Credit'), (False, 'Debit')])),
                 ('balanced', models.BooleanField(default=False, editable=False)),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='Modified', null=True)),
-                ('account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='djangobmf_accounting.Account', null=True)),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='djangobmf_accounting.Account', null=True, related_name='transaction_accounts')),
+                ('transaction', models.ForeignKey(blank=True, to='djangobmf_accounting.Transaction', null=True, related_name='account_transactions')),
             ],
             options={
                 'abstract': False,
@@ -84,12 +85,6 @@ class Migration(migrations.Migration):
             model_name='transaction',
             name='accounts',
             field=models.ManyToManyField(to='djangobmf_accounting.Account', through='djangobmf_accounting.TransactionItem'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='transactionitem',
-            name='transaction',
-            field=models.ForeignKey(blank=True, to='djangobmf_accounting.Transaction', null=True),
             preserve_default=True,
         ),
     ]

@@ -15,7 +15,11 @@ from .models import ACCOUNTING_ASSET
 from .models import ACCOUNTING_LIABILITY
 
 from .models import Account
-site.register(Account)
+from .views import AccountIndexView
+
+site.register(Account, **{
+    'index': AccountIndexView,
+})
 
 from .models import Transaction
 from .views import TransactionCreateView
