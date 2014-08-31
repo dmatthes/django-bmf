@@ -13,16 +13,30 @@ from djangobmf.utils import get_model_from_cfg
 from django.core.exceptions import ValidationError
 
 
+def cancel_condition(object, user):
+    if getattr(object, 'referee_id', False) and object.referee_id != user.pk:
+        return False
+    return True
+
+
 class GoalWorkflow(Workflow):
     class States:
         open = State(_(u"Open"), default=True, delete=False)
-        completed = State(_(u"Completed"))
+        completed = State(_(u"Completed"), update=False, delete=True)
+        cancelled = State(_(u"Cancelled"), update=False, delete=True)
 
     class Transitions:
         complete = Transition(_("Complete this Goal"), "open", "completed")
-        reopen = Transition(_("Reopen this Goal"), "completed", "open")
+        cancel = Transition(_("Cancel this Goal"), "open", "cancelled", condition=cancel_condition)
+        reopen = Transition(_("Reopen this Goal"), ["completed", "cancelled"], "open")
 
     def complete(self):
+        if self.instance.task_set.filter(completed=False).count() > 0:  # TODO untested
+            raise ValidationError(_('You can not complete a goal which has open tasks'))
+        self.instance.completed = True
+
+    def cancel(self):
+        # TODO autoclose all tasks
         if self.instance.task_set.filter(completed=False).count() > 0:  # TODO untested
             raise ValidationError(_('You can not complete a goal which has open tasks'))
         self.instance.completed = True
@@ -49,8 +63,9 @@ class TaskWorkflow(Workflow):
     class States:
         new = State(_(u"New"), True, delete=False)
         open = State(_(u"Open"), delete=False)
-        started = State(_(u"Started"), delete=False)
         hold = State(_(u"Hold"), delete=False)
+        todo = State(_(u"Todo"), delete=False)
+        started = State(_(u"Started"), delete=False)
         review = State(_(u"Review"), delete=False, update=False)
         finished = State(_(u"Finished"), update=False, delete=True)
         cancelled = State(_(u"Cancelled"), update=False, delete=True)
@@ -58,13 +73,18 @@ class TaskWorkflow(Workflow):
     class Transitions:
         start = Transition(
             _("Work on this task"),
-            ["new", "hold", "open"],
+            ["new", "hold", "open", "todo"],
             "started",
             condition=start_condition,
         )
+        todo = Transition(
+            _("Mark as todo"),
+            ["new", "open", "started", "hold"],
+            "todo",
+        )
         hold = Transition(
             _("Set this task on hold"),
-            ["new", "open", "started"],
+            ["new", "open", "started", "todo"],
             "hold",
         )
         stop = Transition(
@@ -74,13 +94,13 @@ class TaskWorkflow(Workflow):
         )
         finish = Transition(
             _("Finish this task"),
-            ["started", "open", "hold", "new", "review"],
+            ["started", "open", "hold", "new", "review", "todo"],
             "finished",
             condition=finish_condition,
         )
         review = Transition(
             _("Set to review"),
-            ["started", "open", "hold", "new"],
+            ["started", "open", "hold", "new", "todo"],
             "review",
         )
         reopen = Transition(
@@ -102,10 +122,17 @@ class TaskWorkflow(Workflow):
 
     def start(self):
         self.instance.work_date = now()
-        if hasattr(self.instance, 'employee'):
-            self.instance.employee_id = self.user.pk
+        self.instance.in_charge_id = self.user.pk
+        self.instance.employee_id = self.user.pk
+
+    def todo(self):
+        self.instance.in_charge_id = self.user.pk
+        self.instance.employee_id = self.user.pk
 
     def stop(self):
+        if not self.instance.in_charge_id and self.instance.employee_id:
+            self.instance.in_charge_id = self.instance.employee_id
+
         if self.instance.work_date:
             self.instance.seconds_on += int((now() - self.instance.work_date).total_seconds())
         self.instance.work_date = now()
@@ -114,14 +141,20 @@ class TaskWorkflow(Workflow):
         self.stop()
 
     def unreview(self):  # LOOK: probably not needed, if timesheets are implemented
+        self.instance.employee_id = self.instance.in_charge_id
         self.instance.work_date = now()
 
     def reopen(self):
+        self.instance.employee_id = self.instance.in_charge_id
         self.instance.seconds_on = 0  # LOOK: probably not needed, if timesheets are implemented
         self.instance.work_date = now()
         self.instance.completed = False
 
     def review(self):
+        if not self.instance.in_charge_id and self.instance.employee_id:
+            self.instance.in_charge_id = self.instance.employee_id
+        if self.instance.goal:
+            self.instance.employee = self.instance.goal.referee
         self.stop()
 
     def finish(self):

@@ -108,14 +108,19 @@ class AbstractGoal(BMFModel):
             "hold": 0.,
             "review": 0.,
             "done": 0.,
+            "todo": 0.,
         }
 
         for state, count in self.task_set.values_list('state').annotate(count=models.Count('state')).order_by():
-            if state in ["new", "open", "started", ]:
+            if state in ["new", "open", ]:
                 active_states += count
 
             if state in ["hold", ]:
                 states["hold"] += count
+                active_states += count
+
+            if state in ["todo", "started"]:
+                states["todo"] += count
                 active_states += count
 
             if state in ["review", ]:
@@ -131,6 +136,7 @@ class AbstractGoal(BMFModel):
 
         states['hold'] = '%4.2f' % (floor(10000 * states["hold"] / active_states) / 100)
         states['done'] = '%4.2f' % (floor(10000 * states["done"] / active_states) / 100)
+        states['todo'] = '%4.2f' % (floor(10000 * states["todo"] / active_states) / 100)
         states['review'] = '%4.2f' % (floor(10000 * states["review"] / active_states) / 100)
 
         return states
@@ -181,6 +187,10 @@ class AbstractTask(BMFModel):
     employee = models.ForeignKey(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
     )
+    in_charge = models.ForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="+", editable=False,
+    )
 
     goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
 
@@ -202,6 +212,7 @@ class AbstractTask(BMFModel):
     def has_permissions(cls, qs, user, obj=None):
         qs_filter = Q(project__isnull=True, goal__isnull=True)
         qs_filter |= Q(employee=getattr(user, 'djangobmf_employee', -1))
+        qs_filter |= Q(in_charge=getattr(user, 'djangobmf_employee', -1))
 
         if hasattr(cls, "goal"):
             goal = cls._meta.get_field_by_name("goal")[0].model

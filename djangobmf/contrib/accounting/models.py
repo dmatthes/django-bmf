@@ -105,7 +105,10 @@ class BaseAccount(BMFMPTTModel):
     def post_save(sender, instance, created, *args, **kwargs):
         if not created and instance.initial_number != instance.number:
             # TODO this get's the job done, but there might be a more efficient way to do this
-            instance._meta.model.objects.partial_rebuild(instance.tree_id)
+            if instance.parent:
+                instance._meta.model.objects.partial_rebuild(instance.tree_id)
+            else:
+                instance._meta.model.objects.rebuild()
 
     def clean(self):
         if self.parent:

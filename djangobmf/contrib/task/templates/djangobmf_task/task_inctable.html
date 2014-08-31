@@ -34,7 +34,8 @@
 
           {% if obj.state == "review" %}<span class="label label-info">{% trans "review" %}</span>{% endif %}
           {% if obj.state == "started" %}<span class="label label-primary">{% trans "started" %}</span>{% endif %}
-          {% if obj.state == "hold" %}<span class="label label-warning">{% trans "hold" %}</span>{% endif %}
+          {% if obj.state == "hold" %}<span class="label label-default">{% trans "hold" %}</span>{% endif %}
+          {% if obj.state == "todo" %}<span class="label label-warning">{% trans "todo" %}</span>{% endif %}
           {{ obj.summary }}
           {% if obj.project or obj.goal %}<br /><small class="text-muted">
               {% if obj.project %}<strong>{{ obj.project }}</strong>{% endif %} {% if obj.goal %}{{ obj.goal }}{% endif %}
@@ -48,7 +49,6 @@
             {% if obj.due_days > 3 and obj.due_days < 7 %}<span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
             {% if obj.due_days >= 7 %}<span class="label label-success"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
             <strong>{{ obj.due_date }}</strong>
-            {# if obj.due_days %}<br />{{ obj.due_date|timeuntil }}{% endif #}
           </small>
           {% endif %}{% endif %}
       </td>
