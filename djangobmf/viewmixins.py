@@ -5,9 +5,11 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse_lazy
 from django.core.urlresolvers import NoReverseMatch
+from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.timezone import now
@@ -307,7 +309,7 @@ class ModuleUpdatePermissionMixin(object):
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name
-        perms.append('%s.update_%s' % info)
+        perms.append('%s.change_%s' % info)
         perms.append('%s.view_%s' % info)
         return super(ModuleUpdatePermissionMixin, self).get_permissions(perms)
 
@@ -334,9 +336,21 @@ class ModuleBaseMixin(object):
     model = None
 
     def get_queryset(self):
-        if hasattr(self, 'object'):
-            return self.queryset
-        return self.model.has_permissions(super(ModuleBaseMixin, self).get_queryset(), self.request.user)
+        if self.queryset is not None:
+            queryset = self.queryset
+            if isinstance(queryset, QuerySet):
+                queryset = queryset.all()
+        elif self.model is not None:
+            queryset = self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+        return self.model.has_permissions(queryset, self.request.user)
 
     def get_object(self):
         if hasattr(self, 'object'):

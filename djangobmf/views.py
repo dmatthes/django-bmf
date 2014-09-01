@@ -308,7 +308,6 @@ class ModuleCloneView(ModuleFormMixin, ModuleClonePermissionMixin, ModuleAjaxMix
 
 class ModuleUpdateView(ModuleFormMixin, ModuleUpdatePermissionMixin, ModuleAjaxMixin, UpdateView):
     """
-    update an update
     """
     context_object_name = 'object'
     template_name_suffix = '_bmfupdate'
@@ -385,7 +384,7 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
 
     def get_permissions(self, perms):
         info = self.model._meta.app_label, self.model._meta.model_name
-        perms.append('%s.update_%s' % info)
+        perms.append('%s.change_%s' % info)
         perms.append('%s.view_%s' % info)
         return super(ModuleWorkflowView, self).get_permissions(perms)
 
