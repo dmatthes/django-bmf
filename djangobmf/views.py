@@ -467,13 +467,10 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
             if not field:
                 # TODO ADD LOGGING
                 raise Http404
-            qs = field.field.choices.queryset
+            qs = field.field.queryset
 
-           #if hasattr(form.instance, 'has_permissions'):
-           #    print (self.request.user)
-           #    asdadasd = asdfasdf
-           #    # qs = form.instance.has_permissions(qs, self.request.user, form.instance)
-           #    qs = form.instance.has_permissions(qs, self.request.user)
+            if hasattr(field.field.queryset.model, 'has_permissions'):
+                qs = field.field.queryset.model.has_permissions(qs, self.request.user)
 
             func = getattr(form.instance, 'get_%s_queryset' % field.name, None)
             if func:
