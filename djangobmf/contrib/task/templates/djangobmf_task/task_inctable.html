@@ -43,7 +43,7 @@
           {% endif %}
       </td>
       <td>{% if obj.employee %}{{ obj.employee }}{% else %}<i>{% trans "None" %}</i>{% endif %}
-          {% if obj.due_date %}{% if obj.state == "new" or obj.state == "started" or obj.state == "open" %}<br />
+          {% if obj.due_date %}{% if obj.state == "new" or obj.state == "started" or obj.state == "todo" or obj.state == "open" %}<br />
           <small>
             {% if obj.due_days <= 3 %}<span class="label label-danger"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
             {% if obj.due_days > 3 and obj.due_days < 7 %}<span class="label label-warning"><span class="glyphicon glyphicon-time"></span></span>{% endif %}
