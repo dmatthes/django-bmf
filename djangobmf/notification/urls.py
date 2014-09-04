@@ -17,9 +17,9 @@ urlpatterns = patterns(
         r'^(?P<ct>[0-9]+)/$', NotificationView.as_view(), name="notification", kwargs={'filter': None},
     ),
     url(
-        r'^(?P<filter>all)/$', NotificationView.as_view(), name="notification", kwargs={'ct': 0},
+        r'^(?P<filter>all|active|unread)/$', NotificationView.as_view(), name="notification", kwargs={'ct': 0},
     ),
     url(
-        r'^(?P<filter>all)/(?P<ct>[0-9]+)/$', NotificationView.as_view(), name="notification",
+        r'^(?P<filter>all|active|unread)/(?P<ct>[0-9]+)/$', NotificationView.as_view(), name="notification",
     ),
 )

@@ -21,6 +21,7 @@ class Notification(models.Model):
     watch_object = GenericForeignKey('watch_ct', 'watch_id')
 
     triggered = models.BooleanField(_("Triggered"), default=True, editable=False, db_index=True)
+    unread = models.BooleanField(_("Unread"), default=True, editable=False, db_index=True)
     last_seen_object = models.PositiveIntegerField(default=0)
 
     new_entry = models.BooleanField(_("New entry"), default=False, db_index=True)

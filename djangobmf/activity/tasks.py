@@ -4,10 +4,11 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.utils.timezone import now
 
 
 def djangobmf_user_watch(activity):
-    # from djangobmf.models import Notification
+
     from djangobmf.models import Notification
 
     from djangobmf.activity.models import ACTION_COMMENT
@@ -25,6 +26,7 @@ def djangobmf_user_watch(activity):
             validated = True
             if validated:
                 watch.pk = None
+                watch.unread = True
                 watch.new_entry = False
                 watch.watch_id = activity.parent_id
                 watch.last_seen_object = activity.pk
@@ -40,4 +42,4 @@ def djangobmf_user_watch(activity):
             qs = qs.filter(workflow=True)
         if activity.action == ACTION_FILE:
             qs = qs.filter(file=True)
-        qs.filter(triggered=False).update(triggered=True)
+        qs.filter(triggered=False).update(triggered=True, seen=False, modified=now())
