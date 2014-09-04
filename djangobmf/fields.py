@@ -7,7 +7,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.six import with_metaclass
 
-from .currency import BaseCurrency
+from .currencies import BaseCurrency
 
 
 class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):

@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.sites import site
-from djangobmf.currency import BaseCurrency
+from djangobmf.currencies import BaseCurrency
 
 
 class USD(BaseCurrency):

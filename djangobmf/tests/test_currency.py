@@ -13,7 +13,7 @@ from django.utils.translation import activate
 
 from django.utils.translation import ugettext_lazy as _
 
-from ..currency import BaseCurrency, Wallet
+from ..currencies import BaseCurrency, Wallet
 
 from decimal import Decimal
 

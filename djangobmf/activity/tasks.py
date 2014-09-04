@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 def djangobmf_user_watch(activity):
-    from djangobmf.models import Notification
+    # from djangobmf.models import Notification
     from djangobmf.models import Watch
 
     from djangobmf.activity.models import ACTION_COMMENT

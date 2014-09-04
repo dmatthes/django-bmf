@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
 from djangobmf.categories import SALES
-from djangobmf.currency import BaseCurrency
+from djangobmf.currencies import BaseCurrency
 from djangobmf.models import BMFModel
 from djangobmf.settings import BASE_MODULE
 from djangobmf.fields import CurrencyField
