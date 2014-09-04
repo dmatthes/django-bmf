@@ -42,6 +42,7 @@ def djangobmf_user_watch(activity):
 
     for user in user_list:
         # TODO check permissions!
+        '''
         activity = Notification(
             user_id=user,
             activity=activity,
@@ -50,3 +51,5 @@ def djangobmf_user_watch(activity):
             created_by=activity.user,
         )
         activity.save()
+        '''
+        pass
