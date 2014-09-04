@@ -16,9 +16,3 @@ admin.site.register(NumberCycle)
 
 from .report.models import Report
 admin.site.register(Report)
-
-from .dashboard.models import View
-admin.site.register(View)
-
-from .watch.models import Watch
-admin.site.register(Watch)

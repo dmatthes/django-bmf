@@ -20,7 +20,6 @@ from .fields import WorkflowField
 
 from .activity.models import Activity
 from .notification.models import Notification
-from .watch.models import Watch
 
 import types
 import inspect
@@ -34,15 +33,11 @@ APP_LABEL = BMFConfig.label
 def add_signals(cls):
     # cleanup history and follows
     def post_delete(sender, instance, *args, **kwargs):
-        Notification.objects.filter(
-            obj_ct=ContentType.objects.get_for_model(sender),
-            obj_id=instance.pk,
-        ).delete()
         Activity.objects.filter(
             parent_ct=ContentType.objects.get_for_model(sender),
             parent_id=instance.pk,
         ).delete()
-        Watch.objects.filter(
+        Notification.objects.filter(
             watch_ct=ContentType.objects.get_for_model(sender),
             watch_id=instance.pk,
         ).delete()
@@ -245,7 +240,7 @@ class BMFSimpleModel(six.with_metaclass(BMFModelBase, models.Model)):
         null=True, blank=True, editable=False,
         related_name="+", on_delete=models.SET_NULL)
     djangobmf_activity = GenericRelation(Activity, content_type_field='parent_ct', object_id_field='parent_id')
-    djangobmf_notification = GenericRelation(Notification, content_type_field='obj_ct', object_id_field='obj_id')
+    djangobmf_notification = GenericRelation(Notification, content_type_field='watch_ct', object_id_field='watch_id')
 
     class Meta:
         abstract = True
