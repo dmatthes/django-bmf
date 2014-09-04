@@ -114,24 +114,17 @@ class ViewMixin(BaseMixin):
             kwargs["djangobmf"]['version'] = get_version()
         return super(BaseMixin, self).get_context_data(**kwargs)
 
-    def update_notification(self, check_object=True):
+    def update_notification(self):
         """
         This function is used by django BMF to update the notifications
         used in the BMF-Framework
         """
-        if check_object \
-                and not self.object.djangobmf_notification.filter(
-                    user=self.request.user,
-                    unread=True,
-                ).update(unread=None, changed=now()):
-            return None
-
         # get all session data
         session_data = self.read_session_data()
 
         # manipulate session
         session_data["notification_last_update"] = datetime.datetime.utcnow().isoformat()
-        session_data["notification_count"] = Notification.objects.filter(unread=True, user=self.request.user).count()
+        session_data["notification_count"] = Notification.objects.filter(triggered=True, user=self.request.user).count()
 
         # update session
         self.write_session_data(session_data)
@@ -207,9 +200,9 @@ class ViewMixin(BaseMixin):
                 )
             ).total_seconds()
             if diff >= 300:
-                self.update_notification(False)
+                self.update_notification()
         else:
-            self.update_notification(False)
+            self.update_notification()
 
         # === MESSAGE =====================================================
 
