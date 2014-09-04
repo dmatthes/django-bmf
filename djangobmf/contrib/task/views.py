@@ -48,7 +48,7 @@ class GoalDetailView(ModuleDetailView):
         for task in self.object.task_set.all():
             if task.state in ["open", "started", "new"]:
                 tasks["open"].append(task)
-            elif task.state in ["hold", "review"]:
+            elif task.state in ["hold", "review", "todo"]:
                 tasks["hold"].append(task)
             else:
                 tasks["done"].append(task)

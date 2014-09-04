@@ -8,6 +8,3 @@ Evolving the BMF-Core
 .. toctree::
     :maxdepth: 1
     :numbered:
-
-    testing
-

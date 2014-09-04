@@ -13,6 +13,8 @@ from .models import Notification
 from ..viewmixins import ViewMixin
 from ..viewmixins import AjaxMixin
 
+from ..sites import site
+
 
 class NotificationView(ViewMixin, ListView):
     model = Notification
@@ -21,22 +23,36 @@ class NotificationView(ViewMixin, ListView):
     paginate_by = 50
 
     def get_context_data(self, **kwargs):
-        navigation = super(NotificationView, self).get_queryset() \
-            .values('watch_ct').annotate(count=Count('unread')).order_by()
 
-      # total = 0
-      # for data in navigation:
-      #     data['name'] = force_text(
-      #         ContentType.objects.get_for_id(data['obj_ct']).model_class()._meta.verbose_name_plural
-      #     )
-      #     total += data['count']
+        # Dict with all items of right navigation
+        navigation = {}
 
-      # kwargs.update({
-      #     'navigation': navigation,
-      #     'unread': total,
-      #     'selected_ct': int(self.kwargs.get('ct', 0)),
-      #     'all_data': self.kwargs.get('filter', None),
-      # })
+        # prefill
+        for ct, model in site.models.items():
+            info = model._meta.app_label, model._meta.model_name
+            perm = '%s.view_%s' % info
+
+            if model._bmfmeta.has_activity:
+                navigation[ct] = {
+                    'name': force_text(model._meta.verbose_name_plural),
+                    'count': 0,
+                    'ct': ct,
+                    'visible': self.request.user.has_perm(perm),
+                }
+
+        total = 0
+        for data in super(NotificationView, self).get_queryset() \
+                    .values('watch_ct').annotate(count=Count('unread')):
+            navigation[data['watch_ct']]['visible'] = True
+            navigation[data['watch_ct']]['count'] =  data['count']
+            total += data['count']
+
+        kwargs.update({
+            'navigation': navigation.values(),
+            'unread': total,
+            'selected_ct': int(self.kwargs.get('ct', 0)),
+            'datafilter': self.kwargs.get('filter', None),
+        })
 
         return super(NotificationView, self).get_context_data(**kwargs)
 

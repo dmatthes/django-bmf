@@ -20,7 +20,7 @@ repeat them for different versions of Python and Django. You can use ``tox`` to
 achieve it::
 
     # get django BMF from GitHub
-    git clone git@github.com:....
+    git clone git@github.com:glomium/django-bmf.git
     # run the test suite
     tox
 
@@ -42,6 +42,3 @@ Write Tests for your the BMF-Core
 
 At the moment the goal is to increase the test coverage. If you like to help us, look at the coverage Report
 and write some tests for modules, which have a poor coverage. Or identify a bug with a testcase :)
-
-
-
