@@ -17,6 +17,9 @@ from .signals import djangobmf_post_save
 
 from collections import OrderedDict
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class BMFFormMetaclass(type):
     def __new__(cls, name, bases, attrs):
@@ -207,8 +210,7 @@ class BMFForm(six.with_metaclass(BMFFormMetaclass, object)):
                 except AttributeError:
                     pass
                 continue
-            # TODO some fieldtypes ARE missing ... add logging if in debug mode?
-            # output field.field.__class__ to see which field classes are ignored
+            logger.critical("Formatting is missing for %s" % field.field.__class__)
         return valid, data
 
     @classmethod
