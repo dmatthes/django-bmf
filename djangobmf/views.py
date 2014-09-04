@@ -23,7 +23,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from .activity.models import Activity
-from .watch.models import Watch
+from .notification.models import Notification
 from .models import Report
 from .activity.forms import HistoryCommentForm
 from .signals import activity_create
@@ -58,7 +58,7 @@ class ModuleActivityMixin(object):
     def get_context_data(self, **kwargs):
         ct = ContentType.objects.get_for_model(self.object)
 
-        watch = Watch.objects.filter(
+        watch = Notification.objects.filter(
             user=self.request.user,
             watch_ct=ct,
             watch_id__in=[self.object.pk, 0]

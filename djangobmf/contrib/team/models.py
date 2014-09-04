@@ -20,7 +20,7 @@ class AbstractTeam(BMFModel):
         max_length=255, null=False, blank=False, editable=True,
     )
     members = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], blank=True, related_name="team_members",
+        BASE_MODULE["EMPLOYEE"], blank=True, related_name="teams",
         limit_choices_to={'user__isnull': False}, through='TeamMember',
     )
 

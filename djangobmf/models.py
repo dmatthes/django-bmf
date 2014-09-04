@@ -14,7 +14,6 @@ __all__ = (
     'NumberCycle',
     'Report',
     'View',
-    'Watch',
 )
 
 from .modelbase import BMFSimpleModel
@@ -28,4 +27,3 @@ from .notification.models import Notification
 from .numbering.models import NumberCycle
 from .report.models import Report
 from .dashboard.models import View
-from .watch.models import Watch
