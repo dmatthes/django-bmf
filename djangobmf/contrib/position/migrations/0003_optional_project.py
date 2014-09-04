@@ -16,7 +16,7 @@ if BASE_MODULE["PROJECT"]:
             migrations.AddField(
                 model_name='position',
                 name='project',
-                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["PROJECT"], null=True),
+                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=BASE_MODULE["PROJECT"], null=True, related_name="+"),
                 preserve_default=True,
             ),
         ]

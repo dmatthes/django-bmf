@@ -32,10 +32,10 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(null=True, verbose_name='Notes', blank=True)),
                 ('term_of_payment', models.TextField(null=True, verbose_name='Term of payment', blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
-                ('invoice', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, null=True, blank=True, editable=False, to=BASE_MODULE["INVOICE"])),
-                ('invoice_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["ADDRESS"], null=True)),
+                ('invoice', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, null=True, blank=True, editable=False, to=BASE_MODULE["INVOICE"], related_name="quotation")),
+                ('invoice_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["ADDRESS"], null=True, related_name="invoice_quotation")),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
-                ('shipping_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["ADDRESS"], null=True)),
+                ('shipping_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["ADDRESS"], null=True, related_name="shipping_quotation")),
             ],
             options={
                 'ordering': ['-pk'],
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
                 ('price_precision', models.PositiveSmallIntegerField(default=0, null=True, editable=False, blank=True)),
                 ('amount', models.FloatField(default=1.0, null=True, verbose_name='Amount')),
                 ('description', models.TextField(null=True, verbose_name='Description', blank=True)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["PRODUCT"], null=True)),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["PRODUCT"], null=True, related_name="quotation_products")),
             ],
             options={
             },
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='quotationproduct',
             name='quotation',
-            field=models.ForeignKey(blank=True, to='djangobmf_quotation.Quotation', null=True),
+            field=models.ForeignKey(blank=True, to='djangobmf_quotation.Quotation', null=True, related_name="quotation_products"),
             preserve_default=True,
         ),
     ]

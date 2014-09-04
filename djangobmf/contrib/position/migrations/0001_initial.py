@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('amount', models.FloatField(default=1.0, null=True, verbose_name='Amount')),
                 ('description', models.TextField(null=True, verbose_name='Description', blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
-                ('invoice', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, editable=False, to=BASE_MODULE["INVOICE"], null=True)),
+                ('invoice', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, editable=False, to=BASE_MODULE["INVOICE"], null=True, related_name="+")),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
                 ('product', models.ForeignKey(to=BASE_MODULE["PRODUCT"], on_delete=django.db.models.deletion.PROTECT, null=True)),
             ],

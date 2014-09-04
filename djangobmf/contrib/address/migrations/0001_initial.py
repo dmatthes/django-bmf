@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(max_length=255, null=True, verbose_name='State', blank=True)),
                 ('country', models.CharField(max_length=255, null=True, verbose_name='Country')),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
-                ('customer', models.ForeignKey(to=BASE_MODULE["CUSTOMER"])),
+                ('customer', models.ForeignKey(to=BASE_MODULE["CUSTOMER"], related_name="customer_address")),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name="+")),
             ],
             options={

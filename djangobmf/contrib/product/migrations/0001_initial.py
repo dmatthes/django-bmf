@@ -34,8 +34,8 @@ class Migration(migrations.Migration):
                 ('price_currency', djangobmf.fields.CurrencyField(default=djangobmf.fields.get_default_currency, max_length=4, null=True, editable=False)),
                 ('price_precision', models.PositiveSmallIntegerField(default=0, null=True, editable=False, blank=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
-                ('expense_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"])),
-                ('income_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"])),
+                ('expense_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"], related_name="product_expense")),
+                ('income_account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=BASE_MODULE["ACCOUNT"], related_name="product_income")),
                 ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, editable=False, to=settings.AUTH_USER_MODEL, null=True, related_name='+')),
             ],
             options={
@@ -59,19 +59,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='taxes',
-            field=models.ManyToManyField(to=BASE_MODULE["TAX"], through='djangobmf_product.ProductTax', blank=True),
+            field=models.ManyToManyField(to=BASE_MODULE["TAX"], through='djangobmf_product.ProductTax', blank=True, related_name="product_taxes"),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='producttax',
             name='product',
-            field=models.ForeignKey(blank=True, to='djangobmf_product.Product', null=True),
+            field=models.ForeignKey(blank=True, to='djangobmf_product.Product', null=True, related_name="product_tax"),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='producttax',
             name='tax',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["TAX"], null=True),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to=BASE_MODULE["TAX"], null=True, related_name="product_tax"),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

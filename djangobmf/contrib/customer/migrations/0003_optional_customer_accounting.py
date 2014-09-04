@@ -17,13 +17,13 @@ if BASE_MODULE["ACCOUNT"]:
             migrations.AddField(
                 model_name='customer',
                 name='asset_account',
-                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT, null=True),
+                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT, null=True, related_name="customer_asset"),
                 preserve_default=True,
             ),
             migrations.AddField(
                 model_name='customer',
                 name='liability_account',
-                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT, null=True),
+                field=models.ForeignKey(to=BASE_MODULE["ACCOUNT"], on_delete=django.db.models.deletion.PROTECT, null=True, related_name="customer_liability"),
                 preserve_default=True,
             ),
         ]
