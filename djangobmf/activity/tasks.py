@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from django.conf import settings
+# from django.conf import settings
 from django.utils.timezone import now
 
 import logging
@@ -50,4 +50,4 @@ def djangobmf_user_watch(activity):
         if activity.action == ACTION_FILE:
             logger.debug("Notifications for appended file: %s (%s)" % (activity.parent_ct, activity.parent_id))
             qs = qs.filter(file=True)
-        qs.filter(triggered=False).update(triggered=True, seen=False, modified=now())
+        qs.update(triggered=True, unread=True, modified=now())

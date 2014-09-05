@@ -12,7 +12,7 @@ from django.core.urlresolvers import NoReverseMatch
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.utils.timezone import now
+# from django.utils.timezone import now
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.defaults import permission_denied
@@ -28,6 +28,9 @@ try:
     from urllib import parse
 except ImportError:
     import urlparse as parse
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class BaseMixin(object):
@@ -72,7 +75,7 @@ class BaseMixin(object):
             try:
                 self.request.user.djangobmf_employee = employee.objects.get(user=self.request.user)
             except employee.DoesNotExist:
-                # the user does not have permission to view the bmf
+                logger.debug("User %s does not have permission to access djangobmf" % self.request.user)
                 if self.request.user.is_superuser:
                     return redirect('djangobmf:wizard', permanent=False)
                 else:
@@ -119,13 +122,18 @@ class ViewMixin(BaseMixin):
         This function is used by django BMF to update the notifications
         used in the BMF-Framework
         """
+        logger.debug("Updating notifications for %s" % self.request.user)
+
         # get all session data
         session_data = self.read_session_data()
 
         # manipulate session
         session_data["notification_last_update"] = datetime.datetime.utcnow().isoformat()
         if count is None:
-            session_data["notification_count"] = Notification.objects.filter(unread=True, user=self.request.user).count()
+            session_data["notification_count"] = Notification.objects.filter(
+                unread=True,
+                user=self.request.user,
+            ).count()
         else:
             session_data["notification_count"] = count
 
@@ -138,6 +146,9 @@ class ViewMixin(BaseMixin):
         provide a primary key, if you don't want to set an active
         dashboard.
         """
+        logger.debug("Updating dashboards for %s" % self.request.user)
+
+        # get all session data
         session_data = self.read_session_data()
         from .dashboard.models import Dashboard
 
@@ -164,6 +175,9 @@ class ViewMixin(BaseMixin):
         This function is used by django BMF to update the views.
         just call it, if you need it
         """
+        logger.debug("Updating views for %s" % self.request.user)
+
+        # get all session data
         session_data = self.read_session_data()
         from .dashboard.models import View
 

@@ -5,13 +5,13 @@ from __future__ import unicode_literals
 
 from django.views.generic import ListView
 from django.db.models import Sum
-from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.models import ContentType
 from django.utils.text import force_text
 
 from .models import Notification
 
 from ..viewmixins import ViewMixin
-from ..viewmixins import AjaxMixin
+# from ..viewmixins import AjaxMixin
 
 from ..settings import ACTIVITY_WORKFLOW
 from ..settings import ACTIVITY_COMMENT
@@ -53,13 +53,14 @@ class NotificationView(ViewMixin, ListView):
 
         total = 0
         for data in super(NotificationView, self).get_queryset() \
-                    .values('watch_ct').annotate(count=Sum('unread')):
+                .values('watch_ct').annotate(count=Sum('unread')):
             navigation[data['watch_ct']]['visible'] = True
-            navigation[data['watch_ct']]['count'] =  data['count']
+            navigation[data['watch_ct']]['count'] = data['count']
             total += data['count']
 
         # update notification icon if neccessary
-        if total != self.request.session['djangobmf']['notification_count']:
+        sessiondata = self.request.session.get('djangobmf', None)
+        if sessiondata and total != sessiondata.get('notification_count', -1):
             self.update_notification(total)
 
         kwargs.update({
