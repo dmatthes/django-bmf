@@ -17,12 +17,12 @@ class Notification(models.Model):
     user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), blank=True, null=True)
 
     watch_ct = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
-    watch_id = models.PositiveIntegerField(default=0)
+    watch_id = models.PositiveIntegerField(null=True)
     watch_object = GenericForeignKey('watch_ct', 'watch_id')
 
     triggered = models.BooleanField(_("Triggered"), default=True, editable=False, db_index=True)
     unread = models.BooleanField(_("Unread"), default=True, editable=False, db_index=True)
-    last_seen_object = models.PositiveIntegerField(default=0)
+    last_seen_object = models.PositiveIntegerField(null=True)
 
     new_entry = models.BooleanField(_("New entry"), default=False, db_index=True)
     comment = models.BooleanField(_("Comment written"), default=False, db_index=True)

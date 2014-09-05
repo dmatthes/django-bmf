@@ -6,25 +6,6 @@
 
 {% block watch_content %}
 {% if selected_ct %}
-<p class="text-right" style="padding: 0.5em 0">
-    {% trans "Default settings" %}:
-    <button class="btn {% if glob_settings.new_entry %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.created }}"></span></button>
-    {% if has_detectchanges %}
-    <button class="btn {% if glob_settings.changed %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.updated }}"></span></button>
-    {% endif %}
-    {% if has_workflow %}
-    <button class="btn {% if glob_settings.workflow %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.workflow }}"></span></button>
-    {% endif %}
-    {% if has_comments %}
-    <button class="btn {% if glob_settings.comment %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.comment }}"></span></button>
-    {% endif %}
-    {% if has_files %}
-    <button class="btn {% if glob_settings.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
-    {% endif %}
-    <a class="btn btn-default btn-warning" href="{% url 'djangobmf:watch_edit' ct=selected_ct %}">
-        <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
-    </a>
-</p>
 <table class="table table-hover">
     <thead>
         <tr>

@@ -18,6 +18,33 @@
             <li{% if datafilter == "all" %} class="active"{% endif %}><a href="{% url 'djangobmf:notification' filter="all" %}">{% trans "All" %}</a></li>
             {% endif %}
         </ul>
+        <p class="text-right" style="padding: 0.5em 0">
+            {% if selected_ct %}
+                {% trans "Default settings" %}:
+                <button class="btn {% if glob_settings.new_entry %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.created }}"></span></button>
+
+                {% if has_detectchanges %}
+                    <button class="btn {% if glob_settings.changed %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.updated }}"></span></button>
+                {% endif %}
+
+                {% if has_workflow %}
+                    <button class="btn {% if glob_settings.workflow %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.workflow }}"></span></button>
+                {% endif %}
+
+                {% if has_comments %}
+                    <button class="btn {% if glob_settings.comment %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.comment }}"></span></button>
+                {% endif %}
+
+                {% if has_files %}
+                    <button class="btn {% if glob_settings.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
+                {% endif %}
+                <a class="btn btn-warning" href="{# url 'djangobmf:watch_edit' ct=selected_ct #}#">
+                    <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
+                </a>
+            {% else %}
+                <button class="btn disabled" href="#">Select a category to edit the default settings</button>
+            {% endif %}
+        </p>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -28,13 +55,41 @@
             </thead>
             <tbody>
                 {% for item in object_list %}
+        <tr{% if not item.active %} class="text-muted"{% endif %}>
+            <td>
+                <span class="text-truncate" style="width:100%; display: block">
+                    <span class="glyphicon {{ item.activity.get_symbol }}"></span>
+                    <a href="{{ item.watch_object.bmfmodule_detail }}">{{ item.watch_object }}</a>
+                </span>
+            </td>
+            <td class="text-right">
+                {% if item.active %}
+                {% if has_detectchanges %}
+                <button class="btn btn btn-xs {% if item.changed %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.updated }}"></span></button>
+                {% endif %}
+                {% if has_workflow %}
+                <button class="btn btn btn-xs {% if item.workflow %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.workflow }}"></span></button>
+                {% endif %}
+                {% if has_comments %}
+                <button class="btn btn btn-xs {% if item.comment %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.comment }}"></span></button>
+                {% endif %}
+                {% if has_files %}
+                <button class="btn btn btn-xs {% if item.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
+                {% endif %}
+                {% endif %}
+                <a class="btn btn-xs btn-warning" href="{% url "djangobmf:watch_edit" ct=selected_ct pk=item.watch_id %}">
+                    <span class="glyphicon glyphicon-wrench"></span>
+                </a>
+            </td>
+        </tr>
                 <tr{% if not item.unread %} class="text-muted"{% endif %}>
                     <td>
                         <span class="text-truncate" style="width:100%; display: block">
                             <span class="glyphicon {{ item.activity.get_symbol }}"></span>
-                            {#<a href="#">#}[{{ item.obj_ct }}] {{ item.obj }}{#</a>#}
+                            {#<a href="#">#}[{{ item.watch_ct }}] ({{ item.watch_pk }}){#</a>#}
                             <br>
                             <small>{{ item.created_by.get_full_name }}</small>
+                            {{ item.watch_id }}
                         </span>
                     </td>
                     <td>

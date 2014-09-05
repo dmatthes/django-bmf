@@ -114,7 +114,7 @@ class ViewMixin(BaseMixin):
             kwargs["djangobmf"]['version'] = get_version()
         return super(BaseMixin, self).get_context_data(**kwargs)
 
-    def update_notification(self):
+    def update_notification(self, count=None):
         """
         This function is used by django BMF to update the notifications
         used in the BMF-Framework
@@ -124,7 +124,10 @@ class ViewMixin(BaseMixin):
 
         # manipulate session
         session_data["notification_last_update"] = datetime.datetime.utcnow().isoformat()
-        session_data["notification_count"] = Notification.objects.filter(triggered=True, user=self.request.user).count()
+        if count is None:
+            session_data["notification_count"] = Notification.objects.filter(unread=True, user=self.request.user).count()
+        else:
+            session_data["notification_count"] = count
 
         # update session
         self.write_session_data(session_data)

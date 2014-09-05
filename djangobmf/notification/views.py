@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 from django.views.generic import ListView
-from django.db.models import Count
+from django.db.models import Sum
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import force_text
 
@@ -12,6 +12,12 @@ from .models import Notification
 
 from ..viewmixins import ViewMixin
 from ..viewmixins import AjaxMixin
+
+from ..settings import ACTIVITY_WORKFLOW
+from ..settings import ACTIVITY_COMMENT
+from ..settings import ACTIVITY_UPDATED
+from ..settings import ACTIVITY_FILE
+from ..settings import ACTIVITY_CREATED
 
 from ..sites import site
 
@@ -23,6 +29,8 @@ class NotificationView(ViewMixin, ListView):
     paginate_by = 50
 
     def get_context_data(self, **kwargs):
+        selected_ct_id = int(self.kwargs.get('ct', 0))
+        selected_model = None
 
         # Dict with all items of right navigation
         navigation = {}
@@ -31,6 +39,9 @@ class NotificationView(ViewMixin, ListView):
         for ct, model in site.models.items():
             info = model._meta.app_label, model._meta.model_name
             perm = '%s.view_%s' % info
+
+            if ct == selected_ct_id:
+                selected_model = model
 
             if model._bmfmeta.has_activity:
                 navigation[ct] = {
@@ -42,24 +53,52 @@ class NotificationView(ViewMixin, ListView):
 
         total = 0
         for data in super(NotificationView, self).get_queryset() \
-                    .values('watch_ct').annotate(count=Count('unread')):
+                    .values('watch_ct').annotate(count=Sum('unread')):
             navigation[data['watch_ct']]['visible'] = True
             navigation[data['watch_ct']]['count'] =  data['count']
             total += data['count']
 
+        # update notification icon if neccessary
+        if total != self.request.session['djangobmf']['notification_count']:
+            self.update_notification(total)
+
         kwargs.update({
             'navigation': navigation.values(),
             'unread': total,
-            'selected_ct': int(self.kwargs.get('ct', 0)),
+            'selected_ct': selected_ct_id,
             'datafilter': self.kwargs.get('filter', None),
+            'symbols': {
+                'workflow': ACTIVITY_WORKFLOW,
+                'comment': ACTIVITY_COMMENT,
+                'updated': ACTIVITY_UPDATED,
+                'file': ACTIVITY_FILE,
+                'created': ACTIVITY_CREATED,
+            }
         })
+
+        # load settings for specific category
+        if selected_model:
+            default = Notification.objects.get_or_create(
+                user=self.request.user,
+                watch_ct_id=selected_ct_id,
+                watch_id=None,
+                unread=False,
+            )
+
+            kwargs.update({
+                'glob_settings': default,
+                'has_detectchanges': selected_model._bmfmeta.has_detectchanges,
+                'has_files': selected_model._bmfmeta.has_files,
+                'has_comments': selected_model._bmfmeta.has_comments,
+                'has_workflow': selected_model._bmfmeta.has_workflow,
+            })
 
         return super(NotificationView, self).get_context_data(**kwargs)
 
     def get_queryset(self):
         qs = super(NotificationView, self).get_queryset()
 
-        qs.exclude(watch_id__isnull=True)
+        qs = qs.exclude(watch_id__isnull=True)
 
         filter = self.kwargs.get('filter', "unread")
 
