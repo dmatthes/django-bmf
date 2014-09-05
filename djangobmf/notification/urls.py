@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 from django.conf.urls import patterns, url
 
 from .views import NotificationView
+from .views import NotificationUpdate
 
 
 urlpatterns = patterns(
@@ -18,5 +19,8 @@ urlpatterns = patterns(
     ),
     url(
         r'^(?P<filter>all|active|unread)/(?P<ct>[0-9]+)/$', NotificationView.as_view(), name="notification",
+    ),
+    url(
+        r'^edit/(?P<pk>[0-9]+)/$', NotificationUpdate.as_view(), name="notification-edit",
     ),
 )

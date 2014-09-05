@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-lg-9 col-sm-8">
         <ul class="nav nav-tabs">
-            {% if selected_ct %}
+            {% if glob_settings %}
             <li{% if datafilter == "unread" %} class="active"{% endif %}><a href="{% url 'djangobmf:notification' ct=selected_ct filter="unread" %}">{% trans "Unread" %}</a></li>
             <li{% if datafilter == "active" %} class="active"{% endif %}><a href="{% url 'djangobmf:notification' ct=selected_ct filter="active" %}">{% trans "Active" %}</a></li>
             <li{% if datafilter == "all" %} class="active"{% endif %}><a href="{% url 'djangobmf:notification' ct=selected_ct filter="all" %}">{% trans "All" %}</a></li>
@@ -19,7 +19,7 @@
             {% endif %}
         </ul>
         <p class="text-right" style="padding: 0.5em 0">
-            {% if selected_ct %}
+            {% if glob_settings %}
                 {% trans "Default settings" %}:
                 <button class="btn {% if glob_settings.new_entry %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.created }}"></span></button>
 
@@ -38,7 +38,7 @@
                 {% if has_files %}
                     <button class="btn {% if glob_settings.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
                 {% endif %}
-                <a class="btn btn-warning" href="{# url 'djangobmf:watch_edit' ct=selected_ct #}#">
+                <a class="btn btn-warning bmf-edit" href="{% url 'djangobmf:notification-edit' pk=glob_settings.pk %}">
                     <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
                 </a>
             {% else %}
@@ -96,6 +96,7 @@
                         {{ item.created|timesince }}<br><small>{{ item.created|date:"SHORT_DATETIME_FORMAT" }}</small>
                     </td>
                     <td class="text-right">
+                        {% url 'djangobmf:notification_edit' pk=item.pk %}
                         <a class="btn btn-xs btn-primary" href="{{ item.obj.bmfmodule_detail }}">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>

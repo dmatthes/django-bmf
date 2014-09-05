@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.views.generic import ListView
+from django.views.generic import UpdateView
 from django.db.models import Sum
 # from django.contrib.contenttypes.models import ContentType
 from django.utils.text import force_text
@@ -11,7 +12,7 @@ from django.utils.text import force_text
 from .models import Notification
 
 from ..viewmixins import ViewMixin
-# from ..viewmixins import AjaxMixin
+from ..viewmixins import AjaxMixin
 
 from ..settings import ACTIVITY_WORKFLOW
 from ..settings import ACTIVITY_COMMENT
@@ -21,9 +22,11 @@ from ..settings import ACTIVITY_CREATED
 
 from ..sites import site
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class NotificationView(ViewMixin, ListView):
-    model = Notification
     allow_empty = True
     template_name = "djangobmf/notification/index.html"
     paginate_by = 50
@@ -52,8 +55,7 @@ class NotificationView(ViewMixin, ListView):
                 }
 
         total = 0
-        for data in super(NotificationView, self).get_queryset() \
-                .values('watch_ct').annotate(count=Sum('unread')):
+        for data in self.get_queryset().values('watch_ct').annotate(count=Sum('unread')):
             navigation[data['watch_ct']]['visible'] = True
             navigation[data['watch_ct']]['count'] = data['count']
             total += data['count']
@@ -78,13 +80,16 @@ class NotificationView(ViewMixin, ListView):
         })
 
         # load settings for specific category
-        if selected_model:
-            default = Notification.objects.get_or_create(
+        if selected_model and navigation[selected_ct_id]['visible']:
+            default, created = Notification.objects.get_or_create(
                 user=self.request.user,
                 watch_ct_id=selected_ct_id,
                 watch_id=None,
                 unread=False,
             )
+
+            if created:
+                logger.debug("Notifications object (%s) created for %s" % (default.pk, self.request.user))
 
             kwargs.update({
                 'glob_settings': default,
@@ -97,9 +102,8 @@ class NotificationView(ViewMixin, ListView):
         return super(NotificationView, self).get_context_data(**kwargs)
 
     def get_queryset(self):
-        qs = super(NotificationView, self).get_queryset()
 
-        qs = qs.exclude(watch_id__isnull=True)
+        qs = Notification.objects.exclude(watch_id__isnull=True).filter(user=self.request.user)
 
         filter = self.kwargs.get('filter', "unread")
 
@@ -112,4 +116,10 @@ class NotificationView(ViewMixin, ListView):
         if self.kwargs.get('ct', None):
             qs = qs.filter(watch_ct_id=self.kwargs.get('ct'))
 
-        return qs.filter(user=self.request.user).select_related('activity', 'ct', 'created_by')
+        return qs.select_related('activity', 'ct', 'created_by')
+
+class NotificationUpdate(AjaxMixin, UpdateView):
+    template_name = "djangobmf/notification/update.html"
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user)
