@@ -1,3 +1,9 @@
 [submodule "submodules/bootstrap"]
 	path = submodules/bootstrap
 	url = https://github.com/twbs/bootstrap
+[submodule "submodules/jquery-cookie"]
+	path = submodules/jquery-cookie
+	url = https://github.com/carhartl/jquery-cookie
+[submodule "submodules/jquery-treegrid"]
+	path = submodules/jquery-treegrid
+	url = https://github.com/maxazan/jquery-treegrid

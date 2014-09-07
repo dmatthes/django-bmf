@@ -2,7 +2,7 @@
  * jQuery Cookie Plugin v1.4.1
  * https://github.com/carhartl/jquery-cookie
  *
- * Copyright 2013 Klaus Hartl
+ * Copyright 2006, 2014 Klaus Hartl
  * Released under the MIT license
  */
 (function (factory) {
@@ -56,7 +56,7 @@
 
 		// Write
 
-		if (value !== undefined && !$.isFunction(value)) {
+		if (arguments.length > 1 && !$.isFunction(value)) {
 			options = $.extend({}, config.defaults, options);
 
 			if (typeof options.expires === 'number') {
@@ -733,8 +733,7 @@
         onChange: null
 
     };
-})(jQuery);
-/*!
+})(jQuery);/*!
  * Bootstrap v3.2.0 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)

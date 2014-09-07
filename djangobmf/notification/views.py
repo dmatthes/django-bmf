@@ -119,6 +119,7 @@ class NotificationView(ViewMixin, ListView):
 
         return qs.select_related('activity', 'ct', 'created_by')
 
+
 class NotificationUpdate(AjaxMixin, UpdateView):
     model = Notification
     template_name = "djangobmf/notification/update.html"

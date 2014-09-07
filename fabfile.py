@@ -45,9 +45,8 @@ def css():
 def js(debug=None):
     with lcd(BASEDIR):
         js = [
-            'js/jquery.cookie.js',
-            'js/jquery.treegrid.js',
-           #'js/jquery-ui-1.10.4.custom.js',
+            'submodules/jquery-cookie/src/jquery.cookie.js',
+            'submodules/jquery-treegrid/js/jquery.treegrid.js',
             'submodules/bootstrap/dist/js/bootstrap.js',
             'js/variables.js',
             'js/bmf-autocomplete.js',
