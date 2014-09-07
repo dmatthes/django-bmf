@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationView(ViewMixin, ListView):
+    model = Notification
     allow_empty = True
     template_name = "djangobmf/notification/index.html"
     paginate_by = 50
@@ -119,7 +120,28 @@ class NotificationView(ViewMixin, ListView):
         return qs.select_related('activity', 'ct', 'created_by')
 
 class NotificationUpdate(AjaxMixin, UpdateView):
+    model = Notification
     template_name = "djangobmf/notification/update.html"
+
+    fields = ('new_entry', 'comment', 'file', 'changed', 'workflow')
 
     def get_queryset(self):
         return Notification.objects.filter(user=self.request.user)
+
+    def get_object(self):
+        if hasattr(self, 'object') and hasattr(self, 'rel_cls'):
+            return self.object
+        self.object = super(NotificationUpdate, self).get_object()
+        self.rel_cls = self.object.watch_ct.model_class()
+
+    def get_form(self, form_class):
+        form = super(NotificationUpdate, self).get_form(form_class)
+        if not self.rel_cls._bmfmeta.has_detectchanges:
+            del form.fields['changed']
+        if not self.rel_cls._bmfmeta.has_files:
+            del form.fields['file']
+        if not self.rel_cls._bmfmeta.has_comments:
+            del form.fields['comment']
+        if not self.rel_cls._bmfmeta.has_workflow:
+            del form.fields['workflow']
+        return form

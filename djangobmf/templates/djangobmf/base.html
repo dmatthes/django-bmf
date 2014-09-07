@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>django BMF - {% block title %}{% endblock %}</title>
-    <meta name="author" content="Igelware" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Igelware" />
     <meta name="Content-Language" content="{{ LANGUAGE_CODE }}" />
     <meta name="language" content="{{ LANGUAGE_CODE }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static "djangobmf/favicon.ico" %}">
     <link href="{% static "djangobmf/css/djangobmf.min.css" %}?v={{ djangobmf.version }}" rel="stylesheet">{% render_block "css" %}
   </head>
   <body>

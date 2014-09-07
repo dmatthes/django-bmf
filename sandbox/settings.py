@@ -182,37 +182,37 @@ BMF_DOCUMENT_URL = '/bmf_documents/'
 # LOCAL SETTINGS ==================================================================
 
 try:
-  from local_settings import *
+    from local_settings import *
 except ImportError:
-  SECRET_KEY = 'just-a-dummy-key-overwrite-it-in:local_settings.py'
-  DATABASES = {
-      'default': {
-          'ENGINE': 'django.db.backends.sqlite3',
-          'NAME': '%s/database.sqlite' % PROJECT_PATH,
-          'USER': '',
-          'PASSWORD': '',
-          'HOST': '',
-          'PORT': '',
+    SECRET_KEY = 'just-a-dummy-key-overwrite-it-in:local_settings.py'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': '%s/database.sqlite' % PROJECT_PATH,
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+      }
     }
-  }
-  DEBUG = True
-  TEMPLATE_DEBUG = DEBUG
-  EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-  CELERY_ALWAYS_EAGER=True # deactivate celery
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    CELERY_ALWAYS_EAGER=True # deactivate celery
 
-  INSTALLED_APPS += (
-    'discover_jenkins',
-#   'django_extensions',
-    'debug_toolbar',
-  )
-  TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-# TEST_RUNNER = 'discover_jenkins.runner.DiscoverCIRunner'
-  MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-  )
-  DEBUG_TOOLBAR_CONFIG = {
-      'INTERCEPT_REDIRECTS': False,
-  }
+    INSTALLED_APPS += (
+        'discover_jenkins',
+#       'django_extensions',
+        'debug_toolbar',
+    )
+    TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+#   TEST_RUNNER = 'discover_jenkins.runner.DiscoverCIRunner'
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    DEBUG_TOOLBAR_CONFIG = {
+        'JQUERY_URL': None,
+    }
 
 # LOGGING =========================================================================
 

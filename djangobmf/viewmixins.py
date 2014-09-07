@@ -249,6 +249,17 @@ class AjaxMixin(BaseMixin):
         response_kwargs['content_type'] = 'application/json'
         return HttpResponse(data, **response_kwargs)
 
+    def get_ajax_context(self, context):
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        response = super(AjaxMixin, self).render_to_response(context, **response_kwargs)
+        response.render()
+        ctx = self.get_ajax_context({
+            'html': response.rendered_content,
+        })
+        return self.render_to_json_response(ctx)
+
 
 class NextMixin(object):
     """
@@ -411,14 +422,6 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
         }
         ctx.update(context)
         return ctx
-
-    def render_to_response(self, context, **response_kwargs):
-        response = super(ModuleAjaxMixin, self).render_to_response(context, **response_kwargs)
-        response.render()
-        ctx = self.get_ajax_context({
-            'html': response.rendered_content,
-        })
-        return self.render_to_json_response(ctx)
 
     def render_valid_form(self, context):
         ctx = self.get_ajax_context({
