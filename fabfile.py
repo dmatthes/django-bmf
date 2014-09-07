@@ -45,7 +45,6 @@ def css():
 def js(debug=None):
     with lcd(BASEDIR):
         js = [
-            'js/jquery-1.11.0.js',
             'js/jquery.cookie.js',
             'js/jquery.treegrid.js',
            #'js/jquery-ui-1.10.4.custom.js',

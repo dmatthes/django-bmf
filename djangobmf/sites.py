@@ -387,20 +387,22 @@ class DjangoBMFSite(object):
         The default implementation checks that admin and contenttypes apps are
         installed, as well as the auth context processor.
         """
+        # TODO: Check out django's system checks framework and redo checks
+        # https://docs.djangoproject.com/en/1.7/topics/checks/
         if not apps.is_installed('django.contrib.admin'):
             raise ImproperlyConfigured(
                 "Put 'django.contrib.admin' in "
-                "your INSTALLED_APPS setting in order to use the admin application."
+                "your INSTALLED_APPS setting in order to use the bmf."
             )
         if not apps.is_installed('django.contrib.contenttypes'):
             raise ImproperlyConfigured(
                 "Put 'django.contrib.contenttypes' in "
-                "your INSTALLED_APPS setting in order to use the admin application."
+                "your INSTALLED_APPS setting in order to use the bmf."
             )
         if 'django.contrib.auth.context_processors.auth' not in settings.TEMPLATE_CONTEXT_PROCESSORS:
             raise ImproperlyConfigured(
                 "Put 'django.contrib.auth.context_processors.auth' "
-                "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the admin application."
+                "in your TEMPLATE_CONTEXT_PROCESSORS setting in order to use the bmf."
             )
 
     def get_urls(self):
