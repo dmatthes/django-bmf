@@ -4,10 +4,11 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 
 
 class Notification(models.Model):
@@ -33,7 +34,7 @@ class Notification(models.Model):
     changed = models.BooleanField(_("Object changed"), default=False, db_index=True)
     workflow = models.BooleanField(_("Workflowstate changed"), default=False, db_index=True)
 
-    modified = models.DateTimeField(_("Modified"), auto_now=True, editable=False, null=True)
+    modified = models.DateTimeField(_("Modified"), editable=False, null=True, default=now)
 
     class Meta:
         unique_together = (('user', 'watch_ct', 'watch_id'),)

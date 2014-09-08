@@ -57,7 +57,7 @@ class NotificationView(ViewMixin, ListView):
                 }
 
         total = 0
-        qs = Notification.objects.exclude(watch_id__isnull=True).filter(user=self.request.user)
+        qs = Notification.objects.exclude(watch_id__isnull=True).filter(user=self.request.user, unread=True)
         # FIXME: The query used here should use SQL to distinct select and count the db
         for data in qs.annotate(count=Count('unread')).values('watch_ct', 'count'):
             navigation[data['watch_ct']]['visible'] = True
@@ -144,7 +144,7 @@ class NotificationUpdate(AjaxMixin, UpdateView):
 
     def get_form(self, form_class):
         form = super(NotificationUpdate, self).get_form(form_class)
-        if not self.object.watch_id:
+        if self.object.watch_id:
             del form.fields['new_entry']
         if not self.rel_cls._bmfmeta.has_detectchanges:
             del form.fields['changed']

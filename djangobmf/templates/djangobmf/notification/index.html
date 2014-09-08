@@ -42,71 +42,53 @@
                     <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
                 </a>
             {% else %}
-                <button class="btn disabled" href="#">Select a category to edit the default settings</button>
+            <button class="btn disabled" href="#">{% trans "Select a category to edit the default settings" %}</button>
             {% endif %}
         </p>
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>{% trans "Entry" %}</th>
-                    <th style="width: 150px;">{% trans "Time" %}</th>
-                    <th style="width: 45px;"></th>
+                    <th>{% trans "Notifications" %}</th>
+                    <th style="width: 150px;"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in object_list %}
-                {# TODO #}
-        <tr{% if not item.active %} class="text-muted"{% endif %}>
-            <td>
-                <span class="text-truncate" style="width:100%; display: block">
-                    <span class="glyphicon {{ item.activity.get_symbol }}"></span>
-                    <a href="{{ item.watch_object.bmfmodule_detail }}">{{ item.watch_object }}</a>
-                </span>
-            </td>
-            <td class="text-right">
-                {% if item.is_active %}
-                {% if has_detectchanges %}
-                <button class="btn btn btn-xs {% if item.changed %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.updated }}"></span></button>
-                {% endif %}
-                {% if has_workflow %}
-                <button class="btn btn btn-xs {% if item.workflow %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.workflow }}"></span></button>
-                {% endif %}
-                {% if has_comments %}
-                <button class="btn btn btn-xs {% if item.comment %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.comment }}"></span></button>
-                {% endif %}
-                {% if has_files %}
-                <button class="btn btn btn-xs {% if item.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
-                {% endif %}
-                {% endif %}
-                <a class="btn btn-xs btn-warning bmfedit" href="{% url "djangobmf:notification-edit" pk=item.pk %}">
-                    <span class="glyphicon glyphicon-wrench"></span>
-                </a>
-            </td>
-        </tr>
-                <tr{% if not item.unread %} class="text-muted"{% endif %}>
+                <tr{% if not item.is_active %} class="text-muted"{% endif %}>
                     <td>
-                        <span class="text-truncate" style="width:100%; display: block">
-                            <span class="glyphicon {{ item.activity.get_symbol }}"></span>
-                            {#<a href="#">#}[{{ item.watch_ct }}] ({{ item.watch_pk }}){#</a>#}
-                            <br>
-                            <small>{{ item.created_by.get_full_name }}</small>
-                            {{ item.watch_id }}
-                        </span>
-                    </td>
-                    <td>
-                        {{ item.created|timesince }}<br><small>{{ item.created|date:"SHORT_DATETIME_FORMAT" }}</small>
+                        <a href="{{ item.watch_object.bmfmodule_detail }}">{{ item.watch_object }}</a>
+                        {% if item.unread %}<span class="label label-primary">new</span>{% endif %}
+                        <br><span><small>
+                            {% if not glob_settings %}[{{ item.watch_ct }}]{% endif %}
+                            {{ item.modified|date:"SHORT_DATETIME_FORMAT" }}
+                        </small></span>
                     </td>
                     <td class="text-right">
-                        {% url 'djangobmf:notification-edit' pk=item.pk %}
-                        <a class="btn btn-xs btn-primary" href="{{ item.obj.bmfmodule_detail }}">
+                        {% if item.is_active %}
+                        {% if has_detectchanges %}
+                        <button class="btn btn btn-xs {% if item.changed %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.updated }}"></span></button>
+                        {% endif %}
+                        {% if has_workflow %}
+                        <button class="btn btn btn-xs {% if item.workflow %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.workflow }}"></span></button>
+                        {% endif %}
+                        {% if has_comments %}
+                        <button class="btn btn btn-xs {% if item.comment %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.comment }}"></span></button>
+                        {% endif %}
+                        {% if has_files %}
+                        <button class="btn btn btn-xs {% if item.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
+                        {% endif %}
+                        {% endif %}
+                        <a class="btn btn-xs btn-warning bmfedit" href="{% url "djangobmf:notification-edit" pk=item.pk %}">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                        </a>
+                        <a class="btn btn-xs btn-primary" href="{{ item.watch_object.bmfmodule_detail }}">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>
                     </td>
                 </tr>
-                {# TODO #}
                 {% empty %}
                 <tr>
-                    <td colspan="3"><em>{% trans "You dont have notifications" %}</em></td>
+                    <td colspan="2"><em>{% trans "You dont have notifications" %}</em></td>
                 </tr>
                 {% endfor %}
             </tbody>

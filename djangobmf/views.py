@@ -64,6 +64,9 @@ class ModuleActivityMixin(object):
                 watch_ct=ct,
                 watch_id=self.object.pk
             )
+            if watch.unread:
+                watch.unread = False
+                watch.save()
             watching = watch.is_active()
         except Notification.DoesNotExist:
             watching = False
