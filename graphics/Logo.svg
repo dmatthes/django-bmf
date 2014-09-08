@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800"
+   height="800"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="bmf-logo.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.66"
+     inkscape:cx="60.482913"
+     inkscape:cy="306.85207"
+     inkscape:document-units="px"
+     inkscape:current-layer="text3005"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1615"
+     inkscape:window-height="1026"
+     inkscape:window-x="1985"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="400,400"
+       id="guide3046" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-252.36215)">
+    <g
+       id="text3005">
+      <path
+         d="m 19.255253,426.77972 130.515007,-63.96968 189.42,289.674 -189.42,289.674 L 19.255253,878.18837 135.91026,652.48404 19.255253,426.77972"
+         id="path3049"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc"
+         style="fill:#c8c828;fill-opacity:1;stroke:none;stroke-opacity:1;stroke-linejoin:round" />
+      <path
+         d="M 281.1162,449.29487 398.5797,391.72216 569.05769,652.42876 398.5797,913.13536 281.1162,855.56265 386.1057,652.42876 281.1162,449.29487"
+         id="path3049-4"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc"
+         style="fill:#3c963c;fill-opacity:1" />
+      <path
+         d="M 521.33011,470.17575 627.04726,418.36032 780.47745,652.99626 627.04726,887.6322 521.33011,835.81676 615.82066,652.99626 521.33011,470.17575"
+         id="path3049-4-1"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc"
+         style="fill:#3c3c64;fill-opacity:1" />
+    </g>
+  </g>
+</svg>
