@@ -411,6 +411,7 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
                 context=self.get_context_data(error=e),
             )
         self.object = self.object._bmfworkflow.instance
+        self.object.modified_by = self.request.user
         self.object.save()
 
         # generate a history object and signal

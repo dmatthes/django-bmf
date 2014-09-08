@@ -167,7 +167,7 @@ def object_changed(sender, instance, **kwargs):
                 pass
         if len(changes) > 0:
             history = Activity(
-                user=instance.created_by,
+                user=instance.modified_by,
                 parent_ct=ContentType.objects.get_for_model(sender),
                 parent_id=instance.pk,
                 action=ACTION_UPDATED,
@@ -180,7 +180,7 @@ def object_changed(sender, instance, **kwargs):
 def new_state(sender, instance, **kwargs):
     if instance._bmfmeta.has_history:
         history = Activity(
-            user=instance.created_by,
+            user=instance.modified_by,
             parent_ct=ContentType.objects.get_for_model(sender),
             parent_id=instance.pk,
             action=ACTION_WORKFLOW,
@@ -196,7 +196,7 @@ def new_state(sender, instance, **kwargs):
 def new_file(sender, instance, file, **kwargs):
     if instance._bmfmeta.has_history:
         history = Activity(
-            user=instance.created_by,
+            user=instance.modified_by,
             parent_ct=ContentType.objects.get_for_model(sender),
             parent_id=instance.pk,
             action=ACTION_FILE,

@@ -4,14 +4,14 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic import ListView
-from django.views.generic import CreateView
+from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from django.views.defaults import permission_denied
-from django.contrib.contenttypes.models import ContentType
+from django.utils.decorators import method_decorator
 from django.utils.timezone import now
+from django.views.defaults import permission_denied
+from django.views.generic import CreateView
+from django.views.generic import ListView
 
 from ..models import Activity
 from ..models import Notification

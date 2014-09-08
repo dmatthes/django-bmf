@@ -3,13 +3,14 @@
 
 from __future__ import unicode_literals
 
-from django.views.generic import CreateView
-from django.views.generic import DetailView
-from django.http import HttpResponseRedirect
-from django.http import Http404
-from django.views.static import serve
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import modelform_factory
+from django.http import HttpResponseRedirect
+from django.http import Http404
+from django.utils.timezone import now
+from django.views.generic import CreateView
+from django.views.generic import DetailView
+from django.views.static import serve
 
 from ..utils import get_model_from_cfg
 from ..signals import activity_addfile
@@ -99,9 +100,15 @@ class FileAddView(BaseMixin, CreateView):
             form.instance.content_type = ct
             form.instance.content_id = pk
             self.object = form.save()
+
+            content_object = ct.model_class().objects.get(pk=pk)
+            content_object.modified = now()
+            content_object.modified_by = self.request.user
+            content_object.save()
+
             activity_addfile.send(
                 sender=ct.model_class(),
-                instance=ct.model_class().objects.get(pk=pk),
+                instance=content_object,
                 file=self.object,
             )
         return HttpResponseRedirect(self.get_success_url())
