@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="bmf-logo.svg">
+   sodipodi:docname="Logo.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.66"
-     inkscape:cx="60.482913"
-     inkscape:cy="306.85207"
+     inkscape:zoom="1"
+     inkscape:cx="260.24514"
+     inkscape:cy="470.64517"
      inkscape:document-units="px"
      inkscape:current-layer="text3005"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1615"
-     inkscape:window-height="1026"
-     inkscape:window-x="1985"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     inkscape:window-x="65"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
     <sodipodi:guide
@@ -62,19 +62,19 @@
     <g
        id="text3005">
       <path
-         d="m 19.255253,426.77972 130.515007,-63.96968 189.42,289.674 -189.42,289.674 L 19.255253,878.18837 135.91026,652.48404 19.255253,426.77972"
+         d="M 27.255253,423.63683 159.4154,358.86081 351.22304,652.18615 159.4154,945.51149 27.255253,880.73548 145.3807,652.18615 27.255253,423.63683"
          id="path3049"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc"
-         style="fill:#c8c828;fill-opacity:1;stroke:none;stroke-opacity:1;stroke-linejoin:round" />
+         style="fill:#c8c828;fill-opacity:1;stroke:none" />
       <path
-         d="M 281.1162,449.29487 398.5797,391.72216 569.05769,652.42876 398.5797,913.13536 281.1162,855.56265 386.1057,652.42876 281.1162,449.29487"
+         d="M 296.41696,446.65129 409.41387,388.35289 573.4094,652.3457 409.41387,916.33849 296.41696,858.04009 397.41421,652.3457 296.41696,446.65129"
          id="path3049-4"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc"
          style="fill:#3c963c;fill-opacity:1" />
       <path
-         d="M 521.33011,470.17575 627.04726,418.36032 780.47745,652.99626 627.04726,887.6322 521.33011,835.81676 615.82066,652.99626 521.33011,470.17575"
+         d="M 531.65877,467.57986 628.0035,415.1113 767.83127,652.70482 628.0035,890.29835 531.65877,837.82977 617.77222,652.70482 531.65877,467.57986"
          id="path3049-4-1"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc"
