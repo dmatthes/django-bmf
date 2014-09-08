@@ -43,5 +43,8 @@ class Notification(models.Model):
         get_latest_by = "modified"
         default_permissions = ()
 
+    def is_active(self):
+        return self.comment or self.file or self.changed or self.workflow
+
     def __str__(self):
         return '%s %s' % (self.user, self.watch_ct)

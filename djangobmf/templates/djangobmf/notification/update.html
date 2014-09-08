@@ -10,14 +10,8 @@
 {% endblock %}
 
 {% block base_content %}
+<form class="form" role="form" action="{% url "djangobmf:notification-edit" pk=form.instance.pk %}" method="post">
 {% csrf_token %}
 {{ form.as_p }}
-
-{% comment %}
-<div class="checkbox">
-    <label>{{ form.file }} {{ form.file.label }}: <span class="text-info glyphicon {{ symbols.file }}"></span></label>
-    <span class="help-block">{{ form.file.help_text }}</span>
-</div>
-{% endcomment %}
-
+</form>
 {% endblock %}

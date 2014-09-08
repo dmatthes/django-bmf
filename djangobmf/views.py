@@ -58,15 +58,14 @@ class ModuleActivityMixin(object):
     def get_context_data(self, **kwargs):
         ct = ContentType.objects.get_for_model(self.object)
 
-        watch = Notification.objects.filter(
-            user=self.request.user,
-            watch_ct=ct,
-            watch_id__in=[self.object.pk, 0]
-        ).order_by('-watch_id').first()
-
-        if watch:
-            watching = watch.active
-        else:
+        try:
+            watch = Notification.objects.get(
+                user=self.request.user,
+                watch_ct=ct,
+                watch_id=self.object.pk
+            )
+            watching = watch.is_active()
+        except Notification.DoesNotExist:
             watching = False
 
         kwargs.update({

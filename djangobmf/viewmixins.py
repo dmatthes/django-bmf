@@ -260,6 +260,13 @@ class AjaxMixin(BaseMixin):
         })
         return self.render_to_json_response(ctx)
 
+    def render_valid_form(self, context):
+        ctx = self.get_ajax_context({
+            'status': 'valid',
+        })
+        ctx.update(context)
+        return self.render_to_json_response(ctx)
+
 
 class NextMixin(object):
     """
@@ -424,12 +431,10 @@ class ModuleAjaxMixin(ModuleBaseMixin, AjaxMixin):
         return ctx
 
     def render_valid_form(self, context):
-        ctx = self.get_ajax_context({
-            'status': 'valid',
-            # 'redirect': self.get_success_url(),
+        context.update({
+            'redirect': self.get_success_url(),
         })
-        ctx.update(context)
-        return self.render_to_json_response(ctx)
+        return super(ModuleAjaxMixin, self).render_valid_form(context)
 
 
 class ModuleViewMixin(ModuleBaseMixin, ViewMixin):

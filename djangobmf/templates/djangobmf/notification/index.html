@@ -38,7 +38,7 @@
                 {% if has_files %}
                     <button class="btn {% if glob_settings.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
                 {% endif %}
-                <a class="btn btn-warning bmf-edit" href="{% url 'djangobmf:notification-edit' pk=glob_settings.pk %}">
+                <a class="btn btn-warning bmfedit" href="{% url 'djangobmf:notification-edit' pk=glob_settings.pk %}">
                     <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
                 </a>
             {% else %}
@@ -55,6 +55,7 @@
             </thead>
             <tbody>
                 {% for item in object_list %}
+                {# TODO #}
         <tr{% if not item.active %} class="text-muted"{% endif %}>
             <td>
                 <span class="text-truncate" style="width:100%; display: block">
@@ -63,7 +64,7 @@
                 </span>
             </td>
             <td class="text-right">
-                {% if item.active %}
+                {% if item.is_active %}
                 {% if has_detectchanges %}
                 <button class="btn btn btn-xs {% if item.changed %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.updated }}"></span></button>
                 {% endif %}
@@ -77,7 +78,7 @@
                 <button class="btn btn btn-xs {% if item.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
                 {% endif %}
                 {% endif %}
-                <a class="btn btn-xs btn-warning" href="{% url "djangobmf:watch_edit" ct=selected_ct pk=item.watch_id %}">
+                <a class="btn btn-xs btn-warning bmfedit" href="{% url "djangobmf:notification-edit" pk=item.pk %}">
                     <span class="glyphicon glyphicon-wrench"></span>
                 </a>
             </td>
@@ -96,12 +97,13 @@
                         {{ item.created|timesince }}<br><small>{{ item.created|date:"SHORT_DATETIME_FORMAT" }}</small>
                     </td>
                     <td class="text-right">
-                        {% url 'djangobmf:notification_edit' pk=item.pk %}
+                        {% url 'djangobmf:notification-edit' pk=item.pk %}
                         <a class="btn btn-xs btn-primary" href="{{ item.obj.bmfmodule_detail }}">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>
                     </td>
                 </tr>
+                {# TODO #}
                 {% empty %}
                 <tr>
                     <td colspan="3"><em>{% trans "You dont have notifications" %}</em></td>

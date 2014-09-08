@@ -3,11 +3,12 @@
 
 from __future__ import unicode_literals
 
-from django.views.generic import ListView
-from django.views.generic import UpdateView
-from django.db.models import Sum
+# from django.db.models import Sum
+from django.db.models import Count
 # from django.contrib.contenttypes.models import ContentType
 from django.utils.text import force_text
+from django.views.generic import ListView
+from django.views.generic import UpdateView
 
 from .models import Notification
 
@@ -56,9 +57,11 @@ class NotificationView(ViewMixin, ListView):
                 }
 
         total = 0
-        for data in self.get_queryset().values('watch_ct').annotate(count=Sum('unread')):
+        qs = Notification.objects.exclude(watch_id__isnull=True).filter(user=self.request.user)
+        # FIXME: The query used here should use SQL to distinct select and count the db
+        for data in qs.annotate(count=Count('unread')).values('watch_ct', 'count'):
             navigation[data['watch_ct']]['visible'] = True
-            navigation[data['watch_ct']]['count'] = data['count']
+            navigation[data['watch_ct']]['count'] += data['count']
             total += data['count']
 
         # update notification icon if neccessary
@@ -123,20 +126,26 @@ class NotificationView(ViewMixin, ListView):
 class NotificationUpdate(AjaxMixin, UpdateView):
     model = Notification
     template_name = "djangobmf/notification/update.html"
-
     fields = ('new_entry', 'comment', 'file', 'changed', 'workflow')
 
     def get_queryset(self):
         return Notification.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        form.save()
+        return self.render_valid_form({'refresh': True, 'redirect': None})
 
     def get_object(self):
         if hasattr(self, 'object') and hasattr(self, 'rel_cls'):
             return self.object
         self.object = super(NotificationUpdate, self).get_object()
         self.rel_cls = self.object.watch_ct.model_class()
+        return self.object
 
     def get_form(self, form_class):
         form = super(NotificationUpdate, self).get_form(form_class)
+        if not self.object.watch_id:
+            del form.fields['new_entry']
         if not self.rel_cls._bmfmeta.has_detectchanges:
             del form.fields['changed']
         if not self.rel_cls._bmfmeta.has_files:

@@ -3287,7 +3287,10 @@ $.extend($.fn.treegrid.defaults, {
         });
     };
 })(jQuery);
-$(document).ready(function() {$('.bmf-edit').bmf_editform()});
+$(document).ready(function() {
+    $('.bmf-edit').bmf_editform(); // TODO: remove me
+    $('.bmfedit').bmf_editform();
+});
 /* inline form */
 
 (function($){
