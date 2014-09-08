@@ -29,7 +29,7 @@ repeat them for different versions of Python and Django. You can use ``tox`` to
 achieve it::
 
     # get django BMF from GitHub
-    git clone git@github.com:glomium/django-bmf.git
+    git clone https://github.com/django-bmf/django-bmf.git
     # run the test suite
     tox
 

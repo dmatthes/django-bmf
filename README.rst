@@ -32,14 +32,21 @@ Features
 Documentation
 ===========================
 
+Please note that this Project is documented poorly. If you have any questions please contact us via team@django-bmf.org - we'd love to
+update the documentation and answer your question!
+
+http://www.django-bmf.org/docs/dev
+
 Getting Help
 ===========================
+
+Email: team@django-bmf.org
 
 Credits
 ===========================
 
-django
-django-filter
-django-mptt
-django-celery
-xhtml2pdf
+* django
+* django-filter
+* django-mptt
+* django-celery
+* xhtml2pdf
