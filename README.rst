@@ -37,6 +37,11 @@ update the documentation and answer your question!
 
 http://www.django-bmf.org/docs/dev
 
+Demo
+===========================
+
+http://demo.django-bmf.org/
+
 Getting Help
 ===========================
 
