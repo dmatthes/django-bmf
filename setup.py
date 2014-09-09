@@ -28,7 +28,7 @@ CLASSIFIERS = [
 version = __import__('djangobmf').get_version()
 
 setup(
-    name='djangoBMF',
+    name='django BMF',
     version=version,
     url=__homepage__,
     license='BSD',
