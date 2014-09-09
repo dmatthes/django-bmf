@@ -9,7 +9,7 @@
 /junit.xml
 /reports
 /htmlcov
-/djangoBMF.egg-info
+/django_bmf.egg-info
 /virtenv
 /docs/build
 /sandbox/static/
