@@ -56,6 +56,16 @@ class BaseMixin(object):
     def read_session_data(self):
         return self.request.session.get("djangobmf", {'version': get_version()})
 
+    def write_session_data(self, data):
+        # reload sessiondata, because we can not be sure, that the
+        # session was not changed during this request
+        session_data = self.read_session_data()
+        session_data.update(data)
+
+        # update session
+        self.request.session["djangobmf"] = session_data
+        self.request.session.modified = True
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """
@@ -94,29 +104,6 @@ class BaseMixin(object):
 
         return super(BaseMixin, self).dispatch(*args, **kwargs)
 
-
-class ViewMixin(BaseMixin):
-
-    def write_session_data(self, data, modify=False):
-        # reload sessiondata, because we can not be sure, that the
-        # session was not changed during this function (update_notification)
-        session_data = self.read_session_data()
-        session_data.update(data)
-
-        # update session
-        self.request.session["djangobmf"] = session_data
-        if modify:
-            self.request.session.modified = True
-
-    def get_context_data(self, **kwargs):
-        kwargs.update({
-            'djangobmf': self.read_session_data()
-        })
-        # allways read current version, if in development mode
-        if settings.DEBUG:
-            kwargs["djangobmf"]['version'] = get_version()
-        return super(BaseMixin, self).get_context_data(**kwargs)
-
     def update_notification(self, count=None):
         """
         This function is used by django BMF to update the notifications
@@ -146,6 +133,9 @@ class ViewMixin(BaseMixin):
         provide a primary key, if you don't want to set an active
         dashboard.
         """
+        if not self.request.user:
+            return False
+
         logger.debug("Updating dashboards for %s" % self.request.user)
 
         # get all session data
@@ -169,6 +159,8 @@ class ViewMixin(BaseMixin):
 
         if update_views:
             self.update_views()
+
+        return True
 
     def update_views(self):
         """
@@ -197,40 +189,27 @@ class ViewMixin(BaseMixin):
         # update session
         self.write_session_data(session_data)
 
-    def dispatch(self, *args, **kwargs):
-        """
-        """
-        function = super(ViewMixin, self).dispatch(*args, **kwargs)
 
-        if self.request.user.is_anonymous():
-            return function
+class ViewMixin(BaseMixin):
+
+    def get_context_data(self, **kwargs):
 
         session_data = self.read_session_data()
 
-        # === NOTIFICATION ================================================
-
-        if 'notification_last_update' in session_data:
-            diff = (
-                datetime.datetime.utcnow() - datetime.datetime.strptime(
-                    session_data['notification_last_update'],
-                    '%Y-%m-%dT%H:%M:%S.%f'
-                )
-            ).total_seconds()
-            if diff >= 300:
-                self.update_notification()
-        else:
-            self.update_notification()
-
-        # === MESSAGE =====================================================
-
-        session_data["message_count"] = 0
-
-        # === DASHBOARD AND VIEWS =========================================
-
         if 'dashboard' not in session_data:
-            self.update_dashboard()
+            if self.update_dashboard():
+                session_data = self.read_session_data()
 
-        return function
+        # update context with session data
+        kwargs.update({
+            'djangobmf': self.read_session_data()
+        })
+
+        # always read current version, if in development mode
+        if settings.DEBUG:
+            kwargs["djangobmf"]['version'] = get_version()
+
+        return super(ViewMixin, self).get_context_data(**kwargs)
 
 
 class AjaxMixin(BaseMixin):
