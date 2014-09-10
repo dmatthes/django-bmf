@@ -1,18 +1,11 @@
-**************************
-Internals
-**************************
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :numbered:
 
     philosophies
     about-us
-    get-involved
-    release-process
-    writing-documentation
-    timeline
+    contributing
     todo
+    roadmap
     changelog
-
-

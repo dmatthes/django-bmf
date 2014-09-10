@@ -1,5 +1,4 @@
 
-***************
 Branching Model
 ***************
 
@@ -8,7 +7,6 @@ We use git flow. If you are not familar with it. please read this article:
 http://nvie.com/posts/a-successful-git-branching-model/
 
 
-*************
 Running tests
 *************
 
@@ -35,7 +33,6 @@ achieve it::
 
 Yeah it's that simple!
 
-*************
 Writing tests
 *************
 
