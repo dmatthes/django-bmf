@@ -414,7 +414,6 @@ class DjangoBMFSite(object):
             self.check_dependencies()
 
         for model in self._registry:
-            ct = ContentType.objects.get_for_model(model)
             data = self._registry[model]
             urls = data['admin'].get_urls(**{
                 "index": data['index'],
@@ -430,7 +429,7 @@ class DjangoBMFSite(object):
             urlpatterns += patterns(
                 '',
                 url(
-                    r'^module/%s/%s/' % (ct.pk, info[1]),
+                    r'^module/%s/%s/' % (info[1], info[0]),
                     include((urls, self.app_name, "module_%s_%s" % info))
                 )
             )
