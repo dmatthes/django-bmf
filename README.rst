@@ -1,4 +1,7 @@
 
+.. image:: https://travis-ci.org/django-bmf/django-bmf.svg
+    :target: https://travis-ci.org/django-bmf/django-bmf
+
 Django BMF understands itself as a ERP-Framework with the following design concepts:
 
 * KISS-Principe for endusers

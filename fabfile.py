@@ -11,6 +11,7 @@ BASEDIR = os.path.dirname(env.real_fabfile)
 PYTHON = BASEDIR + "/virtenv/bin/python"
 DJANGO = BASEDIR + "/virtenv/bin/django-admin.py"
 MANAGE = BASEDIR + "/sandbox/manage.py"
+DEVELOP = BASEDIR + "/develop.py"
 
 LANGUAGES = ('en', 'de',)
 
@@ -85,7 +86,7 @@ def test():
     Tests code with django unittests
     """
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run %s test djangobmf --liveserver=localhost:8001-9000' % MANAGE)
+        local('virtenv/bin/coverage run %s test djangobmf' % DEVELOP)
         local('find %s/sandbox/bmf_documents -empty -delete' % BASEDIR)
         local('virtenv/bin/coverage report -m --include="djangobmf/*"')
 

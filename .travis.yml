@@ -1,0 +1,18 @@
+language: python
+install:
+    - pip install tox 
+script:
+    - tox
+env:
+    - TOXENV=py27-1.7
+    - TOXENV=py33-1.7
+    - TOXENV=py34-1.7
+    - TOXENV=docs
+git:
+    submodules: false
+notifications:
+    email:
+        recipients:
+            - sbraun@django-bmf.org
+        on_success: never
+        on_failure: always
