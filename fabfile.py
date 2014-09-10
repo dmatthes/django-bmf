@@ -29,21 +29,31 @@ FIXTURES = (
 
 @task
 def static():
-  js()
-  css()
-  with lcd(BASEDIR):
-    local('cp submodules/bootstrap/fonts/glyphicons* djangobmf/static/djangobmf/fonts/')
+    """
+    update static files
+    """
+    js()
+    css()
+    with lcd(BASEDIR):
+        local('cp submodules/bootstrap/fonts/glyphicons* djangobmf/static/djangobmf/fonts/')
 
 
 @task
 def css():
-  with lcd(BASEDIR):
-    local('lessc less/custom.less > bootstrap.css')
-    local('yui-compressor --type css -o djangobmf/static/djangobmf/css/djangobmf.min.css bootstrap.css')
+    """
+    recreate css files - with lessc and yui-compressor
+    """
+    with lcd(BASEDIR):
+        local('lessc less/custom.less > bootstrap.css')
+        local('yui-compressor --type css -o djangobmf/static/djangobmf/css/djangobmf.min.css bootstrap.css')
+        local('rm bootstrap.css')
 
 
 @task
-def js(debug=None):
+def js():
+    """
+    recreate js files for development and production
+    """
     with lcd(BASEDIR):
         js_ext = (
             'submodules/jquery-cookie/src/jquery.cookie.js',

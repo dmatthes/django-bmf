@@ -3,18 +3,15 @@
 *.pyc
 *-journal
 
-/.tox
-/.coverage
-/coverage.xml
-/junit.xml
+/\.tox
+/\.coverage
+/coverage\.xml
+/junit\.xml
 /reports
 /htmlcov
-/django_bmf.egg-info
+/django_bmf\.egg-info
 /virtenv
 /docs/build
 /sandbox/static/
-/sandbox/database.sqlite
+/sandbox/database\.sqlite
 /sandbox/local_settings.py
-/js/djangoerp.js
-/bootstrap.css
-/fixtures.json
