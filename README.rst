@@ -32,8 +32,9 @@ Features
 Documentation
 ===========================
 
-Please note that this Project is documented poorly. If you have any questions please contact us via team@django-bmf.org - we'd love to
-update the documentation and answer your question!
+.. note::
+    Please note that this Project is documented poorly. If you have any questions please contact us!
+    We'd love to update the documentation and answer your question!
 
 http://www.django-bmf.org/docs/dev
 
@@ -45,13 +46,19 @@ http://demo.django-bmf.org/
 Getting Help
 ===========================
 
-Email: team@django-bmf.org
+Please report bugs or ask questions using the `Issue Tracker`_ or contact us via team@django-bmf.org
+
+Check also for the latest updates of this project on Github_.
 
 Credits
 ===========================
 
-* django
+* `django`_
 * django-filter
-* django-mptt
-* django-celery
+* `django-mptt`_
 * xhtml2pdf
+
+.. _Github: https://github.com/django-bmf/django-bmf
+.. _Issue Tracker: https://github.com/django-bmf/django-bmf/issues
+.. _django: http://www.djangoproject.com
+.. _django-mptt: https://github.com/django-mptt/django-mptt
