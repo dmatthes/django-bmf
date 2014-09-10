@@ -137,14 +137,6 @@ def make(data=''):
 
 
 @task
-def start_uwsgi():
-  """
-  """
-  with lcd(BASEDIR):
-    local('virtenv/bin/uwsgi uwsgi.ini')
-
-
-@task
 def start():
   """
   """
