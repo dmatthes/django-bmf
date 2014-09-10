@@ -44,10 +44,12 @@ def css():
 @task
 def js(debug=None):
     with lcd(BASEDIR):
-        js = [
+        js_ext = (
             'submodules/jquery-cookie/src/jquery.cookie.js',
             'submodules/jquery-treegrid/js/jquery.treegrid.js',
             'submodules/bootstrap/dist/js/bootstrap.js',
+        )
+        js_own = (
             'js/variables.js',
             'js/bmf-autocomplete.js',
             'js/bmf-calendar.js',
@@ -55,9 +57,15 @@ def js(debug=None):
             'js/bmf-inlineform.js',
             'js/bmf-buildform.js',
             'js/menu.js',
-        ]
-        local('cat %s > djangobmf/static/djangobmf/js/djangobmf.js' % ' '.join(js))
+        )
+
+        local('cp submodules/bootstrap/dist/js/bootstrap.min.js djangobmf/static/djangobmf/js/')
+        local('yui-compressor --type js -o djangobmf/static/djangobmf/js/jquery.cookie.min.js submodules/jquery-cookie/src/jquery.cookie.js')
+        local('yui-compressor --type js -o djangobmf/static/djangobmf/js/jquery.treegrid.min.js submodules/jquery-treegrid/js/jquery.treegrid.js')
+
+        local('cat %s > djangobmf/static/djangobmf/js/djangobmf.js' % ' '.join(js_ext + js_own))
         local('yui-compressor --type js -o djangobmf/static/djangobmf/js/djangobmf.min.js djangobmf/static/djangobmf/js/djangobmf.js')
+        local('cat %s > djangobmf/static/djangobmf/js/djangobmf.js' % ' '.join(js_own))
 
 
 @task
