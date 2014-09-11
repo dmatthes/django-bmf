@@ -95,6 +95,26 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
     # setup and run tests
     django.setup()
+
+# from django.utils.unittest import TextTestResult
+# from django.utils.unittest import TextTestRunner
+# from django.test.runner import DiscoverRunner
+# from coverage import coverage
+# from xml.etree import ElementTree as ET
+# import time
+# from discover_jenkins.results import XMLTestResult
+#   TestRunner = get_runner(settings)
+#   test_runner = TestRunner(verbosity=2, interactive=False, failfast=False)
+#   # code from djanog.tests.runner, which does this:
+#   test_runner.setup_test_environment()
+#   suite = test_runner.build_suite(DIRS, None)
+#   old_config = test_runner.setup_databases()
+#   result = TextTestRunner(buffer=True, resultclass=XMLTestResult, verbosity=test_runner.verbosity).run(suite)
+#   test_runner.teardown_databases(old_config)
+#   test_runner.teardown_test_environment()
+#   failures = test_runner.suite_result(suite, result)
+#   result.dump_xml('.')
+
     failures = djangobmf_tests(verbosity, False, failfast, modules)
 
 #   settings.INSTALLED_APPS = saveapps + (
