@@ -4,10 +4,10 @@
 
 from __future__ import unicode_literals
 
-from django.test import LiveServerTestCase
+from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-class AccountTests(LiveServerTestCase):
+class AccountTests(TestCase):
     fixtures = ["fixtures/users.json", ]
 
     def test_views(self):

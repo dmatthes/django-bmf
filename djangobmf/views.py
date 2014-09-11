@@ -22,15 +22,16 @@ from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from .activity.models import Activity
-from .notification.models import Notification
-from .models import Report
 from .activity.forms import HistoryCommentForm
+from .activity.models import Activity
+from .document.views import FileAddView
+# from .models import Document
+from .models import Report
+from .notification.models import Notification
 from .signals import activity_create
 from .signals import activity_update
 from .signals import activity_workflow
 from .signals import djangobmf_post_save
-from .utils import get_model_from_cfg
 from .utils import form_class_factory
 from .viewmixins import ModuleClonePermissionMixin
 from .viewmixins import ModuleCreatePermissionMixin
@@ -101,15 +102,12 @@ class ModuleFilesMixin(object):
 
     def get_context_data(self, **kwargs):
         if self.model._bmfmeta.has_files:
-            from .file.views import FileAddView
-            document = get_model_from_cfg('DOCUMENT')
-
-            ct = ContentType.objects.get_for_model(self.object)
+            # ct = ContentType.objects.get_for_model(self.object)
 
             kwargs.update({
                 'has_files': True,
                 'history_file_form': FileAddView.form_class(),
-                'files': document.objects.filter(content_type=ct, content_id=self.object.pk),
+                'files': [],  # Document.objects.filter(content_type=ct, content_id=self.object.pk),
             })
         return super(ModuleFilesMixin, self).get_context_data(**kwargs)
 

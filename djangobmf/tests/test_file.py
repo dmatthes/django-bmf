@@ -2,6 +2,8 @@
 # ex:set fileencoding=utf-8:
 # flake8: noqa
 
+'''
+
 from __future__ import unicode_literals
 
 from django.test import LiveServerTestCase
@@ -53,3 +55,5 @@ class CoreTests(BMFModuleTestCase):
         # cleanup
         for obj in query:
             obj.file.delete()
+
+'''
