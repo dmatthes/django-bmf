@@ -12,7 +12,8 @@ from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.static import serve
 
-from ..utils import get_model_from_cfg
+from .models import Document
+
 from ..signals import activity_addfile
 from ..viewmixins import BaseMixin
 
@@ -51,7 +52,7 @@ def sendfile(request, fileobject, allowed=True):
 
 
 class FileDownloadView(BaseMixin, DetailView):
-    model = get_model_from_cfg('DOCUMENT')
+    model = Document
 
     def get(self, request, *args, **kwargs):
         # TODO: support static serving via X-Sendfile and generate warnings if not used (and not debug
@@ -68,8 +69,8 @@ class FileAddView(BaseMixin, CreateView):
     """
     table view
     """
-    model = get_model_from_cfg('DOCUMENT')
-    form_class = modelform_factory(get_model_from_cfg('DOCUMENT'), fields=('file',))
+    model = Document
+    form_class = modelform_factory(Document, fields=('file',))
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())

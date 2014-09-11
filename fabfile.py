@@ -86,15 +86,13 @@ def test():
     Tests code with django unittests
     """
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run %s test djangobmf' % DEVELOP)
-        local('find %s/sandbox/bmf_documents -empty -delete' % BASEDIR)
-        local('virtenv/bin/coverage report -m --include="djangobmf/*"')
+        local('virtenv/bin/python runtests.py')
+        # local('find %s/sandbox/bmf_documents -empty -delete' % BASEDIR)
 
 @task
 def test_contrib(app):
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangobmf.contrib.%(app)s' % {'app': app})
-        local('virtenv/bin/coverage report -m --include="djangobmf/contrib/%(app)s/*"' % {'app': app})
+        local('virtenv/bin/python runtests.py djangobmf.contrib.%(app)s' % {'app': app})
 
 
 @task

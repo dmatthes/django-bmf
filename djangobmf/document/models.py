@@ -11,13 +11,20 @@ from django.utils.translation import ugettext_lazy as _
 
 from .storage import BMFStorage
 
-from ..categories import DOCUMENT
+from ..settings import BASE_MODULE
 from ..utils import generate_filename
-from ..modelbase import BMFModel
 
 
 @python_2_unicode_compatible
-class BaseDocument(BMFModel):
+class Document(models.Model):
+    if BASE_MODULE["CUSTOMER"]:
+        customer = models.ForeignKey(
+            BASE_MODULE["CUSTOMER"], null=True, blank=True, on_delete=models.SET_NULL,
+        )
+    if BASE_MODULE["PROJECT"]:
+        project = models.ForeignKey(
+            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
+        )
     file = models.FileField(_('File'), upload_to=generate_filename, storage=BMFStorage())
     size = models.PositiveIntegerField(null=True, blank=True, editable=False)
 
@@ -48,19 +55,14 @@ class BaseDocument(BMFModel):
             self.size = self.file.size
 
         if hasattr(self, 'project') and hasattr(self.content_object, 'bmfget_project'):
-            self.project = self.content_object.get_project
+            self.project = self.content_object.get_project()
 
         if hasattr(self, 'customer') and hasattr(self.content_object, 'bmfget_customer'):
-            self.customer = self.content_object.get_customer
-
-    class BMFMeta:
-        category = DOCUMENT
-        has_history = False
-        has_file = False
+            self.customer = self.content_object.get_customer()
 
     @models.permalink
     def bmffile_download(self):
         """
         A permalink to the default view of this model in the BMF-System
         """
-        return ('djangobmf:file_download', (), {"pk": self.pk})
+        return ('djangobmf:document_download', (), {"pk": self.pk})

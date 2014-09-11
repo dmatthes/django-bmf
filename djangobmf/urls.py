@@ -39,7 +39,7 @@ urlpatterns = patterns(
     url(r'^accounts/', include('djangobmf.account.urls')),
     url(r'^config/', include('djangobmf.configuration.urls')),
     url(r'^dashboard/', include('djangobmf.dashboard.urls')),
-    url(r'^file/', include('djangobmf.file.urls')),
+    url(r'^document/', include('djangobmf.document.urls')),
     url(r'^i18n/', i18n_javascript, name="jsi18n"),
     #  url(r'^messages/', include('djangobmf.message.urls')),
     url(r'^notifications/', include('djangobmf.notification.urls')),

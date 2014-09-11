@@ -36,7 +36,6 @@ BASE_MODULE = {
     'ADDRESS': 'djangobmf_address.Address',
     'COMPANY': 'djangobmf_company.Company',
     'CUSTOMER': 'djangobmf_customer.Customer',
-    'DOCUMENT': 'djangobmf_document.Document',
     'EMPLOYEE': 'djangobmf_employee.Employee',
     'GOAL': 'djangobmf_task.Goal',
     'INVOICE': 'djangobmf_invoice.Invoice',
@@ -69,9 +68,9 @@ if 'base_url' not in CFG_STORAGE['OPTIONS']:
     CFG_STORAGE['OPTIONS']['base_url'] = getattr(settings, 'BMF_DOCUMENT_URL', None)
 
 if not CFG_STORAGE['OPTIONS']['location']:
-    raise RuntimeError("django BMF module needs a setting BMF_DOCUMENTS_ROOT")
+    raise RuntimeError("django BMF module needs a setting BMF_DOCUMENT_ROOT")
 if not CFG_STORAGE['OPTIONS']['base_url']:
-    raise RuntimeError("django BMF module needs a setting BMF_DOCUMENTS_URL")
+    raise RuntimeError("django BMF module needs a setting BMF_DOCUMENT_URL")
 
 DOCUMENT_ROOT = CFG_STORAGE['OPTIONS']['location']
 DOCUMENT_URL = CFG_STORAGE['OPTIONS']['base_url']

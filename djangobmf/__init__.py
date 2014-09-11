@@ -10,7 +10,7 @@ VERSION = ((0, 1, 5), ('a', 0))  # all alpha versions
 # VERSION = ((1, 0), ('final', 0)) # first final version
 
 
-def get_version(dev=True):
+def get_version(dev=True):  # pragma: no cover
     """
     return a version number consistent with PEP386
     """
@@ -19,7 +19,7 @@ def get_version(dev=True):
 
     version = '.'.join(map(str, VERSION[0]))
 
-    if VERSION[1][0] == "final":  # pragma: no cover
+    if VERSION[1][0] == "final":
         return version
 
     version += VERSION[1][0] + str(VERSION[1][1])
