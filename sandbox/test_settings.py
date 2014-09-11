@@ -97,7 +97,7 @@ INSTALLED_APPS = (
     'djangobmf',
 )
 
-SECRET_KEY = 'djangobmf-sandbox-secret-key'
+SECRET_KEY = 'djangobmf-secret-key'
 
 DATABASES = {
     'default': {

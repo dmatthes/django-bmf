@@ -90,12 +90,12 @@ def test():
         # local('find %s/sandbox/bmf_documents -empty -delete' % BASEDIR)
 
 @task
-def test_contrib(app):
+def test_mod(app):
     with lcd(BASEDIR):
         local('virtenv/bin/python runtests.py -v2 --contrib %(app)s' % {'app': app})
 
 @task
-def test_isolated():
+def test_core():
     with lcd(BASEDIR):
         local('virtenv/bin/python runtests.py -v2 --nocontrib')
 

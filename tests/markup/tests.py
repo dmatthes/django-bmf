@@ -10,6 +10,10 @@ from djangobmf.templatetags.djangobmf_markup import markdown_filter
 
 
 class MarkdownTests(TestCase):
+    def test_empty_text(self):
+        out = markdown_filter(None)
+        self.assertEqual(out, '')
+
     def test_checklist_empty(self):
         text = "[ ] Test"
         out = markdown_filter(text)

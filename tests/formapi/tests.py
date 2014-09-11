@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 
 from django.contrib.contenttypes.models import ContentType
 
-from ..utils import get_model_from_cfg
-from ..testcase import BMFModuleTestCase
+from djangobmf.utils import get_model_from_cfg
+from djangobmf.testcase import BMFModuleTestCase
 
 
 class FormTests(BMFModuleTestCase):

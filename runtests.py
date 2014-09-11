@@ -34,7 +34,6 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
     # find tests in tests-directory
     if len(modules) == 0:
-        modules.append('djangobmf') # TODO: REMOVE ME, WHEN FEATURE IS FINISHED
         path = "tests"
         for module in os.listdir(path):
             if os.path.isdir(os.path.join(path, module)):
@@ -91,55 +90,11 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
     settings.BMF_DOCUMENT_ROOT = TEMP_DIR
     settings.BMF_DOCUMENT_URL = '/documents/'
 
-    saveapps = settings.INSTALLED_APPS
+#   saveapps = settings.INSTALLED_APPS
 
-    # setup and run tests
     django.setup()
 
-# from django.utils.unittest import TextTestResult
-# from django.utils.unittest import TextTestRunner
-# from django.test.runner import DiscoverRunner
-# from coverage import coverage
-# from xml.etree import ElementTree as ET
-# import time
-# from discover_jenkins.results import XMLTestResult
-#   TestRunner = get_runner(settings)
-#   test_runner = TestRunner(verbosity=2, interactive=False, failfast=False)
-#   # code from djanog.tests.runner, which does this:
-#   test_runner.setup_test_environment()
-#   suite = test_runner.build_suite(DIRS, None)
-#   old_config = test_runner.setup_databases()
-#   result = TextTestRunner(buffer=True, resultclass=XMLTestResult, verbosity=test_runner.verbosity).run(suite)
-#   test_runner.teardown_databases(old_config)
-#   test_runner.teardown_test_environment()
-#   failures = test_runner.suite_result(suite, result)
-#   result.dump_xml('.')
-
     failures = djangobmf_tests(verbosity, False, failfast, modules)
-
-#   settings.INSTALLED_APPS = saveapps + (
-#       'tests.model_meta',
-#   )
-#   django.setup()
-#   failures = djangobmf_tests(2, False, False, [])
-
-#   settings.INSTALLED_APPS = saveapps + (
-#       'tests.model_meta2',
-#   )
-#   django.setup()
-#   failures = djangobmf_tests(2, False, False, ["djangobmf"])
-
-#   settings.INSTALLED_APPS = saveapps + (
-#       'tests.model_meta3',
-#   )
-#   django.setup()
-#   failures = djangobmf_tests(2, False, False, ["djangobmf"])
-
-#   settings.INSTALLED_APPS = saveapps + (
-#       'tests.model_meta4',
-#   )
-#   django.setup()
-#   failures = djangobmf_tests(2, False, False, ["djangobmf"])
 
     cov.stop()
 
@@ -152,6 +107,7 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
         cov.html_report(cov_files)
 
     sys.exit(False)
+
 
 def djangobmf_tests(verbosity, interactive, failfast, test_labels):
     TestRunner = get_runner(settings)
@@ -195,6 +151,11 @@ if __name__ == '__main__':
         os.environ['DJANGO_SETTINGS_MODULE'] = "tests.test_sqlite"
     else:
         os.environ['DJANGO_SETTINGS_MODULE'] = "sandbox.settings"
+#   if options.settings:
+#       os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
+#   else:
+#       if "DJANGO_SETTINGS_MODULE" not in os.environ:
+#           os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
 
     main(
         options.modules,
@@ -203,61 +164,6 @@ if __name__ == '__main__':
         contrib=options.contrib,
         nocontrib=options.nocontrib,
     )
-
-#   parser = ArgumentParser(description="Run the Django test suite.")
-#   parser.add_argument('modules', nargs='*', metavar='module',
-#       help='Optional path(s) to test modules; e.g. "i18n" or '
-#            '"i18n.tests.TranslationTests.test_lazy_objects".')
-#   parser.add_argument(
-#       '-v', '--verbosity', default=1, type=int, choices=[0, 1, 2, 3],
-#       help='Verbosity level; 0=minimal output, 1=normal output, 2=all output')
-#   parser.add_argument(
-#       '--noinput', action='store_false', dest='interactive', default=True,
-#       help='Tells Django to NOT prompt the user for input of any kind.')
-#   parser.add_argument(
-#       '--failfast', action='store_true', dest='failfast', default=False,
-#       help='Tells Django to stop running the test suite after first failed '
-#            'test.')
-#   parser.add_argument(
-#       '--settings',
-#       help='Python path to settings module, e.g. "myproject.settings". If '
-#            'this isn\'t provided, either the DJANGO_SETTINGS_MODULE '
-#            'environment variable or "test_sqlite" will be used.')
-#   parser.add_argument('--bisect',
-#       help='Bisect the test suite to discover a test that causes a test '
-#            'failure when combined with the named test.')
-#   parser.add_argument('--pair',
-#       help='Run the test suite in pairs with the named test to find problem '
-#            'pairs.')
-#   parser.add_argument('--liveserver',
-#       help='Overrides the default address where the live server (used with '
-#            'LiveServerTestCase) is expected to run from. The default value '
-#            'is localhost:8081.')
-#   parser.add_argument(
-#       '--selenium', action='store_true', dest='selenium', default=False,
-#       help='Run the Selenium tests as well (if Selenium is installed)')
-#   options = parser.parse_args()
-
-#   # Allow including a trailing slash on app_labels for tab completion convenience
-#   options.modules = [os.path.normpath(labels) for labels in options.modules]
-
-#   if options.settings:
-#       os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
-#   else:
-#       if "DJANGO_SETTINGS_MODULE" not in os.environ:
-#           os.environ['DJANGO_SETTINGS_MODULE'] = 'test_sqlite'
-#       options.settings = os.environ['DJANGO_SETTINGS_MODULE']
-
-#   if options.liveserver is not None:
-#       os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = options.liveserver
-
-#   if options.selenium:
-#       os.environ['DJANGO_SELENIUM_TESTS'] = '1'
-
-#   failures = django_tests(options.verbosity, options.interactive,
-#                               options.failfast, options.modules)
-#   if failures:
-#       sys.exit(bool(failures))
 
 '''
 import logging

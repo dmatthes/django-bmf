@@ -19,7 +19,7 @@ def get_version(dev=True):
 
     version = '.'.join(map(str, VERSION[0]))
 
-    if VERSION[1][0] == "final":
+    if VERSION[1][0] == "final":  # pragma: no cover
         return version
 
     version += VERSION[1][0] + str(VERSION[1][1])
@@ -54,7 +54,5 @@ __author__ = 'Sebastian Braun'
 __contact__ = 'sebastian@elmnt.de'
 __homepage__ = 'http://www.igelware.de'
 __docformat__ = 'restructuredtext'
-
-# -eof meta-
 
 default_app_config = 'djangobmf.apps.BMFConfig'

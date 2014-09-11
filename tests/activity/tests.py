@@ -7,10 +7,10 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
-from ..utils import get_model_from_cfg
+from djangobmf.utils import get_model_from_cfg
 
-from ..models import Activity
-from ..testcase import BMFModuleTestCase
+from djangobmf.models import Activity
+from djangobmf.testcase import BMFModuleTestCase
 
 
 class CoreTests(BMFModuleTestCase):

@@ -43,8 +43,9 @@ class LoginView(FormView, NextMixin):
             self.request.session.delete_test_cookie()
             login(self.request, form.get_user())
             return super(LoginView, self).form_valid(form)
-        self.request.session.set_test_cookie()
-        return super(LoginView, self).form_invalid(form)
+        else:  # pragma: no cover
+            self.request.session.set_test_cookie()
+            return super(LoginView, self).form_invalid(form)
 
     def get_success_url(self):
         return self.redirect_next('djangobmf:dashboard')

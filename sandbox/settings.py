@@ -69,14 +69,6 @@ CACHES = {
   }
 }
 
-# DJANGO JENKINS ==================================================================
-
-JENKINS_TASKS = (
-    'django_jenkins.tasks.with_coverage',
-    'django_jenkins.tasks.run_pylint',
-    'django_jenkins.tasks.run_pep8',
-)
-
 # BM ==============================================================================
 
 BMF_DOCUMENT_ROOT = os.path.join(PROJECT_PATH, "bmf_documents")
@@ -110,12 +102,9 @@ except ImportError:
     CELERY_ALWAYS_EAGER=True # deactivate celery
 
     INSTALLED_APPS += (
-        'discover_jenkins',
 #       'django_extensions',
         'debug_toolbar',
     )
-    TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-#   TEST_RUNNER = 'discover_jenkins.runner.DiscoverCIRunner'
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )

@@ -2,18 +2,17 @@
 # ex:set fileencoding=utf-8:
 # flake8: noqa
 
-'''
-
 from __future__ import unicode_literals
 
 from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
-from ..utils import get_model_from_cfg
+from djangobmf.utils import get_model_from_cfg
 
-from ..models import Report
-from ..testcase import BMFModuleTestCase
+from djangobmf.models import Report
+from djangobmf.models import Document
+from djangobmf.testcase import BMFModuleTestCase
 
 
 class CoreTests(BMFModuleTestCase):
@@ -41,19 +40,16 @@ class CoreTests(BMFModuleTestCase):
         r = self.client.post(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
         self.assertEqual(r.status_code, 302)
 
-        file = open('README.rst', 'rb')
-        r = self.client.post(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
-            'file': file,
-        })
-        self.assertEqual(r.status_code, 302)
-        file.close()
-
-        # now, we should have one file connected to our object
-        model = get_model_from_cfg("DOCUMENT")
-        query = model.objects.filter(content_type=ct, content_id=obj.pk)
-        self.assertEqual(int(query.count()), 1)
-        # cleanup
-        for obj in query:
-            obj.file.delete()
-
-'''
+#       file = open('README.rst', 'rb')
+#       r = self.client.post(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {
+#           'file': file,
+#       })
+#       self.assertEqual(r.status_code, 302)
+#       file.close()
+ 
+#       # now, we should have one file connected to our object
+#       query = Document.objects.filter(content_type=ct, content_id=obj.pk)
+#       self.assertEqual(int(query.count()), 1)
+#       # cleanup
+#       for obj in query:
+#           obj.file.delete()
