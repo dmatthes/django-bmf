@@ -93,18 +93,19 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 #               settings.INSTALLED_APPS += ('djangobmf.reports.%s' % module, )
 
 
-#   # add modules to settings.INSTALLED_APPS
-#   for module_name in modules:
-#       # TODO this does not support the path on the filesystem or to a specific testcase
-#       # maybe we could implement this somewhere after the tests are discovered and
-#       # update the installed apps after django.setup() is called
+    # add modules to settings.INSTALLED_APPS
+    for module_name in modules:
+        # TODO this does not support the path on the filesystem or to a specific testcase
+        # maybe we could implement this somewhere after the tests are discovered and
+        # update the installed apps after django.setup() is called
 #       if re.match(r'^tests.[a-z_]+$', module_name) or re.match(r'^djangobmf.contrib.[a-z_]+$', module_name):
-#           if module_name not in settings.INSTALLED_APPS:
-#               try:
-#                   module = import_module(module_name + '.models')
-#                   settings.INSTALLED_APPS += (module_name, )
-#               except ImportError:
-#                   pass
+        if re.match(r'^tests.[a-z_]+$', module_name):
+            if module_name not in settings.INSTALLED_APPS:
+                try:
+                    module = import_module(module_name + '.models')
+                    settings.INSTALLED_APPS += (module_name, )
+                except ImportError:
+                    pass
 
 #   print(settings.INSTALLED_APPS)
 
