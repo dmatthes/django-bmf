@@ -34,6 +34,7 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
     # find tests in tests-directory
     if len(modules) == 0:
+        modules.append('djangobmf') # TODO: REMOVE ME, WHEN FEATURE IS FINISHED
         path = "tests"
         for module in os.listdir(path):
             if os.path.isdir(os.path.join(path, module)):
@@ -122,12 +123,15 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
     cov.stop()
 
+    if failures > 0:
+        sys.exit(True)
+
     cov.report(cov_files)
     if coverreport:
         cov.xml_report(cov_files)
         cov.html_report(cov_files)
 
-    sys.exit(bool(failures))
+    sys.exit(False)
 
 def djangobmf_tests(verbosity, interactive, failfast, test_labels):
     TestRunner = get_runner(settings)

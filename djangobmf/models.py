@@ -9,6 +9,7 @@ __all__ = (
     'BMFMPTTModel',
     'Activity',
     'Dashboard',
+    'Document',
     'Configuration',
     'Notification',
     'NumberCycle',
@@ -22,6 +23,7 @@ from .modelbase import BMFMPTTModel
 
 from .activity.models import Activity
 from .dashboard.models import Dashboard
+from .document.models import Document
 from .configuration.models import Configuration
 from .notification.models import Notification
 from .numbering.models import NumberCycle

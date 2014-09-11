@@ -92,12 +92,12 @@ def test():
 @task
 def test_contrib(app):
     with lcd(BASEDIR):
-        local('virtenv/bin/python runtests.py --contrib %(app)s' % {'app': app})
+        local('virtenv/bin/python runtests.py -v2 --contrib %(app)s' % {'app': app})
 
 @task
 def test_isolated():
     with lcd(BASEDIR):
-        local('virtenv/bin/python runtests.py --nocontrib')
+        local('virtenv/bin/python runtests.py -v2 --nocontrib')
 
 
 @task
