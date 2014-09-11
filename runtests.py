@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import django
+import re
 import sys
 import os
 import tempfile
@@ -8,15 +9,47 @@ import tempfile
 from django.conf import settings
 from django.test.utils import get_runner
 
+from djangobmf import contrib as bmfcontrib
+
 from argparse import ArgumentParser
 from coverage import coverage
 from flake8.engine import get_style_guide
 
-def main(verbosity=2, failfast=False):
+def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
     print('*'*80)
     print('django ' + django.get_version())
     print('*'*80)
+
+    # only write coverate into html and xml report
+    # when all testcases are executed
+    if len(modules) == 0 and not nocontrib and not contrib:
+        coverreport = True
+    else:
+        coverreport = False
+
+    # only test one contrib module
+    if contrib:
+        modules = ["djangobmf.contrib.%s" % contrib]
+
+    # find tests in tests-directory
+    if len(modules) == 0:
+        path = "tests"
+        for module in os.listdir(path):
+            if os.path.isdir(os.path.join(path, module)):
+                if module[0] == '_':
+                    continue
+                modules.append('tests.%s' % module)
+
+        # find tests in contrib modules
+        SKIPDIRS = []
+        if not nocontrib:
+            path = bmfcontrib.__path__[0]
+            for module in os.listdir(path):
+                if os.path.isdir(os.path.join(path, module)):
+                    if module[0] == '_' or module in SKIPDIRS:
+                        continue
+                    modules.append('djangobmf.contrib.%s' % module)
 
     # flake8
     styleguide = get_style_guide(
@@ -33,30 +66,66 @@ def main(verbosity=2, failfast=False):
 
     # start coverage
     project_dir = os.path.dirname(__file__)
+    if contrib:
+        project_dir = os.path.join(os.path.dirname(__file__), "djangobmf", "contrib", contrib)
+    else:
+        project_dir = os.path.join(os.path.dirname(__file__), "djangobmf")
+
     cov_files = []
-    for (path, dirs, files) in os.walk(os.path.join(project_dir, "djangobmf")):
+
+    for (path, dirs, files) in os.walk(project_dir):
         if os.path.basename(path) == 'tests' or os.path.basename(path) == "migrations":
+            continue
+        if nocontrib and not contrib and re.match(r'^djangobmf.contrib', path):
             continue
         cov_files.extend([os.path.join(path, file) for file in files if file.endswith('.py') and file != "tests.py"])
     cov = coverage()
     cov.erase()
     cov.start()
 
+    # TODO
+
     TEMP_DIR = tempfile.mkdtemp(prefix='djangobmf_')
 
     settings.BMF_DOCUMENT_ROOT = TEMP_DIR
     settings.BMF_DOCUMENT_URL = '/documents/'
 
+    saveapps = settings.INSTALLED_APPS
+
     # setup and run tests
     django.setup()
+    failures = djangobmf_tests(verbosity, False, failfast, modules)
 
-    failures = djangobmf_tests(2, False, False, ["djangobmf"])
+#   settings.INSTALLED_APPS = saveapps + (
+#       'tests.model_meta',
+#   )
+#   django.setup()
+#   failures = djangobmf_tests(2, False, False, [])
+
+#   settings.INSTALLED_APPS = saveapps + (
+#       'tests.model_meta2',
+#   )
+#   django.setup()
+#   failures = djangobmf_tests(2, False, False, ["djangobmf"])
+
+#   settings.INSTALLED_APPS = saveapps + (
+#       'tests.model_meta3',
+#   )
+#   django.setup()
+#   failures = djangobmf_tests(2, False, False, ["djangobmf"])
+
+#   settings.INSTALLED_APPS = saveapps + (
+#       'tests.model_meta4',
+#   )
+#   django.setup()
+#   failures = djangobmf_tests(2, False, False, ["djangobmf"])
 
     cov.stop()
 
     cov.report(cov_files)
-    cov.xml_report(cov_files)
-    cov.html_report(cov_files)
+    if coverreport:
+        cov.xml_report(cov_files)
+        cov.html_report(cov_files)
 
     sys.exit(bool(failures))
 
@@ -69,16 +138,26 @@ def djangobmf_tests(verbosity, interactive, failfast, test_labels):
 
 if __name__ == '__main__':
     parser = ArgumentParser(description="Run the django BMF test suite.")
-#   parser.add_argument('modules', nargs='*', metavar='module',
-#       help='Optional path(s) to test modules.')
-#   parser.add_argument('contrib', nargs='1', metavar='contrib',
-#       help='Only test a specific bmf contrib module')
+    parser.add_argument('modules', nargs='*', metavar='module',
+        help='Optional path(s) to test modules.')
     parser.add_argument(
         '-v', '--verbosity', default=1, type=int, choices=[0, 1, 2, 3],
-        help='Verbosity level; 0=minimal output, 1=normal output, 2=all output')
+        help='Verbosity level; 0=minimal output, 1=normal output, 2=all output'
+    )
     parser.add_argument(
         '--failfast', action='store_true', dest='failfast', default=False,
-        help='Stop running the test suite after first failed test.')
+        help='Stop running the test suite after first failed test.'
+    )
+    parser.add_argument(
+        '--nocontrib', action='store_true', dest='nocontrib', default=False,
+        help='Do not run testing on contrib modules.'
+    )
+    parser.add_argument(
+        '--contrib',
+        default=None,
+        dest="contrib",
+        help='Run tests only on the specified contrib module'
+    )
 #   parser.add_argument(
 #       '--settings',
 #       help='Python path to settings module, e.g. "myproject.settings". If '
@@ -88,8 +167,18 @@ if __name__ == '__main__':
 #   print (options)
 #   options.modules = [os.path.normpath(labels) for labels in options.modules]
 
-    os.environ['DJANGO_SETTINGS_MODULE'] = "sandbox.test_settings"
-    main(verbosity=options.verbosity, failfast=options.failfast)
+    if options.nocontrib:
+        os.environ['DJANGO_SETTINGS_MODULE'] = "tests.test_sqlite"
+    else:
+        os.environ['DJANGO_SETTINGS_MODULE'] = "sandbox.settings"
+
+    main(
+        options.modules,
+        verbosity=options.verbosity,
+        failfast=options.failfast,
+        contrib=options.contrib,
+        nocontrib=options.nocontrib,
+    )
 
 #   parser = ArgumentParser(description="Run the Django test suite.")
 #   parser.add_argument('modules', nargs='*', metavar='module',

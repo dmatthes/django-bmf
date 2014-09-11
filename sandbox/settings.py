@@ -1,6 +1,6 @@
 # Django settings
 
-from test_settings import *
+from .test_settings import *
 
 import os
 from django.utils import six
@@ -31,7 +31,7 @@ TEST_PROJECT_APPS = (
     'djangobmf.contrib.accounting',
     'djangobmf.contrib.address',
     'djangobmf.contrib.customer',
-    'djangobmf.contrib.document',
+#   'djangobmf.contrib.document',
     'djangobmf.contrib.employee',
     'djangobmf.contrib.invoice',
     'djangobmf.contrib.position',

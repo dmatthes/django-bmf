@@ -97,12 +97,16 @@ INSTALLED_APPS = (
     'djangobmf',
 )
 
-SECRET_KEY = 'djangobmf-test-secret-key'
+SECRET_KEY = 'djangobmf-sandbox-secret-key'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
     }
 }
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+)
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'

@@ -7,8 +7,7 @@ from __future__ import unicode_literals
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from ..urls import i18n_javascript
-
+from djangobmf.urls import i18n_javascript
 
 class UrlTests(TestCase):
     def test_i18n_javascript(self):

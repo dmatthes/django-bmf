@@ -9,7 +9,7 @@ from django.test import TestCase
 from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ValidationError
 
-from ..workflows import State, Transition, Workflow, DefaultWorkflow
+from djangobmf.workflows import State, Transition, Workflow, DefaultWorkflow
 
 
 class ClassTests(TestCase):
@@ -35,7 +35,7 @@ class ClassTests(TestCase):
 
         self.assertEqual(obj.affected_states(), ["from1", "from2", "to"])
 
-    def test_workflow(self):
+    def test_validation(self):
         self.assertEqual(str(DefaultWorkflow()), "default")
         self.assertRaises(ValidationError, DefaultWorkflow, 'does_not_exist')
 
@@ -121,7 +121,7 @@ class ClassTests(TestCase):
                 class Transitions:
                     user = Transition('Transition 1', 'test1', 'test2')
 
-        # test API ================================================================
+    def test_api(self):
 
         # this is valid (jeah)
         class TestWF(Workflow):
@@ -158,7 +158,7 @@ class ClassTests(TestCase):
         self.assertEqual(WF._call('trans3', None, None), "custom function called")
         self.assertEqual(WF._call('trans4', None, None), None)
 
-
+'''
 from django.test import LiveServerTestCase
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
@@ -196,3 +196,4 @@ class ViewTests(BMFModuleTestCase):
         # a quotation can't be deleted, if workflow state is not canceled
         r = self.client.get(reverse(namespace + ':delete', None, None, {'pk': obj.pk}))
         self.assertEqual(r.status_code, 403)
+'''
