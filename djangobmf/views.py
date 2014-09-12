@@ -22,11 +22,11 @@ from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from .activity.forms import HistoryCommentForm
-from .activity.models import Activity
 from .document.views import FileAddView
 # from .models import Document
 from .models import Report
+from .notification.forms import HistoryCommentForm
+from .notification.models import Activity
 from .notification.models import Notification
 from .signals import activity_create
 from .signals import activity_update

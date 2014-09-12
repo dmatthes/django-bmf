@@ -18,7 +18,7 @@ from .apps import BMFConfig
 from .workflows import DefaultWorkflow
 from .fields import WorkflowField
 
-from .activity.models import Activity
+from .notification.models import Activity
 from .notification.models import Notification
 
 import types

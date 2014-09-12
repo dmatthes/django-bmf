@@ -49,5 +49,4 @@ urlpatterns = patterns(
 
     # TODO
     url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),  # remove me
-    url(r'^activities/', include('djangobmf.activity.urls')),
 )

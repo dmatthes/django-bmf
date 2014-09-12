@@ -12,13 +12,13 @@ logger = logging.getLogger(__name__)
 
 def djangobmf_user_watch(activity):
 
-    from djangobmf.models import Notification
+    from .models import Notification
 
-    from djangobmf.activity.models import ACTION_COMMENT
-    from djangobmf.activity.models import ACTION_CREATED
-    from djangobmf.activity.models import ACTION_UPDATED
-    from djangobmf.activity.models import ACTION_WORKFLOW
-    from djangobmf.activity.models import ACTION_FILE
+    from .models import ACTION_COMMENT
+    from .models import ACTION_CREATED
+    from .models import ACTION_UPDATED
+    from .models import ACTION_WORKFLOW
+    from .models import ACTION_FILE
 
     if activity.action == ACTION_CREATED:
         logger.debug("Notifications for new object: %s (pk: %s)" % (activity.parent_ct, activity.parent_id))
