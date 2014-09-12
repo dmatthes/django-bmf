@@ -55,6 +55,4 @@ __contact__ = 'sebastian@elmnt.de'
 __homepage__ = 'http://www.igelware.de'
 __docformat__ = 'restructuredtext'
 
-# -eof meta-
-
 default_app_config = 'djangobmf.apps.BMFConfig'

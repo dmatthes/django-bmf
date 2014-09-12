@@ -204,22 +204,6 @@
 
 {
  "pk": 1, 
- "model": "djangobmf_document.document", 
- "fields": {
-  "is_static": true, 
-  "file": "static/pdf-template1-letter.pdf"
- }
-},
-{
- "pk": 2, 
- "model": "djangobmf_document.document", 
- "fields": {
-  "is_static": true, 
-  "file": "static/pdf-template1.pdf"
- }
-},
-{
- "pk": 1, 
  "model": "djangobmf.report", 
  "fields": {
   "contenttype": [

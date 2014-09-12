@@ -39,16 +39,15 @@ urlpatterns = patterns(
     url(r'^accounts/', include('djangobmf.account.urls')),
     url(r'^config/', include('djangobmf.configuration.urls')),
     url(r'^dashboard/', include('djangobmf.dashboard.urls')),
-    url(r'^file/', include('djangobmf.file.urls')),
+    url(r'^document/', include('djangobmf.document.urls')),
     url(r'^i18n/', i18n_javascript, name="jsi18n"),
     #  url(r'^messages/', include('djangobmf.message.urls')),
     url(r'^notifications/', include('djangobmf.notification.urls')),
-    # url(r'^watching/', include('djangobmf.watch.urls')),
     url(r'^wizard/', include('djangobmf.wizard.urls')),
     #   r'^module/' via sites
+    url(r'^modules/$', ModuleView.as_view(), name="modules"),
 
     # TODO
-    url(r'^modules/$', ModuleView.as_view(), name="modules"),
-    url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),
+    url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),  # remove me
     url(r'^activities/', include('djangobmf.activity.urls')),
 )

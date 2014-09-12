@@ -86,15 +86,23 @@ def test():
     Tests code with django unittests
     """
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run %s test djangobmf' % DEVELOP)
-        local('find %s/sandbox/bmf_documents -empty -delete' % BASEDIR)
+        local('virtenv/bin/coverage run runtests.py -v2')
         local('virtenv/bin/coverage report -m --include="djangobmf/*"')
+        local('virtenv/bin/coverage html --include="djangobmf/*"')
+
 
 @task
-def test_contrib(app):
+def test_mod(app):
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run sandbox/manage.py test -v 1 djangobmf.contrib.%(app)s' % {'app': app})
+        local('virtenv/bin/coverage run runtests.py -v2 --contrib %(app)s' % {'app': app})
         local('virtenv/bin/coverage report -m --include="djangobmf/contrib/%(app)s/*"' % {'app': app})
+
+
+@task
+def test_core():
+    with lcd(BASEDIR):
+        local('virtenv/bin/coverage run runtests.py -v2 --nocontrib')
+        local('virtenv/bin/coverage report -m --include="djangobmf/*" --omit="djangobmf/contrib/*"')
 
 
 @task
@@ -103,6 +111,7 @@ def locale():
     for lang in LANGUAGES:
       local('%s makemessages -l %s --domain django' % (DJANGO, lang))
       local('%s makemessages -l %s --domain djangojs' % (DJANGO, lang))
+
 
 @task
 def docs():
