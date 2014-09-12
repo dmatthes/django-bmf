@@ -135,6 +135,43 @@ class NotificationView(ViewMixin, ListView):
         return qs.select_related('activity', 'ct', 'created_by')
 
 
+class NotificationCreate(AjaxMixin, CreateView):
+    model = Notification
+    template_name = "djangobmf/notification/create.html"
+    fields = ('new_entry', 'comment', 'file', 'changed', 'workflow')
+
+    # FIXME CHECK OBJECT PERMISSIONS!
+
+    def get_cls(self):
+        return ContentType.objects.get_for_id(self.kwargs['ct']).model_class()
+
+    def get_form(self, form_class):
+        form = super(NotificationCreate, self).get_form(form_class)
+        cls = self.get_cls()
+
+        del form.fields['new_entry']
+        if not cls._bmfmeta.has_detectchanges:
+            del form.fields['changed']
+        if not cls._bmfmeta.has_files:
+            del form.fields['file']
+        if not cls._bmfmeta.has_comments:
+            del form.fields['comment']
+        if not cls._bmfmeta.has_workflow:
+            del form.fields['workflow']
+
+        return form
+
+    def form_valid(self, form):
+        notification = form.save(commit=False)
+        notification.user = self.request.user
+        notification.watch_ct = ContentType.objects.get_for_id(self.kwargs['ct'])
+        notification.watch_id = int(self.kwargs['pk'])
+        notification.triggered = False
+        notification.unread = False
+        notification.save()
+        return self.render_valid_form({'refresh': True, 'redirect': None})
+
+
 class NotificationUpdate(AjaxMixin, UpdateView):
     model = Notification
     template_name = "djangobmf/notification/update.html"

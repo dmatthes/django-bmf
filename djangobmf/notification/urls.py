@@ -7,6 +7,7 @@ from django.conf.urls import patterns, url
 
 from .views import NotificationView
 from .views import NotificationUpdate
+from .views import NotificationCreate
 from .views import ActivityView
 from .views import HistoryCommentAddView
 from .views import ActivityView as HistoryCommentGetView
@@ -22,6 +23,9 @@ urlpatterns = patterns(
     ),
     url(
         r'^(?P<filter>all|active|unread)/(?P<ct>[0-9]+)/$', NotificationView.as_view(), name="notification",
+    ),
+    url(
+        r'^create/(?P<ct>[0-9]+)/(?P<pk>[0-9]+)/$', NotificationCreate.as_view(), name="notification-create",
     ),
     url(
         r'^edit/(?P<pk>[0-9]+)/$', NotificationUpdate.as_view(), name="notification-edit",

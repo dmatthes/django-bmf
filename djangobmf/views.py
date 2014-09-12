@@ -68,8 +68,10 @@ class ModuleActivityMixin(object):
             if watch.unread:
                 watch.unread = False
                 watch.save()
+            notification = watch
             watching = watch.is_active()
         except Notification.DoesNotExist:
+            notification = None
             watching = False
 
         kwargs.update({
@@ -80,6 +82,7 @@ class ModuleActivityMixin(object):
                 'log': self.model._bmfmeta.has_history,
                 'pk': self.object.pk,
                 'ct': ct.pk,
+                'notification': notification,
                 'watch': watching,
                 'log_data': None,
                 'comment_form': None,

@@ -20,7 +20,7 @@
 <div class="btn-toolbar pull-right" role="toolbar">
     {% if bmfmodule.can_clone %}
     <div class="btn-group">
-        <a class="btn btn-default btn-default bmf-edit" href="{% get_bmf_url object "clone" %}">
+        <a class="btn btn-default btn-default bmfedit" href="{% get_bmf_url object "clone" %}">
             <span class="glyphicon glyphicon-transfer"></span>
         </a>
     </div>
@@ -51,7 +51,7 @@
     {% endif %}
     {% if bmfworkflow.state.update %}
      <div class="btn-group">
-     <a class="btn btn-default btn-warning bmf-edit" href="{% get_bmf_url object "update" %}">
+     <a class="btn btn-default btn-warning bmfedit" href="{% get_bmf_url object "update" %}">
        <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
      </a>
      </div>
@@ -64,15 +64,21 @@
     {% endif %}
 
     <div class="btn-group">
-        {% comment %}{% if bmfactivity.watch %}
-            <a href="{% url 'djangobmf:watch_edit' ct=bmfactivity.ct pk=object.pk %}?next={{ object.bmfmodule_detail }}" class="btn btn-info following">
-                <span class="glyphicon glyphicon-star"></span>
-            </a>
+        {% if bmfactivity.notification %}
+            {% if bmfactivity.watch %}
+                <a href="{% url "djangobmf:notification-edit" pk=bmfactivity.notification.pk %}" class="btn {% if bmfactivity.notification.unread %}btn-info{% else %}btn-default{% endif %} bmfedit">
+                    <span class="glyphicon glyphicon-star"></span>
+                </a>
+            {% else %}
+                <a href="{% url "djangobmf:notification-edit" pk=bmfactivity.notification.pk %}" class="btn btn-default bmfedit">
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                </a>
+            {% endif %}
         {% else %}
-            <a href="{% url 'djangobmf:watch_edit' ct=bmfactivity.ct pk=object.pk %}?next={{ object.bmfmodule_detail }}" class="btn btn-default">
+            <a href="{% url 'djangobmf:notification-create' ct=bmfactivity.ct pk=object.pk %}" class="btn btn-default bmfedit">
                 <span class="glyphicon glyphicon-star-empty"></span>
             </a>
-            {% endif %}{% endcomment %}
+        {% endif %}
 
         {% if files %}
             <a class="btn btn-default btn-info" href="#">
