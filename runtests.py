@@ -22,7 +22,6 @@ from flake8.engine import get_style_guide
 
 def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
-    print('*'*80)
     print('django ' + django.get_version())
     print('*'*80)
 
@@ -93,46 +92,25 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 #               settings.INSTALLED_APPS += ('djangobmf.reports.%s' % module, )
 
 
-    # add modules to settings.INSTALLED_APPS
-    for module_name in modules:
-        # TODO this does not support the path on the filesystem or to a specific testcase
-        # maybe we could implement this somewhere after the tests are discovered and
-        # update the installed apps after django.setup() is called
-#       if re.match(r'^tests.[a-z_]+$', module_name) or re.match(r'^djangobmf.contrib.[a-z_]+$', module_name):
-        if re.match(r'^tests.[a-z_]+$', module_name):
-            if module_name not in settings.INSTALLED_APPS:
-                try:
-                    module = import_module(module_name + '.models')
-                    settings.INSTALLED_APPS += (module_name, )
-                except ImportError:
-                    pass
+#   # add modules to settings.INSTALLED_APPS
+#   for module_name in modules:
+#       # TODO this does not support the path on the filesystem or to a specific testcase
+#       # maybe we could implement this somewhere after the tests are discovered and
+#       # update the installed apps after django.setup() is called
+##      if re.match(r'^tests.[a-z_]+$', module_name) or re.match(r'^djangobmf.contrib.[a-z_]+$', module_name):
+#       if re.match(r'^tests.[a-z_]+$', module_name):
+#           if module_name not in settings.INSTALLED_APPS:
+#               try:
+#                   module = import_module(module_name + '.models')
+#                   settings.INSTALLED_APPS += (module_name, )
+#               except ImportError:
+#                   pass
 
 #   print(settings.INSTALLED_APPS)
-
-    # start coverage
-    project_dir = os.path.dirname(__file__)
-    if contrib:
-        project_dir = os.path.join(os.path.dirname(__file__), "djangobmf", "contrib", contrib)
-    else:
-        project_dir = os.path.join(os.path.dirname(__file__), "djangobmf")
-
-    cov_files = []
-
-    for (path, dirs, files) in os.walk(project_dir):
-        if os.path.basename(path) == 'tests' or os.path.basename(path) == "migrations":
-            continue
-        if nocontrib and not contrib and re.match(r'^djangobmf.contrib', path):
-            continue
-        cov_files.extend([os.path.join(path, file) for file in files if file.endswith('.py') and file != "tests.py"])
-    cov = coverage()
-    cov.erase()
-    cov.start()
 
     django.setup()
 
     failures = djangobmf_tests(verbosity, False, failfast, modules)
-
-    cov.stop()
 
     try:
         # Removing the temporary TEMP_DIR. Ensure we pass in unicode
@@ -143,15 +121,7 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
     except OSError:
         print('Failed to remove temp directory: %s' % TEMP_DIR)
 
-    if failures > 0:
-        sys.exit(True)
-
-    cov.report(cov_files)
-    if coverreport:
-        cov.xml_report(cov_files)
-        cov.html_report(cov_files)
-
-    sys.exit(False)
+    sys.exit(bool(failures))
 
 
 def djangobmf_tests(verbosity, interactive, failfast, test_labels):

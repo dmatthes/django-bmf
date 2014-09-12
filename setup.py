@@ -4,7 +4,7 @@
 import os
 import sys
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Command
 
 from djangobmf import __author__, __contact__, __homepage__
 
@@ -37,7 +37,7 @@ setup(
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
     author=__author__,
     author_email=__contact__,
-    packages=find_packages(exclude=['sandbox', 'tests']),
+    packages=find_packages(exclude=['sandbox']),
     classifiers=CLASSIFIERS,
     install_requires=[
         'django',
@@ -52,7 +52,9 @@ setup(
     ],
     include_package_data=True,
     zip_safe=False,
-    test_suite='runtests.main',
+    test_suite='run_tests.main',
     tests_require = [
+#       'coverage',
+#       'pep8',
     ],
 )

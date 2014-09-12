@@ -6,6 +6,8 @@
 /\.tox
 /\.coverage
 /coverage\.xml
+/junit\.xml
+/reports
 /htmlcov
 /django_bmf\.egg-info
 /virtenv
