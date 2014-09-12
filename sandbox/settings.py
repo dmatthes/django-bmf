@@ -122,7 +122,7 @@ TEST_PROJECT_APPS = (
     'djangobmf.contrib.task',
     'djangobmf.contrib.taxing',
     'djangobmf.contrib.team',
-#   'djangobmf.contrib.timesheet',
+    'djangobmf.contrib.timesheet',
     'djangobmf.currencies.EUR',
     'djangobmf.currencies.USD',
 )

@@ -40,6 +40,7 @@ BASE_MODULE = {
     'GOAL': 'djangobmf_task.Goal',
     'INVOICE': 'djangobmf_invoice.Invoice',
     'TAX': 'djangobmf_taxing.Tax',
+    'TASK': 'djangobmf_task.Task',
     'TEAM': 'djangobmf_team.Team',
     'POSITION': 'djangobmf_position.Position',
     'PRODUCT': 'djangobmf_product.Product',
