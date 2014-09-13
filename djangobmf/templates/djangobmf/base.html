@@ -17,29 +17,19 @@
             <div id="sidebar">
                 <p class="switch"><a href="#"><img src="{% static "djangobmf/logo.png" %}"></a></p>
                 <ul class="sidebar-nav">
+                    {% if djangobmf.dashboard_current %}
                     <li class="sidebar-brand">
-                        <a href="#">Projektmanagement</a>
+                        <a href="{% url "djangobmf:dashboard" pk=djangobmf.dashboard_current.pk %}">{{ djangobmf.dashboard_current.name }}</a>
                     </li>
                     <li>
-                        <a href="#">Aufgaben</a>
+                        <p>Category</p>
                         <ul>
-                            <li><a href="#">Aufgaben</a></li>
-                            <li><a href="#">Aufgaben</a></li>
-                            <li><a href="#">Aufgaben</a></li>
-                            <li><a href="#">Aufgaben</a></li>
-                            <li><a href="#">Aufgaben</a></li>
+                            {% for view in djangobmf.views %}
+                            <li><a href="{{ view.url }}">{{ view.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">Ziele</a>
-                        <ul>
-                            <li><a href="#">Ziele</a></li>
-                            <li><a href="#">Ziele</a></li>
-                            <li><a href="#">Ziele</a></li>
-                            <li><a href="#">Ziele</a></li>
-                            <li><a href="#">Ziele</a></li>
-                        </ul>
-                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <div id="page-content-wrapper">
@@ -69,23 +59,11 @@
                 {% endfor %}
               </ul>
             </li>
-            {% if djangobmf.dashboard_current %}
-              {% if djangobmf.views  %}
-              <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list"></span> {{ djangobmf.dashboard_current.name }} <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  {% for view in djangobmf.views %}
-                  <li><a href="{{ view.url }}">{{ view.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              </li>
-              {% else %}
-              <li class="disabled"><a href="#"><span class="glyphicon glyphicon-list"></span> {{ djangobmf.dashboard_current.name }}</a></li>
-              {% endif %}
-            {% endif %}
           </ul>
           {% endif %}
-          <ul class="nav navbar-nav navbar-right">{% block navbar %}
+          <ul class="nav navbar-nav navbar-right">
+            <li class="hidden-xs"><p class="navbar-text">{{ request.user }}</p></li>
+            {% block navbar %}
             <li data-count="{{ djangobmf.notification_count }}" id="bmf_notification"><a href="{% url 'djangobmf:notification' %}">
               <span class="glyphicon glyphicon-comment"></span>
               <span class="nav-text">{% trans "Notifications" %}</span>
@@ -124,7 +102,7 @@
               </ul>
             </li>
             <li><a id="bmfapi_logout" href="{% url 'djangobmf:modal_logout' %}">
-              <span class="glyphicon glyphicon-off"></span>
+                <span class="glyphicon glyphicon-off"></span>
               <span class="nav-text">{% trans "Logout" %}</span>
             </a></li>
             {% endblock %}</ul>
