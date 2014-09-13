@@ -1,18 +1,51 @@
 {% load sekizai_tags i18n staticfiles %}<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>django BMF - {% block title %}{% endblock %}</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="Igelware" />
-    <meta name="Content-Language" content="{{ LANGUAGE_CODE }}" />
-    <meta name="language" content="{{ LANGUAGE_CODE }}" />
-    <link rel="shortcut icon" type="image/x-icon" href="{% static "djangobmf/favicon.ico" %}">
-    <link href="{% static "djangobmf/css/djangobmf.min.css" %}?v={{ djangobmf.version }}" rel="stylesheet">{% render_block "css" %}
-  </head>
-  <body>
-    <div id="wrap">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>django BMF - {% block title %}{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="author" content="Igelware" />
+        <meta name="Content-Language" content="{{ LANGUAGE_CODE }}" />
+        <meta name="language" content="{{ LANGUAGE_CODE }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{% static "djangobmf/favicon.ico" %}">
+        <link href="{% static "djangobmf/css/djangobmf.min.css" %}?v={{ djangobmf.version }}" rel="stylesheet">{% render_block "css" %}
+    </head>
+    <body>
+{# NEW #}
+        <div id="wrap">
+            <div id="sidebar">
+                <p class="switch"><a href="#"><img src="{% static "djangobmf/logo.png" %}"></a></p>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="#">Projektmanagement</a>
+                    </li>
+                    <li>
+                        <a href="#">Aufgaben</a>
+                        <ul>
+                            <li><a href="#">Aufgaben</a></li>
+                            <li><a href="#">Aufgaben</a></li>
+                            <li><a href="#">Aufgaben</a></li>
+                            <li><a href="#">Aufgaben</a></li>
+                            <li><a href="#">Aufgaben</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Ziele</a>
+                        <ul>
+                            <li><a href="#">Ziele</a></li>
+                            <li><a href="#">Ziele</a></li>
+                            <li><a href="#">Ziele</a></li>
+                            <li><a href="#">Ziele</a></li>
+                            <li><a href="#">Ziele</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="page-content-wrapper">
+{# NEW #}
+
+    <div class="page-container">
     {% block full_body %}
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
       <div class="container">
@@ -118,10 +151,14 @@
       {% block full_content %}{% endblock %}
     </div> <!-- /container -->
     {% endblock %}
-    </div> <!-- /wrap -->
+    </div> <!-- /page-container -->
+{# NEW #}
+          </div>
+      </div>
+{# NEW #}
     <footer>
       <div class="container">
-          <p>django BMF {{ djangobmf.version }}</small></p>
+          <p><a href="http://www.django-bmf.org">django BMF</a> v{{ djangobmf.version }}</small></p>
       </div> <!-- /container -->
     </footer>
     <script src="{% url "djangobmf:jsi18n" %}?v={{ djangobmf.version }}"></script>

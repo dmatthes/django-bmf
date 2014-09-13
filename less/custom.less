@@ -4,6 +4,14 @@
 @import "../submodules/bootstrap/less/bootstrap.less";
 @import "../submodules/bootstrap/less/theme.less";
 
+// OWN
+// -----------------------------------------------------
+
+@bmf-sidebar-width: 200px;
+@bmf-logo-dim: 32px;
+@bmf-logo-padding: 3px;
+
+
 // OVERWRITES
 // -----------------------------------------------------
 
@@ -36,6 +44,11 @@
 @grid-gutter-width: 20px;
 
 @navbar-height: 36px;
+
+@container-tablet: ((720px + @grid-gutter-width - @bmf-logo-dim - 2 * @bmf-logo-padding));
+//@container-desktop: @container-tablet;
+@container-desktop: ((940px + @grid-gutter-width - @bmf-sidebar-width));
+@container-large-desktop: ((1140px + @grid-gutter-width - @bmf-sidebar-width));
 
 /* COLOR THEME
 -------------------------------------------------- */
@@ -83,15 +96,6 @@ html,
 body {
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
-}
-
-/* Wrapper for page content to push down footer */
-#wrap {
-  width: 100%;
-  min-height: 100%; /* for modern browsers */
-  height:auto !important; /* for modern browser */
-  height:100%; /* for IE */
-  overflow: hidden !important; /* FF scrollbar */ 
 }
 
 /* Navigation
@@ -191,24 +195,32 @@ ul > li.checklist {
 -------------------------------------------------- */
 
 footer {
-  padding: @line-height-computed 0;
-  margin: 0;
-  color: @gray;
-  background: @gray-lighter;
-
-  p {
-    padding: 0;
+    padding: @line-height-computed/2 0 @line-height-computed/2 @bmf-sidebar-width;
     margin: 0;
-  }
-  a {
-    color: lighten(@gray, 10%);
-  }
-  b {
-    color: @brand-primary;
-  }
-  a:hover {
-    color: #fff;
-  }
+    color: @gray-light;
+    background: @gray-lighter;
+    
+    p {
+        padding: 0;
+        margin: 0;
+    }
+
+    a {
+        color: @gray-dark;
+    }
+    a:hover {
+        color: @brand-primary;
+        text-decoration: underline;
+    }
+}
+@media(max-width: @screen-sm-max) {
+    footer {
+        padding-left: @bmf-logo-dim + 2 * @bmf-logo-padding;
+    }
+
+    .bmfsidebar-toggled footer {
+        padding-left: @bmf-sidebar-width;
+    }
 }
 
 /* MISC
@@ -229,4 +241,110 @@ footer {
     white-space: nowrap;
     overflow: hidden;
 }
+
 */
+
+/* Sitebar
+-------------------------------------------------- */
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    width: 100%;
+    min-height: 100%; /* for modern browsers */
+    height:auto !important; /* for modern browser */
+    height:100%; /* for IE */
+    overflow: hidden !important; /* FF scrollbar */ 
+}
+
+/*
+#page-content-wrapper {
+    background: #0f0;
+}
+.page-container {
+    background: #00f;
+}
+#wrap {
+    background: #0ff;
+}
+*/
+
+#sidebar {
+    position: fixed;
+    z-index: 1000;
+    width: @bmf-sidebar-width;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #000;
+
+    p.switch {
+        display: none;
+        line-height: 0px;
+        height: @bmf-logo-dim;
+        padding: @bmf-logo-padding;
+        margin: 0;
+        text-align: right;
+
+        a {
+            display:block;
+        }
+
+        img {
+            height: @bmf-logo-dim;
+            width: @bmf-logo-dim;
+        }
+    }
+}
+
+#page-content-wrapper {
+    margin-left: @bmf-sidebar-width;
+}
+
+// tablet or smaller get special treatment
+@media(max-width: @screen-sm-max) {
+
+    #wrap {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .bmfsidebar-toggled #wrap .page-container {
+        margin-left: @bmf-sidebar-width;
+    }
+
+    .bmfsidebar-toggled #wrap #sidebar {
+        width: @bmf-sidebar-width;
+
+        ul {
+            display: block;
+        }
+    }
+
+    #page-content-wrapper {
+        margin-left: @bmf-logo-dim + 2 * @bmf-logo-padding;
+    }
+
+    #sidebar {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        width: @bmf-logo-dim + 2 * @bmf-logo-padding;
+
+        p.switch {
+            display: block;
+        }
+
+        ul {
+            display: none;
+        }
+    }
+}
+
+
+/* Sitebar Styles
+-------------------------------------------------- */
+
+/* TODO */

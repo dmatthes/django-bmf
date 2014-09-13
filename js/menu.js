@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    /* Sidebar
+     * ----------------------------------------------------------------------- */
+
+    $("#sidebar p.switch a").click(function(e) {
+        e.preventDefault();
+        $("body").toggleClass("bmfsidebar-toggled");
+    });
 
     /* Notification
      * ----------------------------------------------------------------------- */
