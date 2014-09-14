@@ -43,6 +43,7 @@ urlpatterns = patterns(
     url(r'^i18n/', i18n_javascript, name="jsi18n"),
     #  url(r'^messages/', include('djangobmf.message.urls')),
     url(r'^notifications/', include('djangobmf.notification.urls')),
+    url(r'^w/', include('djangobmf.workspace.urls')),
     url(r'^wizard/', include('djangobmf.wizard.urls')),
     #   r'^module/' via sites
     url(r'^modules/$', ModuleView.as_view(), name="modules"),

@@ -31,8 +31,8 @@ class Workspace(MPTTModel):
     public = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
 
-    label = models.CharField(max_length=100, blank=False, editable=False)
-    plugin = models.CharField(max_length=100, blank=False, editable=False)
+    label = models.CharField(max_length=100, blank=False, editable=True)
+    plugin = models.CharField(max_length=100, blank=False, editable=True)
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -46,7 +46,7 @@ class Workspace(MPTTModel):
         unique_together = (("parent", "slug"), )
 
     def __str__(self):
-        return self.name
+        return '%s: %s' % (self.type(), self.name)
 
     def __init__(self, *args, **kwargs):
         super(Workspace, self).__init__(*args, **kwargs)
@@ -55,9 +55,13 @@ class Workspace(MPTTModel):
 
     def clean(self):
         if self.org:
-            if (self.parent and self.parent.level != self.org_level - 1) or (not self.parent and self.org_level != 0):
+            if self.parent and self.parent.level != self.org_level - 1:
                 raise ValidationError(
-                    'moveing between different types is not allowed',
+                    _("This object's parent must be a %s" % self.parent.type()),
+                )
+            if not self.parent and self.org_level != 0:
+                raise ValidationError(
+                    _("This object parent must be a empty"),
                 )
                 
         if not self.parent:
@@ -65,11 +69,11 @@ class Workspace(MPTTModel):
         else:
             if self.parent.level == 2:
                 raise ValidationError(
-                    'You are not allowed to append to this type',
+                    _("You can not append to a %s" % self.parent.type()),
                 )
             if self.parent.level == 1 and not self.ct:
                 raise ValidationError(
-                    'You need to define a ContentType',
+                    _("You need to define a ContentType"),
                 )
             if self.parent.level == 0:
                 self.ct = None
@@ -94,3 +98,7 @@ class Workspace(MPTTModel):
              self.url = "%s/%s" % (self.parent.url, self.slug)
          else:
              self.url = self.slug
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('djangobmf:workspace', (), {"url": self.url})

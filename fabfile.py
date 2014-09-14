@@ -16,6 +16,7 @@ DEVELOP = BASEDIR + "/develop.py"
 LANGUAGES = ('en', 'de',)
 
 FIXTURES = (
+    'fixtures/sites.json',
     'fixtures/users.json',
     'fixtures/demodata.json',
     'fixtures/contrib_accounting.json',
