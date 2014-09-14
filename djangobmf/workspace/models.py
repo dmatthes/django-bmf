@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from django.conf import settings
+# from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -63,7 +63,7 @@ class Workspace(MPTTModel):
                 raise ValidationError(
                     _("This object parent must be a empty"),
                 )
-                
+
         if not self.parent:
             self.ct = None
         else:
@@ -94,10 +94,10 @@ class Workspace(MPTTModel):
         return _('Workspace')
 
     def update_url(self):
-         if self.parent:
-             self.url = "%s/%s" % (self.parent.url, self.slug)
-         else:
-             self.url = self.slug
+        if self.parent:
+            self.url = "%s/%s" % (self.parent.url, self.slug)
+        else:
+            self.url = self.slug
 
     @models.permalink
     def get_absolute_url(self):
