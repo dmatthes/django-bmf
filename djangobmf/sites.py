@@ -18,6 +18,7 @@ from django.apps import apps
 
 from .apps import BMFConfig
 from .models import Configuration
+from .workspace.models import Workspace
 from .views import ModuleIndexView
 from .views import ModuleReportView
 from .views import ModuleCreateView
@@ -30,6 +31,9 @@ from .views import ModuleFormAPI
 
 import copy
 import sys
+
+import logging
+logger = logging.getLogger(__name__)
 
 SETTING_KEY = "%s.%s"
 APP_LABEL = BMFConfig.label
@@ -98,7 +102,7 @@ class DjangoBMFModule(object):
 
         urlpatterns = patterns(
             '',
-            url(
+            url(  # TODO: OLD
                 r'^$',
                 index.as_view(model=self.model),
                 name='index',
@@ -239,6 +243,13 @@ class DjangoBMFSite(object):
         # all reports should be stored here
         self.reports = {}
 
+        # all workspaces should be stored here
+        self.workspace = {
+            'dashboard': {},
+            'category': {},
+            'genericview': {},
+        }
+
         # if a module requires a custom setting, it can be stored here
         self.settings = {}
         self.settings_valid = False
@@ -247,6 +258,8 @@ class DjangoBMFSite(object):
             'company_email': forms.EmailField(required=True,),
             'currency': forms.CharField(max_length=10, required=True,),  # TODO add validation / use dropdown
         })
+
+    # --- models --------------------------------------------------------------
 
     def register(self, model, admin=None, **options):
         self.register_model(model, admin)
@@ -288,6 +301,8 @@ class DjangoBMFSite(object):
             raise NotRegistered('The model %s is not registered' % model.__name__)
         del self._registry[model]
 
+    # --- views ---------------------------------------------------------------
+
     def register_view(self, model, type, view):
         if type in ['index', 'detail', 'update', 'delete', 'clone']:
             # TODO check if view is an bmf-view
@@ -309,6 +324,11 @@ class DjangoBMFSite(object):
             # add the view
             self._registry[model][type] = view
 
+    def register_genericview(self, dashboard, category, model, view):
+        pass
+
+    # --- currencies ----------------------------------------------------------
+
     def register_currency(self, currency):
         if currency.iso in self.currencies:
             raise AlreadyRegistered('The currency %s is already registered' % currency.__name__)
@@ -319,6 +339,8 @@ class DjangoBMFSite(object):
             raise NotRegistered('The currency %s is not registered' % currency.__name__)
         del self.currencies[currency.iso]
 
+    # --- reports -------------------------------------------------------------
+
     def register_report(self, name, cls):
         if name in self.reports:
             raise AlreadyRegistered('The report %s is already registered' % name)
@@ -328,6 +350,8 @@ class DjangoBMFSite(object):
         if name not in self.reports:
             raise NotRegistered('The currency %s is not registered' % name)
         del self.reports[name]
+
+    # --- settings ------------------------------------------------------------
 
     def register_settings(self, app_label, settings_dict):
         for setting_name, options in settings_dict.items():
@@ -367,6 +391,37 @@ class DjangoBMFSite(object):
             return self.settings[name].value
         except KeyError:
             raise NotRegistered('The setting %s is not registered' % name)
+
+    # --- workspace -----------------------------------------------------------
+
+    def register_dashboard(self, dashboard):
+
+        obj = dashboard()
+        label = '%s.%s' % (obj.__module__, obj.__class__.__name__)
+
+        if label in self.workspace["dashboard"].keys():
+            logger.debug('Dashboard %s already registered -- skipping registration' % label)
+            return True
+
+        workspace = apps.get_model(APP_LABEL, "Workspace")
+
+        ws, created = workspace.objects.get_or_create(module=label, level=0)
+        if created or ws.slug != obj.slug or ws.url != obj.slug:
+            ws.slug = obj.slug
+            ws.url = obj.slug
+            ws.editalbe = False
+            ws.save()
+
+        self.workspace["dashboard"][label] = obj
+        logger.debug('Dashboard %s registered' % label)
+
+        return True
+
+    # --- misc methods --------------------------------------------------------
+
+    @property
+    def is_ready(self):
+        return apps.get_app_config(APP_LABEL).is_ready
 
     @property
     def urls(self):
@@ -446,6 +501,7 @@ def autodiscover():
             before_import_c = copy.copy(site.currencies)
             before_import_s = copy.copy(site.settings)
             before_import_p = copy.copy(site.reports)
+            before_import_w = copy.copy(site.workspace)
             import_module('%s.%s' % (app_config.name, "bmf_module"))
         except:
             # Reset the model registry to the state before the last import
@@ -454,6 +510,7 @@ def autodiscover():
             site.currencies = before_import_c
             site.settings = before_import_s
             site.reports = before_import_p
+            site.workspace = before_import_w
 
             # Decide whether to bubble up this error
             if module_has_submodule(app_config.module, "bmf_module"):

@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from djangobmf.sites import site
+from djangobmf.categories import ProjectManagement
 
 from .models import Task
 from .models import Goal
@@ -12,6 +13,7 @@ from .views import TaskIndexView
 from .views import GoalCloneView
 from .views import GoalIndexView
 from .views import GoalDetailView
+
 
 site.register(Task, **{
     'index': TaskIndexView,
@@ -22,3 +24,5 @@ site.register(Goal, **{
     'clone': GoalCloneView,
     'detail': GoalDetailView,
 })
+
+site.register_dashboard(ProjectManagement)

@@ -16,7 +16,6 @@ from mptt.models import TreeForeignKey
 
 @python_2_unicode_compatible
 class Workspace(MPTTModel):
-    name = models.CharField(max_length=30, blank=False)
     slug = models.SlugField(max_length=30, blank=False)
     parent = TreeForeignKey(
         'self',
@@ -31,14 +30,14 @@ class Workspace(MPTTModel):
     public = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
 
-    label = models.CharField(max_length=100, blank=False, editable=True)
-    plugin = models.CharField(max_length=100, blank=False, editable=True)
+    module = models.CharField(max_length=255, blank=True, null=True, editable=True)
+#   plugin = models.CharField(max_length=100, blank=False, editable=True)
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['slug']
 
     class Meta:
         verbose_name = _("Workspace")
@@ -46,7 +45,7 @@ class Workspace(MPTTModel):
         unique_together = (("parent", "slug"), )
 
     def __str__(self):
-        return '%s: %s' % (self.type(), self.name)
+        return '%s: %s' % (self.type(), self.slug)
 
     def __init__(self, *args, **kwargs):
         super(Workspace, self).__init__(*args, **kwargs)
