@@ -5,13 +5,13 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
+from django.utils.timezone import now
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
 from djangobmf.fields import WorkflowField
 from djangobmf.settings import BASE_MODULE
-from django.utils.timezone import now
 from djangobmf.categories import PROJECT
 
 from .workflows import GoalWorkflow
