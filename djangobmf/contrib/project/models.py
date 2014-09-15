@@ -10,23 +10,20 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from djangobmf.models import BMFModel
 from djangobmf.categories import PROJECT
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_CUSTOMER
+from djangobmf.settings import CONTRIB_TEAM
+from djangobmf.settings import CONTRIB_EMPLOYEE
 
 
 @python_2_unicode_compatible
 class BaseProject(BMFModel):
-    if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="bmf_projects",
-            on_delete=models.SET_NULL,
-        )
     team = models.ForeignKey(
-        BASE_MODULE["TEAM"], null=True, blank=True,
+        CONTRIB_TEAM, null=True, blank=True,
         on_delete=models.SET_NULL,
         related_name="bmf_projects",
     )
     employees = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], blank=True,
+        CONTRIB_EMPLOYEE, blank=True,
         related_name="bmf_projects",
     )
 
@@ -42,15 +39,13 @@ class BaseProject(BMFModel):
         permissions = (
             ('can_manage', 'Can manage all projects'),
         )
+        swappable = "BMF_CONTRIB_PROJECT"
 
     class BMFMeta:
         category = PROJECT
 
     def __str__(self):
         return self.name
-
-    def bmfget_customer(self):
-        return self.customer
 
     def bmfget_project(self):
         return self
@@ -72,6 +67,14 @@ class AbstractProject(BaseProject):
     """
     """
     notes = models.TextField(null=False, blank=True, )
+
+    customer = models.ForeignKey(  # TODO: make optional
+        CONTRIB_CUSTOMER, null=True, blank=True, related_name="bmf_projects",
+        on_delete=models.SET_NULL,
+    )
+
+    def bmfget_customer(self):
+        return self.customer
 
     class Meta(BaseProject.Meta):
         abstract = True

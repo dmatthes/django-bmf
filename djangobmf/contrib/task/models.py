@@ -11,7 +11,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
 from djangobmf.fields import WorkflowField
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_EMPLOYEE
+from djangobmf.settings import CONTRIB_TEAM
+from djangobmf.settings import CONTRIB_GOAL
 from djangobmf.categories import PROJECT
 
 from .workflows import GoalWorkflow
@@ -23,10 +26,7 @@ from math import floor
 class GoalManager(models.Manager):
 
     def get_queryset(self):
-
-        if BASE_MODULE["PROJECT"]:
-            return super(GoalManager, self).get_queryset().select_related('project')
-        return super(GoalManager, self).get_queryset()
+        return super(GoalManager, self).get_queryset().select_related('project')
 
 
 @python_2_unicode_compatible
@@ -38,20 +38,19 @@ class AbstractGoal(BMFModel):
     summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
-        )
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT, null=True, blank=True, on_delete=models.CASCADE,
+    )
 
     referee = models.ForeignKey(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        CONTRIB_EMPLOYEE, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="+"
     )
     team = models.ForeignKey(
-        BASE_MODULE["TEAM"], null=True, blank=True, on_delete=models.SET_NULL,
+        CONTRIB_TEAM, null=True, blank=True, on_delete=models.SET_NULL,
     )
     employees = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], blank=True,
+        CONTRIB_EMPLOYEE, blank=True,
         related_name="employees"
     )
 
@@ -68,6 +67,7 @@ class AbstractGoal(BMFModel):
         permissions = (
             ('can_manage', 'Can manage all goals'),
         )
+        swappable = "BMF_CONTRIB_GOAL"
 
     def bmfget_customer(self):
         if self.project:
@@ -158,8 +158,7 @@ class TaskManager(models.Manager):
     def get_queryset(self):
 
         related = ['goal']
-        if BASE_MODULE["PROJECT"]:
-            related.append('project')
+        related.append('project')
 
         return super(TaskManager, self).get_queryset() \
             .annotate(due_count=models.Count('due_date')) \
@@ -181,18 +180,18 @@ class AbstractTask(BMFModel):
 
     work_date = models.DateTimeField(null=True, editable=False)
 
-    project = models.ForeignKey(
-        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT, null=True, blank=True, on_delete=models.CASCADE,
     )
     employee = models.ForeignKey(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        CONTRIB_EMPLOYEE, null=True, blank=True, on_delete=models.SET_NULL,
     )
     in_charge = models.ForeignKey(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        CONTRIB_EMPLOYEE, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="+", editable=False,
     )
 
-    goal = models.ForeignKey(BASE_MODULE["GOAL"], null=True, blank=True, on_delete=models.CASCADE)
+    goal = models.ForeignKey(CONTRIB_GOAL, null=True, blank=True, on_delete=models.CASCADE)
 
     seconds_on = models.PositiveIntegerField(null=True, default=0, editable=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
@@ -204,6 +203,7 @@ class AbstractTask(BMFModel):
         verbose_name_plural = _('Tasks')
         ordering = ['due_date', 'summary']
         abstract = True
+        swappable = "BMF_CONTRIB_TASK"
 
     def __str__(self):
         return '#%s: %s' % (self.pk, self.summary)

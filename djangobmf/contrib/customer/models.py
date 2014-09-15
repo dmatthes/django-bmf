@@ -10,8 +10,8 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from djangobmf.models import BMFModel
 from djangobmf.categories import SALES
-from djangobmf.settings import BASE_MODULE
-# from djangobmf.utils import get_model_from_name
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_ACCOUNT
 
 from djangobmf.contrib.accounting.models import ACCOUNTING_ASSET, ACCOUNTING_LIABILITY
 
@@ -27,16 +27,15 @@ class BaseCustomer(BMFModel):
         related_name="bmf_customer",
         on_delete=models.SET_NULL,
     )
-    if BASE_MODULE["PROJECT"]:
-        # TODO edit queryset for projects (show only company projects and own ones)
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"],
-            null=True,
-            blank=True,
-            related_name="+",
-            on_delete=models.PROTECT,
-            help_text=_("Projects function as cost-centers. This setting defines a default project for this customer."),
-        )
+    # TODO edit queryset for projects (show only company projects and own ones)
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT,
+        null=True,
+        blank=True,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text=_("Projects function as cost-centers. This setting defines a default project for this customer."),
+    )
     employee_at = models.ForeignKey(
         'self',
         null=True,
@@ -52,23 +51,24 @@ class BaseCustomer(BMFModel):
     is_supplier = models.BooleanField(_("Is supplier"), default=False)
     # TODO add language
     # TODO add timezone
-    if BASE_MODULE["ACCOUNT"]:
-        asset_account = models.ForeignKey(
-            BASE_MODULE["ACCOUNT"],
-            null=True,
-            blank=False,
-            related_name="customer_asset",
-            limit_choices_to={'type': ACCOUNTING_ASSET, 'read_only': False},
-            on_delete=models.PROTECT,
-        )
-        liability_account = models.ForeignKey(
-            BASE_MODULE["ACCOUNT"],
-            null=True,
-            blank=False,
-            related_name="customer_liability",
-            limit_choices_to={'type': ACCOUNTING_LIABILITY, 'read_only': False},
-            on_delete=models.PROTECT,
-        )
+
+    asset_account = models.ForeignKey(  # TODO: make optional
+        CONTRIB_ACCOUNT,
+        null=True,
+        blank=False,
+        related_name="customer_asset",
+        limit_choices_to={'type': ACCOUNTING_ASSET, 'read_only': False},
+        on_delete=models.PROTECT,
+    )
+    liability_account = models.ForeignKey(  # TODO: make optional
+        CONTRIB_ACCOUNT,
+        null=True,
+        blank=False,
+        related_name="customer_liability",
+        limit_choices_to={'type': ACCOUNTING_LIABILITY, 'read_only': False},
+        on_delete=models.PROTECT,
+    )
+
     customer_payment_term = models.PositiveSmallIntegerField(editable=False, default=1)
     supplier_payment_term = models.PositiveSmallIntegerField(editable=False, default=1)
 
@@ -77,6 +77,7 @@ class BaseCustomer(BMFModel):
         verbose_name_plural = _('Customers')
         ordering = ['name']
         abstract = True
+        swappable = "BMF_CONTRIB_CUSTOMER"
 
     class BMFMeta:
         category = SALES

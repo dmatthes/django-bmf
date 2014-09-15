@@ -10,7 +10,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from djangobmf.categories import SALES
 from djangobmf.currencies import BaseCurrency
 from djangobmf.models import BMFModel
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_ACCOUNT
+from djangobmf.settings import CONTRIB_TAX
+from djangobmf.settings import CONTRIB_PRODUCT
 from djangobmf.fields import CurrencyField
 from djangobmf.fields import MoneyField
 
@@ -75,7 +77,7 @@ class AbstractProduct(BMFModel):
     )
     price = MoneyField(_("Price"), blank=False)
     taxes = models.ManyToManyField(
-        BASE_MODULE["TAX"],
+        CONTRIB_TAX,
         blank=True,
         related_name="product_taxes",
         limit_choices_to={'is_active': True},
@@ -84,7 +86,7 @@ class AbstractProduct(BMFModel):
     # discount = models.FloatField(_('Max. discount'), default=0.0)
     # Accounting
     income_account = models.ForeignKey(
-        BASE_MODULE["ACCOUNT"],
+        CONTRIB_ACCOUNT,
         null=False,
         blank=False,
         related_name="product_income",
@@ -92,7 +94,7 @@ class AbstractProduct(BMFModel):
         on_delete=models.PROTECT,
     )
     expense_account = models.ForeignKey(
-        BASE_MODULE["ACCOUNT"],
+        CONTRIB_ACCOUNT,
         null=False,
         blank=False,
         related_name="product_expense",
@@ -155,6 +157,7 @@ class AbstractProduct(BMFModel):
         verbose_name_plural = _('Products')
         ordering = ['name']
         abstract = True
+        swappable = "BMF_CONTRIB_PRODUCT"
 
     class BMFMeta:
         category = SALES
@@ -205,14 +208,14 @@ class Product(AbstractProduct):
 
 class ProductTax(models.Model):
     product = models.ForeignKey(
-        BASE_MODULE["PRODUCT"],
+        CONTRIB_PRODUCT,
         null=True,
         blank=True,
         related_name="product_tax",
         on_delete=models.CASCADE,
     )
     tax = models.ForeignKey(
-        BASE_MODULE["TAX"],
+        CONTRIB_TAX,
         null=True,
         blank=True,
         related_name="product_tax",

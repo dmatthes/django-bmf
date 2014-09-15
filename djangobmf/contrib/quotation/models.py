@@ -9,7 +9,13 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from djangobmf.models import BMFModel
 from djangobmf.categories import SALES
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_CUSTOMER
+from djangobmf.settings import CONTRIB_QUOTATION
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_INVOICE
+from djangobmf.settings import CONTRIB_PRODUCT
+from djangobmf.settings import CONTRIB_EMPLOYEE
+from djangobmf.settings import CONTRIB_ADDRESS
 from djangobmf.fields import WorkflowField
 from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
 from djangobmf.fields import CurrencyField
@@ -27,50 +33,47 @@ class AbstractQuotation(BMFModel):
     """
     state = WorkflowField()
     invoice = models.OneToOneField(
-        BASE_MODULE["INVOICE"],
+        CONTRIB_INVOICE,
         null=True,
         blank=True,
         editable=False,
         related_name="quotation",
         on_delete=models.PROTECT
     )
-    if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["EMPLOYEE"]:
-        employee = models.ForeignKey(
-            BASE_MODULE["EMPLOYEE"],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
+    customer = models.ForeignKey(  # TODO: make me optional
+        CONTRIB_CUSTOMER,
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
+    project = models.ForeignKey(  # TODO: make me optional
+        CONTRIB_PROJECT,
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
+    employee = models.ForeignKey(  # TODO: make me optional
+        CONTRIB_EMPLOYEE,
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
     shipping_address = models.ForeignKey(
-        BASE_MODULE["ADDRESS"],
+        CONTRIB_ADDRESS,
         null=True,
         blank=True,
         related_name="shipping_quotation",
         on_delete=models.PROTECT,
     )
     invoice_address = models.ForeignKey(
-        BASE_MODULE["ADDRESS"],
+        CONTRIB_ADDRESS,
         null=True,
         blank=True,
         related_name="invoice_quotation",
         on_delete=models.PROTECT,
     )
     quotation_number = models.CharField(_('Quotation number'), max_length=255, null=True, blank=False)
-    products = models.ManyToManyField(BASE_MODULE["PRODUCT"], blank=False, through='QuotationProduct')
+    products = models.ManyToManyField(CONTRIB_PRODUCT, blank=False, through='QuotationProduct')
     net = models.FloatField(editable=False, blank=True, null=True)
     date = models.DateField(_("Date"), null=True, blank=False)
     valid_until = models.DateField(_("Valid until"), null=True, blank=True)
@@ -155,6 +158,7 @@ class AbstractQuotation(BMFModel):
         verbose_name_plural = _('Quotations')
         ordering = ['-pk']
         abstract = True
+        swappable = "BMF_CONTRIB_QUOTATION"
 
     class BMFMeta:
         category = SALES
@@ -173,11 +177,11 @@ class Quotation(AbstractQuotation):
 
 class QuotationProduct(models.Model):
     quotation = models.ForeignKey(
-        BASE_MODULE["QUOTATION"], null=True, blank=True,
+        CONTRIB_QUOTATION, null=True, blank=True,
         related_name="quotation_products", on_delete=models.CASCADE,
     )
     product = models.ForeignKey(
-        BASE_MODULE["PRODUCT"], null=True, blank=True,
+        CONTRIB_PRODUCT, null=True, blank=True,
         related_name="quotation_products", on_delete=models.PROTECT,
     )
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)
