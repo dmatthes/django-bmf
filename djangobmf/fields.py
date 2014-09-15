@@ -106,6 +106,11 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
         value = self._get_val_from_obj(obj)
         return self.get_prep_value(value)
 
+    def deconstruct(self):
+        name, path, args, kwargs = super(CurrencyField, self).deconstruct()
+        del kwargs["null"]
+        del kwargs["default"]
+        return name, path, args, kwargs
 
 class MoneyField(models.DecimalField):
     description = _("Money Field")
@@ -133,6 +138,13 @@ class MoneyField(models.DecimalField):
 
     def get_precision_field_name(self):
         return '%s_precision' % self.name
+
+    def deconstruct(self):
+        name, path, args, kwargs = super(MoneyField, self).deconstruct()
+        del kwargs["null"]
+        del kwargs["max_digits"]
+        del kwargs["decimal_places"]
+        return name, path, args, kwargs
 
     def contribute_to_class(self, cls, name):
         super(MoneyField, self).contribute_to_class(cls, name)
