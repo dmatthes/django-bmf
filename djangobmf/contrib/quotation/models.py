@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from djangobmf.models import BMFModel
 from djangobmf.categories import SALES
 from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_CUSTOMER
 from djangobmf.fields import WorkflowField
 from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
 from djangobmf.fields import CurrencyField
@@ -36,7 +37,7 @@ class AbstractQuotation(BMFModel):
         on_delete=models.PROTECT
     )
     customer = OptionalForeignKey(
-        BASE_MODULE["CUSTOMER"],
+        CONTRIB_CUSTOMER,
         null=True,
         blank=False,
         on_delete=models.SET_NULL,

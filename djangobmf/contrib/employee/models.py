@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFModel
 from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_CUSTOMER
 from djangobmf.categories import HR
 
 from djangobmf.contrib.product.models import PRODUCT_SERVICE
@@ -31,7 +32,7 @@ class AbstractEmployee(BaseEmployee):
     """
     """
     contact = OptionalForeignKey(
-        BASE_MODULE["CUSTOMER"],
+        CONTRIB_CUSTOMER,
         verbose_name=("Contact"),
         blank=True,
         null=True,

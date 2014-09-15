@@ -12,12 +12,13 @@ from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFModel
 from djangobmf.categories import PROJECT
 from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_CUSTOMER
 
 
 @python_2_unicode_compatible
 class BaseProject(BMFModel):
     customer = OptionalForeignKey(
-        BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="bmf_projects",
+        CONTRIB_CUSTOMER, null=True, blank=True, related_name="bmf_projects",
         on_delete=models.SET_NULL,
     )
     team = models.ForeignKey(

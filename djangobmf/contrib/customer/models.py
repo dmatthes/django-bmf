@@ -78,6 +78,7 @@ class BaseCustomer(BMFModel):
         verbose_name_plural = _('Customers')
         ordering = ['name']
         abstract = True
+        swappable = "BMF_CONTRIB_CUSTOMER"
 
     class BMFMeta:
         category = SALES

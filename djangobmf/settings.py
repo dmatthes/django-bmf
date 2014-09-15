@@ -8,16 +8,15 @@ overwrites bmf settings from django's settings
 """
 
 from django.conf import settings
-from django.core.files.storage import get_storage_class
 
-__all__ = (
-    'BASE_MODULE',
-    # 'FILE_SERVER',
-    'DOCUMENT_ROOT',
-    'DOCUMENT_URL',
-    'STORAGE',
-    'STORAGE_OPTIONS',
-)
+# swappable contrib models
+
+CONTRIB_CUSTOMER = getattr(settings, 'BMF_CONTRIB_CUSTOMER', 'djangobmf_customer.Customer')
+
+# OLD below this line ---------------------------------------------------------
+
+
+from django.core.files.storage import get_storage_class
 
 # === activity symbols ========================================================
 

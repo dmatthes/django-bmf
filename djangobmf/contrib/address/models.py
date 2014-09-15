@@ -8,13 +8,13 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_CUSTOMER
 from djangobmf.categories import SALES
 
 
 class BaseAddress(BMFModel):
     customer = models.ForeignKey(
-        BASE_MODULE["CUSTOMER"], null=False, blank=False,
+        CONTRIB_CUSTOMER, null=False, blank=False,
         related_name="customer_address", on_delete=models.CASCADE,
     )
 
