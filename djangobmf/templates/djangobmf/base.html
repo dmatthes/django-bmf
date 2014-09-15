@@ -62,7 +62,6 @@
           </ul>
           {% endif %}
           <ul class="nav navbar-nav navbar-right">
-            <li class="hidden-xs"><p class="navbar-text">{{ request.user }}</p></li>
             {% block navbar %}
             <li data-count="{{ djangobmf.notification_count }}" id="bmf_notification"><a href="{% url 'djangobmf:notification' %}">
               <span class="glyphicon glyphicon-comment"></span>
@@ -87,24 +86,24 @@
               <span class="glyphicon glyphicon-time"></span>
               <span class="nav-text">{% trans "Timesheet" %}</span>
             </a></li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <span class="glyphicon glyphicon-wrench"></span>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                {{ request.user }}
+            </a>
                 <span class="nav-text">{% trans "Settings" %} <b class="caret"></b></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="{% url 'djangobmf:modules' %}">{% trans "Module overview" %}</a></li>
-                {% if bmfmodule %}
-                <li><a id="bmfapi_saveview" href="{% url 'djangobmf:modal_saveview' %}">{% trans "Save current view" %}</a></li>
-                {% else %}
-                <li class="disabled"><a href="#">{% trans "Save current view" %}</a></li>
-                {% endif %}
-              </ul>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'djangobmf:modules' %}">{% trans "Module overview" %}</a></li>
+                    {% if bmfmodule %}
+                    <li><a id="bmfapi_saveview" href="{% url 'djangobmf:modal_saveview' %}">{% trans "Save current view" %}</a></li>
+                    {% else %}
+                    <li class="disabled"><a href="#">{% trans "Save current view" %}</a></li>
+                    {% endif %}
+                    <li class="divider"></li>
+                    <li><a id="bmfapi_logout" href="{% url 'djangobmf:modal_logout' %}">
+                        {% trans "Logout" %}
+                    </a></li>
+                </ul>
             </li>
-            <li><a id="bmfapi_logout" href="{% url 'djangobmf:modal_logout' %}">
-                <span class="glyphicon glyphicon-off"></span>
-              <span class="nav-text">{% trans "Logout" %}</span>
-            </a></li>
             {% endblock %}</ul>
 
         </div><!--/.nav-collapse -->
