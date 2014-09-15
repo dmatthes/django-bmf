@@ -11,7 +11,16 @@ from django.conf import settings
 
 # swappable contrib models
 
-CONTRIB_CUSTOMER = getattr(settings, 'BMF_CONTRIB_CUSTOMER', 'djangobmf_customer.Customer')
+def get_contrib(setting, model):
+    # we need to add the default model to the django settings. otherwise
+    # the migrations fail in django 1.7
+    if not hasattr(settings, setting):
+        setattr(settings, setting, model)
+    return getattr(settings, setting)
+
+CONTRIB_CUSTOMER = get_contrib('BMF_CONTRIB_CUSTOMER', 'djangobmf_customer.Customer')
+CONTRIB_PRODUCT = get_contrib('BMF_CONTRIB_PRODUCT', 'djangobmf_product.Product')
+CONTRIB_PROJECT = get_contrib('BMF_CONTRIB_PROJECT', 'djangobmf_project.Project')
 
 # OLD below this line ---------------------------------------------------------
 

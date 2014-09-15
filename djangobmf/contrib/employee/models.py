@@ -12,6 +12,7 @@ from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFModel
 from djangobmf.settings import BASE_MODULE
 from djangobmf.settings import CONTRIB_CUSTOMER
+from djangobmf.settings import CONTRIB_PRODUCT
 from djangobmf.categories import HR
 
 from djangobmf.contrib.product.models import PRODUCT_SERVICE
@@ -25,6 +26,7 @@ class BaseEmployee(BMFModel):
 
     class BMFMeta:
         category = HR
+        swappable = "BMF_CONTRIB_EMPLOYEE"
 
 
 @python_2_unicode_compatible
@@ -41,7 +43,7 @@ class AbstractEmployee(BaseEmployee):
         on_delete=models.PROTECT,
     )
     product = OptionalForeignKey(
-        BASE_MODULE["PRODUCT"],
+        CONTRIB_PRODUCT,
         verbose_name=("Product"),
         null=True,
         blank=True,
