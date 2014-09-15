@@ -10,6 +10,16 @@ from django.utils.six import with_metaclass
 from .currencies import BaseCurrency
 
 
+class OptionalForeignKey(models.ForeignKey):
+    pass
+#   def __new__(cls, foreignname, *args, **kwargs):
+#       print(cls)
+#       print(foreignname)
+#       print(args)
+#       print(kwargs)
+#       return = super(OptionalForeignKey, cls).__new__(foreignname, *args, **kwargs)
+
+
 class WorkflowField(with_metaclass(models.SubfieldBase, models.CharField)):
     """
     Holds the current state of an Workflow object

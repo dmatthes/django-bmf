@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
 from djangobmf.fields import WorkflowField
+from djangobmf.fields import OptionalForeignKey
 from djangobmf.settings import BASE_MODULE
 from djangobmf.categories import HR
 
@@ -33,14 +34,13 @@ class AbstractTimesheet(BMFModel):
         related_name="+"
     )
 
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["TASK"]:
-        task = models.ForeignKey(
-            BASE_MODULE["TASK"], null=True, blank=True, on_delete=models.SET_NULL,
-        )
+    project = OptionalForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
+
+    task = OptionalForeignKey(
+        BASE_MODULE["TASK"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
 
     def clean(self):
         # overwrite the project with the goals project
