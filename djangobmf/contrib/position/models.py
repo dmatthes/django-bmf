@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from djangobmf.models import BMFModel
 from djangobmf.categories import SALES
 from djangobmf.settings import BASE_MODULE
+from djangobmf.fields import OptionalForeignKey
 from djangobmf.fields import CurrencyField
 from djangobmf.fields import MoneyField
 
@@ -32,15 +33,13 @@ class PositionManager(models.Manager):
 class AbstractPosition(BMFModel):
     """
     """
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"], null=True, blank=False,
-            related_name="+", on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["EMPLOYEE"]:
-        employee = models.ForeignKey(
-            BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL,
-        )
+    project = OptionalForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=False,
+        related_name="+", on_delete=models.SET_NULL,
+    )
+    employee = OptionalForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL,
+    )
 
     date = models.DateField(_("Date"), null=True, blank=False)
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)

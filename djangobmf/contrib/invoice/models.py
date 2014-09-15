@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from djangobmf.models import BMFModel
 from djangobmf.categories import ACCOUNTING
 from djangobmf.settings import BASE_MODULE
+from djangobmf.fields import OptionalForeignKey
 from djangobmf.fields import WorkflowField
 from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
 from djangobmf.fields import CurrencyField
@@ -26,21 +27,18 @@ class AbstractInvoice(BMFModel):
     """
     """
     state = WorkflowField()
-    if BASE_MODULE['CUSTOMER']:
-        customer = models.ForeignKey(
-            BASE_MODULE['CUSTOMER'],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE['PROJECT']:
-        project = models.ForeignKey(
-            BASE_MODULE['PROJECT'], null=True, blank=False, on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE['EMPLOYEE']:
-        employee = models.ForeignKey(
-            BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL,
-        )
+    customer = OptionalForeignKey(
+        BASE_MODULE['CUSTOMER'],
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
+    project = OptionalForeignKey(
+        BASE_MODULE['PROJECT'], null=True, blank=False, on_delete=models.SET_NULL,
+    )
+    employee = OptionalForeignKey(
+        BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL,
+    )
     shipping_address = models.ForeignKey(
         BASE_MODULE["ADDRESS"], related_name="shipping_invoice",
         blank=False, null=True, on_delete=models.SET_NULL,

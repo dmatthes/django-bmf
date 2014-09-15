@@ -17,6 +17,7 @@ from djangobmf.categories import ACCOUNTING
 from djangobmf.fields import CurrencyField
 from djangobmf.fields import MoneyField
 from djangobmf.fields import WorkflowField
+from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFMPTTModel
 from djangobmf.models import BMFModel
 from djangobmf.settings import BASE_MODULE
@@ -159,10 +160,9 @@ class AbstractTransaction(BMFModel):
     ==============  ========  ========
     """
     state = WorkflowField()
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
-        )
+    project = OptionalForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
+    )
     text = models.CharField(
         _('Posting text'), max_length=255, null=False, blank=False,
     )

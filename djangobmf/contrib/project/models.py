@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
+from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFModel
 from djangobmf.categories import PROJECT
 from djangobmf.settings import BASE_MODULE
@@ -15,11 +16,10 @@ from djangobmf.settings import BASE_MODULE
 
 @python_2_unicode_compatible
 class BaseProject(BMFModel):
-    if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="bmf_projects",
-            on_delete=models.SET_NULL,
-        )
+    customer = OptionalForeignKey(
+        BASE_MODULE["CUSTOMER"], null=True, blank=True, related_name="bmf_projects",
+        on_delete=models.SET_NULL,
+    )
     team = models.ForeignKey(
         BASE_MODULE["TEAM"], null=True, blank=True,
         on_delete=models.SET_NULL,

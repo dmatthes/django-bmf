@@ -14,6 +14,7 @@ from djangobmf.fields import WorkflowField
 from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
 from djangobmf.fields import CurrencyField
 from djangobmf.fields import MoneyField
+from djangobmf.fields import OptionalForeignKey
 
 import datetime
 from decimal import Decimal
@@ -34,27 +35,24 @@ class AbstractQuotation(BMFModel):
         related_name="quotation",
         on_delete=models.PROTECT
     )
-    if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["EMPLOYEE"]:
-        employee = models.ForeignKey(
-            BASE_MODULE["EMPLOYEE"],
-            null=True,
-            blank=False,
-            on_delete=models.SET_NULL,
-        )
+    customer = OptionalForeignKey(
+        BASE_MODULE["CUSTOMER"],
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
+    project = OptionalForeignKey(
+        BASE_MODULE["PROJECT"],
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
+    employee = OptionalForeignKey(
+        BASE_MODULE["EMPLOYEE"],
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
     shipping_address = models.ForeignKey(
         BASE_MODULE["ADDRESS"],
         null=True,

@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
+from djangobmf.fields import OptionalForeignKey
 from djangobmf.fields import WorkflowField
 from djangobmf.settings import BASE_MODULE
 from djangobmf.categories import PROJECT
@@ -38,10 +39,9 @@ class AbstractGoal(BMFModel):
     summary = models.CharField(_("Title"), max_length=255, null=True, blank=False, )
     description = models.TextField(_("Description"), null=True, blank=True, )
 
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
-        )
+    project = OptionalForeignKey(
+        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
+    )
 
     referee = models.ForeignKey(
         BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
@@ -181,7 +181,7 @@ class AbstractTask(BMFModel):
 
     work_date = models.DateTimeField(null=True, editable=False)
 
-    project = models.ForeignKey(
+    project = OptionalForeignKey(
         BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.CASCADE,
     )
     employee = models.ForeignKey(
