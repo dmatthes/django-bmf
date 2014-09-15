@@ -9,9 +9,13 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from djangobmf.models import BMFModel
 from djangobmf.categories import ACCOUNTING
-from djangobmf.settings import BASE_MODULE
 from djangobmf.settings import CONTRIB_CUSTOMER
-from djangobmf.fields import OptionalForeignKey
+from djangobmf.settings import CONTRIB_PRODUCT
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_EMPLOYEE
+from djangobmf.settings import CONTRIB_INVOICE
+from djangobmf.settings import CONTRIB_ADDRESS
+from djangobmf.settings import CONTRIB_TRANSACTION
 from djangobmf.fields import WorkflowField
 from djangobmf.numbering.utils import numbercycle_get_name, numbercycle_delete_object
 from djangobmf.fields import CurrencyField
@@ -24,64 +28,76 @@ from .workflows import InvoiceWorkflow
 
 
 @python_2_unicode_compatible
-class AbstractInvoice(BMFModel):
-    """
-    """
+class BaseInvoice(BMFModel):
+
     state = WorkflowField()
-    customer = OptionalForeignKey(
-        CONTRIB_CUSTOMER,
-        null=True,
-        blank=False,
-        on_delete=models.SET_NULL,
-    )
-    project = OptionalForeignKey(
-        BASE_MODULE['PROJECT'], null=True, blank=False, on_delete=models.SET_NULL,
-    )
-    employee = OptionalForeignKey(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=False, on_delete=models.SET_NULL,
-    )
     shipping_address = models.ForeignKey(
-        BASE_MODULE["ADDRESS"], related_name="shipping_invoice",
+        CONTRIB_ADDRESS, related_name="shipping_invoice",
         blank=False, null=True, on_delete=models.SET_NULL,
     )
     invoice_address = models.ForeignKey(
-        BASE_MODULE["ADDRESS"], related_name="quotation_invoice", blank=False,
+        CONTRIB_ADDRESS, related_name="quotation_invoice", blank=False,
         null=True, on_delete=models.SET_NULL,
     )
     invoice_number = models.CharField(_('Invoice number'), max_length=255, null=True, blank=False)
-    products = models.ManyToManyField(BASE_MODULE['PRODUCT'], through='InvoiceProduct')
+    products = models.ManyToManyField(CONTRIB_PRODUCT, through='InvoiceProduct')
     net = models.FloatField(editable=False, blank=True, null=True)
     date = models.DateField(_("Date"), null=True, blank=False)
-    due = models.DateField(_("Due"), null=True, blank=True)
-    notes = models.TextField(_("Notes"), null=True, blank=True)
-    term_of_payment = models.TextField(_("Term of payment"), blank=True, null=True)
+
     transaction = models.ForeignKey(
-        BASE_MODULE["TRANSACTION"], null=True, blank=True, related_name="transation_invoice",
+        CONTRIB_TRANSACTION, null=True, blank=True, related_name="transation_invoice",
         editable=False, on_delete=models.PROTECT,
     )
-
-    def __str__(self):
-        return '%s' % self.invoice_number
-
-    class Meta:
-        verbose_name = _('Invoice')
-        verbose_name_plural = _('Invoices')
-        ordering = ['invoice_number']
-        abstract = True
-
-    class BMFMeta:
-        category = ACCOUNTING
-        number_cycle = "INV{year}/{month}-{counter:04d}"
-        has_files = True
-        has_comments = True
-        workflow = InvoiceWorkflow
-        workflow_field = 'state'
 
     @staticmethod
     def post_save(sender, instance, created, raw, *args, **kwargs):
         if not instance.invoice_number:
             name = numbercycle_get_name(instance)
             instance._meta.model.objects.filter(pk=instance.pk).update(invoice_number=name)
+
+    def __str__(self):
+        return '%s' % self.invoice_number
+
+    class BMFMeta:
+        category = ACCOUNTING
+        number_cycle = "INV{year}/{month}-{counter:04d}"
+        workflow = InvoiceWorkflow
+        workflow_field = 'state'
+
+    class Meta:
+        verbose_name = _('Invoice')
+        verbose_name_plural = _('Invoices')
+        ordering = ['invoice_number']
+        abstract = True
+        swappable = "BMF_CONTRIB_INVOICE"
+
+
+class AbstractInvoice(BaseInvoice):
+    """
+    """
+    customer = models.ForeignKey(  # TODO: make optional
+        CONTRIB_CUSTOMER,
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+    )
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT, null=True, blank=False, on_delete=models.SET_NULL,
+    )
+    employee = models.ForeignKey(  # TODO: make optional
+        CONTRIB_EMPLOYEE, null=True, blank=False, on_delete=models.SET_NULL,
+    )
+
+    due = models.DateField(_("Due"), null=True, blank=True)
+    notes = models.TextField(_("Notes"), null=True, blank=True)
+    term_of_payment = models.TextField(_("Term of payment"), blank=True, null=True)
+
+    class Meta(BaseInvoice.Meta):
+        abstract = True
+
+    class BMFMeta(BaseInvoice.BMFMeta):
+        has_files = True
+        has_comments = True
 
     def bmfget_customer(self):
         if hasattr(self, 'customer'):
@@ -148,11 +164,11 @@ class Invoice(AbstractInvoice):
 
 class InvoiceProduct(models.Model):
     invoice = models.ForeignKey(
-        BASE_MODULE['INVOICE'], null=True, blank=True,
+        CONTRIB_INVOICE, null=True, blank=True,
         related_name="invoice_products", on_delete=models.CASCADE,
     )
     product = models.ForeignKey(
-        BASE_MODULE['PRODUCT'], null=True, blank=True,
+        CONTRIB_PRODUCT, null=True, blank=True,
         related_name="invoice_products", on_delete=models.PROTECT,
     )
     name = models.CharField(_("Name"), max_length=255, null=True, blank=False)

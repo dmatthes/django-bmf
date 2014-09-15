@@ -8,11 +8,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFModel
 from djangobmf.categories import SALES
-from djangobmf.settings import BASE_MODULE
-# from djangobmf.utils import get_model_from_name
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_ACCOUNT
 
 from djangobmf.contrib.accounting.models import ACCOUNTING_ASSET, ACCOUNTING_LIABILITY
 
@@ -29,8 +28,8 @@ class BaseCustomer(BMFModel):
         on_delete=models.SET_NULL,
     )
     # TODO edit queryset for projects (show only company projects and own ones)
-    project = OptionalForeignKey(
-        BASE_MODULE["PROJECT"],
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT,
         null=True,
         blank=True,
         related_name="+",
@@ -53,16 +52,16 @@ class BaseCustomer(BMFModel):
     # TODO add language
     # TODO add timezone
 
-    asset_account = OptionalForeignKey(
-        BASE_MODULE["ACCOUNT"],
+    asset_account = models.ForeignKey(  # TODO: make optional
+        CONTRIB_ACCOUNT,
         null=True,
         blank=False,
         related_name="customer_asset",
         limit_choices_to={'type': ACCOUNTING_ASSET, 'read_only': False},
         on_delete=models.PROTECT,
     )
-    liability_account = OptionalForeignKey(
-        BASE_MODULE["ACCOUNT"],
+    liability_account = models.ForeignKey(  # TODO: make optional
+        CONTRIB_ACCOUNT,
         null=True,
         blank=False,
         related_name="customer_liability",

@@ -10,8 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
 from djangobmf.fields import WorkflowField
-from djangobmf.fields import OptionalForeignKey
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_EMPLOYEE
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_TASK
 from djangobmf.categories import HR
 
 from .workflows import TimesheetWorkflow
@@ -30,16 +31,16 @@ class AbstractTimesheet(BMFModel):
     valid = models.BooleanField(default=False, editable=False)
 
     employee = models.ForeignKey(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True, on_delete=models.SET_NULL,
+        CONTRIB_EMPLOYEE, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="+"
     )
 
-    project = OptionalForeignKey(
-        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT, null=True, blank=True, on_delete=models.SET_NULL,
     )
 
-    task = OptionalForeignKey(
-        BASE_MODULE["TASK"], null=True, blank=True, on_delete=models.SET_NULL,
+    task = models.ForeignKey(  # TODO: make optional
+        CONTRIB_TASK, null=True, blank=True, on_delete=models.SET_NULL,
     )
 
     def clean(self):
@@ -67,6 +68,7 @@ class AbstractTimesheet(BMFModel):
         permissions = (
             ('can_manage', 'Can manage timesheets'),
         )
+        swappable = "BMF_CONTRIB_TIMESHEET"
 
     def bmfget_customer(self):
         if self.project:

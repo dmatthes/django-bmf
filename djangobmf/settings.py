@@ -9,7 +9,9 @@ overwrites bmf settings from django's settings
 
 from django.conf import settings
 
+
 # swappable contrib models
+
 
 def get_contrib(setting, model):
     # we need to add the default model to the django settings. otherwise
@@ -18,9 +20,24 @@ def get_contrib(setting, model):
         setattr(settings, setting, model)
     return getattr(settings, setting)
 
+
+CONTRIB_ACCOUNT = get_contrib('BMF_CONTRIB_ACCOUNT', 'djangobmf_accounting.Account')
+CONTRIB_ADDRESS = get_contrib('BMF_CONTRIB_ADDRESS', 'djangobmf_address.Address')
 CONTRIB_CUSTOMER = get_contrib('BMF_CONTRIB_CUSTOMER', 'djangobmf_customer.Customer')
+CONTRIB_EMPLOYEE = get_contrib('BMF_CONTRIB_EMPLOYEE', 'djangobmf_employee.Employee')
+CONTRIB_GOAL = get_contrib('BMF_CONTRIB_GOAL', 'djangobmf_task.Goal')
+CONTRIB_INVOICE = get_contrib('BMF_CONTRIB_INVOICE', 'djangobmf_invoice.Invoice')
+CONTRIB_TAX = get_contrib('BMF_CONTRIB_TAX', 'djangobmf_taxing.Tax')
+CONTRIB_TASK = get_contrib('BMF_CONTRIB_TASK', 'djangobmf_task.Task')
+CONTRIB_TEAM = get_contrib('BMF_CONTRIB_TEAM', 'djangobmf_team.Team')
+CONTRIB_POSITION = get_contrib('BMF_CONTRIB_POSITION', 'djangobmf_position.Position')
 CONTRIB_PRODUCT = get_contrib('BMF_CONTRIB_PRODUCT', 'djangobmf_product.Product')
 CONTRIB_PROJECT = get_contrib('BMF_CONTRIB_PROJECT', 'djangobmf_project.Project')
+CONTRIB_QUOTATION = get_contrib('BMF_CONTRIB_QUOTATION', 'djangobmf_quotation.Quotation')
+CONTRIB_TIMESHEET = get_contrib('BMF_CONTRIB_TIMESHEET', 'djangobmf_timesheet.Timesheet')
+CONTRIB_TRANSACTION = get_contrib('BMF_CONTRIB_TRANSACTION', 'djangobmf_accounting.Transaction')
+# CONTRIB_TRANSACTION_ITEM = get_contrib('BMF_CONTRIB_TRANSACTION_ITEM', 'djangobmf_accounting.TransactionItem')
+
 
 # OLD below this line ---------------------------------------------------------
 
@@ -38,6 +55,7 @@ ACTIVITY_UNKNOWN = "glyphicon-question-sign"
 
 # === modules =================================================================
 
+# TODO CHECK IF USED AND DELETE THIS CODE
 bmf_modules = getattr(settings, 'BMF_MODULES', {})
 BASE_MODULE = {
     'ACCOUNT': 'djangobmf_accounting.Account',

@@ -11,20 +11,19 @@ from django.utils.translation import ugettext_lazy as _
 
 from .storage import BMFStorage
 
-from ..settings import BASE_MODULE
+from ..settings import CONTRIB_CUSTOMER
+from ..settings import CONTRIB_PROJECT
 from ..utils import generate_filename
 
 
 @python_2_unicode_compatible
 class Document(models.Model):
-    if BASE_MODULE["CUSTOMER"]:
-        customer = models.ForeignKey(
-            BASE_MODULE["CUSTOMER"], null=True, blank=True, on_delete=models.SET_NULL,
-        )
-    if BASE_MODULE["PROJECT"]:
-        project = models.ForeignKey(
-            BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
-        )
+    customer = models.ForeignKey(  # TODO: make optional
+        CONTRIB_CUSTOMER, null=True, blank=True, on_delete=models.SET_NULL,
+    )
+    project = models.ForeignKey(  # TODO: make optional
+        CONTRIB_PROJECT, null=True, blank=True, on_delete=models.SET_NULL,
+    )
     file = models.FileField(_('File'), upload_to=generate_filename, storage=BMFStorage())
     size = models.PositiveIntegerField(null=True, blank=True, editable=False)
 

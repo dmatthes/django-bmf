@@ -8,7 +8,8 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangobmf.models import BMFModel
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_TEAM
+from djangobmf.settings import CONTRIB_EMPLOYEE
 from djangobmf.categories import HR
 
 
@@ -20,7 +21,7 @@ class AbstractTeam(BMFModel):
         max_length=255, null=False, blank=False, editable=True,
     )
     members = models.ManyToManyField(
-        BASE_MODULE["EMPLOYEE"], blank=True, related_name="teams",
+        CONTRIB_EMPLOYEE, blank=True, related_name="teams",
         limit_choices_to={'user__isnull': False}, through='TeamMember',
     )
 
@@ -29,6 +30,7 @@ class AbstractTeam(BMFModel):
         verbose_name_plural = _('Teams')
         ordering = ['name']
         abstract = True
+        swappable = "BMF_CONTRIB_TEAM"
 
     class BMFMeta:
         search_fields = ['name']
@@ -41,10 +43,10 @@ class AbstractTeam(BMFModel):
 
 class TeamMember(models.Model):
     team = models.ForeignKey(
-        BASE_MODULE["TEAM"], null=True, blank=True, related_name="+", on_delete=models.CASCADE,
+        CONTRIB_TEAM, null=True, blank=True, related_name="+", on_delete=models.CASCADE,
     )
     employee = models.ForeignKey(
-        BASE_MODULE["EMPLOYEE"], null=True, blank=True, related_name="+", on_delete=models.CASCADE,
+        CONTRIB_EMPLOYEE, null=True, blank=True, related_name="+", on_delete=models.CASCADE,
     )
     is_manager = models.BooleanField(_("Is manager"), default=False)
 

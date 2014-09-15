@@ -17,10 +17,11 @@ from djangobmf.categories import ACCOUNTING
 from djangobmf.fields import CurrencyField
 from djangobmf.fields import MoneyField
 from djangobmf.fields import WorkflowField
-from djangobmf.fields import OptionalForeignKey
 from djangobmf.models import BMFMPTTModel
 from djangobmf.models import BMFModel
-from djangobmf.settings import BASE_MODULE
+from djangobmf.settings import CONTRIB_ACCOUNT
+from djangobmf.settings import CONTRIB_PROJECT
+from djangobmf.settings import CONTRIB_TRANSACTION
 
 from .workflows import TransactionWorkflow
 
@@ -90,6 +91,7 @@ class BaseAccount(BMFMPTTModel):
         verbose_name_plural = _('Accounts')
         ordering = ['number', 'name', 'type']
         abstract = True
+        swappable = "BMF_CONTRIB_ACCOUNT"
 
     class BMFMeta:
         category = ACCOUNTING
@@ -160,13 +162,13 @@ class AbstractTransaction(BMFModel):
     ==============  ========  ========
     """
     state = WorkflowField()
-    project = OptionalForeignKey(
-        BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
+    project = models.ForeignKey(  # TODO optional
+        CONTRIB_PROJECT, null=True, blank=True, on_delete=models.SET_NULL,
     )
     text = models.CharField(
         _('Posting text'), max_length=255, null=False, blank=False,
     )
-    accounts = models.ManyToManyField(BASE_MODULE["ACCOUNT"], blank=False, through="TransactionItem")
+    accounts = models.ManyToManyField(CONTRIB_ACCOUNT, blank=False, through="TransactionItem")
     balanced = models.BooleanField(_('Draft'), default=False, editable=False)
 
 # expensed = models.BooleanField(_('Expensed'), blank=True, null=False, default=False, )
@@ -175,6 +177,7 @@ class AbstractTransaction(BMFModel):
         verbose_name = _('Transaction')
         verbose_name_plural = _('Transactions')
         abstract = True
+        swappable = "BMF_CONTRIB_TRANSACTION"
 
     class BMFMeta:
         category = ACCOUNTING
@@ -205,11 +208,11 @@ class AbstractTransactionItem(models.Model):
     """
     """
     account = models.ForeignKey(
-        BASE_MODULE["ACCOUNT"], null=True, blank=True,
+        CONTRIB_ACCOUNT, null=True, blank=True,
         related_name="transaction_accounts", on_delete=models.PROTECT,
     )
     transaction = models.ForeignKey(
-        BASE_MODULE["TRANSACTION"], null=True, blank=True,
+        CONTRIB_TRANSACTION, null=True, blank=True,
         related_name="account_transactions", on_delete=models.CASCADE,
     )
     amount_currency = CurrencyField()

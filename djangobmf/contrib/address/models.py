@@ -34,6 +34,7 @@ class BaseAddress(BMFModel):
         verbose_name_plural = _('Addresses')
         ordering = ['name']
         abstract = True
+        swappable = "BMF_CONTRIB_ADDRESS"
 
     class BMFMeta:
         category = SALES
