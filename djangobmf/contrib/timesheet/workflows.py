@@ -7,8 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 
 from djangobmf.workflows import Workflow, State, Transition
-from djangobmf.utils import get_model_from_cfg
-from django.core.exceptions import ValidationError
 
 
 def validate_condition(object, user):
@@ -20,9 +18,9 @@ def validate_condition(object, user):
 class TimesheetWorkflow(Workflow):
 
     class States:
-        active = State(_(u"Active"), True, delete=False)
+        active = State(_(u"Active"), True, update=False, delete=False)
         finished = State(_(u"Finished"), delete=True)
-        validated = State(_(u"Validated"), delete=True)
+        validated = State(_(u"Validated"), update=False, delete=True)
 
     class Transitions:
         finish = Transition(

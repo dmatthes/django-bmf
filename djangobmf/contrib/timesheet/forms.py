@@ -16,6 +16,7 @@ class TimesheetCreateForm(ModelForm):
             'end',
         ]
 
+
 class TimesheetUpdateForm(ModelForm):
     class Meta:
         model = Timesheet

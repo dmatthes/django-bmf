@@ -38,10 +38,26 @@ class AbstractTimesheet(BMFModel):
             BASE_MODULE["PROJECT"], null=True, blank=True, on_delete=models.SET_NULL,
         )
     if BASE_MODULE["TASK"]:
-        project = models.ForeignKey(
+        task = models.ForeignKey(
             BASE_MODULE["TASK"], null=True, blank=True, on_delete=models.SET_NULL,
         )
 
+    def clean(self):
+        # overwrite the project with the goals project
+        if self.task:
+            self.project = self.task.project
+
+    def get_project_queryset(self, qs):
+        if self.task:
+            return qs.filter(task=self.task)
+        else:
+            return qs
+
+    def get_task_queryset(self, qs):
+        if self.project:
+            return qs.filter(project=self.project)
+        else:
+            return qs
 
     class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Timesheet')
