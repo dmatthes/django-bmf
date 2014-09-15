@@ -155,6 +155,7 @@ class AbstractProduct(BMFModel):
         verbose_name_plural = _('Products')
         ordering = ['name']
         abstract = True
+        swappable = "BMF_CONTRIB_PRODUCT"
 
     class BMFMeta:
         category = SALES
