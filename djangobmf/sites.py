@@ -4,17 +4,18 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.apps import apps
 from django.conf import settings
 from django.conf.urls import patterns, url, include
 from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.admin.sites import NotRegistered
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
+from django.db.utils import OperationalError
 from django.utils.module_loading import module_has_submodule
 from django.utils.module_loading import import_module
 from django.utils import six
 from django.utils.text import slugify
-from django.apps import apps
 
 from .apps import BMFConfig
 from .models import Configuration
@@ -405,7 +406,12 @@ class DjangoBMFSite(object):
 
         workspace = apps.get_model(APP_LABEL, "Workspace")
 
-        ws, created = workspace.objects.get_or_create(module=label, level=0)
+        try:
+            ws, created = workspace.objects.get_or_create(module=label, level=0)
+        except OperationalError: 
+            logger.debug('Database not ready, skipping registration of Dashboard %s' % label)
+            return False
+
         if created or ws.slug != obj.slug or ws.url != obj.slug:
             ws.slug = obj.slug
             ws.url = obj.slug
