@@ -268,6 +268,12 @@ class BMFSimpleModel(six.with_metaclass(BMFModelBase, models.Model)):
         """
         return dict([(field, getattr(self, field)) for field in self._bmfmeta.observed_fields])
 
+    def bmfworkflow_transition(self, transition, user, employee=None, teams=None):
+        """
+        Returns the current state of the workflow attached to this model
+        """
+        return self._bmfworkflow._current_state
+
     def get_workflow_state(self):
         """
         Returns the current state of the workflow attached to this model

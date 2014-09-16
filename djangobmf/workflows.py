@@ -202,7 +202,7 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
         self._current_state = self._states[key]
         self._current_state_key = key
 
-    def _call(self, key, instance, user):
+    def _call(self, key, instance, user, employee=None, teams=None):
 
         # check if key is valid
         if self._current_state_key not in self._transitions[key].sources:
