@@ -16,12 +16,21 @@ Contents
 
 .. toctree::
     :maxdepth: 2
-    :numbered:
 
     getting_started/index
-    user_types
+
+    userguide/index
+
+    developing/index
+
     tutorial/index
-    internals/index
+
+    internals/philosophies
+    internals/about-us
+    internals/contributing
+    internals/todo
+    internals/roadmap
+    internals/changelog
 
 
 **************************

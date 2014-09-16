@@ -1,34 +1,36 @@
 
-Version 0.9
+
+Version 0.2
 ====================================
 
-First beta-release
-
-
-Version 0.5
-====================================
-
-CRM or Product
-
-
-Version 0.4
-====================================
-
-DMS
+Tasks, Goals and Projects finished
 
 
 Version 0.3
 ====================================
 
-Timesheets
+Timesheets finished
 
 
-Version 0.2
+Version 0.4
 ====================================
 
-Accounting, Quotations and Invoices
+Accounting, Quotations and Invoices finished
 
-Version 0.1
+
+Version 0.5
 ====================================
 
-Tasks, Goals and Projects
+Document-Management-System finished
+
+
+Version 0.6
+====================================
+
+CRM or Products finished
+
+
+Version 0.9
+====================================
+
+First beta-release

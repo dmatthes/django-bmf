@@ -2,7 +2,9 @@
 Version 0.1.5
 ==================
 
-* Redesigned notifications and dashboard
+* Redesigned notifications
+* All contrib models are ``swappable``
+* Initialised ``contrib.timesheets``
 
 Version 0.1.4
 ==================

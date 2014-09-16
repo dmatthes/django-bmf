@@ -1,11 +1,11 @@
 ******************************************
-Document
+Timesheet
 ******************************************
 
 Models
 ==================================================
 
-.. automodule:: djangobmf.contrib.document.models
+.. automodule:: djangobmf.contrib.timesheet.models
    :members:
    :show-inheritance:
 

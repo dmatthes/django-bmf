@@ -5,13 +5,15 @@ Developing Applications
 
 .. toctree::
     :maxdepth: 1
-    :numbered:
+    :titlesonly:
 
+    contrib
     filestorage
     activity
     numbercycles
     workflows
     models
     modeloptions
+    settings
 
 

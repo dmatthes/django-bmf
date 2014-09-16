@@ -114,45 +114,6 @@ def locale():
 
 
 @task
-def docs():
-  """
-  generates model class diagrams
-  """
-  with cd(BASEDIR + '/docs'):
-    local("make html SPHINXBUILD='../.tox/docs/bin/python ../.tox/docs/bin/sphinx-build'")
-
-# models = [
-#     'server',
-#     'accounting',
-#     'address',
-#     'company',
-#     'currency',
-#     'customer',
-#     'document',
-#     'employee',
-#     'event',
-#     'invoice',
-#     'history',
-#     'memo',
-#     'partner',
-#     'position',
-#     'product',
-#     'project',
-#     'quotation',
-#     'shipment',
-#     'stock',
-#     'task',
-#     'tax',
-#     'team',
-#     'timesheet',
-#     ]
-
-# for i in models:
-#   local('%s %s graph_models -g -e -o docs/images/module_%s.png %s' % (PYTHON, MANAGE, i, i))
-# local('%s %s graph_models -g -d -e -o docs/images/overview.png %s' % (PYTHON, MANAGE, ' '.join(models)))
-
-
-@task
 def make(data=''):
   """
   """
