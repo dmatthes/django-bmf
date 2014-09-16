@@ -9,7 +9,7 @@ from django.apps import apps
 def model_from_name(name):
     app, modelname = name.split('.')
 
-    if not apps.is_installed(app):
+    try:
+        return apps.get_model(app, modelname)
+    except LookupError:
         return None
-
-    return apps.get_model(app, modelname)

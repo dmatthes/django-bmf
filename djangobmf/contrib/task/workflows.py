@@ -121,12 +121,21 @@ class TaskWorkflow(Workflow):
         self.instance.in_charge = self.user.djangobmf_employee
         self.instance.employee = self.user.djangobmf_employee
 
+        if self.instance.project:
+            project = self.instance.project
+        elif self.instance.goal:
+            project = self.instance.goal.project
+        else:
+            project = None
+
         timesheet = model_from_name(CONTRIB_TIMESHEET)
-        if timesheet:
+        if timesheet is not None:
             obj = timesheet(
-                task=self,
+                task=self.instance,
                 employee=self.user.djangobmf_employee,
                 auto=True,
+                project=project,
+                summary=self.instance.summary
             )
             obj.save()
 
@@ -138,26 +147,15 @@ class TaskWorkflow(Workflow):
         if not self.instance.in_charge and self.instance.employee:
             self.instance.in_charge = self.instance.employee
 
-        if self.instance.project:
-            project = self.instance.project
-        elif self.instance.goal:
-            project = self.instance.goal.project
-        else:
-            project = None
-
         timesheet = model_from_name(CONTRIB_TIMESHEET)
-        if timesheet:
-            try:
-                obj = timesheet.objects.get(
-                    task=self,
-                    employee=self.user.djangobmf_employee,
-                    end=None,
-                    auto=True,
-                    project=project,
-                )
+        if timesheet is not None:
+            for obj in timesheet.objects.filter(
+                task=self.instance,
+                employee=self.user.djangobmf_employee,
+                end=None,
+                auto=True,
+            ):
                 obj.bmfworkflow_transition('finish', self.user)
-            except timesheet.DoesNotExist:
-                pass
 
     def hold(self):
         self.stop()
