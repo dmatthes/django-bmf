@@ -1,0 +1,44 @@
+{% extends "djangobmf/module_index.html" %}
+
+{% load i18n %}
+
+{% block base_content %}
+<table class="table table-striped table-condensed table-hover">
+  <thead>
+    <tr>
+        <th width="15%">{% trans "Date" %}</th>
+        <th width="40%">{% trans "Subject" %}</th>
+        <th width="20%">{% trans "Employee" %}</th>
+        <th width="20%">{% trans "Time" %}</th>
+        <th width="5%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for obj in object_list %}
+    <tr>
+      <td>{{ obj.start|date:"SHORT_DATE_FORMAT" }}</td>
+      <td>{% if not obj.end %}<span class="label label-warning">{% trans "Active" %}</span>{% endif %}
+          {{ obj.summary }}
+          {% if obj.project or obj.task %}<br /><small class="text-muted">
+              {% if obj.project %}<strong>{{ obj.project }}</strong>{% endif %} {% if obj.task %}{{ obj.task }}{% endif %}
+          </small>
+          {% endif %}
+      </td>
+      <td>{{ obj.employee }}</td>
+      <td>
+          {% if obj.end %}
+          {{ obj.start|timesince:obj.end }}
+          {% else %}
+          {{ obj.start|timesince }}
+          {% endif %}
+      </td>
+      <td class="text-right">
+        <a class="btn btn-xs btn-primary" href="{{ obj.bmfmodule_detail }}">
+          <span class="glyphicon glyphicon-list"></span>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

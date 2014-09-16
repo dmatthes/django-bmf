@@ -18,6 +18,16 @@ from djangobmf.categories import HR
 from .workflows import TimesheetWorkflow
 
 
+class TimesheetManager(models.Manager):
+
+    def get_queryset(self):
+
+        return super(TimesheetManager, self).get_queryset() \
+            .annotate(end_count=models.Count('end')) \
+            .order_by('end_count', '-end', 'summary') \
+            .select_related('task', 'project', 'employee')
+
+
 @python_2_unicode_compatible
 class AbstractTimesheet(BMFModel):
     """
@@ -44,6 +54,8 @@ class AbstractTimesheet(BMFModel):
         CONTRIB_TASK, null=True, blank=True, on_delete=models.SET_NULL,
     )
 
+    objects = TimesheetManager()
+
     def clean(self):
         # overwrite the project with the goals project
         if self.task:
@@ -64,7 +76,7 @@ class AbstractTimesheet(BMFModel):
     class Meta(BMFModel.Meta):  # only needed for abstract models
         verbose_name = _('Timesheet')
         verbose_name_plural = _('Timesheets')
-        ordering = ['start']
+        ordering = ['-end']
         abstract = True
         permissions = (
             ('can_manage', 'Can manage timesheets'),

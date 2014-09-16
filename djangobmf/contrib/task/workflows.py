@@ -151,7 +151,7 @@ class TaskWorkflow(Workflow):
         if timesheet is not None:
             for obj in timesheet.objects.filter(
                 task=self.instance,
-                employee=self.user.djangobmf_employee,
+                employee__in=[self.instance.in_charge, self.user.djangobmf_employee],
                 end=None,
                 auto=True,
             ):
