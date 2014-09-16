@@ -9,6 +9,8 @@ from django.utils.encoding import force_text
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from djangobmf.utils.user import user_add_bmf
+
 import inspect
 from collections import OrderedDict
 
@@ -207,6 +209,8 @@ class Workflow(six.with_metaclass(WorkflowMetaclass, object)):
         # check if key is valid
         if self._current_state_key not in self._transitions[key].sources:
             raise ValidationError(_("This transition is not valid"))
+
+        user_add_bmf(user)
 
         # update object with instance and user (they come in handy in user-defined functions)
         self.instance = instance

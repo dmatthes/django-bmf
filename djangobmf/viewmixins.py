@@ -20,7 +20,7 @@ from django.views.defaults import permission_denied
 from djangobmf import get_version
 from djangobmf.decorators import login_required
 from djangobmf.models import Notification
-from djangobmf.utils import get_model_from_cfg
+from djangobmf.utils.user import user_add_bmf
 
 import json
 import datetime
@@ -78,29 +78,18 @@ class BaseMixin(object):
         if not self.check_permissions() or not self.request.user.has_perms(self.get_permissions([])):
             return permission_denied(self.request)
 
-        # === EMPLOYEE ====================================================
+        # === EMPLOYEE AND TEAMS ==========================================
 
-        employee = get_model_from_cfg('EMPLOYEE')
-        if employee:
-            try:
-                self.request.user.djangobmf_employee = employee.objects.get(user=self.request.user)
-            except employee.DoesNotExist:
-                logger.debug("User %s does not have permission to access djangobmf" % self.request.user)
-                if self.request.user.is_superuser:
-                    return redirect('djangobmf:wizard', permanent=False)
-                else:
-                    raise PermissionDenied
-        else:
-            self.request.user.djangobmf_employee = None
+        user_add_bmf(self.request.user)
 
-        # === TEAM ========================================================
+        if self.request.user.djangobmf_has_employee and not self.request.user.djangobmf_employee:
+            logger.debug("User %s does not have permission to access djangobmf" % self.request.user)
+            if self.request.user.is_superuser:
+                return redirect('djangobmf:wizard', permanent=False)
+            else:
+                raise PermissionDenied
 
-        team = get_model_from_cfg('TEAM')
-        if team:
-            self.request.user.djangobmf_teams = \
-                team.objects.filter(members=self.request.user.djangobmf_employee).values_list("id", flat=1)
-        else:
-            self.request.user.djangobmf_teams = None
+        # =================================================================
 
         return super(BaseMixin, self).dispatch(*args, **kwargs)
 

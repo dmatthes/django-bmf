@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import signals
 from django.db.models.base import ModelBase
@@ -14,12 +15,12 @@ from django.core.exceptions import ImproperlyConfigured
 from django.contrib.contenttypes.fields import GenericRelation
 
 from .apps import BMFConfig
-
-from .workflows import DefaultWorkflow
 from .fields import WorkflowField
-
 from .notification.models import Activity
 from .notification.models import Notification
+from .signals import activity_workflow
+from .signals import djangobmf_post_save
+from .workflows import DefaultWorkflow
 
 import types
 import inspect
@@ -267,6 +268,25 @@ class BMFSimpleModel(six.with_metaclass(BMFModelBase, models.Model)):
         returns the values of every field in self._bmfmeta.observed_fields as a dictionary
         """
         return dict([(field, getattr(self, field)) for field in self._bmfmeta.observed_fields])
+
+    def bmfworkflow_transition(self, to, user):
+        """
+        Returns the current state of the workflow attached to this model
+        """
+
+        transitions = dict(self._bmfworkflow._from_here())
+        if to not in transitions:
+            raise ValidationError(_("This transition is not valid"))
+
+        success_url = self._bmfworkflow._call(to, self, user)  # TODO remove me, if workflows use ajax
+        self.modified_by = user
+        self.save()
+
+        # generate a history object and signal
+        activity_workflow.send(sender=self.__class__, instance=self)
+        djangobmf_post_save.send(sender=self.__class__, instance=self, new=False)
+
+        return success_url  # TODO remove me, if workflows use ajax
 
     def get_workflow_state(self):
         """

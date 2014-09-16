@@ -112,6 +112,7 @@ class CurrencyField(with_metaclass(models.SubfieldBase, models.CharField)):
         del kwargs["default"]
         return name, path, args, kwargs
 
+
 class MoneyField(models.DecimalField):
     description = _("Money Field")
 
