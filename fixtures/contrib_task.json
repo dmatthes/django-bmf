@@ -1,7 +1,6 @@
 [
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-07-19T15:33:44.772Z",
   "summary": "Example Target",
@@ -25,7 +24,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-07-19T15:33:59.733Z",
   "summary": "Target without Project",
@@ -49,7 +47,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-08-29T13:36:13.619Z",
   "summary": "Goal no project, employee and team",
@@ -73,7 +70,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [
    2
   ],
@@ -99,7 +95,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-08-29T13:36:55.947Z",
   "summary": "Goal no project and employee",
@@ -123,7 +118,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-08-29T13:37:41.116Z",
   "summary": "Goal no employee and team",
@@ -147,7 +141,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-08-29T13:37:50.437Z",
   "summary": "Goal no employee and team",
@@ -171,7 +164,6 @@
 },
 {
  "fields": {
-  "billable": false,
   "employees": [],
   "created": "2014-08-29T13:38:14.028Z",
   "summary": "Goal only referee",
@@ -195,7 +187,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": null,
   "due_date": null,
   "created": "2014-07-19T15:34:22.501Z",
@@ -209,7 +200,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -220,7 +210,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 2,
   "due_date": null,
   "created": "2014-07-19T15:34:35.757Z",
@@ -234,7 +223,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -245,7 +233,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 1,
   "due_date": null,
   "created": "2014-07-19T15:34:53.908Z",
@@ -259,7 +246,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -270,7 +256,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 5,
   "due_date": null,
   "created": "2014-08-29T14:30:05.174Z",
@@ -284,7 +269,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -295,7 +279,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 4,
   "due_date": null,
   "created": "2014-08-29T14:30:20.259Z",
@@ -309,7 +292,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -320,7 +302,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 3,
   "due_date": null,
   "created": "2014-08-29T14:30:33.650Z",
@@ -334,7 +315,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -345,7 +325,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 8,
   "due_date": null,
   "created": "2014-08-29T14:30:49.917Z",
@@ -359,7 +338,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -370,7 +348,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 6,
   "due_date": null,
   "created": "2014-08-29T14:31:04.775Z",
@@ -384,7 +361,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],
@@ -395,7 +371,6 @@
 },
 {
  "fields": {
-  "seconds_on": 0,
   "goal": 7,
   "due_date": null,
   "created": "2014-08-29T14:31:18.160Z",
@@ -409,7 +384,6 @@
   "completed": false,
   "state": "new",
   "uuid": null,
-  "work_date": null,
   "created_by": [
    "admin"
   ],

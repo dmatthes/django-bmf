@@ -28,6 +28,7 @@ class AbstractTimesheet(BMFModel):
     description = models.TextField(_("Description"), null=True, blank=True, )
     start = models.DateTimeField(null=True, blank=False, default=now)
     end = models.DateTimeField(null=True, blank=True)
+    auto = models.BooleanField(default=False, editable=False)
     valid = models.BooleanField(default=False, editable=False)
 
     employee = models.ForeignKey(

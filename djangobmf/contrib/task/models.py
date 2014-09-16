@@ -54,7 +54,6 @@ class AbstractGoal(BMFModel):
         related_name="employees"
     )
 
-    billable = models.BooleanField(_("Is billable"), default=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
     objects = GoalManager()
@@ -175,10 +174,7 @@ class AbstractTask(BMFModel):
 
     summary = models.CharField(_("Title"), max_length=255, null=True, blank=False)
     description = models.TextField(_("Description"), null=True, blank=True)
-
     due_date = models.DateField(_('Due date'), null=True, blank=True)
-
-    work_date = models.DateTimeField(null=True, editable=False)
 
     project = models.ForeignKey(  # TODO: make optional
         CONTRIB_PROJECT, null=True, blank=True, on_delete=models.CASCADE,
@@ -193,7 +189,6 @@ class AbstractTask(BMFModel):
 
     goal = models.ForeignKey(CONTRIB_GOAL, null=True, blank=True, on_delete=models.CASCADE)
 
-    seconds_on = models.PositiveIntegerField(null=True, default=0, editable=False)
     completed = models.BooleanField(_("Completed"), default=False, editable=False)
 
     objects = TaskManager()

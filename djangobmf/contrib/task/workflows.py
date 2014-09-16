@@ -3,14 +3,12 @@
 
 from __future__ import unicode_literals
 
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from django.utils.timezone import now
-
-from math import ceil
 
 from djangobmf.workflows import Workflow, State, Transition
-from djangobmf.utils import get_model_from_cfg
-from django.core.exceptions import ValidationError
+from djangobmf.settings import CONTRIB_TIMESHEET
+from djangobmf.utils.model_from_name import model_from_name
 
 
 def cancel_condition(object, user):
@@ -58,7 +56,6 @@ def finish_condition(object, user):
 
 
 class TaskWorkflow(Workflow):
-    bill_resolution = 5  # minutes
 
     class States:
         new = State(_(u"New"), True, delete=False)
@@ -121,38 +118,60 @@ class TaskWorkflow(Workflow):
         )
 
     def start(self):
-        self.instance.work_date = now()
-        self.instance.in_charge_id = self.user.pk
-        self.instance.employee_id = self.user.pk
+        self.instance.in_charge = self.user.djangobmf_employee
+        self.instance.employee = self.user.djangobmf_employee
+
+        timesheet = model_from_name(CONTRIB_TIMESHEET)
+        if timesheet:
+            obj = timesheet(
+                task=self,
+                employee=self.user.djangobmf_employee,
+                auto=True,
+            )
+            obj.save()
 
     def todo(self):
-        self.instance.in_charge_id = self.user.pk
-        self.instance.employee_id = self.user.pk
+        self.instance.in_charge = self.user.djangobmf_employee
+        self.instance.employee = self.user.djangobmf_employee
 
     def stop(self):
-        if not self.instance.in_charge_id and self.instance.employee_id:
-            self.instance.in_charge_id = self.instance.employee_id
+        if not self.instance.in_charge and self.instance.employee:
+            self.instance.in_charge = self.instance.employee
 
-        if self.instance.work_date:
-            self.instance.seconds_on += int((now() - self.instance.work_date).total_seconds())
-        self.instance.work_date = now()
+        if self.instance.project:
+            project = self.instance.project
+        elif self.instance.goal:
+            project = self.instance.goal.project
+        else:
+            project = None
+
+        timesheet = model_from_name(CONTRIB_TIMESHEET)
+        if timesheet:
+            try:
+                obj = timesheet.objects.get(
+                    task=self,
+                    employee=self.user.djangobmf_employee,
+                    end=None,
+                    auto=True,
+                    project=project,
+                )
+                obj.bmfworkflow_transition('finish', self.user)
+            except timesheet.DoesNotExist:
+                pass
 
     def hold(self):
         self.stop()
 
-    def unreview(self):  # LOOK: probably not needed, if timesheets are implemented
-        self.instance.employee_id = self.instance.in_charge_id
-        self.instance.work_date = now()
+    def unreview(self):
+        self.instance.employee = self.instance.in_charge
 
     def reopen(self):
-        self.instance.employee_id = self.instance.in_charge_id
-        self.instance.seconds_on = 0  # LOOK: probably not needed, if timesheets are implemented
-        self.instance.work_date = now()
+        self.instance.employee = self.instance.in_charge
         self.instance.completed = False
 
     def review(self):
-        if not self.instance.in_charge_id and self.instance.employee_id:
-            self.instance.in_charge_id = self.instance.employee_id
+        if not self.instance.in_charge and self.instance.employee:
+            self.instance.in_charge = self.instance.employee
         if self.instance.goal:
             self.instance.employee = self.instance.goal.referee
         self.stop()
@@ -160,32 +179,7 @@ class TaskWorkflow(Workflow):
     def finish(self):
         self.stop()
         self.instance.due_date = None
-
-        # TODO remove this functionality IF timesheets are implemented
-        billable_time = ceil(self.instance.seconds_on / 60.)
-
-        # get the project from
-        if self.instance.project:  # TODO untested
-            project = self.instance.project
-        elif self.instance.goal:  # TODO untested
-            project = self.instance.goal.project
-        else:
-            project = None
-
         self.instance.completed = True
-
-        if project and project.customer and self.instance.goal and self.instance.employee:  # TODO untested
-            if self.instance.goal.billable and billable_time > 0:
-                if not self.instance.employee.product:
-                    raise ValidationError(_("The employee's user-account needs a default product"))
-                position = get_model_from_cfg('POSITION')(
-                    name=self.instance.summary, project=project,
-                    employee=self.user.bmf_employee,
-                    date=now(), product=self.user.bmf_employee.product,
-                    amount=self.bill_resolution * ceil(billable_time / self.bill_resolution) / 60.)
-                position.clean()
-                position.save()
-                return position.bmfmodule_detail()
 
     def cancel(self):
         self.finish()

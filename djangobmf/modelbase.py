@@ -269,16 +269,16 @@ class BMFSimpleModel(six.with_metaclass(BMFModelBase, models.Model)):
         """
         return dict([(field, getattr(self, field)) for field in self._bmfmeta.observed_fields])
 
-    def bmfworkflow_transition(self, to, user):
+    def bmfworkflow_transition(self, via, user):
         """
-        Returns the current state of the workflow attached to this model
+        executes the ``via`` transition of the workflow state.
         """
 
         transitions = dict(self._bmfworkflow._from_here())
-        if to not in transitions:
+        if via not in transitions:
             raise ValidationError(_("This transition is not valid"))
 
-        success_url = self._bmfworkflow._call(to, self, user)  # TODO remove me, if workflows use ajax
+        success_url = self._bmfworkflow._call(via, self, user)  # TODO remove me, if workflows use ajax
         self.modified_by = user
         self.save()
 

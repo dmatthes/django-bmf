@@ -66,11 +66,11 @@ class TaskModuleTests(BMFModuleTestCase):
     def test_task_workflows(self):
         """
         """
-        goal1 = Goal(summary="Goal1", project_id=1, billable=True)
+        goal1 = Goal(summary="Goal1", project_id=1)
         goal1.clean()
         goal1.save()
 
-        goal2 = Goal(summary="Goal2", project_id=1, billable=True, referee_id=2)
+        goal2 = Goal(summary="Goal2", project_id=1, referee_id=2)
         goal2.clean()
         goal2.save()
 
@@ -116,7 +116,7 @@ class TaskModuleTests(BMFModuleTestCase):
 
         task6.get_project_queryset(Project.all())
 
-        task7 = Task(summary="Task7", goal=goal1, seconds_on=1222, employee_id=1)
+        task7 = Task(summary="Task7", goal=goal1, employee_id=1)
         task7.clean()
         task7.save()
 

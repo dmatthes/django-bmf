@@ -5,6 +5,10 @@ from djangobmf.settings import CONTRIB_TEAM
 
 
 def user_add_bmf(user):
+    """
+    Adds ``djangobmf_employee`` and ``djangobmf_teams`` to the given
+    user instance.
+    """
 
     if not hasattr(user, 'djangobmf_employee'):
         try:
