@@ -20,7 +20,7 @@ from django.views.defaults import permission_denied
 from djangobmf import get_version
 from djangobmf.decorators import login_required
 from djangobmf.models import Notification
-from djangobmf.utils.user import bmfuser
+from djangobmf.utils.user import user_add_bmf
 
 import json
 import datetime
@@ -80,7 +80,7 @@ class BaseMixin(object):
 
         # === EMPLOYEE AND TEAMS ==========================================
 
-        bmfuser(self.request.user)
+        user_add_bmf(self.request.user)
 
         if self.request.user.djangobmf_has_employee and not self.request.user.djangobmf_employee:
             logger.debug("User %s does not have permission to access djangobmf" % self.request.user)

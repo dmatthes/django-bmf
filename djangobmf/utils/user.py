@@ -4,7 +4,7 @@ from djangobmf.settings import CONTRIB_EMPLOYEE
 from djangobmf.settings import CONTRIB_TEAM
 
 
-def bmfuser(user):
+def user_add_bmf(user):
 
     if not hasattr(user, 'djangobmf_employee'):
         try:

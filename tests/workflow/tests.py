@@ -11,6 +11,8 @@ from django.core.exceptions import ValidationError
 
 from djangobmf.workflows import State, Transition, Workflow, DefaultWorkflow
 
+from django.contrib.auth.models import User
+
 
 class ClassTests(TestCase):
     def test_state(self):
@@ -123,6 +125,9 @@ class ClassTests(TestCase):
 
     def test_api(self):
 
+        user = User()
+        user.save()
+
         # this is valid (jeah)
         class TestWF(Workflow):
             class States:
@@ -153,10 +158,10 @@ class ClassTests(TestCase):
 
         msg = "reserved name: instance"
         with self.assertRaises(ValidationError, msg=msg):
-            WF._call('trans1', None, None)
-        self.assertEqual(WF._call('trans2', None, None), "custom function called")
-        self.assertEqual(WF._call('trans3', None, None), "custom function called")
-        self.assertEqual(WF._call('trans4', None, None), None)
+            WF._call('trans1', None, user)
+        self.assertEqual(WF._call('trans2', None, user), "custom function called")
+        self.assertEqual(WF._call('trans3', None, user), "custom function called")
+        self.assertEqual(WF._call('trans4', None, user), None)
 
 '''
 from django.test import LiveServerTestCase

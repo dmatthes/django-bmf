@@ -30,8 +30,8 @@ from .notification.models import Activity
 from .notification.models import Notification
 from .signals import activity_create
 from .signals import activity_update
-from .signals import activity_workflow
-from .signals import djangobmf_post_save
+# from .signals import activity_workflow
+# from .signals import djangobmf_post_save
 from .utils import form_class_factory
 from .viewmixins import ModuleClonePermissionMixin
 from .viewmixins import ModuleCreatePermissionMixin
@@ -397,12 +397,9 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
     def get(self, request, transition='', *args, **kwargs):
         self.object = self.get_object()
 
-        transitions = dict(self.object._bmfworkflow._from_here())
-        if transition not in transitions:
-            raise Http404
-
         try:
-            self.success_url = self.object._bmfworkflow._call(transition, self.object, self.request.user)
+            # TODO also change modelbase.py, when updating to use ajax
+            self.success_url = self.object.bmfworkflow_transition(transition, self.request.user)
         except ValidationError as e:
             # the objects gets checks with full_clean
             # if a validation error is raised, show an error page and don't save the object
@@ -411,13 +408,7 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
                 template=['djangobmf/module_workflow.html'],
                 context=self.get_context_data(error=e),
             )
-        self.object = self.object._bmfworkflow.instance
-        self.object.modified_by = self.request.user
-        self.object.save()
 
-        # generate a history object and signal
-        activity_workflow.send(sender=self.object.__class__, instance=self.object)
-        djangobmf_post_save.send(sender=self.object.__class__, instance=self.object, new=False)
         messages.success(self.request, 'Workflow-State changed')
         return HttpResponseRedirect(self.get_success_url())
 
