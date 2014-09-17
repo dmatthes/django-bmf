@@ -32,7 +32,6 @@
                     {% endif %}
                 </ul>
             </div>
-            <div id="page-content-wrapper">
 {# NEW #}
 
     <div class="page-container">
@@ -130,23 +129,22 @@
     {% endblock %}
     </div> <!-- /page-container -->
 {# NEW #}
-          </div>
       </div>
 {# NEW #}
-    <footer>
-      <div class="container">
-          <p><a href="http://www.django-bmf.org">django BMF</a> v{{ djangobmf.version }}</small></p>
-      </div> <!-- /container -->
-    </footer>
-    <script src="{% url "djangobmf:jsi18n" %}?v={{ djangobmf.version }}"></script>
-    <script src="{% static "admin/js/jquery.min.js" %}"></script>
-    {% if debug %}
-    <script src="{% static "djangobmf/js/jquery.cookie.min.js" %}?v={{ djangobmf.version }}"></script>
-    <script src="{% static "djangobmf/js/jquery.treegrid.min.js" %}?v={{ djangobmf.version }}"></script>
-    <script src="{% static "djangobmf/js/bootstrap.min.js" %}?v={{ djangobmf.version }}"></script>
-    <script src="{% static "djangobmf/js/djangobmf.js" %}?v={{ djangobmf.version }}"></script>
-    {% else %}
-    <script src="{% static "djangobmf/js/djangobmf.min.js" %}?v={{ djangobmf.version }}"></script>
-    {% endif %}{% render_block "js" %}
-  </body>
+        <footer>
+            <div class="container">
+                <p><a href="http://www.django-bmf.org">django BMF</a> v{{ djangobmf.version }}</small></p>
+            </div> <!-- /container -->
+        </footer>
+        <script src="{% url "djangobmf:jsi18n" %}?v={{ djangobmf.version }}"></script>
+        <script src="{% static "admin/js/jquery.min.js" %}"></script>
+        {% if debug %}
+        <script src="{% static "djangobmf/js/jquery.cookie.min.js" %}?v={{ djangobmf.version }}"></script>
+        <script src="{% static "djangobmf/js/jquery.treegrid.min.js" %}?v={{ djangobmf.version }}"></script>
+        <script src="{% static "djangobmf/js/bootstrap.min.js" %}?v={{ djangobmf.version }}"></script>
+        <script src="{% static "djangobmf/js/djangobmf.js" %}?v={{ djangobmf.version }}"></script>
+        {% else %}
+        <script src="{% static "djangobmf/js/djangobmf.min.js" %}?v={{ djangobmf.version }}"></script>
+        {% endif %}{% render_block "js" %}
+    </body>
 </html>
