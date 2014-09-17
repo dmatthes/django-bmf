@@ -34,7 +34,9 @@ class GoalWorkflow(Workflow):
         self.instance.completed = True
 
     def cancel(self):
-        # TODO autoclose all tasks
+        # TODO autoclose all tasks - needs testing / exception catching
+        # for obj in self.instance.task_set.filter(completed=False):
+        #     obj.bmfworkflow_transition('cancel', self.user)
         if self.instance.task_set.filter(completed=False).count() > 0:  # TODO untested
             raise ValidationError(_('You can not complete a goal which has open tasks'))
         self.instance.completed = True
