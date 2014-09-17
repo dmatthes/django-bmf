@@ -46,7 +46,7 @@
 @navbar-height: 36px;
 
 @container-tablet: ((720px + @grid-gutter-width - @bmf-logo-dim - 2 * @bmf-logo-padding));
-//@container-desktop: @container-tablet;
+// @container-desktop: @container-tablet;
 @container-desktop: ((940px + @grid-gutter-width - @bmf-sidebar-width));
 @container-large-desktop: ((1140px + @grid-gutter-width - @bmf-sidebar-width));
 
@@ -90,20 +90,20 @@
 -------------------------------------------------- */
 
 html {
-  overflow-y: scroll
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
 }
-html,
 body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
+    height: 100%;
 }
 
 /* Navigation
 -------------------------------------------------- */
 .navbar-inverse {
-  span.nav-text {
-    display: none;
-  }
+    span.nav-text {
+        display: none;
+    }
 
   #bmf_notification, #bmf_message {
     & > a > span.glyphicon {
@@ -143,21 +143,21 @@ body {
 
 }
 @media (max-width: @screen-xs-max) {
-  .navbar-inverse {
-    span.nav-text {
-      display: inline;
+    .navbar-inverse {
+        span.nav-text {
+            display: inline;
+        }
     }
-  }
 }
 
 /* Dropdown at mouseover
 -------------------------------------------------- */
 @media (min-width: @screen-sm) {
-  ul.nav.dashboards {
-    & > li.dropdown:hover .dropdown-menu {
-      display: block;
+    ul.nav.dashboards {
+        & > li.dropdown:hover .dropdown-menu {
+            display: block;
+        }
     }
-  }
 }
 
 /* Markdown checklist
@@ -182,6 +182,7 @@ ul > li.checklist {
     display: inline-block;
     position: relative;
 }
+
 .treegrid-expander {
     width: 16px;
     height: 16px;
@@ -189,7 +190,6 @@ ul > li.checklist {
     position: relative;
     cursor: pointer;
 }
-
 
 /* Footer
 -------------------------------------------------- */
@@ -199,6 +199,12 @@ footer {
     margin: 0;
     color: @gray-light;
     background: @gray-lighter;
+    width: 100%;
+
+    -webkit-transition: padding 0.5s ease, margin 0.5s ease;
+    -moz-transition: padding 0.5s ease, margin 0.5s ease;
+    -o-transition: padding 0.5s ease, margin 0.5s ease;
+    transition: padding 0.5s ease, margin 0.5s ease;
     
     p {
         padding: 0;
@@ -211,15 +217,6 @@ footer {
     a:hover {
         color: @brand-primary;
         text-decoration: underline;
-    }
-}
-@media(max-width: @screen-sm-max) {
-    footer {
-        padding-left: @bmf-logo-dim + 2 * @bmf-logo-padding;
-    }
-
-    .bmfsidebar-toggled footer {
-        padding-left: @bmf-sidebar-width;
     }
 }
 
@@ -248,25 +245,20 @@ footer {
 -------------------------------------------------- */
 
 /* Wrapper for page content to push down footer */
+
 #wrap {
     width: 100%;
     min-height: 100%; /* for modern browsers */
     height:auto !important; /* for modern browser */
     height:100%; /* for IE */
     overflow: hidden !important; /* FF scrollbar */ 
+    padding: 0 0 0 @bmf-sidebar-width;
+    margin: 0;
+    -webkit-transition: padding 0.5s ease, margin 0.5s ease;
+    -moz-transition: padding 0.5s ease, margin 0.5s ease;
+    -o-transition: padding 0.5s ease, margin 0.5s ease;
+    transition: padding 0.5s ease, margin 0.5s ease;
 }
-
-/*
-#page-content-wrapper {
-    background: #0f0;
-}
-.page-container {
-    background: #00f;
-}
-#wrap {
-    background: #0ff;
-}
-*/
 
 #sidebar {
     position: fixed;
@@ -276,6 +268,11 @@ footer {
     overflow-x: hidden;
     overflow-y: auto;
     background: #000;
+    left: 0;
+    -webkit-transition: left 0.5s ease;
+    -moz-transition: left 0.5s ease;
+    -o-transition: left 0.5s ease;
+    transition: left 0.5s ease;
 
     p.switch {
         visibility: hidden;
@@ -287,6 +284,15 @@ footer {
 
         a {
             display:block;
+            opacity: 0.8;
+            -webkit-transition: opacity 0.2s ease;
+            -moz-transition: opacity 0.2s ease;
+            -o-transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease;
+
+            &:hover {
+                opacity: 1.0;
+            }
         }
 
         img {
@@ -296,53 +302,35 @@ footer {
     }
 }
 
-#page-content-wrapper {
-    margin-left: @bmf-sidebar-width;
-}
-
-// tablet or smaller get special treatment
 @media(max-width: @screen-sm-max) {
 
-    #wrap {
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
+    #wrap, footer {
+        padding-left: @bmf-logo-dim + 2 * @bmf-logo-padding;
     }
 
-    .bmfsidebar-toggled #wrap .page-container {
-        margin-left: @bmf-sidebar-width;
+    .bmfsidebar-toggled #wrap,
+    .bmfsidebar-toggled footer {
+        margin-left: @bmf-sidebar-width - @bmf-logo-dim - 2 * @bmf-logo-padding ;
     }
-
-    .bmfsidebar-toggled #wrap #sidebar {
-        width: @bmf-sidebar-width;
-
-        ul {
-            display: block;
-        }
-    }
-
-    #page-content-wrapper {
-        margin-left: @bmf-logo-dim + 2 * @bmf-logo-padding;
-    }
-
+  
     #sidebar {
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-        width: @bmf-logo-dim + 2 * @bmf-logo-padding;
-
+        left: @bmf-logo-dim + 2 * @bmf-logo-padding - @bmf-sidebar-width;
+  
         p.switch {
             visibility: visible;
         }
-
         ul {
             display: none;
         }
     }
-}
 
+    .bmfsidebar-toggled #sidebar {
+        left: 0;
+        ul {
+            display: block;
+        }
+    }
+}
 
 /* Sitebar Styles
 -------------------------------------------------- */
