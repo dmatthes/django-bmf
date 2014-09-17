@@ -12,6 +12,7 @@
         <link href="{% static "djangobmf/css/djangobmf.min.css" %}?v={{ djangobmf.version }}" rel="stylesheet">{% render_block "css" %}
     </head>
     <body>
+        {% block full_body %}
 {# NEW #}
         <div id="wrap">
             <div id="sidebar">
@@ -31,12 +32,12 @@
                     </li>
                     {% endif %}
                 </ul>
+                Cache: {{ workspace }}
             </div>
             <div id="page-content-wrapper">
 {# NEW #}
 
     <div class="page-container">
-    {% block full_body %}
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -127,7 +128,6 @@
       </div>{% endif %}
       {% block full_content %}{% endblock %}
     </div> <!-- /container -->
-    {% endblock %}
     </div> <!-- /page-container -->
 {# NEW #}
           </div>
@@ -138,6 +138,7 @@
           <p><a href="http://www.django-bmf.org">django BMF</a> v{{ djangobmf.version }}</small></p>
       </div> <!-- /container -->
     </footer>
+    {% endblock %}
     <script src="{% url "djangobmf:jsi18n" %}?v={{ djangobmf.version }}"></script>
     <script src="{% static "admin/js/jquery.min.js" %}"></script>
     {% if debug %}

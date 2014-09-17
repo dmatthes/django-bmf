@@ -92,11 +92,14 @@ class Workspace(MPTTModel):
             return _('Category')
         return _('Workspace')
 
-    def update_url(self):
+    def get_url(self):
         if self.parent:
-            self.url = "%s/%s" % (self.parent.url, self.slug)
+            return "%s/%s" % (self.parent.url, self.slug)
         else:
-            self.url = self.slug
+            return self.slug
+
+    def update_url(self):
+        self.url = self.get_url()
 
     @models.permalink
     def get_absolute_url(self):

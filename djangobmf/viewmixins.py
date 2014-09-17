@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
@@ -12,8 +13,8 @@ from django.core.urlresolvers import NoReverseMatch
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import redirect
-# from django.utils.timezone import now
 from django.utils.decorators import method_decorator
+from django.utils.translation import get_language
 from django.views.decorators.cache import never_cache
 from django.views.defaults import permission_denied
 
@@ -92,6 +93,18 @@ class BaseMixin(object):
         # =================================================================
 
         return super(BaseMixin, self).dispatch(*args, **kwargs)
+
+    def get_workspace(self, pk=None):
+        cache_key = 'bmf_workspace_%s_%s' % (self.request.user.pk, get_language())
+        cache_timeout = 600
+        data = cache.get(cache_key)
+        if not data:
+            logger.debug("Reload workspace cache (%s) for user %s" % (cache_key, self.request.user))
+            data = "Test"
+            cache.set(cache_key, data, cache_timeout)
+
+        # build current workspace
+        return data
 
     def update_notification(self, count=None):
         """
@@ -189,9 +202,13 @@ class ViewMixin(BaseMixin):
             if self.update_dashboard():
                 session_data = self.read_session_data()
 
+        # load the current workspace
+        workspace = self.get_workspace(session_data.get('workspace', None))
+
         # update context with session data
         kwargs.update({
-            'djangobmf': self.read_session_data()
+            'djangobmf': self.read_session_data(),
+            'workspace': workspace,
         })
 
         # always read current version, if in development mode

@@ -3,7 +3,10 @@
 
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext_lazy as _
+
 from djangobmf.sites import site
+from djangobmf.categories import BaseCategory
 from djangobmf.categories import ProjectManagement
 
 from .models import Task
@@ -25,4 +28,17 @@ site.register(Goal, **{
     'detail': GoalDetailView,
 })
 
+
+class GoalCategory(BaseCategory):
+    name = _('Goals')
+    slug = "goals"
+
+
+class TaskCategory(BaseCategory):
+    name = _('tasks')
+    slug = "tasks"
+
+
 site.register_dashboard(ProjectManagement)
+site.register_category(ProjectManagement, GoalCategory)
+site.register_category(ProjectManagement, TaskCategory)

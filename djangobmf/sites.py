@@ -19,7 +19,6 @@ from django.utils.text import slugify
 
 from .apps import BMFConfig
 from .models import Configuration
-from .workspace.models import Workspace
 from .views import ModuleIndexView
 from .views import ModuleReportView
 from .views import ModuleCreateView
@@ -408,18 +407,55 @@ class DjangoBMFSite(object):
 
         try:
             ws, created = workspace.objects.get_or_create(module=label, level=0)
-        except OperationalError: 
+        except OperationalError:
             logger.debug('Database not ready, skipping registration of Dashboard %s' % label)
             return False
 
         if created or ws.slug != obj.slug or ws.url != obj.slug:
             ws.slug = obj.slug
             ws.url = obj.slug
-            ws.editalbe = False
+            ws.editable = False
             ws.save()
 
         self.workspace["dashboard"][label] = obj
         logger.debug('Dashboard %s registered' % label)
+
+        return True
+
+    def register_category(self, dashboard, category):
+
+        parent = dashboard()
+        obj = category()
+        label = '%s.%s' % (obj.__module__, obj.__class__.__name__)
+        parent_label = '%s.%s' % (parent.__module__, parent.__class__.__name__)
+
+        if label in self.workspace["dashboard"].keys():
+            logger.debug('Category %s already registered -- skipping registration' % label)
+            return True
+
+        workspace = apps.get_model(APP_LABEL, "Workspace")
+
+        try:
+            parent_workspace = workspace.objects.get(module=parent_label)
+        except OperationalError:
+            logger.debug('Database not ready, skipping registration of Category %s' % label)
+            return False
+        except workspace.DoesNotExist:
+            logger.error('%s does not exist - skipping registration of Category %s' % (parent_label, label))
+            return False
+
+        ws, created = workspace.objects \
+            .select_related('parent') \
+            .get_or_create(module=label, parent=parent_workspace)
+
+        if created or ws.slug != obj.slug or ws.url != ws.get_url():
+            ws.slug = obj.slug
+            ws.editable = False
+            ws.update_url()
+            ws.save()
+
+        self.workspace["category"][label] = obj
+        logger.debug('Category %s registered' % label)
 
         return True
 

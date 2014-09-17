@@ -7,12 +7,12 @@ from django.utils.translation import ugettext_lazy as _
 
 SETTINGS = _('Settings')  # OLD
 CR = _('Customer Relationship')  # OLD
-HR = _('Human Resources')  #OLD
+HR = _('Human Resources')  # OLD
 SALES = _('Sales')  # OLD
 ACCOUNTING = _('Accounting')  # OLD
 PURCHASES = _('Purchases')  # OLD
 WAREHOUSE = _('Warehouse')  # OLD
-KNOWLEDGE = _('Knowledge') # OLD AND UNUSED
+KNOWLEDGE = _('Knowledge')  # OLD AND UNUSED
 DOCUMENT = _('Documents')  # OLD
 PROJECT = _('Projects')  # OLD
 

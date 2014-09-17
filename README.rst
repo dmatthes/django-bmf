@@ -1,6 +1,5 @@
 
-.. image:: https://travis-ci.org/django-bmf/django-bmf.svg
-    :target: https://travis-ci.org/django-bmf/django-bmf
+|Build status| |PyPi version| |PyPi downloads| |PyPi wheel| |Project license|
 
 Django BMF understands itself as a ERP-Framework with the following design concepts:
 
@@ -65,3 +64,15 @@ Credits
 .. _Issue Tracker: https://github.com/django-bmf/django-bmf/issues
 .. _django: http://www.djangoproject.com
 .. _django-mptt: https://github.com/django-mptt/django-mptt
+
+
+.. |Build status| image:: https://api.travis-ci.org/django-bmf/django-bmf.svg?branch=develop
+   :target: http://travis-ci.org/django-bmf/django-bmf
+.. |PyPi version| image:: https://pypip.in/v/django-bmf/badge.svg
+   :target: https://pypi.python.org/pypi/django-cms/
+.. |PyPi downloads| image:: https://pypip.in/d/django-bmf/badge.svg
+   :target: https://pypi.python.org/pypi/django-cms/
+.. |PyPi wheel| image:: https://pypip.in/wheel/django-bmf/badge.svg
+   :target: https://pypi.python.org/pypi/django-cms/
+.. |Project license| image:: https://pypip.in/license/django-bmf/badge.svg
+   :target: https://pypi.python.org/pypi/django-cms/
