@@ -144,6 +144,7 @@ class TaskWorkflow(Workflow):
     def todo(self):
         self.instance.in_charge = self.user.djangobmf_employee
         self.instance.employee = self.user.djangobmf_employee
+        self.stop()
 
     def stop(self):
         if not self.instance.in_charge and self.instance.employee:
