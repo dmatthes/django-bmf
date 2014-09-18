@@ -19,7 +19,7 @@
                 <p class="switch"><a href="#"><img src="{% static "djangobmf/logo.png" %}"></a></p>
                 <ul class="sidebar-nav">
                     {% if djangobmf.dashboard_current %}
-                    <li class="sidebar-brand">
+                    <li class="sidebar-board">
                         <a href="{% url "djangobmf:dashboard" pk=djangobmf.dashboard_current.pk %}">{{ djangobmf.dashboard_current.name }}</a>
                     </li>
                     <li>
@@ -29,9 +29,24 @@
                             <li><a href="{{ view.url }}">{{ view.name }}</a></li>
                             {% endfor %}
                         </ul>
+                        <p>Category</p>
+                        <ul>
+                            {% for view in djangobmf.views %}
+                            <li><a href="{{ view.url }}">{{ view.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        <p>Category</p>
+                        <ul>
+                            {% for view in djangobmf.views %}
+                            <li><a href="{{ view.url }}">{{ view.name }}</a></li>
+                            {% endfor %}
+                        </ul>
                     </li>
                     {% endif %}
                 </ul>
+                <p class="text-center">
+                   <a href="{% url 'djangobmf:modules' %}">{% trans "Module overview" %}</a>
+                </p>
                 Cache: {{ workspace }}
             </div>
 {# NEW #}

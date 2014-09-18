@@ -220,6 +220,11 @@ footer {
     }
 }
 
+/* Sitebar
+-------------------------------------------------- */
+@import "sidebar.less";
+
+
 /* MISC
 -------------------------------------------------- */
 
@@ -241,98 +246,3 @@ footer {
 
 */
 
-/* Sitebar
--------------------------------------------------- */
-
-/* Wrapper for page content to push down footer */
-
-#wrap {
-    width: 100%;
-    min-height: 100%; /* for modern browsers */
-    height:auto !important; /* for modern browser */
-    height:100%; /* for IE */
-    overflow: hidden !important; /* FF scrollbar */ 
-    padding: 0 0 0 @bmf-sidebar-width;
-    margin: 0;
-    -webkit-transition: padding 0.5s ease, margin 0.5s ease;
-    -moz-transition: padding 0.5s ease, margin 0.5s ease;
-    -o-transition: padding 0.5s ease, margin 0.5s ease;
-    transition: padding 0.5s ease, margin 0.5s ease;
-}
-
-#sidebar {
-    position: fixed;
-    z-index: 1000;
-    width: @bmf-sidebar-width;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background: #000;
-    left: 0;
-    -webkit-transition: left 0.5s ease;
-    -moz-transition: left 0.5s ease;
-    -o-transition: left 0.5s ease;
-    transition: left 0.5s ease;
-
-    p.switch {
-        visibility: hidden;
-        line-height: 0px;
-        height: @bmf-logo-dim;
-        padding: @bmf-logo-padding;
-        margin: 0;
-        text-align: right;
-
-        a {
-            display:block;
-            opacity: 0.8;
-            -webkit-transition: opacity 0.2s ease;
-            -moz-transition: opacity 0.2s ease;
-            -o-transition: opacity 0.2s ease;
-            transition: opacity 0.2s ease;
-
-            &:hover {
-                opacity: 1.0;
-            }
-        }
-
-        img {
-            height: @bmf-logo-dim;
-            width: @bmf-logo-dim;
-        }
-    }
-}
-
-@media(max-width: @screen-sm-max) {
-
-    #wrap, footer {
-        padding-left: @bmf-logo-dim + 2 * @bmf-logo-padding;
-    }
-
-    .bmfsidebar-toggled #wrap,
-    .bmfsidebar-toggled footer {
-        margin-left: @bmf-sidebar-width - @bmf-logo-dim - 2 * @bmf-logo-padding ;
-    }
-  
-    #sidebar {
-        left: @bmf-logo-dim + 2 * @bmf-logo-padding - @bmf-sidebar-width;
-  
-        p.switch {
-            visibility: visible;
-        }
-        ul {
-            display: none;
-        }
-    }
-
-    .bmfsidebar-toggled #sidebar {
-        left: 0;
-        ul {
-            display: block;
-        }
-    }
-}
-
-/* Sitebar Styles
--------------------------------------------------- */
-
-/* TODO */
