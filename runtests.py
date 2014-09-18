@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 import django
+import logging
 import os
 import re
 import shutil
 import sys
 import tempfile
+import warnings
 
+from django.apps import apps
 from django.conf import settings
 from django.test.utils import get_runner
 from django.utils import six
@@ -20,17 +23,43 @@ from coverage import coverage
 from importlib import import_module
 from flake8.engine import get_style_guide
 
+
+def get_installed():
+    return [app_config.name for app_config in apps.get_app_configs()]
+
+
 def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
 
     print('django ' + django.get_version())
     print('*'*80)
 
-    # only write coverate into html and xml report
-    # when all testcases are executed
-    if len(modules) == 0 and not nocontrib and not contrib:
-        coverreport = True
-    else:
-        coverreport = False
+    # run flake8 first
+    styleguide = get_style_guide(
+        parse_argv=False,
+        config_file="tox.ini",
+        max_complexity=-1,
+        jobs='1',
+    )
+    styleguide.options.report.start()
+    styleguide.input_dir("djangobmf")
+    styleguide.options.report.stop()
+    if styleguide.options.report.get_count() > 0:
+        sys.exit(True)
+
+    # apply test settings
+    TEMP_DIR = tempfile.mkdtemp(prefix='djangobmf_')
+    settings.BMF_DOCUMENT_ROOT = TEMP_DIR
+    settings.BMF_DOCUMENT_URL = '/documents/'
+
+    if verbosity > 0:
+        # Ensure any warnings captured to logging are piped through a verbose
+        # logging handler.
+        logger = logging.getLogger('py.warnings')
+        handler = logging.StreamHandler()
+        logger.addHandler(handler)
+
+    # Load all the app
+    django.setup()
 
     # only test one contrib module
     if contrib:
@@ -55,60 +84,31 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
                         continue
                     modules.append('djangobmf.contrib.%s' % module)
 
-    # flake8
-    styleguide = get_style_guide(
-        parse_argv=False,
-        config_file="tox.ini",
-        max_complexity=-1,
-        jobs='1',
-    )
-    styleguide.options.report.start()
-    styleguide.input_dir("djangobmf")
-    styleguide.options.report.stop()
-    if styleguide.options.report.get_count() > 0:
-        sys.exit(True)
+    # add currencies to INSTALLED_APPS
+    path = bmfcurrencies.__path__[0]
+    for module in os.listdir(path):
+        if os.path.isdir(os.path.join(path, module)):
+            if module[0] == '_':
+                continue
+            settings.INSTALLED_APPS += ('djangobmf.currencies.%s' % module, )
 
-    TEMP_DIR = tempfile.mkdtemp(prefix='djangobmf_')
-    settings.BMF_DOCUMENT_ROOT = TEMP_DIR
-    settings.BMF_DOCUMENT_URL = '/documents/'
+    # add reports to INSTALLED_APPS
+    if six.PY2:
+        path = bmfreports.__path__[0]
+        for module in os.listdir(path):
+            if os.path.isdir(os.path.join(path, module)):
+                if module[0] == '_':
+                    continue
+                settings.INSTALLED_APPS += ('djangobmf.reports.%s' % module, )
 
-#   # add currencies to INSTALLED_APPS
-#   path = bmfcurrencies.__path__[0]
-#   for module in os.listdir(path):
-#       if os.path.isdir(os.path.join(path, module)):
-#           if module[0] == '_':
-#               continue
-#           print(module)
-#           settings.INSTALLED_APPS += ('djangobmf.currencies.%s' % module, )
-
-#   # add reports to INSTALLED_APPS
-#   if six.PY2:
-#       path = bmfreports.__path__[0]
-#       for module in os.listdir(path):
-#           if os.path.isdir(os.path.join(path, module)):
-#               if module[0] == '_':
-#                   continue
-#               print(module)
-#               settings.INSTALLED_APPS += ('djangobmf.reports.%s' % module, )
-
-
-#   # add modules to settings.INSTALLED_APPS
-#   for module_name in modules:
-#       # TODO this does not support the path on the filesystem or to a specific testcase
-#       # maybe we could implement this somewhere after the tests are discovered and
-#       # update the installed apps after django.setup() is called
-##      if re.match(r'^tests.[a-z_]+$', module_name) or re.match(r'^djangobmf.contrib.[a-z_]+$', module_name):
-#       if re.match(r'^tests.[a-z_]+$', module_name):
-#           if module_name not in settings.INSTALLED_APPS:
-#               try:
-#                   module = import_module(module_name + '.models')
-#                   settings.INSTALLED_APPS += (module_name, )
-#               except ImportError:
-#                   pass
-
-#   print(settings.INSTALLED_APPS)
-
-    django.setup()
+    # update installed apps
+    installed_app_names = set(get_installed())
+    for module in modules:
+        if module not in installed_app_names:
+            if verbosity >= 2:
+                print("Importing application %s" % module)
+            settings.INSTALLED_APPS += (module, )
+    apps.set_installed_apps(settings.INSTALLED_APPS)
 
     failures = djangobmf_tests(verbosity, False, failfast, modules)
 
@@ -160,16 +160,16 @@ if __name__ == '__main__':
              'environment variable or "test_sqlite" will be used.')
     options = parser.parse_args()
 
-#   if options.settings:
-#       os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
-#   else:
-#       if "DJANGO_SETTINGS_MODULE" not in os.environ:
-#           os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
-
-    if options.nocontrib:
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
+    if options.settings:
+        os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
     else:
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'sandbox.settings'
+        if "DJANGO_SETTINGS_MODULE" not in os.environ:
+            os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
+
+#   if options.nocontrib:
+#       os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
+#   else:
+#       os.environ['DJANGO_SETTINGS_MODULE'] = 'sandbox.settings'
 
     main(
         options.modules,

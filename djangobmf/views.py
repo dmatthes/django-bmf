@@ -182,28 +182,6 @@ class ModuleFormMixin(object):
         return form_class_factory(self.form_class)
 
 
-class ModuleIndexView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
-    """
-    """
-    context_object_name = 'objects'
-    template_name_suffix = '_bmfindex'
-    allow_empty = True
-
-    def get_template_names(self):
-        return super(ModuleIndexView, self).get_template_names() + ["djangobmf/module_index_default.html"]
-
-    def get_context_data(self, **kwargs):
-        if self.filterset_class:
-            kwargs.update({
-                'has_filter': True,
-            })
-        else:
-            kwargs.update({
-                'has_filter': False,
-            })
-        return super(ModuleIndexView, self).get_context_data(**kwargs)
-
-
 class ModuleDetailView(
         ModuleViewPermissionMixin, ModuleFilesMixin, ModuleActivityMixin, ModuleViewMixin, DetailView):
     """

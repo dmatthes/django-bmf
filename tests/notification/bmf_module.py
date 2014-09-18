@@ -5,6 +5,6 @@ from __future__ import unicode_literals
 
 from djangobmf.sites import site
 
-from .models import TestsNotfication
+from .models import TestNotification
 
-site.register(TestsNotification)
+site.register(TestNotification)

@@ -404,8 +404,7 @@ class DjangoBMFSite(object):
             ws.url = obj.slug
             ws.editable = False
             ws.save()
-
-        logger.debug('Dashboard %s registered' % label)
+            logger.debug('Dashboard %s registered' % label)
 
         return True
 
@@ -435,8 +434,7 @@ class DjangoBMFSite(object):
             ws.editable = False
             ws.update_url()
             ws.save()
-
-        logger.debug('Category %s registered' % label)
+            logger.debug('Category %s registered' % label)
 
         return True
 
@@ -469,8 +467,7 @@ class DjangoBMFSite(object):
             ws.editable = False
             ws.update_url()
             ws.save()
-
-        logger.debug('View %s registered' % label)
+            logger.debug('View %s registered' % label)
 
         return True
 
