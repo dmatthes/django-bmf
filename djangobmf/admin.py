@@ -20,6 +20,6 @@ admin.site.register(Report)
 
 
 class WorkspaceAdmin(MPTTModelAdmin):
-    list_display = ('slug', 'type', 'ct', 'public', 'editable', 'url', 'lft', 'rght', 'level', 'tree_id')
+    list_display = ('slug', '__str__', 'ct', 'public', 'editable', 'url')
 
 admin.site.register(Workspace, WorkspaceAdmin)

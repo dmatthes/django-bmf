@@ -7,7 +7,7 @@ from django.apps import apps
 
 
 def model_from_name(name):
-    app, modelname = name.split('.')
+    app, modelname = name.rsplit('.', 1)
 
     try:
         return apps.get_model(app, modelname)

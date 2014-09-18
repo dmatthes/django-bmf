@@ -13,6 +13,8 @@ from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel
 from mptt.models import TreeForeignKey
 
+from importlib import import_module
+
 
 @python_2_unicode_compatible
 class Workspace(MPTTModel):
@@ -26,6 +28,7 @@ class Workspace(MPTTModel):
     )
     url = models.CharField(max_length=255, blank=False, editable=False, db_index=True)
     ct = models.ForeignKey(ContentType, related_name="+", on_delete=models.CASCADE, blank=True, null=True)
+    # TODO ct should only show bmf modules
 
     public = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
@@ -45,12 +48,25 @@ class Workspace(MPTTModel):
         unique_together = (("parent", "slug"), )
 
     def __str__(self):
-        return '%s: %s' % (self.type(), self.slug)
+        if hasattr(self, 'module_cls') and self.module_cls:
+            return '%s' % getattr(self.module_cls, 'name')
+        return self.slug
 
     def __init__(self, *args, **kwargs):
         super(Workspace, self).__init__(*args, **kwargs)
         self.org = self.pk
         self.org_level = self.level
+
+        if self.module:
+            module_name, class_name = self.module.rsplit(".", 1)
+
+            try:
+                module = import_module(module_name)
+            except ImportError:
+                # TODO generate warning!
+                self.module_cls = None
+                return
+            self.module_cls = getattr(module, class_name, None)
 
     def clean(self):
         if self.org:
@@ -70,10 +86,15 @@ class Workspace(MPTTModel):
                 raise ValidationError(
                     _("You can not append to a %s" % self.parent.type()),
                 )
-            if self.parent.level == 1 and not self.ct:
-                raise ValidationError(
-                    _("You need to define a ContentType"),
-                )
+            if self.parent.level == 1:
+                if not self.ct:
+                    raise ValidationError(
+                        _("You need to define a ContentType"),
+                    )
+                elif not hasattr(self.ct.model_class(), '_bmfmeta'):
+                    raise ValidationError(
+                        _("The ContentType does not belong to an BMF-Module"),
+                    )
             if self.parent.level == 0:
                 self.ct = None
         self.update_url()

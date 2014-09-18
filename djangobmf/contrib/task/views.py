@@ -13,6 +13,8 @@ from .forms import BMFGoalCloneForm
 
 
 class GoalIndexView(ModuleIndexView):
+    slug = "test"
+    name = "test"
     filterset_class = GoalFilter
 
 

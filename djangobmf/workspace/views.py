@@ -4,19 +4,18 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
-from django.views.generic import DetailView
+from django.http import Http404
+# from django.views.generic import View
+# from django.views.generic import DetailView
 # from django.views.generic import UpdateView
 # from django.views.generic import CreateView
 # from django.views.generic import DeleteView
-
 from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
-# from django.utils import six
-# from django.utils.encoding import force_text
+from djangobmf.viewmixins import ViewMixin
 
 from .models import Workspace
-from ..viewmixins import ViewMixin
 
 
 class WorkspaceRedirectView(RedirectView):
@@ -38,11 +37,19 @@ class WorkspaceDashboardView(ViewMixin, TemplateView):
     template_name = "djangobmf/dashboard/detail.html"
 
 
-class WorkspaceGenericView(ViewMixin, DetailView):
-    context_object_name = 'object'
-    model = Workspace
-    template_name = "djangobmf/dashboard/detail.html"
+def workspace_generic_view(request, *args, **kwargs):
+    try:
+        obj = Workspace.objects.get(url=kwargs['url'])
+    except Workspace.DoesNotExist:
+        raise Http404
 
-    def get_object(self):
-        print(self.kwargs)
-        return Workspace.objects.all()[0]
+    if not obj.module_cls:
+        # TODO add logging
+        raise Http404
+
+    response_function = obj.module_cls.as_view(
+        model=obj.ct.model_class(),
+        # workspace=obj,
+    )
+
+    return response_function(request, *args, **kwargs)
