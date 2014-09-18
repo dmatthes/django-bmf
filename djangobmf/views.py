@@ -22,33 +22,69 @@ from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from .document.views import FileAddView
+from djangobmf.document.views import FileAddView
 # from .models import Document
-from .models import Report
-from .notification.forms import HistoryCommentForm
-from .notification.models import Activity
-from .notification.models import Notification
-from .signals import activity_create
-from .signals import activity_update
+from djangobmf.models import Report
+from djangobmf.notification.forms import HistoryCommentForm
+from djangobmf.notification.models import Activity
+from djangobmf.notification.models import Notification
+from djangobmf.signals import activity_create
+from djangobmf.signals import activity_update
 # from .signals import activity_workflow
 # from .signals import djangobmf_post_save
-from .utils import form_class_factory
-from .viewmixins import ModuleClonePermissionMixin
-from .viewmixins import ModuleCreatePermissionMixin
-from .viewmixins import ModuleDeletePermissionMixin
-from .viewmixins import ModuleUpdatePermissionMixin
-from .viewmixins import ModuleViewPermissionMixin
-from .viewmixins import ModuleAjaxMixin
-from .viewmixins import ModuleBaseMixin
-from .viewmixins import ModuleViewMixin
-from .viewmixins import NextMixin
+from djangobmf.utils import form_class_factory
+from djangobmf.utils.deprecation import RemovedInNextBMFVersionWarning
+from djangobmf.viewmixins import ModuleClonePermissionMixin
+from djangobmf.viewmixins import ModuleCreatePermissionMixin
+from djangobmf.viewmixins import ModuleDeletePermissionMixin
+from djangobmf.viewmixins import ModuleUpdatePermissionMixin
+from djangobmf.viewmixins import ModuleViewPermissionMixin
+from djangobmf.viewmixins import ModuleAjaxMixin
+from djangobmf.viewmixins import ModuleBaseMixin
+from djangobmf.viewmixins import ModuleViewMixin
+from djangobmf.viewmixins import NextMixin
 
 import re
 import operator
 import copy
 import types
+import warnings
 from functools import reduce
 from django_filters.views import FilterView
+
+
+class ModuleGenericListView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
+    """
+    """
+    model = None  # gets set by workspace.views
+    workspace = None  # gets set by workspace.views
+    context_object_name = 'objects'
+    template_name_suffix = '_bmfindex'
+    allow_empty = True
+    name = None
+    slug = None
+
+    def get_template_names(self):
+        return super(ModuleGenericListView, self).get_template_names() + ["djangobmf/module_index_default.html"]
+
+    def get_context_data(self, **kwargs):
+        if self.filterset_class:
+            kwargs.update({
+                'has_filter': True,
+            })
+        else:
+            kwargs.update({
+                'has_filter': False,
+            })
+        return super(ModuleGenericListView, self).get_context_data(**kwargs)
+
+
+class ModuleIndexView(ModuleGenericListView):
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "ModuleIndexView is is deprecated.",
+            RemovedInNextBMFVersionWarning, stacklevel=2)
+        super(ModuleIndexView, self).__init__(*args, **kwargs)
 
 
 class ModuleActivityMixin(object):

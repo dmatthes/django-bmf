@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 
+from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.http import Http404
 # from django.views.generic import View
@@ -14,6 +15,7 @@ from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
 from djangobmf.viewmixins import ViewMixin
+from djangobmf.views import ModuleGenericListView
 
 from .models import Workspace
 
@@ -47,9 +49,12 @@ def workspace_generic_view(request, *args, **kwargs):
         # TODO add logging
         raise Http404
 
+    if not issubclass(obj.module_cls, ModuleGenericListView):
+        raise ImproperlyConfigured("%s must be a subclass of ModuleGenericListView" % obj.module)
+
     response_function = obj.module_cls.as_view(
         model=obj.ct.model_class(),
-        # workspace=obj,
+        workspace=obj,
     )
 
     return response_function(request, *args, **kwargs)

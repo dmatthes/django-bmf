@@ -243,13 +243,6 @@ class DjangoBMFSite(object):
         # all reports should be stored here
         self.reports = {}
 
-        # all workspaces should be stored here
-        self.workspace = {
-            'dashboard': {},
-            'category': {},
-            'genericview': {},
-        }
-
         # if a module requires a custom setting, it can be stored here
         self.settings = {}
         self.settings_valid = False
@@ -266,7 +259,7 @@ class DjangoBMFSite(object):
 
         for view in ['index', 'create', 'detail', 'update', 'delete', 'report', 'clone']:
             if view in options:
-                self.register_view(model, view, options[view])
+                self.register_old_view(model, view, options[view])
 
         if 'urlpatterns' in options:
             self._registry[model]['urlpatterns'] = options['urlpatterns']
@@ -303,7 +296,7 @@ class DjangoBMFSite(object):
 
     # --- views ---------------------------------------------------------------
 
-    def register_view(self, model, type, view):
+    def register_old_view(self, model, type, view):
         if type in ['index', 'detail', 'update', 'delete', 'clone']:
             # TODO check if view is an bmf-view
             # add the view
@@ -398,11 +391,6 @@ class DjangoBMFSite(object):
 
         obj = dashboard()
         label = '%s.%s' % (obj.__module__, obj.__class__.__name__)
-
-        if label in self.workspace["dashboard"].keys():
-            logger.debug('Dashboard %s already registered -- skipping registration' % label)
-            return True
-
         workspace = apps.get_model(APP_LABEL, "Workspace")
 
         try:
@@ -417,7 +405,6 @@ class DjangoBMFSite(object):
             ws.editable = False
             ws.save()
 
-        self.workspace["dashboard"][label] = obj
         logger.debug('Dashboard %s registered' % label)
 
         return True
@@ -428,11 +415,6 @@ class DjangoBMFSite(object):
         obj = category()
         label = '%s.%s' % (obj.__module__, obj.__class__.__name__)
         parent_label = '%s.%s' % (parent.__module__, parent.__class__.__name__)
-
-        if label in self.workspace["dashboard"].keys():
-            logger.debug('Category %s already registered -- skipping registration' % label)
-            return True
-
         workspace = apps.get_model(APP_LABEL, "Workspace")
 
         try:
@@ -454,8 +436,41 @@ class DjangoBMFSite(object):
             ws.update_url()
             ws.save()
 
-        self.workspace["category"][label] = obj
         logger.debug('Category %s registered' % label)
+
+        return True
+
+    def register_view(self, model, category, view):
+
+        parent = category()
+        obj = view()
+        label = '%s.%s' % (obj.__module__, obj.__class__.__name__)
+        parent_label = '%s.%s' % (parent.__module__, parent.__class__.__name__)
+        workspace = apps.get_model(APP_LABEL, "Workspace")
+
+        try:
+            parent_workspace = workspace.objects.get(module=parent_label)
+        except OperationalError:
+            logger.debug('Database not ready, skipping registration of View %s' % label)
+            return False
+        except workspace.DoesNotExist:
+            logger.error('%s does not exist - skipping registration of View %s' % (parent_label, label))
+            return False
+
+        ct = ContentType.objects.get_for_model(model)
+
+        ws, created = workspace.objects \
+            .select_related('parent') \
+            .get_or_create(module=label, parent=parent_workspace)
+
+        if created or ws.slug != obj.slug or ws.url != ws.get_url() or ws.ct != ct:
+            ws.ct = ct
+            ws.slug = obj.slug
+            ws.editable = False
+            ws.update_url()
+            ws.save()
+
+        logger.debug('View %s registered' % label)
 
         return True
 
@@ -543,7 +558,6 @@ def autodiscover():
             before_import_c = copy.copy(site.currencies)
             before_import_s = copy.copy(site.settings)
             before_import_p = copy.copy(site.reports)
-            before_import_w = copy.copy(site.workspace)
             import_module('%s.%s' % (app_config.name, "bmf_module"))
         except:
             # Reset the model registry to the state before the last import
@@ -552,7 +566,6 @@ def autodiscover():
             site.currencies = before_import_c
             site.settings = before_import_s
             site.reports = before_import_p
-            site.workspace = before_import_w
 
             # Decide whether to bubble up this error
             if module_has_submodule(app_config.module, "bmf_module"):

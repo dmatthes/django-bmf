@@ -3,18 +3,21 @@
 
 from __future__ import unicode_literals
 
-from ...views import ModuleIndexView
-from ...views import ModuleDetailView
-from ...views import ModuleCloneView
+from django.utils.translation import ugettext_lazy as _
+
+from djangobmf.views import ModuleGenericListView
+from djangobmf.views import ModuleDetailView
+from djangobmf.views import ModuleCloneView
+from djangobmf.views import ModuleIndexView
 
 from .filters import TaskFilter
 from .filters import GoalFilter
 from .forms import BMFGoalCloneForm
 
 
-class GoalIndexView(ModuleIndexView):
-    slug = "test"
-    name = "test"
+class GoalIndexView(ModuleGenericListView):
+    slug = "all"
+    name = _("All Goals")
     filterset_class = GoalFilter
 
 
