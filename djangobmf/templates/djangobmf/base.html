@@ -19,7 +19,7 @@
                 <ul class="sidebar-nav">
                     {% if bmfworkspace.workspace %}
                     <li class="sidebar-board">
-                        <a href="{{ workspace.url }}">{{ workspace.name }}</a>
+                        <a href="{{ bmfworkspace.workspace.url }}">{{ bmfworkspace.workspace.name }}</a>
                     </li>
                     {% for category in bmfworkspace.workspace.categories.values %}
                     <li>

@@ -28,11 +28,17 @@ class ActiveGoalView(ModuleListView):
     name = _("Active Goals")
     filterset_class = GoalFilter
 
+    def get_queryset(self):
+        return super(ActiveGoalView, self).get_queryset().filter(completed=False)
+
 
 class MyGoalView(ModuleListView):
     slug = "my"
     name = _("My Goals")
-    filterset_class = GoalFilter
+
+    def get_queryset(self):
+        return super(MyGoalView, self).get_queryset() \
+            .filter(completed=False, referee=getattr(self.request.user, 'djangobmf_employee', -1))
 
 
 class ArchiveTaskView(ModuleArchiveView):
@@ -46,23 +52,38 @@ class OpenTaskView(ModuleLetterView):
     name = _("Open Tasks")
     filterset_class = TaskFilter
 
+    def get_queryset(self):
+        return super(OpenTaskView, self).get_queryset().filter(completed=False)
 
-class NewTaskView(ModuleListView):
-    slug = "new"
-    name = _("New Tasks")
-    filterset_class = TaskFilter
+
+class AvailableTaskView(ModuleListView):
+    slug = "available"
+    name = _("Available Tasks")
+
+    def get_queryset(self):
+        return super(AvailableTaskView, self).get_queryset().filter(employee=None, completed=False)
 
 
 class MyTaskView(ModuleListView):
     slug = "my"
     name = _("My Tasks")
-    filterset_class = TaskFilter
+
+    def get_queryset(self):
+        return super(MyTaskView, self).get_queryset() \
+            .filter(completed=False, employee=getattr(self.request.user, 'djangobmf_employee', -1))
 
 
 class TodoTaskView(ModuleListView):
     slug = "todo"
     name = _("Todolist")
-    filterset_class = TaskFilter
+
+    def get_queryset(self):
+        return super(TodoTaskView, self).get_queryset() \
+            .filter(
+                completed=False,
+                state__in=["todo", "started", "review"],
+                employee=getattr(self.request.user, 'djangobmf_employee', -1),
+            )
 
 
 class GoalCloneView(ModuleCloneView):

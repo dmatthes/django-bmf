@@ -13,6 +13,9 @@ class ActiveProjectView(ModuleLetterView):
     slug = "active"
     name = _("Active Projects")
 
+    def get_queryset(self):
+        return super(ActiveProjectView, self).get_queryset().filter(is_active=True)
+
 
 class AllProjectView(ModuleLetterView):
     slug = "all"

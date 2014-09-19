@@ -13,9 +13,9 @@ from .models import Task
 from .models import Goal
 
 from .views import ArchiveTaskView
-from .views import OpenTaskView
-from .views import NewTaskView
+from .views import AvailableTaskView
 from .views import MyTaskView
+from .views import OpenTaskView
 from .views import TodoTaskView
 
 from .views import ActiveGoalView
@@ -55,7 +55,7 @@ site.register_view(Goal, GoalCategory, ArchiveGoalView)
 
 site.register_category(ProjectManagement, TaskCategory)
 site.register_view(Task, TaskCategory, MyTaskView)
-site.register_view(Task, TaskCategory, NewTaskView)
 site.register_view(Task, TaskCategory, TodoTaskView)
+site.register_view(Task, TaskCategory, AvailableTaskView)
 site.register_view(Task, TaskCategory, OpenTaskView)
 site.register_view(Task, TaskCategory, ArchiveTaskView)
