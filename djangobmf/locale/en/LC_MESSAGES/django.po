@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-20 01:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,68 +25,23 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: activity/models.py:42
-msgid "Comment"
-msgstr ""
-
-#: activity/models.py:43 modelbase.py:203 notification/models.py:22
-msgid "Created"
-msgstr ""
-
-#: activity/models.py:44
-msgid "Updated"
-msgstr ""
-
-#: activity/models.py:45
-msgid "Workflow"
-msgstr ""
-
-#: activity/models.py:46 file/models.py:48
-msgid "File"
-msgstr ""
-
-#: activity/models.py:56
-msgid "Topic"
-msgstr ""
-
-#: activity/models.py:57
-msgid "Text"
-msgstr ""
-
-#: activity/models.py:59 templates/djangobmf/modal/follow.html:18
-msgid "Action"
-msgstr ""
-
-#: activity/models.py:61
-msgid "Template"
-msgstr ""
-
-#: activity/models.py:67 modelbase.py:202 report/models.py:39
-#: watch/models.py:29
-msgid "Modified"
-msgstr ""
-
-#: activity/models.py:71 activity/models.py:72
-msgid "History"
-msgstr ""
-
-#: categories.py:8 templates/djangobmf/base.html:87
+#: categories.py:8 templates/djangobmf/base.html:105
 msgid "Settings"
 msgstr ""
 
-#: categories.py:9
+#: categories.py:9 categories.py:52
 msgid "Customer Relationship"
 msgstr ""
 
-#: categories.py:10
+#: categories.py:10 categories.py:47
 msgid "Human Resources"
 msgstr ""
 
-#: categories.py:11
+#: categories.py:11 categories.py:42
 msgid "Sales"
 msgstr ""
 
-#: categories.py:12
+#: categories.py:12 categories.py:57
 msgid "Accounting"
 msgstr ""
 
@@ -94,7 +49,7 @@ msgstr ""
 msgid "Purchases"
 msgstr ""
 
-#: categories.py:14
+#: categories.py:14 categories.py:62
 msgid "Warehouse"
 msgstr ""
 
@@ -102,7 +57,7 @@ msgstr ""
 msgid "Knowledge"
 msgstr ""
 
-#: categories.py:16 file/models.py:59
+#: categories.py:16 document/models.py:45
 msgid "Documents"
 msgstr ""
 
@@ -110,112 +65,245 @@ msgstr ""
 msgid "Projects"
 msgstr ""
 
-#: configuration/models.py:47
-msgid "Application"
+#: categories.py:32
+msgid "Project Management"
 msgstr ""
 
-#: configuration/models.py:48
-msgid "Fieldname"
+#: categories.py:37
+msgid "Document Management"
 msgstr ""
 
 #: configuration/models.py:49
+msgid "Application"
+msgstr ""
+
+#: configuration/models.py:52
+msgid "Fieldname"
+msgstr ""
+
+#: configuration/models.py:54
 msgid "Value"
 msgstr ""
 
-#: configuration/models.py:52 templates/djangobmf/configuration/edit.html:5
-#: templates/djangobmf/configuration/edit.html:7
+#: configuration/models.py:57 templates/djangobmf/configuration/edit.html:5
 #: templates/djangobmf/configuration/index.html:5
-#: templates/djangobmf/configuration/index.html:7
 msgid "Configuration"
 msgstr ""
 
-#: configuration/models.py:53
+#: configuration/models.py:58
 msgid "Configurations"
 msgstr ""
 
-#: currency.py:57
+#: contrib/timesheet/models.py:37
+msgid "Title"
+msgstr ""
+
+#: contrib/timesheet/models.py:38
+msgid "Description"
+msgstr ""
+
+#: contrib/timesheet/models.py:77 templates/djangobmf/base.html:99
+msgid "Timesheet"
+msgstr ""
+
+#: contrib/timesheet/models.py:78
+msgid "Timesheets"
+msgstr ""
+
+#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:9
+msgid "Date"
+msgstr ""
+
+#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:10
+msgid "Subject"
+msgstr ""
+
+#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:11
+msgid "Employee"
+msgstr ""
+
+#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:12
+msgid "Time"
+msgstr ""
+
+#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:20
+#: contrib/timesheet/workflows.py:21
+#: templates/djangobmf/notification/index.html:13
+#: templates/djangobmf/notification/index.html:17
+msgid "Active"
+msgstr ""
+
+#: contrib/timesheet/workflows.py:22
+msgid "Finished"
+msgstr ""
+
+#: contrib/timesheet/workflows.py:23
+msgid "Validated"
+msgstr ""
+
+#: contrib/timesheet/workflows.py:27
+msgid "Finish"
+msgstr ""
+
+#: contrib/timesheet/workflows.py:32
+msgid "Validate"
+msgstr ""
+
+#: currencies/__init__.py:51
 #, python-format
 msgid "%(val)s %(sym)s"
 msgstr ""
 
-#: dashboard/forms.py:24
-msgid "Select Dashboard"
+#: dashboard/models.py:22
+msgid "Name"
 msgstr ""
 
-#: fields.py:21
-msgid "Workflow object"
+#: document/models.py:27 notification/models.py:49
+msgid "File"
 msgstr ""
 
-#: fields.py:74
-msgid "Money Field"
-msgstr ""
-
-#: fields.py:97
-msgid "Currency Field"
-msgstr ""
-
-#: file/models.py:58
+#: document/models.py:44
 msgid "Document"
 msgstr ""
 
-#: modelbase.py:62
+#: fields.py:28
+msgid "Workflow object"
+msgstr ""
+
+#: fields.py:78
+msgid "Currency Field"
+msgstr ""
+
+#: fields.py:117
+msgid "Money Field"
+msgstr ""
+
+#: modelbase.py:69
 msgid "No category"
 msgstr ""
 
-#: notification/models.py:23
-msgid "Changed"
+#: modelbase.py:233 notification/models.py:82 notification/models.py:242
+#: report/models.py:55
+msgid "Modified"
 msgstr ""
 
-#: notification/models.py:28
-msgid "Notification"
+#: modelbase.py:234 notification/models.py:46
+msgid "Created"
 msgstr ""
 
-#: notification/models.py:29 templates/djangobmf/base.html:57
-#: templates/djangobmf/notification/index.html:5
-#: templates/djangobmf/notification/index.html:7
-msgid "Notifications"
+#: modelbase.py:279 workflows.py:211
+msgid "This transition is not valid"
 msgstr ""
 
-#: report/models.py:35
+#: notification/models.py:45
+msgid "Comment"
+msgstr ""
+
+#: notification/models.py:47
+msgid "Updated"
+msgstr ""
+
+#: notification/models.py:48
+msgid "Workflow"
+msgstr ""
+
+#: notification/models.py:65
+msgid "Topic"
+msgstr ""
+
+#: notification/models.py:66
+msgid "Text"
+msgstr ""
+
+#: notification/models.py:68
+msgid "Action"
+msgstr ""
+
+#: notification/models.py:75 numbering/models.py:41
+msgid "Template"
+msgstr ""
+
+#: notification/models.py:86 notification/models.py:87
+msgid "History"
+msgstr ""
+
+#: notification/models.py:232
+msgid "Triggered"
+msgstr ""
+
+#: notification/models.py:233 templates/djangobmf/notification/index.html:12
+#: templates/djangobmf/notification/index.html:16
+msgid "Unread"
+msgstr ""
+
+#: notification/models.py:236
+msgid "New entry"
+msgstr ""
+
+#: notification/models.py:237
+msgid "Comment written"
+msgstr ""
+
+#: notification/models.py:238
+msgid "File added"
+msgstr ""
+
+#: notification/models.py:239
+msgid "Object changed"
+msgstr ""
+
+#: notification/models.py:240
+msgid "Workflowstate changed"
+msgstr ""
+
+#: notification/models.py:247
+msgid "Watched activity"
+msgstr ""
+
+#: notification/models.py:248
+msgid "Watched activities"
+msgstr ""
+
+#: report/models.py:39
 msgid "Reporttype"
 msgstr ""
 
-#: report/models.py:36
+#: report/models.py:42
 msgid "Mimetype"
 msgstr ""
 
-#: report/models.py:38
+#: report/models.py:50
 msgid "Options"
 msgstr ""
 
-#: report/models.py:38
+#: report/models.py:52
 msgid ""
 "Options for the renderer. Empty this field to get all available options with "
 "default values"
 msgstr ""
 
-#: report/models.py:42
+#: report/models.py:58
 msgid "Report"
 msgstr ""
 
-#: report/models.py:43
+#: report/models.py:59
 msgid "Reports"
 msgstr ""
 
 #: templates/djangobmf/account/login.html:5
-#: templates/djangobmf/account/login.html:28
+#: templates/djangobmf/account/login.html:26
 #: templates/djangobmf/account/logout.html:16
 msgid "Login"
 msgstr ""
 
-#: templates/djangobmf/account/login.html:13
+#: templates/djangobmf/account/login.html:11
 msgid "Please sign in"
 msgstr ""
 
 #: templates/djangobmf/account/logout.html:5
 #: templates/djangobmf/account/modal_logout.html:6
 #: templates/djangobmf/account/modal_logout.html:11
-#: templates/djangobmf/base.html:100
+#: templates/djangobmf/base.html:110
 msgid "Logout"
 msgstr ""
 
@@ -228,7 +316,7 @@ msgid "Are you sure you want to log out?"
 msgstr ""
 
 #: templates/djangobmf/account/modal_logout.html:10
-#: templates/djangobmf/modal/saveview.html:33
+#: templates/djangobmf/module_clone.html:9
 #: templates/djangobmf/module_create.html:9
 #: templates/djangobmf/module_update.html:9
 msgid "Cancel"
@@ -270,33 +358,38 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: templates/djangobmf/base.html:20
-msgid "Toogle navigation"
-msgstr ""
-
-#: templates/djangobmf/base.html:31
+#: templates/djangobmf/base.html:38 templates/djangobmf/base.html.py:64
 #: templates/djangobmf/dashboard/detail.html:4
-#: templates/djangobmf/dashboard/detail.html:20
+#: templates/djangobmf/dashboard/detail.html:12
 #: templates/djangobmf/dashboard/sitebar.html:3
-#: templates/djangobmf/dashboard/update.html:18
+#: templates/djangobmf/dashboard/update.html:12
 msgid "Dashboards"
 msgstr ""
 
-#: templates/djangobmf/base.html:90
+#: templates/djangobmf/base.html:54
+msgid "Toogle navigation"
+msgstr ""
+
+#: templates/djangobmf/base.html:78
+#: templates/djangobmf/notification/index.html:5
+#: templates/djangobmf/notification/index.html:51
+msgid "Notifications"
+msgstr ""
+
+#: templates/djangobmf/base.html:107
 #: templates/djangobmf/dashboard/sitebar.html:18
-#: templates/djangobmf/modules.html:4 templates/djangobmf/modules.html.py:7
-#: templates/djangobmf/modules.html:13
+#: templates/djangobmf/modules.html:4 templates/djangobmf/modules.html.py:9
 msgid "Module overview"
 msgstr ""
 
-#: templates/djangobmf/base.html:92 templates/djangobmf/base.html.py:94
-msgid "Save current view"
+#: templates/djangobmf/base_modal.html:4
+#: templates/djangobmf/module_modal_base.html:4
+#: templates/djangobmf/notification/create.html:8
+#: templates/djangobmf/notification/update.html:8
+msgid "Close"
 msgstr ""
 
-#: templates/djangobmf/configuration/edit.html:16
-#: templates/djangobmf/modal/follow.html:61
-#: templates/djangobmf/modal/saveview.html:34
-#: templates/djangobmf/watch/edit.html:43
+#: templates/djangobmf/configuration/edit.html:13
 msgid "Save"
 msgstr ""
 
@@ -312,92 +405,54 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: templates/djangobmf/dashboard/detail.html:16
-#: templates/djangobmf/dashboard/update.html:14
-#: templates/djangobmf/module_detail.html:59
-#: templates/djangobmf/module_detail.html:65
+#: templates/djangobmf/dashboard/sitebar.html:12
+msgid "Click on \"add\" to create a new dashboard"
+msgstr ""
+
+#: templates/djangobmf/dashboard/update.html:8
+#: templates/djangobmf/module_detail.html:55
+#: templates/djangobmf/module_detail.html:61
 #: templates/djangobmf/module_workflow.html:12
-#: templates/djangobmf/watch/index.html:26
+#: templates/djangobmf/notification/index.html:42
 msgid "Edit"
 msgstr ""
 
-#: templates/djangobmf/dashboard/detail.html:21
-#: templates/djangobmf/dashboard/update.html:19
+#: templates/djangobmf/dashboard/update.html:13
 #: templates/djangobmf/module_index.html:19
 #: templates/djangobmf/module_index.html:29
 msgid "Add"
 msgstr ""
 
-#: templates/djangobmf/dashboard/detail.html:51
-msgid "You have not yet added a view to this dashboard"
-msgstr ""
-
-#: templates/djangobmf/dashboard/sitebar.html:12
-msgid "Click on \"add\" to create a new dashboard"
-msgstr ""
-
-#: templates/djangobmf/dashboard/update.html:75
+#: templates/djangobmf/dashboard/update.html:69
 msgid "Update dashboard"
 msgstr ""
 
 #: templates/djangobmf/message/index.html:5
-#: templates/djangobmf/message/index.html:7
 msgid "Messages"
 msgstr ""
 
-#: templates/djangobmf/modal/follow.html:8
-msgid "Edit notifications"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:14
-msgid "Informs you if the following actions occur"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:20
-msgid "Default"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:25
-msgid "New object created"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:31
-msgid "Comment added"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:38
-msgid "Workflow-state changed"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:44
-msgid "Object-data changed"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:50 watch/models.py:25
-msgid "File added"
-msgstr ""
-
-#: templates/djangobmf/modal/follow.html:60
-#: templates/djangobmf/module_modal_base.html:4
-msgid "Close"
-msgstr ""
-
-#: templates/djangobmf/modal/saveview.html:8
-msgid "Save the current view"
-msgstr ""
-
-#: templates/djangobmf/module_base.html:31
-#: templates/djangobmf/module_base.html:74
+#: templates/djangobmf/module_base.html:24
+#: templates/djangobmf/module_base.html:67
 msgid "Append file"
 msgstr ""
 
-#: templates/djangobmf/module_base.html:35
-#: templates/djangobmf/module_base.html:59
+#: templates/djangobmf/module_base.html:28
+#: templates/djangobmf/module_base.html:52
 msgid "Write message"
 msgstr ""
 
-#: templates/djangobmf/module_base.html:83
+#: templates/djangobmf/module_base.html:76
 msgid "Load more items"
+msgstr ""
+
+#: templates/djangobmf/module_clone.html:6
+#, python-format
+msgid "Copy %(object)s"
+msgstr ""
+
+#: templates/djangobmf/module_clone.html:10
+#: templates/djangobmf/module_update.html:10
+msgid "Save Changes"
 msgstr ""
 
 #: templates/djangobmf/module_create.html:6
@@ -412,7 +467,6 @@ msgstr ""
 #: templates/djangobmf/module_delete.html:10
 #: templates/djangobmf/module_delete_default.html:8
 #: templates/djangobmf/module_workflow.html:11
-#: templates/djangobmf/watch/edit.html:44
 msgid "Back"
 msgstr ""
 
@@ -420,11 +474,11 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: templates/djangobmf/module_detail.html:15
+#: templates/djangobmf/module_detail.html:11
 msgid "Files"
 msgstr ""
 
-#: templates/djangobmf/module_detail.html:52
+#: templates/djangobmf/module_detail.html:48
 msgid "Print"
 msgstr ""
 
@@ -441,10 +495,6 @@ msgstr ""
 msgid "Change %(object)s"
 msgstr ""
 
-#: templates/djangobmf/module_update.html:10
-msgid "Save Changes"
-msgstr ""
-
 #: templates/djangobmf/module_workflow.html:7
 msgid "State could not be changed"
 msgstr ""
@@ -454,53 +504,44 @@ msgid ""
 "This object is not valid. You need to edit it in order to change it's state."
 msgstr ""
 
-#: templates/djangobmf/modules.html:24
+#: templates/djangobmf/modules.html:20
 msgid "You don't have access to any modules"
 msgstr ""
 
-#: templates/djangobmf/notification/index.html:15
+#: templates/djangobmf/notification/create.html:5
+#: templates/djangobmf/notification/update.html:5
+msgid "Update Notification"
+msgstr ""
+
+#: templates/djangobmf/notification/create.html:9
+#: templates/djangobmf/notification/update.html:9
+msgid "Save changes"
+msgstr ""
+
+#: templates/djangobmf/notification/index.html:14
 #: templates/djangobmf/notification/index.html:18
-#: templates/djangobmf/watch/base.html:15
-msgid "Unread notifications"
+#: templates/djangobmf/notification/index.html:113
+msgid "All"
 msgstr ""
 
-#: templates/djangobmf/notification/index.html:16
-#: templates/djangobmf/notification/index.html:19
-#: templates/djangobmf/watch/base.html:16
-msgid "All notifications"
+#: templates/djangobmf/notification/index.html:23
+msgid "Default settings"
 msgstr ""
 
-#: templates/djangobmf/notification/index.html:21
-#: templates/djangobmf/watch/base.html:5 templates/djangobmf/watch/base.html:8
-#: templates/djangobmf/watch/base.html:17
-msgid "Watching"
+#: templates/djangobmf/notification/index.html:45
+msgid "Select a category to edit the default settings"
 msgstr ""
 
-#: templates/djangobmf/notification/index.html:26
-#: templates/djangobmf/watch/index.html:32
-msgid "Entry"
-msgstr ""
-
-#: templates/djangobmf/notification/index.html:27
-msgid "Time"
-msgstr ""
-
-#: templates/djangobmf/notification/index.html:53
+#: templates/djangobmf/notification/index.html:91
 msgid "You dont have notifications"
 msgstr ""
 
-#: templates/djangobmf/notification/index.html:61
-#: templates/djangobmf/watch/index.html:79
+#: templates/djangobmf/notification/index.html:99
 msgid "Previous"
 msgstr ""
 
-#: templates/djangobmf/notification/index.html:64
-#: templates/djangobmf/watch/index.html:82
+#: templates/djangobmf/notification/index.html:102
 msgid "Next"
-msgstr ""
-
-#: templates/djangobmf/notification/index.html:75
-msgid "All"
 msgstr ""
 
 #: templates/djangobmf/report_html_base.html:110
@@ -524,62 +565,67 @@ msgstr ""
 msgid "Page %(current)s of %(all)s"
 msgstr ""
 
-#: templates/djangobmf/watch/index.html:11
-msgid "Default settings"
-msgstr ""
-
-#: templates/djangobmf/watch/index.html:67
-msgid "You don't watch any activities on this model"
-msgstr ""
-
 #: templates/djangobmf/wizard/index.html:5
-#: templates/djangobmf/wizard/index.html:6
-#: templates/djangobmf/wizard/index.html:10
+#: templates/djangobmf/wizard/index.html:9
 msgid "Wizard"
 msgstr ""
 
-#: templatetags/djangobmf_forms.py:157
+#: templatetags/djangobmf_forms.py:156
 msgid "empty"
 msgstr ""
 
-#: views.py:470
+#: views.py:354
+msgid "Object copied"
+msgstr ""
+
+#: views.py:376
+msgid "Object updated"
+msgstr ""
+
+#: views.py:407
+msgid "Object created"
+msgstr ""
+
+#: views.py:486
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
 
-#: watch/models.py:21
-msgid "Active"
-msgstr ""
-
-#: watch/models.py:23
-msgid "New entry"
-msgstr ""
-
-#: watch/models.py:24
-msgid "Comment written"
-msgstr ""
-
-#: watch/models.py:26
-msgid "Object changed"
-msgstr ""
-
-#: watch/models.py:27
-msgid "Workflowstate changed"
-msgstr ""
-
-#: watch/models.py:34
-msgid "Watched activity"
-msgstr ""
-
-#: watch/models.py:35
-msgid "Watched activities"
-msgstr ""
-
-#: workflows.py:166
+#: workflows.py:203
 #, python-format
 msgid "The state %s is not valid"
 msgstr ""
 
-#: workflows.py:174
-msgid "This transition is not valid"
+#: workspace/models.py:46 workspace/models.py:47 workspace/models.py:114
+msgid "Workspace"
+msgstr ""
+
+#: workspace/models.py:75
+#, python-format
+msgid "This object's parent must be a %s"
+msgstr ""
+
+#: workspace/models.py:79
+msgid "This object parent must be a empty"
+msgstr ""
+
+#: workspace/models.py:87
+#, python-format
+msgid "You can not append to a %s"
+msgstr ""
+
+#: workspace/models.py:92
+msgid "You need to define a ContentType"
+msgstr ""
+
+#: workspace/models.py:96
+msgid "The ContentType does not belong to an BMF-Module"
+msgstr ""
+
+#: workspace/models.py:111
+msgid "View"
+msgstr ""
+
+#: workspace/models.py:113
+msgid "Category"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-20 01:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/product/models.py:23
+#: contrib/product/models.py:28
 msgid "Service"
 msgstr "Dienstleistung"
 
-#: contrib/product/models.py:31
+#: contrib/product/models.py:36
 msgid "Has batch number"
 msgstr "Hat Chargennummer"
 
-#: contrib/product/models.py:32
+#: contrib/product/models.py:37
 msgid "Has serial number"
 msgstr "Hat Seriennummer"
 
-#: contrib/product/models.py:41
+#: contrib/product/models.py:48
 msgid "Name"
 msgstr "Name"
 
-#: contrib/product/models.py:42
+#: contrib/product/models.py:54
 msgid "Product Code"
 msgstr "Produkt Code"
 
-#: contrib/product/models.py:44
+#: contrib/product/models.py:61
 msgid "Product type"
 msgstr "Produkt Typ"
 
-#: contrib/product/models.py:46
+#: contrib/product/models.py:68
 msgid "Can be sold"
 msgstr "Kann verkauft werden"
 
-#: contrib/product/models.py:47
+#: contrib/product/models.py:71
 msgid "Can be purchased"
 msgstr "Kann eingekauft werden"
 
-#: contrib/product/models.py:49
+#: contrib/product/models.py:73
 msgid "Description"
 msgstr "Beschreibung"
 
-#: contrib/product/models.py:51
+#: contrib/product/models.py:78
 msgid "Price"
 msgstr "Preis"
 
-#: contrib/product/models.py:124
+#: contrib/product/models.py:156
 msgid "Product"
 msgstr "Produkt"
 
-#: contrib/product/models.py:125
+#: contrib/product/models.py:157
 msgid "Products"
 msgstr "Produkte"
 
-#: contrib/product/models.py:177
+#: contrib/product/models.py:224
 msgid "Is the tax included in the price?"
 msgstr ""
 

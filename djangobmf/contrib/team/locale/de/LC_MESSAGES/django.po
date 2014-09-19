@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-20 01:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/team/models.py:21 contrib/team/models.py:22
+#: contrib/team/models.py:29
 msgid "Team"
 msgstr "Team"
 
-#: contrib/team/models.py:39
+#: contrib/team/models.py:30
+msgid "Teams"
+msgstr "Teams"
+
+#: contrib/team/models.py:51
 msgid "Is manager"
-msgstr ""
+msgstr "Ist manager"

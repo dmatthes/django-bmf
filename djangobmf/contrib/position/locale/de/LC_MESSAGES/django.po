@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-20 01:12+0200\n"
 "PO-Revision-Date: 2014-01-26 06:34+0100\n"
 "Last-Translator: Admin User <admin@demo.django-bmf.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,37 +19,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.7.3\n"
 
-#: contrib/position/models.py:38
+#: contrib/position/models.py:46
 #: contrib/position/templates/djangobmf_position/position_bmfindex.html:13
 msgid "Date"
 msgstr "Datum"
 
-#: contrib/position/models.py:39
+#: contrib/position/models.py:47
 #: contrib/position/templates/djangobmf_position/position_bmfindex.html:14
 msgid "Name"
 msgstr "Name"
 
-#: contrib/position/models.py:43
+#: contrib/position/models.py:57
 msgid "Invoiceable"
 msgstr "Berechenbar"
 
-#: contrib/position/models.py:47
+#: contrib/position/models.py:61
 msgid "Price"
 msgstr "Preis"
 
-#: contrib/position/models.py:50
+#: contrib/position/models.py:62
 msgid "Amount"
 msgstr "Menge"
 
-#: contrib/position/models.py:51
+#: contrib/position/models.py:63
 msgid "Description"
 msgstr "Beschreibung"
 
-#: contrib/position/models.py:81
+#: contrib/position/models.py:92
 msgid "Position"
 msgstr "Position"
 
-#: contrib/position/models.py:82
+#: contrib/position/models.py:93
 msgid "Positions"
 msgstr "Positionen"
 
@@ -64,6 +64,3 @@ msgstr "Projekt"
 #: contrib/position/templates/djangobmf_position/position_bmfindex.html:17
 msgid "Employee"
 msgstr "Mitarbeiter"
-
-#~ msgid "Topic"
-#~ msgstr "Betreff"

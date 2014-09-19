@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-20 01:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,34 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/employee/models.py:19
+#: contrib/employee/models.py:30
 msgid "Employee"
 msgstr "Mitarbeiter"
 
-#: contrib/employee/models.py:20
+#: contrib/employee/models.py:31
 msgid "Employees"
 msgstr "Mitarbeiter"
 
-#: contrib/employee/models.py:35
+#: contrib/employee/models.py:62
 msgid "Name"
 msgstr "Name"
 
-#: contrib/employee/models.py:36
+#: contrib/employee/models.py:63
 msgid "Email"
 msgstr "Email"
 
-#: contrib/employee/models.py:37
+#: contrib/employee/models.py:65
 msgid "Phone office"
 msgstr "Telefon"
 
-#: contrib/employee/models.py:38
+#: contrib/employee/models.py:68
 msgid "Phone mobile"
 msgstr "Handy"
 
-#: contrib/employee/models.py:39
+#: contrib/employee/models.py:71
 msgid "Fax"
 msgstr "Fax"
 
-#: contrib/employee/models.py:40
+#: contrib/employee/models.py:77
 msgid "Supervisor"
 msgstr "Vorgesetzter"
