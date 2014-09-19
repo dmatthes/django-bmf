@@ -79,11 +79,8 @@ class TodoTaskView(ModuleListView):
 
     def get_queryset(self):
         return super(TodoTaskView, self).get_queryset() \
-            .filter(
-                completed=False,
-                state__in=["todo", "started", "review"],
-                employee=getattr(self.request.user, 'djangobmf_employee', -1),
-            )
+            .filter(completed=False, state__in=["todo", "started", "review"],
+                    employee=getattr(self.request.user, 'djangobmf_employee', -1))
 
 
 class GoalCloneView(ModuleCloneView):
