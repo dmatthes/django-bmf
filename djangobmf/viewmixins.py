@@ -21,7 +21,10 @@ from django.views.defaults import permission_denied
 from djangobmf import get_version
 from djangobmf.decorators import login_required
 from djangobmf.models import Notification
+from djangobmf.models import Workspace
 from djangobmf.utils.user import user_add_bmf
+
+from collections import OrderedDict
 
 import json
 import datetime
@@ -40,7 +43,7 @@ class BaseMixin(object):
     this is used so we don't neet to define a middleware
     """
 
-    def get_permissions(self, permissions):
+    def get_permissions(self, permissions=[]):
         """
         returns a list of (django) permissions and use them in dispatch to
         determinate if the user can view the page, he requested
@@ -94,17 +97,79 @@ class BaseMixin(object):
 
         return super(BaseMixin, self).dispatch(*args, **kwargs)
 
-    def get_workspace(self, pk=None):
+    def update_workspace(self, workspace=None):
+        """
+        This function reads all workspaces for a user instance, builds the
+        navigation-tree and updates the active workspace (if neccessary)
+
+        workspace can either be None, the workspaces primary key or None
+        """
         cache_key = 'bmf_workspace_%s_%s' % (self.request.user.pk, get_language())
         cache_timeout = 600
+
+        # get navigation key from cache
         data = cache.get(cache_key)
         if not data:
             logger.debug("Reload workspace cache (%s) for user %s" % (cache_key, self.request.user))
-            data = "Test"
+
+            data = {
+                "relations": {},
+                "dashboards": {},
+                "workspace": {},
+            }
+
+            cur_dashboard = None
+            cur_category = None
+            new_category = False
+            for ws in Workspace.objects.all():
+                if ws.level == 1:
+                    cur_category = ws
+                    new_category = True
+                    continue
+                if ws.level == 0:
+                    cur_dashboard = ws
+                    data['relations'][ws.pk] = ws.pk
+                    continue
+
+                model = ws.ct.model_class()
+                permissions = ws.module_cls(model=model, workspace=ws).get_permissions([])
+
+                if self.request.user.has_perms(permissions):
+                    data['relations'][ws.pk] = cur_dashboard.pk
+
+                    if cur_dashboard.pk not in data['dashboards'].keys():
+
+                        data['dashboards'][cur_dashboard.pk] = {
+                            "url": cur_dashboard.get_absolute_url(),
+                            "name": '%s' % cur_dashboard.module_cls.name,
+                        }
+                        data['workspace'][cur_dashboard.pk] = {
+                            "url": cur_dashboard.get_absolute_url(),
+                            "name": '%s' % cur_dashboard.module_cls.name,
+                            "categories": OrderedDict()
+                        }
+                        if new_category:
+                            data['workspace'][cur_dashboard.pk]["categories"][cur_category.pk] = {
+                                "name": '%s' % cur_category.module_cls.name,
+                                "views": OrderedDict()
+                            }
+                            new_category = False
+                        data['workspace'][cur_dashboard.pk]["categories"][cur_category.pk]["views"][ws.pk] = {
+                            "name": '%s' % ws.module_cls.name,
+                            "url": ws.get_absolute_url(),
+                        }
             cache.set(cache_key, data, cache_timeout)
 
         # build current workspace
-        return data
+        if isinstance(workspace, Workspace):
+            workspace = workspace.pk
+
+        ws = data['relations'].get(workspace, None)
+
+        if not workspace or not ws:
+            return data["dashboards"], None, None, None
+
+        return data["dashboards"], data["workspace"][ws], ws, workspace
 
     def update_notification(self, count=None):
         """
@@ -203,12 +268,23 @@ class ViewMixin(BaseMixin):
                 session_data = self.read_session_data()
 
         # load the current workspace
-        workspace = self.get_workspace(session_data.get('workspace', None))
+        session_workspace = session_data.get('workspace', None)
+        dashboards, workspace, db_active, ws_active = self.update_workspace(
+            getattr(self, 'workspace', session_workspace)
+        )
+
+        # update session
+        if session_workspace != ws_active:
+            session_data['workspace'] = ws_active
+            self.write_session_data(session_data)
 
         # update context with session data
         kwargs.update({
             'djangobmf': self.read_session_data(),
+            'dashboards': dashboards,
             'workspace': workspace,
+            'workspace_active': ws_active,
+            'dashboard_active': db_active,
         })
 
         # always read current version, if in development mode
@@ -281,7 +357,7 @@ class ModuleViewPermissionMixin(object):
     Checks view permissions of an bmfmodule
     """
 
-    def get_permissions(self, perms):
+    def get_permissions(self, perms=[]):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.view_%s' % info)
         return super(ModuleViewPermissionMixin, self).get_permissions(perms)
@@ -292,7 +368,7 @@ class ModuleCreatePermissionMixin(object):
     Checks create permissions of an bmfmodule
     """
 
-    def get_permissions(self, perms):
+    def get_permissions(self, perms=[]):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.add_%s' % info)
         perms.append('%s.view_%s' % info)
@@ -304,7 +380,7 @@ class ModuleClonePermissionMixin(object):
     Checks create permissions of an bmfmodule
     """
 
-    def get_permissions(self, perms):
+    def get_permissions(self, perms=[]):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.clone_%s' % info)
         perms.append('%s.view_%s' % info)
@@ -320,7 +396,7 @@ class ModuleUpdatePermissionMixin(object):
         return self.get_object()._bmfworkflow._current_state.update \
             and super(ModuleUpdatePermissionMixin, self).check_permissions()
 
-    def get_permissions(self, perms):
+    def get_permissions(self, perms=[]):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.change_%s' % info)
         perms.append('%s.view_%s' % info)
@@ -336,7 +412,7 @@ class ModuleDeletePermissionMixin(object):
         return self.get_object()._bmfworkflow._current_state.delete \
             and super(ModuleDeletePermissionMixin, self).check_permissions()
 
-    def get_permissions(self, perms):
+    def get_permissions(self, perms=[]):
         info = self.model._meta.app_label, self.model._meta.model_name
         perms.append('%s.delete_%s' % info)
         perms.append('%s.view_%s' % info)

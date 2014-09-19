@@ -13,44 +13,30 @@
     </head>
     <body>
         {% block full_body %}
-{# NEW #}
         <div id="wrap">
             <div id="sidebar">
                 <p class="switch"><a href="#"><img src="{% static "djangobmf/logo.png" %}"></a></p>
                 <ul class="sidebar-nav">
-                    {% if djangobmf.dashboard_current %}
+                    {% if workspace %}
                     <li class="sidebar-board">
-                        <a href="{% url "djangobmf:dashboard" pk=djangobmf.dashboard_current.pk %}">{{ djangobmf.dashboard_current.name }}</a>
+                        <a href="{{ workspace.url }}">{{ workspace.name }}</a>
                     </li>
+                    {% for category in workspace.categories.values %}
                     <li>
-                        <p>Category</p>
+                        <p>{{ category.name }}</p>
                         <ul>
-                            {% for view in djangobmf.views %}
-                            <li><a href="{{ view.url }}">{{ view.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                        <p>Category</p>
-                        <ul>
-                            {% for view in djangobmf.views %}
-                            <li><a href="{{ view.url }}">{{ view.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                        <p>Category</p>
-                        <ul>
-                            {% for view in djangobmf.views %}
-                            <li><a href="{{ view.url }}">{{ view.name }}</a></li>
+                            {% for pk, view in category.views.items %}
+                            <li{% ifequal pk workspace_active %} class="active"{% endifequal %}>
+                                <a href="{{ view.url }}">{{ view.name }}</a>
+                            </li>
                             {% endfor %}
                         </ul>
                     </li>
+                    {% endfor %}
                     {% endif %}
                 </ul>
-                <p class="text-center">
-                   <a href="{% url 'djangobmf:modules' %}">{% trans "Module overview" %}</a>
-                </p>
-                Cache: {{ workspace }}
             </div>
-{# NEW #}
-
+{# OLD INDENT #}
     <div class="page-container">
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
       <div class="container">
@@ -69,8 +55,10 @@
             <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-dashboard"></span> {% trans "Dashboards" %} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                {% for dashboard in djangobmf.dashboard %}
-                <li{% if djangobmf.current_dashboard and dashboard.pk == djangobmf.current_dashboard.pk %} class="active"{% endif %}><a href="{% url "djangobmf:dashboard" pk=dashboard.pk %}">{{ dashboard.name }}</a></li>
+                {% for pk, dashboard in dashboards.items %}
+                <li{% ifequal dashboard_active pk %} class="active"{% endifequal %}>
+                    <a href="{{ dashboard.url }}">{{ dashboard.name }}</a>
+                </li>
                 {% endfor %}
               </ul>
             </li>

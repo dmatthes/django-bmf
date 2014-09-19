@@ -7,11 +7,11 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.http import Http404
 # from django.views.generic import View
-# from django.views.generic import DetailView
+from django.views.generic import DetailView
 # from django.views.generic import UpdateView
 # from django.views.generic import CreateView
 # from django.views.generic import DeleteView
-from django.views.generic import TemplateView
+# from django.views.generic import TemplateView
 from django.views.generic import RedirectView
 
 from djangobmf.viewmixins import ViewMixin
@@ -31,12 +31,20 @@ class WorkspaceRedirectView(RedirectView):
         return reverse('djangobmf:workspace', None, (), {'url': '/'.join(url)})
 
 
-class WorkspaceDashboardView(ViewMixin, TemplateView):
+class WorkspaceDashboardView(ViewMixin, DetailView):
     """
     currently a (static) templateview is used
     later this should be a user-defined dashboard with plugins
     """
     template_name = "djangobmf/dashboard/detail.html"
+    
+    def get_object(self):
+        try:
+            obj = Workspace.objects.get(url=self.kwargs['url'])
+        except Workspace.DoesNotExist:
+            raise Http404
+        self.workspace = obj
+        return obj
 
 
 def workspace_generic_view(request, *args, **kwargs):
