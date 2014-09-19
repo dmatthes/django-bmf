@@ -105,7 +105,6 @@ class BaseMixin(object):
         """
         cache_key = 'bmf_workspace_%s_%s' % (self.request.user.pk, get_language())
         cache_timeout = 600
-        cache_timeout = 1
 
         # get navigation key from cache
         data = cache.get(cache_key)
@@ -143,21 +142,22 @@ class BaseMixin(object):
                             "url": cur_dashboard.get_absolute_url(),
                             "name": '%s' % cur_dashboard.module_cls.name,
                         }
+
                         data['workspace'][cur_dashboard.pk] = {
                             "url": cur_dashboard.get_absolute_url(),
                             "name": '%s' % cur_dashboard.module_cls.name,
                             "categories": OrderedDict()
                         }
-                        if new_category:
-                            data['workspace'][cur_dashboard.pk]["categories"][cur_category.pk] = {
-                                "name": '%s' % cur_category.module_cls.name,
-                                "views": OrderedDict()
-                            }
-                            new_category = False
-                        data['workspace'][cur_dashboard.pk]["categories"][cur_category.pk]["views"][ws.pk] = {
-                            "name": '%s' % ws.module_cls.name,
-                            "url": ws.get_absolute_url(),
+                    if new_category:
+                        data['workspace'][cur_dashboard.pk]["categories"][cur_category.pk] = {
+                            "name": '%s' % cur_category.module_cls.name,
+                            "views": OrderedDict()
                         }
+                        new_category = False
+                    data['workspace'][cur_dashboard.pk]["categories"][cur_category.pk]["views"][ws.pk] = {
+                        "name": '%s' % ws.module_cls.name,
+                        "url": ws.get_absolute_url(),
+                    }
             cache.set(cache_key, data, cache_timeout)
 
         # build current workspace

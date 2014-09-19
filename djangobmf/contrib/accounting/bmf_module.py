@@ -4,7 +4,10 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
+from djangobmf.categories import BaseCategory
+from djangobmf.categories import Accounting
 from djangobmf.sites import site
 
 from .apps import AccountingConfig
@@ -39,3 +42,19 @@ SETTINGS = {
     'supplier': forms.ModelChoiceField(queryset=Account.objects.filter(type=ACCOUNTING_LIABILITY)),
 }
 site.register_settings(AccountingConfig.label, SETTINGS)
+
+
+class AccountCategory(BaseCategory):
+    name = _('Accounts')
+    slug = "accounts"
+
+
+class TransactionCategory(BaseCategory):
+    name = _('Transactions')
+    slug = "transactions"
+
+
+site.register_dashboard(Accounting)
+
+site.register_category(Accounting, AccountCategory)
+site.register_view(Account, AccountCategory, AccountIndexView)

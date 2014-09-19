@@ -35,7 +35,7 @@ class GoalCategory(BaseCategory):
 
 
 class TaskCategory(BaseCategory):
-    name = _('tasks')
+    name = _('Tasks')
     slug = "tasks"
 
 site.register_dashboard(ProjectManagement)
@@ -44,3 +44,4 @@ site.register_category(ProjectManagement, GoalCategory)
 site.register_view(Goal, GoalCategory, GoalIndexView)
 
 site.register_category(ProjectManagement, TaskCategory)
+site.register_view(Task, TaskCategory, TaskIndexView)

@@ -10,6 +10,7 @@ from djangobmf.categories import BaseCategory
 from djangobmf.categories import ProjectManagement
 
 from .models import Project
+from .views import ProjectIndexView
 from .views import ProjectUpdateView
 
 site.register(Project, **{
@@ -18,9 +19,10 @@ site.register(Project, **{
 
 
 class ProjectCategory(BaseCategory):
-    name = _('projects')
+    name = _('Projects')
     slug = "projects"
 
 
 site.register_dashboard(ProjectManagement)
 site.register_category(ProjectManagement, ProjectCategory)
+site.register_view(Project, ProjectCategory, ProjectIndexView)

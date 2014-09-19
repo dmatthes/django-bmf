@@ -8,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 from djangobmf.views import ModuleGenericListView
 from djangobmf.views import ModuleDetailView
 from djangobmf.views import ModuleCloneView
-from djangobmf.views import ModuleIndexView
 
 from .filters import TaskFilter
 from .filters import GoalFilter
@@ -19,6 +18,12 @@ class GoalIndexView(ModuleGenericListView):
     slug = "all"
     name = _("All Goals")
     filterset_class = GoalFilter
+
+
+class TaskIndexView(ModuleGenericListView):
+    slug = "all"
+    name = _("All Tasks")
+    filterset_class = TaskFilter
 
 
 class GoalCloneView(ModuleCloneView):
@@ -62,7 +67,3 @@ class GoalDetailView(ModuleDetailView):
             'tasks': tasks,
         })
         return super(GoalDetailView, self).get_context_data(**kwargs)
-
-
-class TaskIndexView(ModuleIndexView):
-    filterset_class = TaskFilter

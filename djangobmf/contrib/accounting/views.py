@@ -3,7 +3,9 @@
 
 from __future__ import unicode_literals
 
-from djangobmf.views import ModuleIndexView
+from django.utils.translation import ugettext_lazy as _
+
+from djangobmf.views import ModuleGenericListView
 from djangobmf.views import ModuleCreateView
 from djangobmf.views import ModuleUpdateView
 from djangobmf.views import ModuleDetailView
@@ -14,9 +16,9 @@ from .forms import BMFTransactionUpdateForm
 from .forms import BMFTransactionCreateForm
 
 
-class AccountIndexView(ModuleIndexView):
-    pass
-#   queryset = Account.objects.all().order_by('tree', 'number', 'name')
+class AccountIndexView(ModuleGenericListView):
+    name = _("All Accounts")
+    slug = "all"
 
 
 class TransactionCreateView(ModuleCreateView):
