@@ -7,12 +7,9 @@
 <div class="page-header">
 {% if object.name %}
   <h1>{{ object.name }}<span class="pull-right">
-    <a href="{% url "djangobmf:dashboard_update" pk=object.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}</a>
-    <a href="{% url "djangobmf:dashboard_delete" pk=object.pk %}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
   </h1>
 {% else %}
   <h1>{% trans "Dashboards" %}<span class="pull-right">
-      <a href="{% url "djangobmf:dashboard_create" %}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</a>
     </span> 
   </h1>
 {% endif %}

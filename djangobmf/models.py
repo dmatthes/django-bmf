@@ -14,7 +14,6 @@ __all__ = (
     'Notification',
     'NumberCycle',
     'Report',
-    'View',
     'Workspace',
 )
 
@@ -29,5 +28,4 @@ from .notification.models import Activity
 from .notification.models import Notification
 from .numbering.models import NumberCycle
 from .report.models import Report
-from .dashboard.models import View
 from .workspace.models import Workspace

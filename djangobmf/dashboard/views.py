@@ -3,11 +3,7 @@
 
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
 from django.views.generic import DetailView
-from django.views.generic import UpdateView
-from django.views.generic import CreateView
-from django.views.generic import DeleteView
 from django.utils import six
 from django.utils.encoding import force_text
 
@@ -54,36 +50,3 @@ class DashboardView(ViewMixin, DetailView):
 
         context['modules'] = models
         return context
-
-
-class DashboardDelete(ViewMixin, DeleteView):
-    model = Dashboard
-    template_name = "djangobmf/dashboard/delete.html"
-
-    def get_success_url(self):
-        self.update_dashboard()
-        return reverse('djangobmf:dashboard')
-
-
-class DashboardCreate(ViewMixin, CreateView):
-    model = Dashboard
-    fields = ['name']
-    template_name = "djangobmf/dashboard/create.html"
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(DashboardCreate, self).form_valid(form)
-
-    def get_success_url(self):
-        self.update_dashboard()
-        return reverse('djangobmf:dashboard')
-
-
-class DashboardUpdate(ViewMixin, UpdateView):
-    model = Dashboard
-    fields = ['name']
-    template_name = "djangobmf/dashboard/update.html"
-
-    def get_success_url(self):
-        self.update_dashboard()
-        return reverse('djangobmf:dashboard', kwargs={'pk': self.object.pk})

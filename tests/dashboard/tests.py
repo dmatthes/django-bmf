@@ -15,16 +15,3 @@ class DashboardTests(BMFViewTestCase):
         """
         r = self.client.get(reverse('djangobmf:dashboard'))
         self.assertEqual(r.status_code, 200)
-
-        r = self.client.get(reverse('djangobmf:dashboard_create'))
-        self.assertEqual(r.status_code, 200)
-
- #      r = self.client.get(reverse('djangobmf:dashboard_update'))
- #      self.assertEqual(r.status_code, 200)
-
- #      r = self.client.get(reverse('djangobmf:dashboard_delete'))
- #      self.assertEqual(r.status_code, 200)
-
-    def test_views(self):
-        """
-        """

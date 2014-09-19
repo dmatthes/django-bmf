@@ -25,7 +25,6 @@ TIME_ZONE = 'Europe/Berlin'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'de'
 
 SITE_ID = 1
 
@@ -145,11 +144,6 @@ INSTALLED_APPS = (
     'sekizai',
 )
 INSTALLED_APPS += TEST_PROJECT_APPS
-
-LANGUAGES = (
-    (u'de', 'Deutsch'),
-    (u'en', 'English'),
-)
 
 DEFAULT_FROM_EMAIL = "team@igelware.de"
 SERVER_EMAIL = "noreply@igelware.de"

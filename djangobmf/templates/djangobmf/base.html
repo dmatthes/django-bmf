@@ -33,6 +33,15 @@
                         </ul>
                     </li>
                     {% endfor %}
+                    {% else %}
+                    <li class="sidebar-board">
+                        <p>{% trans "Dashboards" %}</p>
+                    </li>
+                    {% for dashboard in dashboards.values %}
+                    <li>
+                        <a href="{{ dashboard.url }}">{{ dashboard.name }}</a>
+                    </li>
+                    {% endfor %}
                     {% endif %}
                 </ul>
             </div>
@@ -50,7 +59,6 @@
           <a class="navbar-brand" href="{% url 'djangobmf:dashboard' %}">django BMF</a>
         </div><!--/.nav-header -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          {% if djangobmf.dashboard %}
           <ul class="nav navbar-nav dashboards">
             <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-dashboard"></span> {% trans "Dashboards" %} <b class="caret"></b></a>
@@ -63,7 +71,6 @@
               </ul>
             </li>
           </ul>
-          {% endif %}
           <ul class="nav navbar-nav navbar-right">
             {% block navbar %}
             <li data-count="{{ djangobmf.notification_count }}" id="bmf_notification"><a href="{% url 'djangobmf:notification' %}">
@@ -96,11 +103,6 @@
                 <span class="nav-text">{% trans "Settings" %} <b class="caret"></b></span>
                 <ul class="dropdown-menu">
                     <li><a href="{% url 'djangobmf:modules' %}">{% trans "Module overview" %}</a></li>
-                    {% if bmfmodule %}
-                    <li><a id="bmfapi_saveview" href="{% url 'djangobmf:modal_saveview' %}">{% trans "Save current view" %}</a></li>
-                    {% else %}
-                    <li class="disabled"><a href="#">{% trans "Save current view" %}</a></li>
-                    {% endif %}
                     <li class="divider"></li>
                     <li><a id="bmfapi_logout" href="{% url 'djangobmf:modal_logout' %}">
                         {% trans "Logout" %}

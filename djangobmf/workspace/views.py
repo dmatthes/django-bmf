@@ -37,7 +37,7 @@ class WorkspaceDashboardView(ViewMixin, DetailView):
     later this should be a user-defined dashboard with plugins
     """
     template_name = "djangobmf/dashboard/detail.html"
-    
+
     def get_object(self):
         try:
             obj = Workspace.objects.get(url=self.kwargs['url'])

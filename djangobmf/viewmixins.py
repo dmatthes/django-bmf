@@ -9,7 +9,6 @@ from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse_lazy
-from django.core.urlresolvers import NoReverseMatch
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -106,6 +105,7 @@ class BaseMixin(object):
         """
         cache_key = 'bmf_workspace_%s_%s' % (self.request.user.pk, get_language())
         cache_timeout = 600
+        cache_timeout = 1
 
         # get navigation key from cache
         data = cache.get(cache_key)
@@ -194,68 +194,6 @@ class BaseMixin(object):
         # update session
         self.write_session_data(session_data)
 
-    def update_dashboard(self, pk=None):
-        """
-        This function is used by django BMF to update the dashboards.
-        provide a primary key, if you don't want to set an active
-        dashboard.
-        """
-        if not self.request.user:
-            return False
-
-        logger.debug("Updating dashboards for %s" % self.request.user)
-
-        # get all session data
-        session_data = self.read_session_data()
-        from .dashboard.models import Dashboard
-
-        session_data["dashboard"] = []
-        session_data["dashboard_current"] = None
-
-        update_views = False
-
-        for d in Dashboard.objects.filter(user=self.request.user, name__isnull=False):
-            data = {'pk': d.pk, 'name': d.name}
-            if pk and int(pk) == d.pk:
-                session_data['dashboard_current'] = data
-                update_views = True
-            session_data['dashboard'].append(data)
-
-        # update session
-        self.write_session_data(session_data)
-
-        if update_views:
-            self.update_views()
-
-        return True
-
-    def update_views(self):
-        """
-        This function is used by django BMF to update the views.
-        just call it, if you need it
-        """
-        logger.debug("Updating views for %s" % self.request.user)
-
-        # get all session data
-        session_data = self.read_session_data()
-        from .dashboard.models import View
-
-        # can only be done if a current dashboard is loaded
-        if not session_data.get('dashboard_current', None):
-            return None
-        session_data['views'] = []
-
-        for d in View.objects.filter(dashboard_id=session_data['dashboard_current']['pk']):
-            try:
-                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': d.get_absolute_url()}
-            except NoReverseMatch:
-                data = {'pk': d.pk, 'name': d.name, 'category': d.category, 'url': '#'}  # TODO
-                continue
-            session_data['views'].append(data)
-
-        # update session
-        self.write_session_data(session_data)
-
 
 class ViewMixin(BaseMixin):
 
@@ -263,18 +201,15 @@ class ViewMixin(BaseMixin):
 
         session_data = self.read_session_data()
 
-        if 'dashboard' not in session_data:
-            if self.update_dashboard():
-                session_data = self.read_session_data()
-
         # load the current workspace
-        session_workspace = session_data.get('workspace', None)
+        session_dashboard = session_data.get('dashboard', None)
         dashboards, workspace, db_active, ws_active = self.update_workspace(
-            getattr(self, 'workspace', session_workspace)
+            getattr(self, 'workspace', session_dashboard)
         )
 
         # update session
-        if session_workspace != ws_active:
+        if session_dashboard != db_active or db_active != ws_active and session_data.get('workspace') != ws_active:
+            session_data['dashboard'] = db_active
             session_data['workspace'] = ws_active
             self.write_session_data(session_data)
 

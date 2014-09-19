@@ -17,7 +17,6 @@ from django.views.decorators.http import last_modified
 from djangobmf import get_version
 from djangobmf.dashboard.views import DashboardView
 from djangobmf.module.views import ModuleView
-from djangobmf.modals.views import ModalSaveView
 
 
 @cache_page(86400, key_prefix='bmf-js18n-%s' % get_version())
@@ -47,7 +46,4 @@ urlpatterns = patterns(
     url(r'^workspace/', include('djangobmf.workspace.urls')),
     #   r'^module/' via sites
     url(r'^modules/$', ModuleView.as_view(), name="modules"),
-
-    # TODO
-    url(r'^ajax/save/view/$', ModalSaveView.as_view(), name="modal_saveview"),  # remove me
 )

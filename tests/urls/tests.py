@@ -11,5 +11,5 @@ from djangobmf.urls import i18n_javascript
 
 class UrlTests(TestCase):
     def test_i18n_javascript(self):
-        r = self.client.get(reverse('djangobmf:jsi18n'), {})
+        r = self.client.get(reverse('djangobmf:jsi18n'))
         self.assertEqual(r.status_code, 200)

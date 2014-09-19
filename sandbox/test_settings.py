@@ -43,6 +43,12 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+    (u'de', 'Deutsch'),
+    (u'en', 'English'),
+)
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
