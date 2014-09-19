@@ -216,10 +216,12 @@ class ViewMixin(BaseMixin):
         # update context with session data
         kwargs.update({
             'djangobmf': self.read_session_data(),
-            'dashboards': dashboards,
-            'workspace': workspace,
-            'workspace_active': ws_active,
-            'dashboard_active': db_active,
+            'bmfworkspace': {
+                'dashboards': dashboards,
+                'workspace': workspace,
+                'workspace_active': ws_active,
+                'dashboard_active': db_active,
+            },
         })
 
         # always read current version, if in development mode

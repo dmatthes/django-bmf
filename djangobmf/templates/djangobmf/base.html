@@ -17,16 +17,16 @@
             <div id="sidebar">
                 <p class="switch"><a href="#"><img src="{% static "djangobmf/logo.png" %}"></a></p>
                 <ul class="sidebar-nav">
-                    {% if workspace %}
+                    {% if bmfworkspace.workspace %}
                     <li class="sidebar-board">
                         <a href="{{ workspace.url }}">{{ workspace.name }}</a>
                     </li>
-                    {% for category in workspace.categories.values %}
+                    {% for category in bmfworkspace.workspace.categories.values %}
                     <li>
                         <p>{{ category.name }}</p>
                         <ul>
                             {% for pk, view in category.views.items %}
-                            <li{% ifequal pk workspace_active %} class="active"{% endifequal %}>
+                            <li{% ifequal bmfworkspace.workspace_active pk %} class="active"{% endifequal %}>
                                 <a href="{{ view.url }}">{{ view.name }}</a>
                             </li>
                             {% endfor %}
@@ -37,7 +37,7 @@
                     <li class="sidebar-board">
                         <p>{% trans "Dashboards" %}</p>
                     </li>
-                    {% for dashboard in dashboards.values %}
+                    {% for dashboard in bmfworkspace.dashboards.values %}
                     <li>
                         <a href="{{ dashboard.url }}">{{ dashboard.name }}</a>
                     </li>
@@ -63,8 +63,8 @@
             <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-dashboard"></span> {% trans "Dashboards" %} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                {% for pk, dashboard in dashboards.items %}
-                <li{% ifequal dashboard_active pk %} class="active"{% endifequal %}>
+                {% for pk, dashboard in bmfworkspace.dashboards.items %}
+                <li{% ifequal bmfworkspace.dashboard_active pk %} class="active"{% endifequal %}>
                     <a href="{{ dashboard.url }}">{{ dashboard.name }}</a>
                 </li>
                 {% endfor %}

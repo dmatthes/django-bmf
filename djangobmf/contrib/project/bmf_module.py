@@ -10,7 +10,8 @@ from djangobmf.categories import BaseCategory
 from djangobmf.categories import ProjectManagement
 
 from .models import Project
-from .views import ProjectIndexView
+from .views import ActiveProjectView
+from .views import AllProjectView
 from .views import ProjectUpdateView
 
 site.register(Project, **{
@@ -25,4 +26,5 @@ class ProjectCategory(BaseCategory):
 
 site.register_dashboard(ProjectManagement)
 site.register_category(ProjectManagement, ProjectCategory)
-site.register_view(Project, ProjectCategory, ProjectIndexView)
+site.register_view(Project, ProjectCategory, ActiveProjectView)
+site.register_view(Project, ProjectCategory, AllProjectView)

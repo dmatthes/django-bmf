@@ -5,7 +5,10 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from djangobmf.views import ModuleGenericListView
+from djangobmf.views import ModuleArchiveView
+from djangobmf.views import ModuleListView
+from djangobmf.views import ModuleLetterView
+
 from djangobmf.views import ModuleDetailView
 from djangobmf.views import ModuleCloneView
 
@@ -14,15 +17,51 @@ from .filters import GoalFilter
 from .forms import BMFGoalCloneForm
 
 
-class GoalIndexView(ModuleGenericListView):
-    slug = "all"
-    name = _("All Goals")
+class ArchiveGoalView(ModuleArchiveView):
+    slug = "archive"
+    name = _("Archive")
     filterset_class = GoalFilter
 
 
-class TaskIndexView(ModuleGenericListView):
-    slug = "all"
-    name = _("All Tasks")
+class ActiveGoalView(ModuleListView):
+    slug = "active"
+    name = _("Active Goals")
+    filterset_class = GoalFilter
+
+
+class MyGoalView(ModuleListView):
+    slug = "my"
+    name = _("My Goals")
+    filterset_class = GoalFilter
+
+
+class ArchiveTaskView(ModuleArchiveView):
+    slug = "archive"
+    name = _("Archive")
+    filterset_class = TaskFilter
+
+
+class OpenTaskView(ModuleLetterView):
+    slug = "open"
+    name = _("Open Tasks")
+    filterset_class = TaskFilter
+
+
+class NewTaskView(ModuleListView):
+    slug = "new"
+    name = _("New Tasks")
+    filterset_class = TaskFilter
+
+
+class MyTaskView(ModuleListView):
+    slug = "my"
+    name = _("My Tasks")
+    filterset_class = TaskFilter
+
+
+class TodoTaskView(ModuleListView):
+    slug = "todo"
+    name = _("Todolist")
     filterset_class = TaskFilter
 
 

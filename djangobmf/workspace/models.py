@@ -39,8 +39,8 @@ class Workspace(MPTTModel):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    class MPTTMeta:
-        order_insertion_by = ['slug']
+#   class MPTTMeta:
+#       order_insertion_by = ['slug']
 
     class Meta:
         verbose_name = _("Workspace")

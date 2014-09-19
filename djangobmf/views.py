@@ -53,11 +53,11 @@ from functools import reduce
 from django_filters.views import FilterView
 
 
-class ModuleGenericListView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
+class ModuleGenericBaseView(ModuleViewPermissionMixin, ModuleViewMixin, FilterView):
     """
     """
-    model = None  # gets set by workspace.views
-    workspace = None  # gets set by workspace.views
+    model = None  # set by workspace.views
+    workspace = None  # set by workspace.views
     context_object_name = 'objects'
     template_name_suffix = '_bmfindex'
     allow_empty = True
@@ -65,7 +65,7 @@ class ModuleGenericListView(ModuleViewPermissionMixin, ModuleViewMixin, FilterVi
     slug = None
 
     def get_template_names(self):
-        return super(ModuleGenericListView, self).get_template_names() + ["djangobmf/module_index_default.html"]
+        return super(ModuleGenericBaseView, self).get_template_names() + ["djangobmf/module_index_default.html"]
 
     def get_context_data(self, **kwargs):
         if self.filterset_class:
@@ -76,15 +76,47 @@ class ModuleGenericListView(ModuleViewPermissionMixin, ModuleViewMixin, FilterVi
             kwargs.update({
                 'has_filter': False,
             })
-        return super(ModuleGenericListView, self).get_context_data(**kwargs)
+        return super(ModuleGenericBaseView, self).get_context_data(**kwargs)
 
 
-class ModuleIndexView(ModuleGenericListView):
+class ModuleListView(ModuleGenericBaseView):
+    """
+    """
+    pass
+
+
+class ModuleCategoryView(ModuleGenericBaseView):
+    """
+    """
+    pass
+
+
+class ModuleArchiveView(ModuleGenericBaseView):
+    """
+    """
+    pass
+
+
+class ModuleLetterView(ModuleGenericBaseView):
+    """
+    """
+    pass
+
+
+class ModuleIndexView(ModuleListView):
     def __init__(self, *args, **kwargs):
         warnings.warn(
-            "ModuleIndexView is is deprecated.",
+            "ModuleIndexView is is deprecated - use ModuleListView",
             RemovedInNextBMFVersionWarning, stacklevel=2)
         super(ModuleIndexView, self).__init__(*args, **kwargs)
+
+
+class ModuleGenericListView(ModuleListView):
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "ModuleGenericListView is is deprecated - use ModuleListView",
+            RemovedInNextBMFVersionWarning, stacklevel=2)
+        super(ModuleGenericListView, self).__init__(*args, **kwargs)
 
 
 class ModuleActivityMixin(object):
