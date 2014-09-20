@@ -100,9 +100,9 @@ def test_mod(app):
 
 
 @task
-def test_core():
+def test_core(module=""):
     with lcd(BASEDIR):
-        local('virtenv/bin/coverage run runtests.py -v2 --nocontrib')
+        local('virtenv/bin/coverage run runtests.py %s -v2 --nocontrib' % module)
         local('virtenv/bin/coverage report -m --include="djangobmf/*" --omit="djangobmf/contrib/*"')
 
 

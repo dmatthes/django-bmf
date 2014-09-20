@@ -101,7 +101,7 @@ class Workspace(MPTTModel):
 
     def save(self, *args, **kwargs):
         super(Workspace, self).save(*args, **kwargs)
-        qs = self.get_descendants()
+        qs = self.get_children()
         for workspace in qs:
             workspace.update_url()
             workspace.save()

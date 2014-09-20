@@ -84,22 +84,22 @@ def main(modules, verbosity=2, failfast=False, contrib=None, nocontrib=False):
                         continue
                     modules.append('djangobmf.contrib.%s' % module)
 
-    # add currencies to INSTALLED_APPS
-    path = bmfcurrencies.__path__[0]
-    for module in os.listdir(path):
-        if os.path.isdir(os.path.join(path, module)):
-            if module[0] == '_':
-                continue
-            settings.INSTALLED_APPS += ('djangobmf.currencies.%s' % module, )
-
-    # add reports to INSTALLED_APPS
-    if six.PY2:
-        path = bmfreports.__path__[0]
+        # add currencies to INSTALLED_APPS
+        path = bmfcurrencies.__path__[0]
         for module in os.listdir(path):
             if os.path.isdir(os.path.join(path, module)):
                 if module[0] == '_':
                     continue
-                settings.INSTALLED_APPS += ('djangobmf.reports.%s' % module, )
+                settings.INSTALLED_APPS += ('djangobmf.currencies.%s' % module, )
+
+        # add reports to INSTALLED_APPS
+        if six.PY2:
+            path = bmfreports.__path__[0]
+            for module in os.listdir(path):
+                if os.path.isdir(os.path.join(path, module)):
+                    if module[0] == '_':
+                        continue
+                    settings.INSTALLED_APPS += ('djangobmf.reports.%s' % module, )
 
     # update installed apps
     installed_app_names = set(get_installed())
@@ -160,16 +160,14 @@ if __name__ == '__main__':
              'environment variable or "test_sqlite" will be used.')
     options = parser.parse_args()
 
+    if options.contrib:
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'sandbox.settings'
+
     if options.settings:
         os.environ['DJANGO_SETTINGS_MODULE'] = options.settings
     else:
         if "DJANGO_SETTINGS_MODULE" not in os.environ:
             os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
-
-#   if options.nocontrib:
-#       os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_sqlite'
-#   else:
-#       os.environ['DJANGO_SETTINGS_MODULE'] = 'sandbox.settings'
 
     main(
         options.modules,
