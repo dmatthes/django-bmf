@@ -7,12 +7,14 @@ env:
     - TOXENV=py27-1.7
     - TOXENV=py33-1.7
     - TOXENV=py34-1.7
+    - TOXENV=py27-1.8
+    - TOXENV=py33-1.8
+    - TOXENV=py34-1.8
     - TOXENV=docs
+matrix:
+    allow_failures:
+        - env: TOXENV=py27-1.8
+        - env: TOXENV=py33-1.8
+        - env: TOXENV=py34-1.8
 git:
     submodules: false
-notifications:
-    email:
-        recipients:
-            - sbraun@django-bmf.org
-        on_success: never
-        on_failure: always

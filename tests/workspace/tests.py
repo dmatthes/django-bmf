@@ -44,6 +44,7 @@ class WorkspaceTests(TestCase):
 
     def setUp(self):
         sites.autodiscover()
+        Workspace.objects.all().delete()
         sites.site.register_dashboard(TestDashboard1)
         sites.site.register_category(TestDashboard1, TestCategory1)
         sites.site.register_view(WorkspaceTest, TestCategory1, WorkspaceTestView)
