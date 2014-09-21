@@ -28,7 +28,7 @@ urlpatterns = patterns(
         r'^create/(?P<ct>[0-9]+)/(?P<pk>[0-9]+)/$', NotificationCreate.as_view(), name="notification-create",
     ),
     url(
-        r'^edit/(?P<pk>[0-9]+)/$', NotificationUpdate.as_view(), name="notification-edit",
+        r'^update/(?P<pk>[0-9]+)/$', NotificationUpdate.as_view(), name="notification-update",
     ),
     url(
         r'^activity/$', ActivityView.as_view(), name="activity",

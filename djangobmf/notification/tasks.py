@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 def djangobmf_user_watch(activity):
-
     from .models import Notification
 
     from .models import ACTION_COMMENT

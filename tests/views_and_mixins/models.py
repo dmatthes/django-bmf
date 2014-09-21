@@ -19,13 +19,9 @@ class TestWorkflow(Workflow):
         go = Transition("go", "start", "end")
 
 
-class TestNotification(BMFModel):
+class TestView(BMFModel):
     state = WorkflowField()
     field = models.CharField(max_length=3)
-
-    @classmethod
-    def has_permissions(cls, qs, user, obj=None):
-        return qs
 
     class BMFMeta:
         has_files = True

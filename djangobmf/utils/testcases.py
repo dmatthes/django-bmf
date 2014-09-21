@@ -19,7 +19,7 @@ import json
 
 class BaseTestCase(object):
     def setUp(self):  # noqa
-        from . import sites
+        from djangobmf import sites
         sites.autodiscover()
         activate('en')
 
@@ -41,8 +41,8 @@ class BaseTestCase(object):
         }
 
         # Check for special case where email is used as username
-        if (username_field != 'email'):
-            fields[username_field] = username
+        # if username_field != 'email':
+        fields[username_field] = username
 
         user_obj = user(**fields)
         user_obj.set_password(getattr(user_obj, username_field))
@@ -61,13 +61,79 @@ class BaseTestCase(object):
         return user_obj
 
     def client_login(self, username):
-
         # Check for special case where email is used as username
-        if get_user_model().USERNAME_FIELD == 'email':
-            username += '@test.django-bmf.org'
+        # if get_user_model().USERNAME_FIELD == 'email':
+        #     username += '@test.django-bmf.org'
 
         # update client
         self.client.login(username=username, password=username)
+
+
+class ModuleMixin(object):
+    model = None
+
+    def get_latest_object(self):
+        return self.model.objects.order_by('pk').last()
+
+    def autotest_get(
+            self, namespace=None, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None, url=None):
+        """
+        tests the POST request of a view, returns the response
+        """
+        if not url:
+            url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
+        r = self.client.get(url, data)
+        self.assertEqual(r.status_code, status_code)
+        return r
+
+    def autotest_post(
+            self, namespace=None, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None, url=None):
+        """
+        tests the GET request of a view, returns the response
+        """
+        if not url:
+            url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
+        r = self.client.post(url, data)
+        self.assertEqual(r.status_code, status_code)
+        return r
+
+    def autotest_ajax_get(
+            self, namespace=None, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None, url=None):
+        """
+        tests the GET request of an ajax-view, returns the serialized data
+        """
+        if not url:
+            url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
+        r = self.client.get(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(r.status_code, status_code)
+        if status_code == 200:
+            return json.loads(r.content.decode())
+        return r
+
+    def autotest_ajax_post(
+            self, namespace=None, status_code=200, data=None, parameter=None,
+            urlconf=None, args=None, kwargs=None, current_app=None, url=None):
+        """
+        tests the POST request of an ajax-view, returns the serialized data
+        """
+        if not url:
+            url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
+        if parameter:
+            url += '?' + parameter
+        r = self.client.post(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(r.status_code, status_code)
+        if status_code == 200:
+            return json.loads(r.content.decode())
+        return r
 
 
 class TestCase(BaseTestCase, DjangoTestCase):
@@ -82,7 +148,7 @@ class LiveServerTestCase(BaseTestCase, DjangoLiveServerTestCase):
     pass
 
 
-# OLD CODE BELOW THIS LINE
+# OLD CODE BELOW THIS LINE -- DO NOT USE THIS
 
 
 class BMFViewTestCase(LiveServerTestCase):
@@ -98,73 +164,14 @@ class BMFViewTestCase(LiveServerTestCase):
     ]
 
     def setUp(self):  # noqa
-        from . import sites
+        from djangobmf import sites
         sites.autodiscover()
         self.client.login(username='admin', password='admin')
         activate('en')
 
 
-class BMFModuleTestCase(BMFViewTestCase):
-    model = None
-
-    def get_latest_object(self):
-        return self.model.objects.order_by('pk').last()
-
-    def autotest_get(
-            self, namespace, status_code=200, data=None, parameter=None,
-            urlconf=None, args=None, kwargs=None, current_app=None):
-        """
-        tests the POST request of a view, returns the response
-        """
-        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
-        if parameter:
-            url += '?' + parameter
-        r = self.client.get(url, data)
-        self.assertEqual(r.status_code, status_code)
-        return r
-
-    def autotest_post(
-            self, namespace, status_code=200, data=None, parameter=None,
-            urlconf=None, args=None, kwargs=None, current_app=None):
-        """
-        tests the GET request of a view, returns the response
-        """
-        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
-        if parameter:
-            url += '?' + parameter
-        r = self.client.post(url, data)
-        self.assertEqual(r.status_code, status_code)
-        return r
-
-    def autotest_ajax_get(
-            self, namespace, status_code=200, data=None, parameter=None,
-            urlconf=None, args=None, kwargs=None, current_app=None):
-        """
-        tests the GET request of an ajax-view, returns the serialized data
-        """
-        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
-        if parameter:
-            url += '?' + parameter
-        r = self.client.get(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(r.status_code, status_code)
-        if status_code == 200:
-            return json.loads(r.content.decode())
-        return r
-
-    def autotest_ajax_post(
-            self, namespace, status_code=200, data=None, parameter=None,
-            urlconf=None, args=None, kwargs=None, current_app=None):
-        """
-        tests the POST request of an ajax-view, returns the serialized data
-        """
-        url = reverse(self.model._bmfmeta.url_namespace + ':' + namespace, urlconf, args, kwargs, current_app)
-        if parameter:
-            url += '?' + parameter
-        r = self.client.post(url, data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(r.status_code, status_code)
-        if status_code == 200:
-            return json.loads(r.content.decode())
-        return r
+class BMFModuleTestCase(ModuleMixin, BMFViewTestCase):
+    pass
 
 
 class BMFWorkflowTestCase(TestCase):

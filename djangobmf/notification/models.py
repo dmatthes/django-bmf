@@ -17,21 +17,21 @@ from django.utils.translation import ugettext_lazy as _
 
 import json
 
-from ..signals import activity_create
-from ..signals import activity_update
-from ..signals import activity_addfile
-from ..signals import activity_workflow
+from djangobmf.signals import activity_create
+from djangobmf.signals import activity_update
+from djangobmf.signals import activity_addfile
+from djangobmf.signals import activity_workflow
 
-from ..settings import ACTIVITY_WORKFLOW
-from ..settings import ACTIVITY_COMMENT
-from ..settings import ACTIVITY_UPDATED
-from ..settings import ACTIVITY_FILE
-from ..settings import ACTIVITY_CREATED
-from ..settings import ACTIVITY_UNKNOWN
+from djangobmf.settings import ACTIVITY_WORKFLOW
+from djangobmf.settings import ACTIVITY_COMMENT
+from djangobmf.settings import ACTIVITY_UPDATED
+from djangobmf.settings import ACTIVITY_FILE
+from djangobmf.settings import ACTIVITY_CREATED
+from djangobmf.settings import ACTIVITY_UNKNOWN
 
 # celery should be optional!
 try:
-    from ..tasks.djangobmf_user_watch import async as djangobmf_user_watch
+    from djangobmf.tasks.djangobmf_user_watch import async as djangobmf_user_watch
 except ImportError:
     from .tasks import djangobmf_user_watch
 

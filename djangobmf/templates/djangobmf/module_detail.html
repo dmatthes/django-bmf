@@ -66,11 +66,11 @@
     <div class="btn-group">
         {% if bmfactivity.notification %}
             {% if bmfactivity.watch %}
-                <a href="{% url "djangobmf:notification-edit" pk=bmfactivity.notification.pk %}" class="btn {% if bmfactivity.notification.unread %}btn-info{% else %}btn-default{% endif %} bmfedit">
+                <a href="{% url "djangobmf:notification-update" pk=bmfactivity.notification.pk %}" class="btn {% if bmfactivity.notification.unread %}btn-info{% else %}btn-default{% endif %} bmfedit">
                     <span class="glyphicon glyphicon-star"></span>
                 </a>
             {% else %}
-                <a href="{% url "djangobmf:notification-edit" pk=bmfactivity.notification.pk %}" class="btn btn-default bmfedit">
+                <a href="{% url "djangobmf:notification-update" pk=bmfactivity.notification.pk %}" class="btn btn-default bmfedit">
                     <span class="glyphicon glyphicon-star-empty"></span>
                 </a>
             {% endif %}
