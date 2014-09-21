@@ -1,77 +1,70 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"PO-Revision-Date: 2014-09-21 02:27+0000\n"
+"Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/product/models.py:28
+#: contrib/product/models.py:23
 msgid "Service"
-msgstr "Dienstleistung"
-
-#: contrib/product/models.py:36
-msgid "Has batch number"
-msgstr "Hat Chargennummer"
-
-#: contrib/product/models.py:37
-msgid "Has serial number"
-msgstr "Hat Seriennummer"
-
-#: contrib/product/models.py:48
-msgid "Name"
-msgstr "Name"
-
-#: contrib/product/models.py:54
-msgid "Product Code"
-msgstr "Produkt Code"
-
-#: contrib/product/models.py:61
-msgid "Product type"
-msgstr "Produkt Typ"
-
-#: contrib/product/models.py:68
-msgid "Can be sold"
-msgstr "Kann verkauft werden"
-
-#: contrib/product/models.py:71
-msgid "Can be purchased"
-msgstr "Kann eingekauft werden"
-
-#: contrib/product/models.py:73
-msgid "Description"
-msgstr "Beschreibung"
-
-#: contrib/product/models.py:78
-msgid "Price"
-msgstr "Preis"
-
-#: contrib/product/models.py:156
-msgid "Product"
-msgstr "Produkt"
-
-#: contrib/product/models.py:157
-msgid "Products"
-msgstr "Produkte"
-
-#: contrib/product/models.py:224
-msgid "Is the tax included in the price?"
 msgstr ""
 
-#~ msgid "Consumable"
-#~ msgstr "Verbrauchsgut"
+#: contrib/product/models.py:31
+msgid "Has batch number"
+msgstr ""
 
-#~ msgid "Stockable"
-#~ msgstr "Lagerbar"
+#: contrib/product/models.py:32
+msgid "Has serial number"
+msgstr ""
+
+#: contrib/product/models.py:41
+msgid "Name"
+msgstr ""
+
+#: contrib/product/models.py:42
+msgid "Product Code"
+msgstr ""
+
+#: contrib/product/models.py:44
+msgid "Product type"
+msgstr ""
+
+#: contrib/product/models.py:46
+msgid "Can be sold"
+msgstr ""
+
+#: contrib/product/models.py:47
+msgid "Can be purchased"
+msgstr ""
+
+#: contrib/product/models.py:49
+msgid "Description"
+msgstr ""
+
+#: contrib/product/models.py:51
+msgid "Price"
+msgstr ""
+
+#: contrib/product/models.py:124
+msgid "Product"
+msgstr ""
+
+#: contrib/product/models.py:125
+msgid "Products"
+msgstr ""
+
+#: contrib/product/models.py:177
+msgid "Is the tax included in the price?"
+msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,47 +17,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contrib/quotation/models.py:40
+#: contrib/quotation/models.py:75
 msgid "Quotation number"
 msgstr ""
 
-#: contrib/quotation/models.py:43
+#: contrib/quotation/models.py:78
 msgid "Date"
 msgstr ""
 
-#: contrib/quotation/models.py:44
+#: contrib/quotation/models.py:79
 msgid "Valid until"
 msgstr ""
 
-#: contrib/quotation/models.py:45
+#: contrib/quotation/models.py:80
 msgid "Notes"
 msgstr ""
 
-#: contrib/quotation/models.py:46
+#: contrib/quotation/models.py:81
 msgid "Term of payment"
 msgstr ""
 
-#: contrib/quotation/models.py:120
+#: contrib/quotation/models.py:157
 msgid "Quotation"
 msgstr ""
 
-#: contrib/quotation/models.py:121
+#: contrib/quotation/models.py:158
 msgid "Quotations"
 msgstr ""
 
-#: contrib/quotation/models.py:143
+#: contrib/quotation/models.py:187
 msgid "Name"
 msgstr ""
 
-#: contrib/quotation/models.py:144
+#: contrib/quotation/models.py:192
 msgid "Price"
 msgstr ""
 
-#: contrib/quotation/models.py:147
+#: contrib/quotation/models.py:193
 msgid "Amount"
 msgstr ""
 
-#: contrib/quotation/models.py:149
+#: contrib/quotation/models.py:195
 msgid "Description"
 msgstr ""
 

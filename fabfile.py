@@ -108,10 +108,9 @@ def test_core(module=""):
 
 @task
 def locale():
-  with lcd(BASEDIR + '/djangobmf'):
-    for lang in LANGUAGES:
-      local('%s makemessages -l %s --domain django' % (DJANGO, lang))
-      local('%s makemessages -l %s --domain djangojs' % (DJANGO, lang))
+    with lcd(BASEDIR + '/djangobmf'):
+        local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
+        local('%s makemessages -l %s --domain djangojs' % (DJANGO, 'en'))
 
 
 @task

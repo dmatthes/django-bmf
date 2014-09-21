@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/djangobmf/js/djangobmf.min.js:39
+#: static/djangobmf/js/djangobmf.js:28 static/djangobmf/js/djangobmf.min.js:16
 msgid ""
 "Error 403\n"
 " You don't have permission to view this page"
 msgstr ""
 
-#: static/djangobmf/js/djangobmf.min.js:39
+#: static/djangobmf/js/djangobmf.js:31 static/djangobmf/js/djangobmf.min.js:16
 msgid ""
 "Error 404\n"
 " Page not found"
 msgstr ""
 
-#: static/djangobmf/js/djangobmf.min.js:39
+#: static/djangobmf/js/djangobmf.js:34 static/djangobmf/js/djangobmf.min.js:16
 msgid ""
 "Error 500\n"
 " An Error occured while rendering the page"

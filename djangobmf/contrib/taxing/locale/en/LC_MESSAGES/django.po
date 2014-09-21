@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contrib/taxing/models.py:25
+#: contrib/taxing/models.py:30
 msgid ""
 "Tax is allways included in the product price and never visible to the "
 "customer"
 msgstr ""
 
-#: contrib/taxing/models.py:26
+#: contrib/taxing/models.py:33
 msgid "Is active"
 msgstr ""
 
-#: contrib/taxing/models.py:32
+#: contrib/taxing/models.py:39
 msgid "Tax"
 msgstr ""
 
-#: contrib/taxing/models.py:33
+#: contrib/taxing/models.py:40
 msgid "Taxes"
 msgstr ""

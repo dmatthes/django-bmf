@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,61 +92,6 @@ msgstr ""
 
 #: configuration/models.py:58
 msgid "Configurations"
-msgstr ""
-
-#: contrib/timesheet/models.py:37
-msgid "Title"
-msgstr ""
-
-#: contrib/timesheet/models.py:38
-msgid "Description"
-msgstr ""
-
-#: contrib/timesheet/models.py:77 templates/djangobmf/base.html:99
-msgid "Timesheet"
-msgstr ""
-
-#: contrib/timesheet/models.py:78
-msgid "Timesheets"
-msgstr ""
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:9
-msgid "Date"
-msgstr ""
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:10
-msgid "Subject"
-msgstr ""
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:11
-msgid "Employee"
-msgstr ""
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:12
-msgid "Time"
-msgstr ""
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:20
-#: contrib/timesheet/workflows.py:21
-#: templates/djangobmf/notification/index.html:13
-#: templates/djangobmf/notification/index.html:17
-msgid "Active"
-msgstr ""
-
-#: contrib/timesheet/workflows.py:22
-msgid "Finished"
-msgstr ""
-
-#: contrib/timesheet/workflows.py:23
-msgid "Validated"
-msgstr ""
-
-#: contrib/timesheet/workflows.py:27
-msgid "Finish"
-msgstr ""
-
-#: contrib/timesheet/workflows.py:32
-msgid "Validate"
 msgstr ""
 
 #: currencies/__init__.py:51
@@ -376,6 +321,10 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+#: templates/djangobmf/base.html:99
+msgid "Timesheet"
+msgstr ""
+
 #: templates/djangobmf/base.html:107
 #: templates/djangobmf/dashboard/sitebar.html:18
 #: templates/djangobmf/modules.html:4 templates/djangobmf/modules.html.py:9
@@ -516,6 +465,11 @@ msgstr ""
 #: templates/djangobmf/notification/create.html:9
 #: templates/djangobmf/notification/update.html:9
 msgid "Save changes"
+msgstr ""
+
+#: templates/djangobmf/notification/index.html:13
+#: templates/djangobmf/notification/index.html:17
+msgid "Active"
 msgstr ""
 
 #: templates/djangobmf/notification/index.html:14

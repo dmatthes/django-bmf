@@ -1,28 +1,28 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"PO-Revision-Date: 2014-09-21 02:37+0000\n"
+"Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: contrib/customer/bmf_module.py:18
 msgid "Company"
 msgstr "Unternehmen"
 
-#: contrib/customer/bmf_module.py:19 contrib/customer/models.py:76
+#: contrib/customer/bmf_module.py:19 contrib/customer/models.py:50
 msgid "Customer"
 msgstr "Kunde"
 
@@ -34,77 +34,76 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: contrib/customer/models.py:37
+#: contrib/customer/models.py:26
 msgid ""
 "Projects function as cost-centers. This setting defines a default project "
 "for this customer."
 msgstr ""
 
-#: contrib/customer/models.py:46
+#: contrib/customer/models.py:29
 msgid "Is Company"
 msgstr ""
 
-#: contrib/customer/models.py:47
+#: contrib/customer/models.py:31
 msgid "Taxvat"
 msgstr ""
 
-#: contrib/customer/models.py:48
+#: contrib/customer/models.py:33
 msgid "Can use company adresses"
 msgstr ""
 
-#: contrib/customer/models.py:49
+#: contrib/customer/models.py:35
 msgid "Is active"
 msgstr ""
 
-#: contrib/customer/models.py:50
-#, fuzzy
+#: contrib/customer/models.py:36
 msgid "Is customer"
-msgstr "Kunde"
+msgstr ""
 
-#: contrib/customer/models.py:51
+#: contrib/customer/models.py:37
 msgid "Is supplier"
 msgstr ""
 
-#: contrib/customer/models.py:77
+#: contrib/customer/models.py:51
 msgid "Customers"
 msgstr "Kunden"
 
-#: contrib/customer/models.py:120
+#: contrib/customer/models.py:93
 msgid "Name 2"
 msgstr ""
 
-#: contrib/customer/models.py:121
+#: contrib/customer/models.py:94
 msgid "Job position"
 msgstr ""
 
-#: contrib/customer/models.py:122
+#: contrib/customer/models.py:95
 msgid "Title"
 msgstr ""
 
-#: contrib/customer/models.py:123
+#: contrib/customer/models.py:96
 msgid "Phone office"
 msgstr ""
 
-#: contrib/customer/models.py:124
+#: contrib/customer/models.py:97
 msgid "Phone privat"
 msgstr ""
 
-#: contrib/customer/models.py:125
+#: contrib/customer/models.py:98
 msgid "Phone mobile"
 msgstr ""
 
-#: contrib/customer/models.py:126
+#: contrib/customer/models.py:99
 msgid "Email"
 msgstr "Email"
 
-#: contrib/customer/models.py:127
+#: contrib/customer/models.py:100
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
-#: contrib/customer/models.py:128
+#: contrib/customer/models.py:101
 msgid "Website"
 msgstr "Webseite"
 
-#: contrib/customer/models.py:129
+#: contrib/customer/models.py:102
 msgid "Notes"
 msgstr "Notizen"

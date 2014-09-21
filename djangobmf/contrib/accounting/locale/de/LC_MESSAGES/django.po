@@ -1,128 +1,114 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
-"PO-Revision-Date: 2014-01-26 06:24+0100\n"
-"Last-Translator: Admin User <admin@demo.django-bmf.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"PO-Revision-Date: 2014-09-21 02:31+0000\n"
+"Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Translated-Using: django-rosetta 0.7.3\n"
 
-#: contrib/accounting/bmf_module.py:48 contrib/accounting/models.py:91
-msgid "Accounts"
-msgstr "Konten"
-
-#: contrib/accounting/bmf_module.py:53 contrib/accounting/models.py:178
-msgid "Transactions"
-msgstr "Buchungen"
-
-#: contrib/accounting/models.py:38
+#: contrib/accounting/models.py:35
 msgid "Income"
 msgstr "Erträge"
 
-#: contrib/accounting/models.py:39
+#: contrib/accounting/models.py:36
 msgid "Expense"
 msgstr "Aufwände"
 
-#: contrib/accounting/models.py:40
+#: contrib/accounting/models.py:37
 msgid "Asset"
 msgstr "Aktiva"
 
-#: contrib/accounting/models.py:41
+#: contrib/accounting/models.py:38
 msgid "Liability"
 msgstr "Passiva"
 
-#: contrib/accounting/models.py:42
+#: contrib/accounting/models.py:39
 msgid "Equity"
 msgstr "Eigenkapital"
 
-#: contrib/accounting/models.py:63
+#: contrib/accounting/models.py:57
 msgid "Number"
 msgstr "Nummer"
 
-#: contrib/accounting/models.py:64
+#: contrib/accounting/models.py:58
 msgid "Name"
 msgstr "Name"
 
-#: contrib/accounting/models.py:66
+#: contrib/accounting/models.py:59
 msgid "Type"
 msgstr "Typ"
 
-#: contrib/accounting/models.py:68
+#: contrib/accounting/models.py:60
 msgid "Read-only"
 msgstr "Schreibgeschützt"
 
-#: contrib/accounting/models.py:90
+#: contrib/accounting/models.py:87
 msgid "Account"
 msgstr "Konto"
 
-#: contrib/accounting/models.py:121
-msgid "The type does not match the model parents type"
-msgstr "Der Typ stimmt nicht mit dem Elternelement überein"
+#: contrib/accounting/models.py:88
+msgid "Accounts"
+msgstr "Konten"
 
-#: contrib/accounting/models.py:123
-msgid "Root accounts must define a type"
-msgstr "Wurzel-Konten müssen einen Typ definieren"
-
-#: contrib/accounting/models.py:132
+#: contrib/accounting/models.py:103
 msgid "Comment"
 msgstr "Kommentar"
 
-#: contrib/accounting/models.py:169
+#: contrib/accounting/models.py:137
 msgid "Posting text"
 msgstr "Verwendungszweck"
 
-#: contrib/accounting/models.py:172
+#: contrib/accounting/models.py:139
 msgid "Draft"
 msgstr "Entwurf"
 
-#: contrib/accounting/models.py:177
+#: contrib/accounting/models.py:144
 msgid "Transaction"
 msgstr "Buchung"
 
-#: contrib/accounting/models.py:221
+#: contrib/accounting/models.py:145
+msgid "Transactions"
+msgstr "Buchungen"
+
+#: contrib/accounting/models.py:179
 msgid "Credit"
 msgstr ""
 
-#: contrib/accounting/models.py:221
+#: contrib/accounting/models.py:179
 msgid "Debit"
 msgstr ""
 
-#: contrib/accounting/models.py:226
+#: contrib/accounting/models.py:181
 msgid "Modified"
 msgstr "Modifiziert"
 
-#: contrib/accounting/views.py:20
-msgid "All Accounts"
-msgstr "Alle Konten"
-
-#: contrib/accounting/workflows.py:13
+#: contrib/accounting/workflows.py:14
 msgid "Open"
 msgstr "Offem"
 
-#: contrib/accounting/workflows.py:14
+#: contrib/accounting/workflows.py:15
 msgid "Balanced"
 msgstr "Bilanziert"
 
-#: contrib/accounting/workflows.py:15
+#: contrib/accounting/workflows.py:16
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: contrib/accounting/workflows.py:18
+#: contrib/accounting/workflows.py:19
 msgid "Balance"
 msgstr "Bilanz"
 
-#: contrib/accounting/workflows.py:19
+#: contrib/accounting/workflows.py:20
 msgid "Cancel"
 msgstr "Abbrechen"
