@@ -9,7 +9,7 @@ from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.formats import number_format
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from decimal import Decimal
 from copy import deepcopy
@@ -48,7 +48,7 @@ class CurrencyMetaclass(type):
 
 @python_2_unicode_compatible
 class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
-    formatstr = _('%(val)s %(sym)s')
+    formatstr = pgettext_lazy('%(val)s %(sym)s', "currency formatting")
     base_precision = 2
 
     def __init__(self, value=None, precision=0):

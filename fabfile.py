@@ -88,8 +88,7 @@ def test():
     """
     with lcd(BASEDIR):
         local('virtenv/bin/coverage run runtests.py -v2')
-        local('virtenv/bin/coverage report -m --include="djangobmf/*"')
-        local('virtenv/bin/coverage html --include="djangobmf/*"')
+        local('virtenv/bin/coverage report -m')
 
 
 @task
@@ -103,7 +102,7 @@ def test_mod(app):
 def test_core(module=""):
     with lcd(BASEDIR):
         local('virtenv/bin/coverage run runtests.py %s -v2 --nocontrib' % module)
-        local('virtenv/bin/coverage report -m --include="djangobmf/*" --omit="djangobmf/contrib/*"')
+        local('virtenv/bin/coverage report -m --omit="djangobmf/contrib/*"')
 
 
 @task
