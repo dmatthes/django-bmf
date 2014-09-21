@@ -39,11 +39,14 @@ class WorkspaceDashboardView(ViewMixin, DetailView):
     template_name = "djangobmf/dashboard/detail.html"
 
     def get_object(self):
-        try:
-            obj = Workspace.objects.get(url=self.kwargs['url'])
-        except Workspace.DoesNotExist:
-            raise Http404
-        self.workspace = obj
+        if "url" in self.kwargs:
+            try:
+                obj = Workspace.objects.get(url=self.kwargs['url'])
+            except Workspace.DoesNotExist:
+                raise Http404
+            self.workspace = obj
+        else:
+            self.workspace = None
         return obj
 
 

@@ -164,7 +164,10 @@ class BaseMixin(object):
         if isinstance(workspace, Workspace):
             workspace = workspace.pk
 
-        ws = data['relations'].get(workspace, None)
+        if "relations" in data:
+            ws = data['relations'].get(workspace, None)
+        else:
+            ws = None
 
         if not workspace or not ws:
             return data["dashboards"], None, None, None
