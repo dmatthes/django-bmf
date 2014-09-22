@@ -19,7 +19,6 @@ from .fields import WorkflowField
 from .notification.models import Activity
 from .notification.models import Notification
 from .signals import activity_workflow
-from .signals import djangobmf_post_save
 from .workflows import DefaultWorkflow
 
 import types
@@ -284,7 +283,6 @@ class BMFSimpleModel(six.with_metaclass(BMFModelBase, models.Model)):
 
         # generate a history object and signal
         activity_workflow.send(sender=self.__class__, instance=self)
-        djangobmf_post_save.send(sender=self.__class__, instance=self, new=False)
 
         return success_url  # TODO remove me, if workflows use ajax
 

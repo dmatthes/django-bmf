@@ -31,7 +31,6 @@ from djangobmf.notification.models import Notification
 from djangobmf.signals import activity_create
 from djangobmf.signals import activity_update
 # from .signals import activity_workflow
-# from .signals import djangobmf_post_save
 from djangobmf.utils import form_class_factory
 from djangobmf.utils.deprecation import RemovedInNextBMFVersionWarning
 from djangobmf.viewmixins import ModuleClonePermissionMixin
