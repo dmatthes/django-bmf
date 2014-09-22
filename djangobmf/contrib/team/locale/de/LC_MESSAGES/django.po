@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
-"PO-Revision-Date: 2014-09-21 02:32+0000\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
+"PO-Revision-Date: 2014-09-22 12:15+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -17,10 +17,14 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/team/models.py:21 contrib/team/models.py:22
+#: contrib/team/models.py:29
 msgid "Team"
 msgstr "Team"
 
-#: contrib/team/models.py:39
+#: contrib/team/models.py:30
+msgid "Teams"
+msgstr ""
+
+#: contrib/team/models.py:51
 msgid "Is manager"
 msgstr "Ist manager"

@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
-"PO-Revision-Date: 2014-09-21 02:13+0000\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
+"PO-Revision-Date: 2014-09-22 12:29+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -67,11 +68,11 @@ msgstr "Projekte"
 
 #: categories.py:32
 msgid "Project Management"
-msgstr ""
+msgstr "Projekt Management"
 
 #: categories.py:37
 msgid "Document Management"
-msgstr ""
+msgstr "Dokumenten Management"
 
 #: configuration/models.py:49
 msgid "Application"
@@ -93,61 +94,6 @@ msgstr "Konfiguration"
 #: configuration/models.py:58
 msgid "Configurations"
 msgstr "Konfigurationen"
-
-#: contrib/timesheet/models.py:37
-msgid "Title"
-msgstr "Titel"
-
-#: contrib/timesheet/models.py:38
-msgid "Description"
-msgstr "Beschreibung"
-
-#: contrib/timesheet/models.py:77 templates/djangobmf/base.html:99
-msgid "Timesheet"
-msgstr "Stundenzettel"
-
-#: contrib/timesheet/models.py:78
-msgid "Timesheets"
-msgstr "Stundenzettel"
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:9
-msgid "Date"
-msgstr "Datum"
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:10
-msgid "Subject"
-msgstr "Betreff"
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:11
-msgid "Employee"
-msgstr "Mitarbeiter"
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:12
-msgid "Time"
-msgstr "Zeit"
-
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:20
-#: contrib/timesheet/workflows.py:21
-#: templates/djangobmf/notification/index.html:13
-#: templates/djangobmf/notification/index.html:17
-msgid "Active"
-msgstr "Aktiv"
-
-#: contrib/timesheet/workflows.py:22
-msgid "Finished"
-msgstr "Abgeschlossen"
-
-#: contrib/timesheet/workflows.py:23
-msgid "Validated"
-msgstr "Validiert"
-
-#: contrib/timesheet/workflows.py:27
-msgid "Finish"
-msgstr "Abschließen"
-
-#: contrib/timesheet/workflows.py:32
-msgid "Validate"
-msgstr "Validieren"
 
 #: currencies/__init__.py:51
 #, python-format
@@ -376,6 +322,10 @@ msgstr ""
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
+#: templates/djangobmf/base.html:99
+msgid "Timesheet"
+msgstr "Stundenzettel"
+
 #: templates/djangobmf/base.html:107
 #: templates/djangobmf/dashboard/sitebar.html:18
 #: templates/djangobmf/modules.html:4 templates/djangobmf/modules.html.py:9
@@ -517,6 +467,11 @@ msgstr "Aktualisieren Benachrichtigungen"
 #: templates/djangobmf/notification/update.html:9
 msgid "Save changes"
 msgstr "Speichere Änderungen"
+
+#: templates/djangobmf/notification/index.html:13
+#: templates/djangobmf/notification/index.html:17
+msgid "Active"
+msgstr "Aktiv"
 
 #: templates/djangobmf/notification/index.html:14
 #: templates/djangobmf/notification/index.html:18

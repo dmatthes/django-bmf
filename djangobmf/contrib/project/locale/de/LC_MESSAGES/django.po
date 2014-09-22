@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
-"PO-Revision-Date: 2014-09-21 02:33+0000\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
+"PO-Revision-Date: 2014-09-22 12:28+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -17,14 +18,50 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/project/models.py:22
+#: contrib/project/bmf_module.py:23
+#: contrib/project/templates/djangobmf_project/project_bmfindex.html:5
+#: contrib/project/templates/djangobmf_project/project_bmfindex.html:8
+#: contrib/project/templates/djangobmf_project/project_bmfrelated_customer.html:7
+msgid "Projects"
+msgstr ""
+
+#: contrib/project/models.py:30
+#: contrib/project/templates/djangobmf_project/project_bmfindex.html:13
 msgid "Name"
 msgstr "Name"
 
-#: contrib/project/models.py:24
+#: contrib/project/models.py:32
 msgid "Is active"
 msgstr "Ist aktiv"
 
-#: contrib/project/models.py:27 contrib/project/models.py:28
+#: contrib/project/models.py:35 contrib/project/models.py:36
+#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:5
+#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:8
 msgid "Project"
 msgstr "Projekt"
+
+#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:10
+msgid "Active"
+msgstr "Aktiv"
+
+#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:10
+msgid "Inactive"
+msgstr ""
+
+#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:11
+#: contrib/project/templates/djangobmf_project/project_bmfindex.html:14
+msgid "Customer"
+msgstr "Kunde"
+
+#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:12
+#: contrib/project/templates/djangobmf_project/project_bmfindex.html:15
+msgid "Employee"
+msgstr "Mitarbeiter"
+
+#: contrib/project/views.py:14
+msgid "Active Projects"
+msgstr ""
+
+#: contrib/project/views.py:22
+msgid "All Projects"
+msgstr "Alle Projekte"

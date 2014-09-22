@@ -6,22 +6,18 @@ import django
 
 from djangobmf.settings import BASE_MODULE
 
-if BASE_MODULE["PROJECT"]:
-    class Migration(migrations.Migration):
+class Migration(migrations.Migration):
 
-        dependencies = [
-            ('djangobmf_accounting', '0001_initial'),
-            migrations.swappable_dependency(BASE_MODULE["PROJECT"]),
-        ]
+    dependencies = [
+        ('djangobmf_accounting', '0001_initial'),
+        migrations.swappable_dependency(BASE_MODULE["PROJECT"]),
+    ]
 
-        operations = [
-            migrations.AddField(
-                model_name='transaction',
-                name='project',
-                field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=BASE_MODULE["PROJECT"], null=True),
-                preserve_default=True,
-            ),
-        ]
-else:
-    class Migration(migrations.Migration):
-        pass
+    operations = [
+        migrations.AddField(
+            model_name='transaction',
+            name='project',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to=BASE_MODULE["PROJECT"], null=True),
+            preserve_default=True,
+        ),
+    ]

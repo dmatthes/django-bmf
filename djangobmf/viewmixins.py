@@ -164,14 +164,10 @@ class BaseMixin(object):
         if isinstance(workspace, Workspace):
             workspace = workspace.pk
 
-        if "relations" in data:
-            ws = data['relations'].get(workspace, None)
-        else:
-            ws = None
+        ws = data['relations'].get(workspace, None)
 
-        if not workspace or not ws:
+        if not ws:
             return data["dashboards"], None, None, None
-
         return data["dashboards"], data["workspace"][ws], ws, workspace
 
     def update_notification(self, count=None):

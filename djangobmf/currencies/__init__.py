@@ -48,7 +48,7 @@ class CurrencyMetaclass(type):
 
 @python_2_unicode_compatible
 class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
-    formatstr = pgettext_lazy('%(val)s %(sym)s', "currency formatting")
+    formatstr = pgettext_lazy("currency formatting", '%(val)s %(sym)s')
     base_precision = 2
 
     def __init__(self, value=None, precision=0):

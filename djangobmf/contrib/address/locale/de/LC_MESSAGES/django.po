@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
-"PO-Revision-Date: 2014-09-21 02:36+0000\n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
+"PO-Revision-Date: 2014-09-22 12:14+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -18,68 +18,66 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/address/models.py:18
+#: contrib/address/models.py:21
 msgid "Is active"
 msgstr "Ist aktiv"
 
-#: contrib/address/models.py:19
+#: contrib/address/models.py:22
 msgid "Is billing"
 msgstr ""
 
-#: contrib/address/models.py:20
+#: contrib/address/models.py:23
 msgid "Is shipping"
 msgstr ""
 
-#: contrib/address/models.py:21
+#: contrib/address/models.py:24
 msgid "Default billing"
 msgstr ""
 
-#: contrib/address/models.py:22
+#: contrib/address/models.py:25
 msgid "Default shipping"
 msgstr ""
 
-#: contrib/address/models.py:28
+#: contrib/address/models.py:33
 msgid "Address"
 msgstr "Adress"
 
-#: contrib/address/models.py:29
+#: contrib/address/models.py:34
 msgid "Addresses"
 msgstr "Adressen"
 
-#: contrib/address/models.py:43
+#: contrib/address/models.py:50
 msgid "Name"
 msgstr "Name"
 
-#: contrib/address/models.py:44
+#: contrib/address/models.py:51
 msgid "Name2"
 msgstr "Name2"
 
-#: contrib/address/models.py:45
+#: contrib/address/models.py:52
 msgid "Street"
 msgstr "Straße"
 
-#: contrib/address/models.py:46
+#: contrib/address/models.py:53
 msgid "Zipcode"
 msgstr "Postleitzahl"
 
-#: contrib/address/models.py:47
+#: contrib/address/models.py:54
 msgid "City"
 msgstr "Stadt"
 
-#: contrib/address/models.py:48
+#: contrib/address/models.py:55
 msgid "State"
 msgstr "Bundesland"
 
-#: contrib/address/models.py:49
+#: contrib/address/models.py:56
 msgid "Country"
 msgstr "Land"
 
-#: contrib/address/models.py:55
+#: contrib/address/models.py:63
 #, python-format
 msgid ""
-"\n"
-"                %(name)s %(name2)s\n"
-"                %(street)s\n"
-"                %(city)s, %(state)s, %(zip)s, %(country)s\n"
-"            "
-msgstr "\n%(name)s %(name2)s\n%(street)s\n%(zip)s %(city)s, %(state)s\n%(country)s"
+"%(name)s %(name2)s\n"
+"%(street)s\n"
+"%(city)s, %(state)s, %(zip)s, %(country)s"
+msgstr ""
