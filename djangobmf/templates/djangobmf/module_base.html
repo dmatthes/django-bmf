@@ -56,7 +56,7 @@ $('html').fileDrop({
     {% endif %}
     {% if has_files %}
     <div id="bmf_message_file" class="collapse out">
-      <form class="form" role="form" action="{% url "djangobmf:file_add" pk=object.pk ct=bmfactivity.ct %}" method="post" enctype="multipart/form-data">
+      <form class="form" role="form" action="{% url "djangobmf:document-add" pk=object.pk ct=bmfactivity.ct %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
           <div class="col-xs-7">

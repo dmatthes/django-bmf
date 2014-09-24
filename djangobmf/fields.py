@@ -58,9 +58,11 @@ class MoneyProxy(object):
     def __get__(self, obj, type=None):
         if obj is None:
             raise AttributeError('Can only be accessed via an instance.')
-        return obj.__dict__[self.field.name].value
+        return obj.__dict__[self.field.name]
 
     def __set__(self, obj, value):
+
+        # get currency model
         currency = getattr(obj, self.field.get_currency_field_name())
 
         if self.field.has_precision:
@@ -152,6 +154,10 @@ class MoneyField(models.DecimalField):
         if not cls._meta.abstract:
             self.has_precision = hasattr(self, self.get_precision_field_name())
             setattr(cls, self.name, MoneyProxy(self))
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_prep_value(value)
 
     def get_prep_value(self, value):
         if isinstance(value, BaseCurrency):

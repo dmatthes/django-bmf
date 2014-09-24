@@ -52,11 +52,11 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
     base_precision = 2
 
     def __init__(self, value=None, precision=0):
-        if value:
-            self.set(value)
-        else:
-            self.value = None
         self.precision = self.base_precision + precision
+        if value is None:
+            self.value = None
+        else:
+            self.set(value)
 
     def __str__(self):
         if self.value is None:
@@ -158,6 +158,10 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
 
         if self.value.as_tuple().exponent > -self.base_precision:
             self.value = self.value.quantize(Decimal('1E-%s' % self.base_precision))
+
+        # TODO: move this to validation
+        if self.value.as_tuple().exponent < -self.precision:
+            self.value = self.value.quantize(Decimal('1E-%s' % self.precision))
 
 
 class Wallet(object):

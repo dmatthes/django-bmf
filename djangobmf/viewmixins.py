@@ -375,6 +375,10 @@ class ModuleBaseMixin(object):
                     'cls': self.__class__.__name__
                 }
             )
+
+        # load employee and team data into user
+        user_add_bmf(self.request.user)
+
         return self.model.has_permissions(queryset, self.request.user)
 
     def get_object(self):

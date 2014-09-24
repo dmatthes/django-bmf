@@ -34,10 +34,10 @@ class CoreTests(BMFModuleTestCase):
         obj = model.objects.order_by('pk').last()
         ct = ContentType.objects.get_for_model(model)
 
-        r = self.client.get(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}))
+        r = self.client.get(reverse('djangobmf:document-add', None, None, {'pk': obj.pk, 'ct': ct.pk}))
         self.assertEqual(r.status_code, 302)
 
-        r = self.client.post(reverse('djangobmf:file_add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
+        r = self.client.post(reverse('djangobmf:document-add', None, None, {'pk': obj.pk, 'ct': ct.pk}), {})
         self.assertEqual(r.status_code, 302)
 
 #       file = open('README.rst', 'rb')

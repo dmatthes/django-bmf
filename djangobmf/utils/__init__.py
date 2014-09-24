@@ -10,7 +10,6 @@ __all__ = (
     'form_class_factory',
 )
 
-from .generate_filename import generate_filename
 from .get_model import get_model_from_name  # TODO remove me
 from .get_model import get_model_from_cfg  # TODO remove me
 from .forms import form_class_factory

@@ -33,6 +33,10 @@ class OpenTransactionView(ModuleTreeView):
     slug = "items"
 
 
+class TransferView(ModuleCreateView):
+    form_class = BMFTransactionCreateForm
+
+
 class TransactionCreateView(ModuleCreateView):
     form_class = BMFTransactionCreateForm
 

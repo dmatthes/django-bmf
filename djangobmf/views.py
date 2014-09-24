@@ -22,6 +22,7 @@ from django.views.generic.dates import YearMixin
 from django.views.generic.dates import MonthMixin
 from django.views.generic.dates import WeekMixin
 from django.views.generic.dates import DayMixin
+from django.views.generic.dates import DateMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.views.generic.list import MultipleObjectTemplateResponseMixin
@@ -32,8 +33,9 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from djangobmf.document.views import FileAddView
-# from .models import Document
+from djangobmf.document.forms import UploadDocument
+from djangobmf.document.models import Document
+# from djangobmf.document.views import DocumentCreateView
 from djangobmf.models import Report
 from djangobmf.notification.forms import HistoryCommentForm
 from djangobmf.notification.models import Activity
@@ -63,6 +65,9 @@ from functools import reduce
 from django_filters.views import FilterView
 
 
+# --- list views --------------------------------------------------------------
+
+
 class ModuleGenericBaseView(ModuleViewPermissionMixin, ModuleViewMixin):
     """
     """
@@ -86,18 +91,43 @@ class ModuleGenericBaseView(ModuleViewPermissionMixin, ModuleViewMixin):
 
         names = []
         if self.template_name_suffix:
-            names.append("%s/%s%s.html" % (
+            names.append("%s/%s_bmf%s.html" % (
                 self.model._meta.app_label,
                 self.model._meta.model_name,
                 self.template_name_suffix
             ))
+            names.append("djangobmf/module_generic_%s.html" % self.template_name_suffix)
+
+        names.append("djangobmf/module_generic_default.html")
+
+        # TODO remove me
         names.append("%s/%s_bmfindex.html" % (
             self.model._meta.app_label,
             self.model._meta.model_name
         ))
+
+        # TODO remove me
         names.append("djangobmf/module_index_default.html")
 
         return names
+
+
+class ModuleListView(ModuleGenericBaseView, MultipleObjectTemplateResponseMixin, MultipleObjectMixin, View):
+    """
+    This view generates a simple parginated list
+    """
+    template_name_suffix = 'list'
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(object_list=self.object_list)
+        return self.render_to_response(context)
+
+
+class ModuleFilterView(ModuleGenericBaseView, FilterView):
+    """
+    """
+    template_name_suffix = 'filter'
 
     def get_context_data(self, **kwargs):
         if self.filterset_class:
@@ -108,36 +138,30 @@ class ModuleGenericBaseView(ModuleViewPermissionMixin, ModuleViewMixin):
             kwargs.update({
                 'has_filter': False,
             })
-        return super(ModuleGenericBaseView, self).get_context_data(**kwargs)
-
-
-class ModuleListView(ModuleGenericBaseView, FilterView):
-    """
-    This view generates a simple parginated list
-    """
-    template_name_suffix = '_bmflist'
+        return super(ModuleFilterView, self).get_context_data(**kwargs)
 
 
 class ModuleTreeView(ModuleGenericBaseView, FilterView):
     """
     This view generates a parginated list and tree navigation
     """
-    template_name_suffix = '_bmftree'
+    template_name_suffix = 'tree'
 
 
 class ModuleCategoryView(ModuleGenericBaseView, FilterView):
     """
     TODO: Some mixin between Tree, List and Letter, probably with multiple categorie-items or workspace-states
     """
-    template_name_suffix = '_bmfcategory'
+    template_name_suffix = 'category'
 
 
-class ModuleArchiveView(ModuleGenericBaseView, YearMixin, MonthMixin, WeekMixin,
-                        DayMixin, MultipleObjectTemplateResponseMixin, MultipleObjectMixin, View):
+class ModuleArchiveView(ModuleGenericBaseView, YearMixin, MonthMixin, WeekMixin, DayMixin,
+                        DateMixin, MultipleObjectTemplateResponseMixin, MultipleObjectMixin, View):
     """
     This view generates a parginated list for a time intervall
     """
-    template_name_suffix = '_bmfarchive'
+    template_name_suffix = 'archive'
+    date_field = 'modified'
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -150,23 +174,10 @@ class ModuleLetterView(ModuleGenericBaseView, FilterView):
     This view generates a parginated list and a "A-Z 0-9"
     navigation
     """
-    template_name_suffix = '_bmfletter'
+    template_name_suffix = 'letter'
 
 
-class ModuleIndexView(ModuleListView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-            "ModuleIndexView is is deprecated - use ModuleListView",
-            RemovedInNextBMFVersionWarning, stacklevel=2)
-        super(ModuleIndexView, self).__init__(*args, **kwargs)
-
-
-class ModuleGenericListView(ModuleListView):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-            "ModuleGenericListView is is deprecated - use ModuleListView",
-            RemovedInNextBMFVersionWarning, stacklevel=2)
-        super(ModuleGenericListView, self).__init__(*args, **kwargs)
+# --- detail, forms and api ---------------------------------------------------
 
 
 class ModuleActivityMixin(object):
@@ -223,12 +234,12 @@ class ModuleFilesMixin(object):
 
     def get_context_data(self, **kwargs):
         if self.model._bmfmeta.has_files:
-            # ct = ContentType.objects.get_for_model(self.object)
+            ct = ContentType.objects.get_for_model(self.object)
 
             kwargs.update({
                 'has_files': True,
-                'history_file_form': FileAddView.form_class(),
-                'files': [],  # Document.objects.filter(content_type=ct, content_id=self.object.pk),
+                'history_file_form': UploadDocument,
+                'files': Document.objects.filter(content_type=ct, content_id=self.object.pk),
             })
         return super(ModuleFilesMixin, self).get_context_data(**kwargs)
 
@@ -617,6 +628,9 @@ class ModuleFormAPI(ModuleFormMixin, ModuleAjaxMixin, SingleObjectMixin, BaseFor
             return "%s__icontains" % field_name
 
 
+# --- misc --------------------------------------------------------------------
+
+
 class ModuleOverviewView(ViewMixin, TemplateView):
     template_name = "djangobmf/modules.html"
 
@@ -639,3 +653,22 @@ class ModuleOverviewView(ViewMixin, TemplateView):
         context = super(ModuleOverviewView, self).get_context_data(**kwargs)
         context['modules'] = modules
         return context
+
+
+# --- old ---------------------------------------------------------------------
+
+
+class ModuleIndexView(ModuleListView):
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "ModuleIndexView is is deprecated - use ModuleListView",
+            RemovedInNextBMFVersionWarning, stacklevel=2)
+        super(ModuleIndexView, self).__init__(*args, **kwargs)
+
+
+class ModuleGenericListView(ModuleListView):
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "ModuleGenericListView is is deprecated - use ModuleListView",
+            RemovedInNextBMFVersionWarning, stacklevel=2)
+        super(ModuleGenericListView, self).__init__(*args, **kwargs)
