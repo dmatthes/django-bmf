@@ -36,7 +36,7 @@ CONTRIB_PROJECT = get_contrib('BMF_CONTRIB_PROJECT', 'djangobmf_project.Project'
 CONTRIB_QUOTATION = get_contrib('BMF_CONTRIB_QUOTATION', 'djangobmf_quotation.Quotation')
 CONTRIB_TIMESHEET = get_contrib('BMF_CONTRIB_TIMESHEET', 'djangobmf_timesheet.Timesheet')
 CONTRIB_TRANSACTION = get_contrib('BMF_CONTRIB_TRANSACTION', 'djangobmf_accounting.Transaction')
-# CONTRIB_TRANSACTION_ITEM = get_contrib('BMF_CONTRIB_TRANSACTION_ITEM', 'djangobmf_accounting.TransactionItem')
+CONTRIB_TRANSACTIONITEM = get_contrib('BMF_CONTRIB_TRANSACTIONITEM', 'djangobmf_accounting.TransactionItem')
 
 
 # OLD below this line ---------------------------------------------------------

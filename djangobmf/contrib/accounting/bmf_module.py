@@ -25,6 +25,7 @@ site.register(Account, **{
 })
 
 from .models import Transaction
+from .views import OpenTransactionView
 from .views import TransactionCreateView
 from .views import TransactionDetailView
 from .views import TransactionUpdateView
@@ -35,6 +36,11 @@ site.register(Transaction, **{
     'update': TransactionUpdateView,
 })
 
+from .models import TransactionItem
+from .views import AllTransactionView
+
+site.register(TransactionItem)
+
 SETTINGS = {
     'income': forms.ModelChoiceField(queryset=Account.objects.filter(type=ACCOUNTING_INCOME)),
     'expense': forms.ModelChoiceField(queryset=Account.objects.filter(type=ACCOUNTING_EXPENSE)),
@@ -44,11 +50,6 @@ SETTINGS = {
 site.register_settings(AccountingConfig.label, SETTINGS)
 
 
-class AccountCategory(BaseCategory):
-    name = _('Accounts')
-    slug = "accounts"
-
-
 class TransactionCategory(BaseCategory):
     name = _('Transactions')
     slug = "transactions"
@@ -56,5 +57,7 @@ class TransactionCategory(BaseCategory):
 
 site.register_dashboard(Accounting)
 
-site.register_category(Accounting, AccountCategory)
-site.register_view(Account, AccountCategory, AccountIndexView)
+site.register_category(Accounting, TransactionCategory)
+site.register_view(Account, TransactionCategory, AccountIndexView)
+site.register_view(Transaction, TransactionCategory, OpenTransactionView)
+site.register_view(TransactionItem, TransactionCategory, AllTransactionView)

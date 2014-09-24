@@ -5,7 +5,9 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from djangobmf.views import ModuleGenericListView
+from djangobmf.views import ModuleArchiveView
+from djangobmf.views import ModuleListView
+from djangobmf.views import ModuleTreeView
 from djangobmf.views import ModuleCreateView
 from djangobmf.views import ModuleUpdateView
 from djangobmf.views import ModuleDetailView
@@ -16,9 +18,19 @@ from .forms import BMFTransactionUpdateForm
 from .forms import BMFTransactionCreateForm
 
 
-class AccountIndexView(ModuleGenericListView):
+class AccountIndexView(ModuleListView):
     name = _("All Accounts")
-    slug = "all"
+    slug = "accounts"
+
+
+class AllTransactionView(ModuleArchiveView):
+    name = _("All Transactions")
+    slug = "transactions"
+
+
+class OpenTransactionView(ModuleTreeView):
+    name = _("Open Transactions")
+    slug = "items"
 
 
 class TransactionCreateView(ModuleCreateView):

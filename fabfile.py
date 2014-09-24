@@ -46,7 +46,7 @@ def css():
     recreate css files - with lessc and yui-compressor
     """
     with lcd(BASEDIR):
-        local('lessc less/custom.less > bootstrap.css')
+        local('lessc less/djangobmf.less > bootstrap.css')
         local('yui-compressor --type css -o djangobmf/static/djangobmf/css/djangobmf.min.css bootstrap.css')
         local('rm bootstrap.css')
 

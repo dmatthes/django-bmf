@@ -204,7 +204,7 @@ class TransactionItemManager(models.Manager):
             .select_related('account').extra(select={"type": "type"})
 
 
-class AbstractTransactionItem(models.Model):
+class AbstractTransactionItem(BMFModel):
     """
     """
     account = models.ForeignKey(
@@ -222,14 +222,16 @@ class AbstractTransactionItem(models.Model):
         default=True,
     )
     balanced = models.BooleanField(default=False, editable=False)
-    modified = models.DateTimeField(
-        _("Modified"), auto_now=True, editable=False, null=True, blank=False,
-    )
 
     objects = TransactionItemManager()
 
     class Meta:
         abstract = True
+        swappable = "BMF_CONTRIB_TRANSACTIONITEM"
+
+    class BMFMeta:
+        category = ACCOUNTING
+        has_logging = False
 
 # def set_debit(self, amount):
 #   if self.get_type in [ACCOUNTING_ASSET, ACCOUNTING_EXPENSE]:
