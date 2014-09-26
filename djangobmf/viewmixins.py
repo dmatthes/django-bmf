@@ -127,14 +127,14 @@ class BaseMixin(object):
                     continue
                 if ws.level == 0:
                     cur_dashboard = ws
-                    data['relations'][ws.pk] = ws.pk
+                    data['relations'][ws.pk] = (cur_dashboard.pk, None)
                     continue
 
                 model = ws.ct.model_class()
                 permissions = ws.module_cls(model=model, workspace=ws).get_permissions([])
 
                 if self.request.user.has_perms(permissions):
-                    data['relations'][ws.pk] = cur_dashboard.pk
+                    data['relations'][ws.pk] = (cur_dashboard.pk, cur_category.pk)
 
                     if cur_dashboard.pk not in data['dashboards'].keys():
 
@@ -164,11 +164,15 @@ class BaseMixin(object):
         if isinstance(workspace, Workspace):
             workspace = workspace.pk
 
-        ws = data['relations'].get(workspace, None)
+        db, cat = data['relations'].get(workspace, (None, None))
+        if cat:
+            view = data['workspace'][db]["categories"][cat]["views"][workspace]
+        else:
+            view = None
 
-        if not ws:
-            return data["dashboards"], None, None, None
-        return data["dashboards"], data["workspace"][ws], ws, workspace
+        if not db:
+            return data["dashboards"], None, None, None, None
+        return data["dashboards"], data["workspace"][db], db, workspace, view
 
     def update_notification(self, count=None):
         """
@@ -201,13 +205,20 @@ class ViewMixin(BaseMixin):
         session_data = self.read_session_data()
 
         # load the current workspace
-        session_dashboard = session_data.get('dashboard', None)
-        dashboards, workspace, db_active, ws_active = self.update_workspace(
-            getattr(self, 'workspace', session_dashboard)
+        dashboards, workspace, db_active, ws_active, ws_view = self.update_workspace(
+            getattr(self, 'workspace', session_data.get('workspace', None))
         )
 
         # update session
-        if session_dashboard != db_active or db_active != ws_active and session_data.get('workspace') != ws_active:
+        if db_active and ws_active and session_data.get('dashboard') != db_active \
+                or db_active != ws_active and session_data.get('workspace') != ws_active:
+            logger.debug("Update session for %s: (dashboard %s->%s) (workspace %s->%s)" % (
+                self.request.user,
+                session_data.get('dashboard', None),
+                db_active,
+                session_data.get('workspace', None),
+                ws_active,
+            ))
             session_data['dashboard'] = db_active
             session_data['workspace'] = ws_active
             self.write_session_data(session_data)
@@ -218,8 +229,8 @@ class ViewMixin(BaseMixin):
             'bmfworkspace': {
                 'dashboards': dashboards,
                 'workspace': workspace,
-                'workspace_active': ws_active,
-                'dashboard_active': db_active,
+                'workspace_active': session_data.get('dashboard', None),
+                'dashboard_active': session_data.get('workspace', None),
             },
         })
 
@@ -270,20 +281,21 @@ class NextMixin(object):
     redirects to an url or to next, if it is set via get
     """
 
-    def redirect_next(self, reverse, *args, **kwargs):
-        redirect_to = self.request.REQUEST.get('next', '')
+    def redirect_next(self, reverse=None, *args, **kwargs):
+        if 'next' in self.request.REQUEST:
+            redirect_to = self.request.REQUEST.get('next', '')
 
-        netloc = parse.urlparse(redirect_to)[1]
-        if netloc and netloc != self.request.get_host():
-            redirect_to = None
-
-        if redirect_to:
-            return redirect_to
+            netloc = parse.urlparse(redirect_to)[1]
+            if not netloc or netloc == self.request.get_host():
+                return redirect_to
 
         if hasattr(self, 'success_url') and self.success_url:
             return self.success_url
 
-        return reverse_lazy(reverse, args=args, kwargs=kwargs)
+        if reverse:
+            return reverse_lazy(reverse, args=args, kwargs=kwargs)
+
+        return self.request.path_info
 
 
 # PERMISSIONS

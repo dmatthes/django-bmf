@@ -32,7 +32,7 @@
          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ bmfworkflow.state }} <span class="caret"></span></button>
          <ul class="dropdown-menu" role="menu">
            {% for transition in bmfworkflow.transitions %}
-           <li><a href="{% get_bmf_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
+           <li><a href="{% get_bmf_url object "workflow" transition=transition.0 %}?next={{ request.path_info }}">{{ transition.1 }}</a></li>
            {% endfor %}
          </ul>
        </div>

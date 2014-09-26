@@ -482,7 +482,7 @@ class ModuleDeleteView(ModuleDeletePermissionMixin, NextMixin, ModuleViewMixin, 
 
     def get_success_url(self):
         messages.info(self.request, 'Object deleted')
-        return self.redirect_next('%s:index' % self.model._bmfmeta.url_namespace)
+        return self.redirect_next()
 
 
 class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
@@ -499,7 +499,7 @@ class ModuleWorkflowView(ModuleViewMixin, NextMixin, DetailView):
         return super(ModuleWorkflowView, self).get_permissions(perms)
 
     def get_success_url(self):
-        return self.redirect_next('%s:index' % self.model._bmfmeta.url_namespace)
+        return self.redirect_next()
 
     def get(self, request, transition='', *args, **kwargs):
         self.object = self.get_object()
