@@ -126,10 +126,12 @@ def locale():
     with lcd(BASEDIR + '/djangobmf'):
         local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
         local('%s makemessages -l %s --domain djangojs' % (DJANGO, 'en'))
+        check_locale()
 
     for app in APPS:
         with lcd(BASEDIR + '/djangobmf/contrib/' + app):
             local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
+            check_locale()
 
     with lcd(BASEDIR):
         local('tx pull')
@@ -142,6 +144,14 @@ def locale():
             local('%s compilemessages' % DJANGO)
 
     puts("Dont forget to run 'tx push -s' to push new source files")
+
+def check_locale():
+    numstat = local('git diff --numstat locale', quiet)
+    for stats in numstat.split('\n'):
+        insertions, deletions, file = stats.split('\t')
+        if insertions == '1' and deletions == '1' and file[-3:] == '.po':
+            with lcd(BASEDIR):
+                local('git checkout -- %s' % file)
 
 @task
 def make(data=''):
