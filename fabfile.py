@@ -28,6 +28,22 @@ FIXTURES = (
     'fixtures/admin_dashboard.json',
 )
 
+APPS = [
+    'accounting',
+    'address',
+    'customer',
+    'employee',
+    'invoice',
+    'position',
+    'product',
+    'project',
+    'quotation',
+    'task',
+    'taxing',
+    'team',
+    'timesheet',
+]
+
 
 @task
 def static():
@@ -111,6 +127,21 @@ def locale():
         local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
         local('%s makemessages -l %s --domain djangojs' % (DJANGO, 'en'))
 
+    for app in APPS:
+        with lcd(BASEDIR + '/djangobmf/contrib/' + app):
+            local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
+
+    with lcd(BASEDIR):
+        local('tx pull')
+
+    with lcd(BASEDIR + '/djangobmf'):
+        local('%s compilemessages' % DJANGO)
+
+    for app in APPS:
+        with lcd(BASEDIR + '/djangobmf/contrib/' + app):
+            local('%s compilemessages' % DJANGO)
+
+    puts("Dont forget to run 'tx push -s' to push new source files")
 
 @task
 def make(data=''):

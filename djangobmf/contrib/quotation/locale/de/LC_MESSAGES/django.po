@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
-"PO-Revision-Date: 2014-09-21 02:32+0000\n"
+"POT-Creation-Date: 2014-09-27 13:58+0200\n"
+"PO-Revision-Date: 2014-09-27 12:03+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -17,136 +18,144 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/quotation/models.py:40
-msgid "Quotation number"
-msgstr "Angebotsnummer"
-
-#: contrib/quotation/models.py:43
-msgid "Date"
-msgstr "Datum"
-
-#: contrib/quotation/models.py:44
-msgid "Valid until"
-msgstr "Gültig bis"
-
-#: contrib/quotation/models.py:45
-msgid "Notes"
-msgstr "Notizen"
-
-#: contrib/quotation/models.py:46
-msgid "Term of payment"
-msgstr ""
-
-#: contrib/quotation/models.py:120
-msgid "Quotation"
-msgstr "Angebot"
-
-#: contrib/quotation/models.py:121
+#: bmf_module.py:31 models.py:158
 msgid "Quotations"
 msgstr "Angebote"
 
-#: contrib/quotation/models.py:143
-msgid "Name"
+#: models.py:75
+msgid "Quotation number"
+msgstr "Angebotsnummer"
+
+#: models.py:78
+msgid "Date"
+msgstr "Datum"
+
+#: models.py:79
+msgid "Valid until"
+msgstr "Gültig bis"
+
+#: models.py:80
+msgid "Notes"
+msgstr "Notizen"
+
+#: models.py:81
+msgid "Term of payment"
 msgstr ""
 
-#: contrib/quotation/models.py:144
+#: models.py:157
+msgid "Quotation"
+msgstr "Angebot"
+
+#: models.py:187
+msgid "Name"
+msgstr "Name"
+
+#: models.py:192
 msgid "Price"
 msgstr "Preis"
 
-#: contrib/quotation/models.py:147
+#: models.py:193
 msgid "Amount"
 msgstr "Menge"
 
-#: contrib/quotation/models.py:149
+#: models.py:195
 msgid "Description"
 msgstr "Beschreibung"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:4
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:18
+#: templates/djangobmf_quotation/quotation_htmlreport.html:4
+#: templates/djangobmf_quotation/quotation_htmlreport.html:18
 #, python-format
 msgid "Quotation %(name)s"
 msgstr "Angebot %(name)s"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:11
+#: templates/djangobmf_quotation/quotation_htmlreport.html:11
 msgid "Your contact person"
 msgstr ""
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:24
+#: templates/djangobmf_quotation/quotation_htmlreport.html:24
 msgid "Dear Valued Customer,"
 msgstr ""
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:30
+#: templates/djangobmf_quotation/quotation_htmlreport.html:30
 msgid "Quantity"
 msgstr "Menge"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:31
+#: templates/djangobmf_quotation/quotation_htmlreport.html:31
 msgid "Article"
 msgstr "Artikel"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:32
+#: templates/djangobmf_quotation/quotation_htmlreport.html:32
 msgid "Tax"
 msgstr "Steuer"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:33
+#: templates/djangobmf_quotation/quotation_htmlreport.html:33
 msgid "Unit price"
 msgstr "Basispreis"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:34
+#: templates/djangobmf_quotation/quotation_htmlreport.html:34
 msgid "Total price"
 msgstr "Gesamtpreis"
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:60
+#: templates/djangobmf_quotation/quotation_htmlreport.html:60
 msgid "Subtotal"
 msgstr ""
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:70
+#: templates/djangobmf_quotation/quotation_htmlreport.html:70
 msgid "Billing amount"
 msgstr ""
 
-#: contrib/quotation/templates/djangobmf_quotation/quotation_htmlreport.html:77
+#: templates/djangobmf_quotation/quotation_htmlreport.html:77
 msgid "With kind regards"
 msgstr ""
 
-#: contrib/quotation/workflows.py:15
+#: views.py:24
+msgid "All Quotations"
+msgstr ""
+
+#: views.py:30
+msgid "Open Quotations"
+msgstr ""
+
+#: workflows.py:15
 msgid "Draft"
 msgstr "Entwurf"
 
-#: contrib/quotation/workflows.py:16
+#: workflows.py:16
 msgid "Send"
 msgstr "Gesendet"
 
-#: contrib/quotation/workflows.py:17
+#: workflows.py:17
 msgid "Accepted"
 msgstr "Angenommen"
 
-#: contrib/quotation/workflows.py:18
+#: workflows.py:18
 msgid "Done"
 msgstr "Erledigt"
 
-#: contrib/quotation/workflows.py:19
+#: workflows.py:19
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: contrib/quotation/workflows.py:22
+#: workflows.py:22
 msgid "Send to customer"
 msgstr "An Kunden senden"
 
-#: contrib/quotation/workflows.py:23
+#: workflows.py:23
 msgid "Quotation accepted by customer"
 msgstr "Angebot wurde vom Kunden angenommen"
 
-#: contrib/quotation/workflows.py:24
+#: workflows.py:24
 msgid "Reopen this quotation"
 msgstr "Angebot wieder öffnen"
 
-#: contrib/quotation/workflows.py:25
+#: workflows.py:25
 msgid "Generate invoice"
 msgstr "Erstelle Rechnung"
 
-#: contrib/quotation/workflows.py:26
+#: workflows.py:26
 msgid "Revise this quotation"
 msgstr "Überarbeite dieses Angebot"
 
-#: contrib/quotation/workflows.py:27
+#: workflows.py:27
 msgid "Cancel"
 msgstr "Abbrechen"

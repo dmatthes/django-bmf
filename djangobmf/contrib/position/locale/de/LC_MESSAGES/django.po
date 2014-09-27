@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
-"PO-Revision-Date: 2014-09-21 02:33+0000\n"
+"POT-Creation-Date: 2014-09-27 13:58+0200\n"
+"PO-Revision-Date: 2014-09-27 12:03+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -17,48 +17,54 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/position/models.py:38
-#: contrib/position/templates/djangobmf_position/position_bmfindex.html:13
-msgid "Date"
-msgstr "Datum"
-
-#: contrib/position/models.py:39
-#: contrib/position/templates/djangobmf_position/position_bmfindex.html:14
-msgid "Name"
-msgstr "Name"
-
-#: contrib/position/models.py:43
-msgid "Invoiceable"
-msgstr "Berechenbar"
-
-#: contrib/position/models.py:47
-msgid "Price"
-msgstr "Preis"
-
-#: contrib/position/models.py:50
-msgid "Amount"
-msgstr "Menge"
-
-#: contrib/position/models.py:51
-msgid "Description"
-msgstr "Beschreibung"
-
-#: contrib/position/models.py:81
-msgid "Position"
-msgstr "Position"
-
-#: contrib/position/models.py:82
+#: bmf_module.py:35 models.py:93
 msgid "Positions"
 msgstr "Positionen"
 
-#: contrib/position/templates/djangobmf_position/position_bmfindex.html:15
+#: models.py:46 templates/djangobmf_position/position_bmfindex.html:13
+msgid "Date"
+msgstr "Datum"
+
+#: models.py:47 templates/djangobmf_position/position_bmfindex.html:14
+msgid "Name"
+msgstr "Name"
+
+#: models.py:57
+msgid "Invoiceable"
+msgstr "Berechenbar"
+
+#: models.py:61
+msgid "Price"
+msgstr "Preis"
+
+#: models.py:62
+msgid "Amount"
+msgstr "Menge"
+
+#: models.py:63
+msgid "Description"
+msgstr "Beschreibung"
+
+#: models.py:92
+msgid "Position"
+msgstr "Position"
+
+#: templates/djangobmf_position/position_bmfindex.html:15
 msgid "Product"
 msgstr "Produkt"
 
-#: contrib/position/templates/djangobmf_position/position_bmfindex.html:16
+#: templates/djangobmf_position/position_bmfindex.html:16
 msgid "Project"
 msgstr "Projekt"
 
-#: contrib/position/templates/djangobmf_position/position_bmfindex.html:17
+#: templates/djangobmf_position/position_bmfindex.html:17
 msgid "Employee"
 msgstr "Mitarbeiter"
+
+#: views.py:29
+msgid "All Positions"
+msgstr ""
+
+#: views.py:35
+msgid "Open Positions"
+msgstr ""

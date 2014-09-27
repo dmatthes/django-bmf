@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 04:28+0200\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contrib/timesheet/models.py:37
+#: models.py:37
 msgid "Title"
 msgstr ""
 
-#: contrib/timesheet/models.py:38
+#: models.py:38
 msgid "Description"
 msgstr ""
 
-#: contrib/timesheet/models.py:77
+#: models.py:77
 msgid "Timesheet"
 msgstr ""
 
-#: contrib/timesheet/models.py:78
+#: models.py:78
 msgid "Timesheets"
 msgstr ""
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:9
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:9
 msgid "Date"
 msgstr ""
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:10
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:10
 msgid "Subject"
 msgstr ""
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:11
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:11
 msgid "Employee"
 msgstr ""
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:12
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:12
 msgid "Time"
 msgstr ""
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:20
-#: contrib/timesheet/workflows.py:21
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:20 workflows.py:21
 msgid "Active"
 msgstr ""
 
-#: contrib/timesheet/workflows.py:22
+#: workflows.py:22
 msgid "Finished"
 msgstr ""
 
-#: contrib/timesheet/workflows.py:23
+#: workflows.py:23
 msgid "Validated"
 msgstr ""
 
-#: contrib/timesheet/workflows.py:27
+#: workflows.py:27
 msgid "Finish"
 msgstr ""
 
-#: contrib/timesheet/workflows.py:32
+#: workflows.py:32
 msgid "Validate"
 msgstr ""

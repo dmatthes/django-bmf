@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
-"PO-Revision-Date: 2014-09-21 02:33+0000\n"
+"POT-Creation-Date: 2014-09-27 13:58+0200\n"
+"PO-Revision-Date: 2014-09-27 12:03+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -17,120 +18,128 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/invoice/models.py:37
-msgid "Invoice number"
-msgstr "Rechnungsnummer"
-
-#: contrib/invoice/models.py:40
-msgid "Date"
-msgstr "Datum"
-
-#: contrib/invoice/models.py:41
-msgid "Due"
-msgstr "Fällig"
-
-#: contrib/invoice/models.py:42
-msgid "Notes"
-msgstr "Notizen"
-
-#: contrib/invoice/models.py:43
-msgid "Term of payment"
-msgstr ""
-
-#: contrib/invoice/models.py:50
-msgid "Invoice"
-msgstr "Rechnung"
-
-#: contrib/invoice/models.py:51
+#: bmf_module.py:29 models.py:69
 msgid "Invoices"
 msgstr "Rechnungen"
 
-#: contrib/invoice/models.py:134
-msgid "Name"
+#: models.py:42
+msgid "Invoice number"
+msgstr "Rechnungsnummer"
+
+#: models.py:45
+msgid "Date"
+msgstr "Datum"
+
+#: models.py:68
+msgid "Invoice"
+msgstr "Rechnung"
+
+#: models.py:91
+msgid "Due"
+msgstr "Fällig"
+
+#: models.py:92
+msgid "Notes"
+msgstr "Notizen"
+
+#: models.py:93
+msgid "Term of payment"
 msgstr ""
 
-#: contrib/invoice/models.py:135
+#: models.py:174
+msgid "Name"
+msgstr "Name"
+
+#: models.py:179
 msgid "Price"
 msgstr "Preis"
 
-#: contrib/invoice/models.py:138
+#: models.py:180
 msgid "Amount"
 msgstr "Menge"
 
-#: contrib/invoice/models.py:140
+#: models.py:182
 msgid "Description"
 msgstr "Beschreibung"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:4
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:18
+#: templates/djangobmf_invoice/invoice_htmlreport.html:4
+#: templates/djangobmf_invoice/invoice_htmlreport.html:18
 #, python-format
 msgid "Invoice %(name)s"
 msgstr "Rechnung %(name)s"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:11
+#: templates/djangobmf_invoice/invoice_htmlreport.html:11
 msgid "Your contact person"
 msgstr ""
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:24
+#: templates/djangobmf_invoice/invoice_htmlreport.html:24
 msgid "Dear Valued Customer,"
 msgstr ""
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:33
+#: templates/djangobmf_invoice/invoice_htmlreport.html:33
 msgid "Quantity"
 msgstr "Menge"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:34
+#: templates/djangobmf_invoice/invoice_htmlreport.html:34
 msgid "Article"
 msgstr "Artikel"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:35
+#: templates/djangobmf_invoice/invoice_htmlreport.html:35
 msgid "Tax"
 msgstr "Steuer"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:36
+#: templates/djangobmf_invoice/invoice_htmlreport.html:36
 msgid "Unit price"
 msgstr "Basispreis"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:37
+#: templates/djangobmf_invoice/invoice_htmlreport.html:37
 msgid "Total price"
 msgstr "Gesamtpreis"
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:63
+#: templates/djangobmf_invoice/invoice_htmlreport.html:63
 msgid "Subtotal"
 msgstr ""
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:73
+#: templates/djangobmf_invoice/invoice_htmlreport.html:73
 msgid "Billing amount"
 msgstr ""
 
-#: contrib/invoice/templates/djangobmf_invoice/invoice_htmlreport.html:81
+#: templates/djangobmf_invoice/invoice_htmlreport.html:81
 msgid "With kind regards"
 msgstr ""
 
-#: contrib/invoice/workflows.py:16
+#: views.py:19
+msgid "All Invoices"
+msgstr ""
+
+#: views.py:24
+msgid "Open Invoices"
+msgstr ""
+
+#: workflows.py:14
 msgid "Draft"
 msgstr "Entwurf"
 
-#: contrib/invoice/workflows.py:17
+#: workflows.py:15
 msgid "Open"
 msgstr "Offen"
 
-#: contrib/invoice/workflows.py:18
+#: workflows.py:16
 msgid "Payed"
 msgstr "Bezahlt"
 
-#: contrib/invoice/workflows.py:19
+#: workflows.py:17
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: contrib/invoice/workflows.py:22
+#: workflows.py:20
 msgid "Send to Customer"
 msgstr ""
 
-#: contrib/invoice/workflows.py:23
+#: workflows.py:21
 msgid "Customer payed"
 msgstr ""
 
-#: contrib/invoice/workflows.py:25
+#: workflows.py:23
 msgid "Cancel"
 msgstr "Abbrechen"
