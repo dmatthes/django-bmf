@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 13:58+0200\n"
-"PO-Revision-Date: 2014-09-27 12:03+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:08+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "Notizen"
 
 #: models.py:81
 msgid "Term of payment"
-msgstr ""
+msgstr "Zahlungsbedingungen"
 
 #: models.py:157
 msgid "Quotation"
@@ -110,11 +110,11 @@ msgstr ""
 
 #: views.py:24
 msgid "All Quotations"
-msgstr ""
+msgstr "Alle Angebote"
 
 #: views.py:30
 msgid "Open Quotations"
-msgstr ""
+msgstr "Offene Angebote"
 
 #: workflows.py:15
 msgid "Draft"

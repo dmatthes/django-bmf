@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 13:58+0200\n"
-"PO-Revision-Date: 2014-09-27 12:02+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:05+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -82,15 +82,15 @@ msgstr "Titel"
 
 #: models.py:123
 msgid "Phone office"
-msgstr ""
+msgstr "Telefon Büro"
 
 #: models.py:124
 msgid "Phone privat"
-msgstr ""
+msgstr "Telefon Privat"
 
 #: models.py:125
 msgid "Phone mobile"
-msgstr ""
+msgstr "Telefon Mobil"
 
 #: models.py:126
 msgid "Email"
@@ -110,8 +110,8 @@ msgstr "Notizen"
 
 #: views.py:18
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: views.py:23
 msgid "Supplier"
-msgstr ""
+msgstr "Zulieferer"

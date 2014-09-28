@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 13:58+0200\n"
-"PO-Revision-Date: 2014-09-27 12:02+0000\n"
+"POT-Creation-Date: 2014-09-27 15:25+0200\n"
+"PO-Revision-Date: 2014-09-27 14:03+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -95,11 +95,27 @@ msgstr "Konfiguration"
 msgid "Configurations"
 msgstr "Konfigurationen"
 
+#: currencies/EUR/models.py:14
+msgid "€"
+msgstr "€"
+
+#: currencies/EUR/models.py:15
+msgid "Euro"
+msgstr "Euro"
+
+#: currencies/USD/models.py:14
+msgid "$"
+msgstr "$"
+
+#: currencies/USD/models.py:15
+msgid "Dollar"
+msgstr "Dollar"
+
 #: currencies/__init__.py:51
 #, python-format
 msgctxt "currency formatting"
 msgid "%(val)s %(sym)s"
-msgstr ""
+msgstr "%(val)s %(sym)s"
 
 #: dashboard/models.py:22 document/models.py:28
 msgid "Name"

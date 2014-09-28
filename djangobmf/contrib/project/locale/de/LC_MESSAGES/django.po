@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 04:28+0200\n"
-"PO-Revision-Date: 2014-09-27 11:48+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:02+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -18,50 +18,48 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/project/bmf_module.py:23
-#: contrib/project/templates/djangobmf_project/project_bmfindex.html:5
-#: contrib/project/templates/djangobmf_project/project_bmfindex.html:8
-#: contrib/project/templates/djangobmf_project/project_bmfrelated_customer.html:7
+#: bmf_module.py:23 templates/djangobmf_project/project_bmfindex.html:5
+#: templates/djangobmf_project/project_bmfindex.html:8
+#: templates/djangobmf_project/project_bmfrelated_customer.html:7
 msgid "Projects"
-msgstr ""
+msgstr "Projekte"
 
-#: contrib/project/models.py:30
-#: contrib/project/templates/djangobmf_project/project_bmfindex.html:13
+#: models.py:30 templates/djangobmf_project/project_bmfindex.html:13
 msgid "Name"
 msgstr "Name"
 
-#: contrib/project/models.py:32
+#: models.py:32
 msgid "Is active"
 msgstr "Ist aktiv"
 
-#: contrib/project/models.py:35 contrib/project/models.py:36
-#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:5
-#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:8
+#: models.py:35 models.py:36
+#: templates/djangobmf_project/project_bmfdetail.html:5
+#: templates/djangobmf_project/project_bmfdetail.html:8
 msgid "Project"
 msgstr "Projekt"
 
-#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:10
+#: templates/djangobmf_project/project_bmfdetail.html:10
 msgid "Active"
 msgstr "Aktiv"
 
-#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:10
+#: templates/djangobmf_project/project_bmfdetail.html:10
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktiv"
 
-#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:11
-#: contrib/project/templates/djangobmf_project/project_bmfindex.html:14
+#: templates/djangobmf_project/project_bmfdetail.html:11
+#: templates/djangobmf_project/project_bmfindex.html:14
 msgid "Customer"
 msgstr "Kunde"
 
-#: contrib/project/templates/djangobmf_project/project_bmfdetail.html:12
-#: contrib/project/templates/djangobmf_project/project_bmfindex.html:15
+#: templates/djangobmf_project/project_bmfdetail.html:12
+#: templates/djangobmf_project/project_bmfindex.html:15
 msgid "Employee"
 msgstr "Mitarbeiter"
 
-#: contrib/project/views.py:14
+#: views.py:14
 msgid "Active Projects"
 msgstr "Aktive Projekte"
 
-#: contrib/project/views.py:22
+#: views.py:22
 msgid "All Projects"
 msgstr "Alle Projekte"

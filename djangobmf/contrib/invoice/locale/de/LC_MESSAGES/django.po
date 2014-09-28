@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 13:58+0200\n"
-"PO-Revision-Date: 2014-09-27 12:03+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:08+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -110,11 +110,11 @@ msgstr ""
 
 #: views.py:19
 msgid "All Invoices"
-msgstr ""
+msgstr "Alle Rechnungen"
 
 #: views.py:24
 msgid "Open Invoices"
-msgstr ""
+msgstr "Offene Rechnungen"
 
 #: workflows.py:14
 msgid "Draft"

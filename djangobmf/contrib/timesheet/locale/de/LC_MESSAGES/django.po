@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 04:28+0200\n"
-"PO-Revision-Date: 2014-09-22 12:27+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:08+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -18,55 +18,54 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/timesheet/models.py:37
+#: models.py:37
 msgid "Title"
 msgstr "Titel"
 
-#: contrib/timesheet/models.py:38
+#: models.py:38
 msgid "Description"
 msgstr "Beschreibung"
 
-#: contrib/timesheet/models.py:77
+#: models.py:77
 msgid "Timesheet"
 msgstr "Stundenzettel"
 
-#: contrib/timesheet/models.py:78
+#: models.py:78
 msgid "Timesheets"
 msgstr "Stundenzettel"
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:9
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:9
 msgid "Date"
 msgstr "Datum"
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:10
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:10
 msgid "Subject"
 msgstr "Betreff"
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:11
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:11
 msgid "Employee"
 msgstr "Mitarbeiter"
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:12
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:12
 msgid "Time"
 msgstr "Zeit"
 
-#: contrib/timesheet/templates/djangobmf_timesheet/timesheet_bmfindex.html:20
-#: contrib/timesheet/workflows.py:21
+#: templates/djangobmf_timesheet/timesheet_bmfindex.html:20 workflows.py:21
 msgid "Active"
 msgstr "Aktiv"
 
-#: contrib/timesheet/workflows.py:22
+#: workflows.py:22
 msgid "Finished"
 msgstr "Abgeschlossen"
 
-#: contrib/timesheet/workflows.py:23
+#: workflows.py:23
 msgid "Validated"
 msgstr "Validiert"
 
-#: contrib/timesheet/workflows.py:27
+#: workflows.py:27
 msgid "Finish"
 msgstr "Abschließen"
 
-#: contrib/timesheet/workflows.py:32
+#: workflows.py:32
 msgid "Validate"
 msgstr "Validieren"

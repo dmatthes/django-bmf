@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 04:28+0200\n"
-"PO-Revision-Date: 2014-09-22 12:18+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:09+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -18,216 +18,215 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contrib/task/bmf_module.py:41 contrib/task/models.py:63
+#: bmf_module.py:41 models.py:63
 msgid "Goals"
 msgstr "Ziele"
 
-#: contrib/task/bmf_module.py:46 contrib/task/models.py:198
+#: bmf_module.py:46 models.py:198
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: contrib/task/forms.py:19
+#: forms.py:19
 msgid "Copy the Tasks"
 msgstr ""
 
-#: contrib/task/forms.py:20
+#: forms.py:20
 msgid "When copying unset the task's employee"
 msgstr ""
 
-#: contrib/task/models.py:38 contrib/task/models.py:175
+#: models.py:38 models.py:175
 msgid "Title"
 msgstr "Titel"
 
-#: contrib/task/models.py:39 contrib/task/models.py:176
+#: models.py:39 models.py:176
 msgid "Description"
 msgstr "Beschreibung"
 
-#: contrib/task/models.py:57 contrib/task/models.py:192
-#: contrib/task/workflows.py:23
+#: models.py:57 models.py:192 workflows.py:23
 msgid "Completed"
 msgstr "Abgeschlossen"
 
-#: contrib/task/models.py:62
+#: models.py:62
 msgid "Goal"
 msgstr "Ziel"
 
-#: contrib/task/models.py:177
+#: models.py:177
 msgid "Due date"
 msgstr "Fällig"
 
-#: contrib/task/models.py:197
+#: models.py:197
 msgid "Task"
 msgstr "Aufgabe"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:26
-#: contrib/task/templates/djangobmf_task/task_bmfrelated_project.html:7
+#: templates/djangobmf_task/goal_bmfdetail.html:26
+#: templates/djangobmf_task/task_bmfrelated_project.html:7
 msgid "Open tasks"
 msgstr "Offene Aufgaben"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:27
+#: templates/djangobmf_task/goal_bmfdetail.html:27
 msgid "Tasks on hold"
 msgstr "In Warteschlange"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfdetail.html:28
+#: templates/djangobmf_task/goal_bmfdetail.html:28
 msgid "Accomplished Tasks"
 msgstr "Abgeschlossene Aufgaben"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:8
+#: templates/djangobmf_task/goal_bmfindex.html:8
 msgid "Project"
 msgstr "Projekt"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:12
+#: templates/djangobmf_task/goal_bmfindex.html:12
 msgid "Summary"
 msgstr "Zusammenfassung"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:13
+#: templates/djangobmf_task/goal_bmfindex.html:13
 msgid "Referee"
 msgstr "Referent"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:14
+#: templates/djangobmf_task/goal_bmfindex.html:14
 msgid "Current State"
 msgstr "Aktueller Status"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfindex.html:33
+#: templates/djangobmf_task/goal_bmfindex.html:33
 msgid "completed"
 msgstr "abgeschlossen"
 
-#: contrib/task/templates/djangobmf_task/goal_bmfrelated_project.html:7
+#: templates/djangobmf_task/goal_bmfrelated_project.html:7
 msgid "Current goals"
 msgstr "Aktuelle Ziele"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:6
+#: templates/djangobmf_task/task_inctable.html:6
 msgid "Employee"
 msgstr "Mitarbeiter"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:7
+#: templates/djangobmf_task/task_inctable.html:7
 msgid "State"
 msgstr "Status"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:35
+#: templates/djangobmf_task/task_inctable.html:35
 msgid "review"
 msgstr "prüfen"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:36
+#: templates/djangobmf_task/task_inctable.html:36
 msgid "started"
 msgstr "gestartet"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:37
+#: templates/djangobmf_task/task_inctable.html:37
 msgid "hold"
 msgstr "angehalten"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:38
+#: templates/djangobmf_task/task_inctable.html:38
 msgid "todo"
 msgstr "zu erledigen"
 
-#: contrib/task/templates/djangobmf_task/task_inctable.html:45
+#: templates/djangobmf_task/task_inctable.html:45
 msgid "None"
 msgstr "Kein"
 
-#: contrib/task/views.py:22 contrib/task/views.py:46
+#: views.py:22 views.py:46
 msgid "Archive"
 msgstr "Archiv"
 
-#: contrib/task/views.py:28
+#: views.py:28
 msgid "Active Goals"
 msgstr "Aktive Ziele"
 
-#: contrib/task/views.py:37
+#: views.py:37
 msgid "My Goals"
 msgstr "Meine Ziele"
 
-#: contrib/task/views.py:52
+#: views.py:52
 msgid "Open Tasks"
 msgstr "Offene Aufgaben"
 
-#: contrib/task/views.py:61
+#: views.py:61
 msgid "Available Tasks"
 msgstr "Verfügbare Aufgaben"
 
-#: contrib/task/views.py:69
+#: views.py:69
 msgid "My Tasks"
 msgstr "Meine Aufgaben"
 
-#: contrib/task/views.py:78
+#: views.py:78
 msgid "Todolist"
 msgstr "Zu erledigende Aufgaben"
 
-#: contrib/task/workflows.py:22 contrib/task/workflows.py:64
+#: workflows.py:22 workflows.py:64
 msgid "Open"
 msgstr "Offen"
 
-#: contrib/task/workflows.py:24 contrib/task/workflows.py:70
+#: workflows.py:24 workflows.py:70
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: contrib/task/workflows.py:27
+#: workflows.py:27
 msgid "Complete this Goal"
 msgstr "Schließe das Ziel ab"
 
-#: contrib/task/workflows.py:28
+#: workflows.py:28
 msgid "Cancel this Goal"
 msgstr ""
 
-#: contrib/task/workflows.py:29
+#: workflows.py:29
 msgid "Reopen this Goal"
 msgstr "Öffne das Ziel"
 
-#: contrib/task/workflows.py:33 contrib/task/workflows.py:41
+#: workflows.py:33 workflows.py:41
 msgid "You can not complete a goal which has open tasks"
 msgstr ""
 
-#: contrib/task/workflows.py:63
+#: workflows.py:63
 msgid "New"
 msgstr "Neu"
 
-#: contrib/task/workflows.py:65
+#: workflows.py:65
 msgid "Hold"
 msgstr "Angehalten"
 
-#: contrib/task/workflows.py:66
+#: workflows.py:66
 msgid "Todo"
 msgstr "Zu erledigen"
 
-#: contrib/task/workflows.py:67
+#: workflows.py:67
 msgid "Started"
 msgstr "Gestartet"
 
-#: contrib/task/workflows.py:68
+#: workflows.py:68
 msgid "Review"
 msgstr "Prüfung"
 
-#: contrib/task/workflows.py:69
+#: workflows.py:69
 msgid "Finished"
 msgstr "Abgeschlossen"
 
-#: contrib/task/workflows.py:74
+#: workflows.py:74
 msgid "Work on this task"
 msgstr "Arbeite an dieser Aufgabe"
 
-#: contrib/task/workflows.py:80
+#: workflows.py:80
 msgid "Mark as todo"
 msgstr ""
 
-#: contrib/task/workflows.py:85
+#: workflows.py:85
 msgid "Set this task on hold"
 msgstr "Setze diese Aufgabe in die Wateschlange"
 
-#: contrib/task/workflows.py:90
+#: workflows.py:90
 msgid "Stop working on this task"
 msgstr "Halte die Arbeite an dieser Aufgabe an"
 
-#: contrib/task/workflows.py:95
+#: workflows.py:95
 msgid "Finish this task"
 msgstr "Schließe diese Aufgabe ab"
 
-#: contrib/task/workflows.py:101
+#: workflows.py:101
 msgid "Set to review"
 msgstr ""
 
-#: contrib/task/workflows.py:106 contrib/task/workflows.py:111
+#: workflows.py:106 workflows.py:111
 msgid "Reopen this task"
 msgstr "Wiedereröffne diese Aufgabe"
 
-#: contrib/task/workflows.py:116
+#: workflows.py:116
 msgid "Cancel this task"
 msgstr "Breche diese Aufgabe ab"

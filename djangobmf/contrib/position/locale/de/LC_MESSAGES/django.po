@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 13:58+0200\n"
-"PO-Revision-Date: 2014-09-27 12:03+0000\n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:08+0000\n"
 "Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -63,8 +64,8 @@ msgstr "Mitarbeiter"
 
 #: views.py:29
 msgid "All Positions"
-msgstr ""
+msgstr "Alle Positionen"
 
 #: views.py:35
 msgid "Open Positions"
-msgstr ""
+msgstr "Offene Positionen"
