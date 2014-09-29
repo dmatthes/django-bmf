@@ -26,6 +26,7 @@ class AccountIndexView(ModuleListView):
 class AllTransactionView(ModuleArchiveView):
     name = _("All Transactions")
     slug = "transactions"
+    date_resolution = "month"
 
 
 class OpenTransactionView(ModuleTreeView):

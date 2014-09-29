@@ -27,7 +27,7 @@ site.register(Invoice, **{
 
 class InvoiceCategory(BaseCategory):
     name = _('Invoices')
-    slug = "Invoices"
+    slug = "invoices"
 
 
 site.register_dashboard(Accounting)

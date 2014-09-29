@@ -18,6 +18,7 @@ from .forms import BMFInvoiceCreateForm
 class AllInvoiceView(ModuleArchiveView):
     name = _("All Invoices")
     slug = "all"
+    date_resolution = "month"
 
 
 class OpenInvoiceView(ModuleListView):

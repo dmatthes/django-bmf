@@ -18,11 +18,14 @@ from django.views.generic import UpdateView
 from django.views.generic.base import TemplateView
 # from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import BaseFormView
+from django.views.generic.dates import BaseDateListView
 from django.views.generic.dates import YearMixin
 from django.views.generic.dates import MonthMixin
 from django.views.generic.dates import WeekMixin
 from django.views.generic.dates import DayMixin
 from django.views.generic.dates import DateMixin
+from django.views.generic.dates import _date_from_string
+from django.views.generic.dates import _get_next_prev
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.views.generic.list import MultipleObjectTemplateResponseMixin
@@ -30,6 +33,8 @@ from django.template.loader import get_template
 from django.template.loader import select_template
 from django.template import TemplateDoesNotExist
 from django.utils.encoding import force_text
+from django.utils.formats import get_format
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
@@ -56,9 +61,10 @@ from djangobmf.viewmixins import ModuleViewMixin
 from djangobmf.viewmixins import NextMixin
 from djangobmf.viewmixins import ViewMixin
 
-import re
-import operator
 import copy
+import datetime
+import operator
+import re
 import types
 import warnings
 from functools import reduce
@@ -91,23 +97,22 @@ class ModuleGenericBaseView(ModuleViewPermissionMixin, ModuleViewMixin):
 
         names = []
         if self.template_name_suffix:
-            names.append("%s/%s_bmf%s.html" % (
+            names.append("%s/%s_bmfgeneric_%s.html" % (
                 self.model._meta.app_label,
                 self.model._meta.model_name,
                 self.template_name_suffix
             ))
+
+        names.append("%s/%s_bmfgeneric.html" % (
+            self.model._meta.app_label,
+            self.model._meta.model_name
+        ))
+        if self.template_name_suffix:
             names.append("djangobmf/module_generic_%s.html" % self.template_name_suffix)
 
         names.append("djangobmf/module_generic_default.html")
 
-        # TODO remove me
-        names.append("%s/%s_bmfindex.html" % (
-            self.model._meta.app_label,
-            self.model._meta.model_name
-        ))
-
-        # TODO remove me
-        names.append("djangobmf/module_index_default.html")
+        print(names)
 
         return names
 
@@ -156,18 +161,99 @@ class ModuleCategoryView(ModuleGenericBaseView, FilterView):
 
 
 class ModuleArchiveView(ModuleGenericBaseView, YearMixin, MonthMixin, WeekMixin, DayMixin,
-                        DateMixin, MultipleObjectTemplateResponseMixin, MultipleObjectMixin, View):
+                        MultipleObjectTemplateResponseMixin, BaseDateListView):
     """
     This view generates a parginated list for a time intervall
     """
     template_name_suffix = 'archive'
     date_field = 'modified'
+    date_resolution = 'year'
+    allow_empty = True
+    allow_future = False
 
     def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data(object_list=self.object_list)
+        self.date_list, self.object_list, extra_context = self.get_dated_items()
+        context = self.get_context_data(object_list=self.object_list, date_list=self.date_list)
+        context.update(extra_context)
         return self.render_to_response(context)
 
+    def get_week_format(self):
+        return '%W' if get_format('FIRST_DAY_OF_WEEK') else '%U'
+
+    def get_dated_items(self):
+        """
+        Return (date_list, items, extra_context) for this request.
+        """
+
+        year = self.request.GET.get('year', None)
+        month = self.request.GET.get('month', None)
+        day = self.request.GET.get('day', None)
+        week = self.request.GET.get('week', None)
+
+        year_format = '%Y'
+        month_format = '%m'
+        day_format = '%d'
+        week_format = self.get_week_format()
+
+        date_now = now()
+
+        if not year:
+            year = date_now.strftime(year_format)
+
+        if not month and self.date_resolution in ["month", "day"]:
+            month = date_now.strftime(month_format)
+
+        if not week and self.date_resolution in ["week"]:
+            week = date_now.strftime(week_format)
+
+        if not day and self.date_resolution in ["day"]:
+            day = date_now.strftime(day_format)
+
+
+        date_field = self.get_date_field()
+        htmlargs = {}
+
+        if month:
+            if day:
+                date = _date_from_string(year, year_format, month, month_format, day, day_format)
+                period = "day"
+                until = self._make_date_lookup_arg(self._get_next_day(date))
+            else:
+                date = _date_from_string(year, year_format, month, month_format)
+                period = "month"
+                until = self._make_date_lookup_arg(self._get_next_month(date))
+        elif week: 
+            if week_format == '%W':
+                date = _date_from_string(year, year_format, week, week_format, '1', '%w')
+            else:
+                date = _date_from_string(year, year_format, week, week_format, '0', '%w')
+            period = "week"
+            until = self._make_date_lookup_arg(self._get_next_week(date))
+        else:
+            date = _date_from_string(year, year_format)
+            period = "year"
+            until = self._make_date_lookup_arg(self._get_next_year(date))
+        since = self._make_date_lookup_arg(date)
+
+        lookup_kwargs = {
+            '%s__gte' % date_field: since,
+            '%s__lt' % date_field: until,
+        }
+
+        qs = self.get_dated_queryset(**lookup_kwargs)
+        date_list = self.get_date_list(qs)
+
+        return (date_list, qs, {
+            'current_period': date,
+            'next_period': _get_next_prev(self, date, False, period),
+            'previous_period': _get_next_prev(self, date, True, period),
+            'dateformat': {
+                'year': year_format,
+                'month': month_format,
+                'day': day_format,
+                'week': week_format,
+            }
+        })
 
 class ModuleLetterView(ModuleGenericBaseView, FilterView):
     """
