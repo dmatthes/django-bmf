@@ -23,7 +23,6 @@ from django.views.generic.dates import YearMixin
 from django.views.generic.dates import MonthMixin
 from django.views.generic.dates import WeekMixin
 from django.views.generic.dates import DayMixin
-from django.views.generic.dates import DateMixin
 from django.views.generic.dates import _date_from_string
 from django.views.generic.dates import _get_next_prev
 from django.views.generic.detail import SingleObjectMixin
@@ -112,8 +111,6 @@ class ModuleGenericBaseView(ModuleViewPermissionMixin, ModuleViewMixin):
 
         names.append("djangobmf/module_generic_default.html")
 
-        print(names)
-
         return names
 
 
@@ -200,20 +197,18 @@ class ModuleArchiveView(ModuleGenericBaseView, YearMixin, MonthMixin, WeekMixin,
         if not year:
             year = date_now.strftime(year_format)
 
-        if not month and self.date_resolution in ["month", "day"]:
+        if not month and not week and self.date_resolution in ["month", "day"]:
             month = date_now.strftime(month_format)
 
-        if not week and self.date_resolution in ["week"]:
+        if not week and not month and self.date_resolution in ["week"]:
             week = date_now.strftime(week_format)
 
         if not day and self.date_resolution in ["day"]:
             day = date_now.strftime(day_format)
 
-
         date_field = self.get_date_field()
-        htmlargs = {}
 
-        if month:
+        if month and not week:
             if day:
                 date = _date_from_string(year, year_format, month, month_format, day, day_format)
                 period = "day"
@@ -222,7 +217,7 @@ class ModuleArchiveView(ModuleGenericBaseView, YearMixin, MonthMixin, WeekMixin,
                 date = _date_from_string(year, year_format, month, month_format)
                 period = "month"
                 until = self._make_date_lookup_arg(self._get_next_month(date))
-        elif week: 
+        elif week and not month:
             if week_format == '%W':
                 date = _date_from_string(year, year_format, week, week_format, '1', '%w')
             else:
@@ -244,16 +239,19 @@ class ModuleArchiveView(ModuleGenericBaseView, YearMixin, MonthMixin, WeekMixin,
         date_list = self.get_date_list(qs)
 
         return (date_list, qs, {
-            'current_period': date,
+            'current_period': period,
+            'current_period_start': date,
+            'current_period_end': until - datetime.timedelta(1),
             'next_period': _get_next_prev(self, date, False, period),
             'previous_period': _get_next_prev(self, date, True, period),
             'dateformat': {
-                'year': year_format,
-                'month': month_format,
-                'day': day_format,
-                'week': week_format,
+                'year': year_format[1:],
+                'month': month_format[1:],
+                'day': day_format[1:],
+                'week': week_format[1:],
             }
         })
+
 
 class ModuleLetterView(ModuleGenericBaseView, FilterView):
     """
