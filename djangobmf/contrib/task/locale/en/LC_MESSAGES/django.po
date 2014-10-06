@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,23 +70,23 @@ msgstr ""
 msgid "Accomplished Tasks"
 msgstr ""
 
-#: templates/djangobmf_task/goal_bmfindex.html:8
+#: templates/djangobmf_task/goal_bmfgeneric.html:8
 msgid "Project"
 msgstr ""
 
-#: templates/djangobmf_task/goal_bmfindex.html:12
+#: templates/djangobmf_task/goal_bmfgeneric.html:12
 msgid "Summary"
 msgstr ""
 
-#: templates/djangobmf_task/goal_bmfindex.html:13
+#: templates/djangobmf_task/goal_bmfgeneric.html:13
 msgid "Referee"
 msgstr ""
 
-#: templates/djangobmf_task/goal_bmfindex.html:14
+#: templates/djangobmf_task/goal_bmfgeneric.html:14
 msgid "Current State"
 msgstr ""
 
-#: templates/djangobmf_task/goal_bmfindex.html:33
+#: templates/djangobmf_task/goal_bmfgeneric.html:33
 msgid "completed"
 msgstr ""
 
@@ -134,19 +134,19 @@ msgstr ""
 msgid "My Goals"
 msgstr ""
 
-#: views.py:52
+#: views.py:53
 msgid "Open Tasks"
 msgstr ""
 
-#: views.py:61
+#: views.py:62
 msgid "Available Tasks"
 msgstr ""
 
-#: views.py:69
+#: views.py:70
 msgid "My Tasks"
 msgstr ""
 
-#: views.py:78
+#: views.py:79
 msgid "Todolist"
 msgstr ""
 

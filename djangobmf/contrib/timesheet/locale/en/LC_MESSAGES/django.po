@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,23 +33,24 @@ msgstr ""
 msgid "Timesheets"
 msgstr ""
 
-#: templates/djangobmf_timesheet/timesheet_bmfindex.html:9
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:9
 msgid "Date"
 msgstr ""
 
-#: templates/djangobmf_timesheet/timesheet_bmfindex.html:10
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:10
 msgid "Subject"
 msgstr ""
 
-#: templates/djangobmf_timesheet/timesheet_bmfindex.html:11
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:11
 msgid "Employee"
 msgstr ""
 
-#: templates/djangobmf_timesheet/timesheet_bmfindex.html:12
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:12
 msgid "Time"
 msgstr ""
 
-#: templates/djangobmf_timesheet/timesheet_bmfindex.html:20 workflows.py:21
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:20
+#: workflows.py:21
 msgid "Active"
 msgstr ""
 

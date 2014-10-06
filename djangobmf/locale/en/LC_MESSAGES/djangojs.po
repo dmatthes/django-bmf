@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,4 +33,21 @@ msgstr ""
 msgid ""
 "Error 500\n"
 " An Error occured while rendering the page"
+msgstr ""
+
+#: static/djangobmf/js/djangobmf.js:242 static/djangobmf/js/djangobmf.js:362
+#: static/djangobmf/js/djangobmf.min.js:16
+msgid ""
+"January February March April May June July August September October November "
+"December"
+msgstr ""
+
+#: static/djangobmf/js/djangobmf.js:243 static/djangobmf/js/djangobmf.js:363
+#: static/djangobmf/js/djangobmf.min.js:16
+msgid "Su Mo Tu We Th Fr Sa"
+msgstr ""
+
+#: static/djangobmf/js/djangobmf.js:244 static/djangobmf/js/djangobmf.js:364
+#: static/djangobmf/js/djangobmf.min.js:16
+msgid "Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
 msgstr ""

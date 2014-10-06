@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Positions"
 msgstr ""
 
-#: models.py:46 templates/djangobmf_position/position_bmfindex.html:13
+#: models.py:46 templates/djangobmf_position/position_bmfgeneric.html:13
 msgid "Date"
 msgstr ""
 
-#: models.py:47 templates/djangobmf_position/position_bmfindex.html:14
+#: models.py:47 templates/djangobmf_position/position_bmfgeneric.html:14
 msgid "Name"
 msgstr ""
 
@@ -49,15 +49,15 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: templates/djangobmf_position/position_bmfindex.html:15
+#: templates/djangobmf_position/position_bmfgeneric.html:15
 msgid "Product"
 msgstr ""
 
-#: templates/djangobmf_position/position_bmfindex.html:16
+#: templates/djangobmf_position/position_bmfgeneric.html:16
 msgid "Project"
 msgstr ""
 
-#: templates/djangobmf_position/position_bmfindex.html:17
+#: templates/djangobmf_position/position_bmfgeneric.html:17
 msgid "Employee"
 msgstr ""
 
