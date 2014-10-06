@@ -13,18 +13,18 @@ from djangobmf.signals import activity_update
 from djangobmf.utils.testcases import TestCase
 from djangobmf.utils.testcases import ModuleMixin
 
-from .models import TestNotification
+from .models import TestView
 
 from unittest import expectedFailure
 
 
 class NotificationTests(ModuleMixin, TestCase):
-    model = TestNotification
+    model = TestView
 
     def setUp(self):  # noqa
         super(NotificationTests, self).setUp()
 
-        self.ct = ContentType.objects.get_for_model(TestNotification)
+        self.ct = ContentType.objects.get_for_model(TestView)
 
         self.user1 = self.create_user("user1", is_superuser=True)
         self.user2 = self.create_user("user2", is_superuser=True)
@@ -46,7 +46,7 @@ class NotificationTests(ModuleMixin, TestCase):
 
     def test_model_create(self):
         self.prepare_model_tests()
-        object = TestNotification.objects.create(field="b")
+        object = TestView.objects.create(field="b")
 
         activity_create.send(sender=object.__class__, instance=object)
 
@@ -65,7 +65,7 @@ class NotificationTests(ModuleMixin, TestCase):
     @expectedFailure
     def test_model_changed(self):
         self.prepare_model_tests()
-        object = TestNotification.objects.create(field="b")
+        object = TestView.objects.create(field="b")
 
         object.field = "a"
 
@@ -144,7 +144,7 @@ class NotificationTests(ModuleMixin, TestCase):
 
     def test_notification_views_edit_object(self):
         self.client_login("user1")
-        object = TestNotification.objects.create(field="a")
+        object = TestView.objects.create(field="a")
 
         data = self.autotest_ajax_get(
             url=reverse('djangobmf:notification-create', kwargs={'ct': self.ct.pk, 'pk': object.pk}),
