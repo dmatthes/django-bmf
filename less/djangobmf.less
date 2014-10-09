@@ -160,71 +160,6 @@ body {
     }
 }
 
-/* Markdown checklist
--------------------------------------------------- */
-
-ul > li.checklist {
-    list-style-type: none;
-    position:relative;
-    & > span.glyphicon {
-        position: absolute;
-        left: -16px;
-        top: 4px;
-    }
-}
-
-/* TreeGrid (js plugin)
--------------------------------------------------- */
-
-.treegrid-indent {
-    width: 8px;
-    height: 16px;
-    display: inline-block;
-    position: relative;
-}
-
-.treegrid-expander {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-}
-
-/* Footer
--------------------------------------------------- */
-
-footer {
-    padding: @line-height-computed/2 0 @line-height-computed/2 @bmf-sidebar-width;
-    margin: 0;
-    color: @gray-light;
-    background: @gray-lighter;
-    width: 100%;
-
-    -webkit-transition: padding 0.5s ease, margin 0.5s ease;
-    -moz-transition: padding 0.5s ease, margin 0.5s ease;
-    -o-transition: padding 0.5s ease, margin 0.5s ease;
-    transition: padding 0.5s ease, margin 0.5s ease;
-    
-    p {
-        padding: 0;
-        margin: 0;
-    }
-
-    a {
-        color: @gray-dark;
-    }
-    a:hover {
-        color: @brand-primary;
-        text-decoration: underline;
-    }
-}
-
-/* Sitebar
--------------------------------------------------- */
-@import "sidebar.less";
-
-
 /* MISC
 -------------------------------------------------- */
 
@@ -246,3 +181,9 @@ footer {
 
 */
 
+/* Includes
+-------------------------------------------------- */
+@import "footer.less";
+@import "markdown.less";
+@import "sidebar.less";
+@import "treegrid.less";

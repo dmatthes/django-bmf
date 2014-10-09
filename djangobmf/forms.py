@@ -13,8 +13,6 @@ from django.forms.util import ErrorList
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import six
 
-from .signals import djangobmf_post_save
-
 from collections import OrderedDict
 
 import logging
@@ -287,20 +285,8 @@ class BMFForm(six.with_metaclass(BMFFormMetaclass, object)):
         """
         Saves the base form and save subforms, if available
         """
-        new = not bool(self.instance.pk)
-
         if len(self.forms) == 0:
-            obj = self.base_form.save(**kwargs)
-            if kwargs.get('commit', True):
-                djangobmf_post_save.send(sender=obj.__class__, instance=obj, new=new)
-#               if self.instance._bmfmeta.has_history:
-#                   # the model has been saved, now send the signal and write a comment
-#                   if new:
-#                       history = write_history(obj, ACTION_CREATED)
-#                   else:
-#                       history = write_history(obj, ACTION_UPDATED)
-#                   bmf_new_history.send(sender=obj.__class__, instance=history)
-            return obj
+            return self.base_form.save(**kwargs)
 
         if not kwargs.get('commit', True):
             raise ValueError("'%s' object must be commited when saved" % self.__class__.__name__)
@@ -317,15 +303,6 @@ class BMFForm(six.with_metaclass(BMFFormMetaclass, object)):
             obj.bmf_clean()
             obj.save()
 
-        djangobmf_post_save.send(sender=obj.__class__, instance=obj, new=new)
-
-        # the model has been saved, now send the signal and write a comment
-#       if self.instance._bmfmeta.has_history:
-#           if new:
-#               history = write_history(obj, ACTION_CREATED)
-#           else:
-#               history = write_history(obj, ACTION_UPDATED)
-#           bmf_new_history.send(sender=obj.__class__, instance=history)
         return obj
 
     # === LOOK AT ===============================================================

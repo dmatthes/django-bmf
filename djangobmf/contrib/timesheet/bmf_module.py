@@ -7,10 +7,12 @@ from djangobmf.sites import site
 
 from .models import Timesheet
 
+from .views import ArchiveView
 from .views import CreateView
 from .views import UpdateView
 
 site.register(Timesheet, **{
+    'index': ArchiveView,
     'create': CreateView,
     'update': UpdateView,
 })

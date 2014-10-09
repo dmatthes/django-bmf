@@ -6,11 +6,11 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
+from djangobmf.viewmixins import BaseMixin
 
 class MixinTests(TestCase):
-    def test_base_mixin(self):
-        from djangobmf.viewmixins import BaseMixin
 
+    def test_base_mixin(self):
         obj = BaseMixin()
         self.assertEqual(obj.get_permissions(), [])
         self.assertEqual(obj.get_permissions(['test']), ['test'])

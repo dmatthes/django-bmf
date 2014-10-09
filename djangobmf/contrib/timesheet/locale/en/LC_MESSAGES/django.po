@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:37
+msgid "Title"
+msgstr ""
+
+#: models.py:38
+msgid "Description"
+msgstr ""
+
+#: models.py:77
+msgid "Timesheet"
+msgstr ""
+
+#: models.py:78
+msgid "Timesheets"
+msgstr ""
+
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:9
+msgid "Date"
+msgstr ""
+
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:10
+msgid "Subject"
+msgstr ""
+
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:11
+msgid "Employee"
+msgstr ""
+
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:12
+msgid "Time"
+msgstr ""
+
+#: templates/djangobmf_timesheet/timesheet_bmfgeneric_archive.html:20
+#: workflows.py:21
+msgid "Active"
+msgstr ""
+
+#: workflows.py:22
+msgid "Finished"
+msgstr ""
+
+#: workflows.py:23
+msgid "Validated"
+msgstr ""
+
+#: workflows.py:27
+msgid "Finish"
+msgstr ""
+
+#: workflows.py:32
+msgid "Validate"
+msgstr ""

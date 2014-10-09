@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.contenttypes.models import ContentType
-from django.forms.models import modelform_factory
+# from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.utils.timezone import now
@@ -12,11 +12,11 @@ from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.static import serve
 
+from djangobmf.signals import activity_addfile
+from djangobmf.viewmixins import BaseMixin
+
+from .forms import UploadDocument
 from .models import Document
-
-from ..signals import activity_addfile
-from ..viewmixins import BaseMixin
-
 
 '''
 from django.conf import settings
@@ -51,7 +51,7 @@ def sendfile(request, fileobject, allowed=True):
 '''
 
 
-class FileDownloadView(BaseMixin, DetailView):
+class DocumentDownloadView(BaseMixin, DetailView):
     model = Document
 
     def get(self, request, *args, **kwargs):
@@ -65,29 +65,15 @@ class FileDownloadView(BaseMixin, DetailView):
         )
 
 
-class FileAddView(BaseMixin, CreateView):
-    """
-    table view
-    """
+class DocumentCreateView(BaseMixin, CreateView):
     model = Document
-    form_class = modelform_factory(Document, fields=('file',))
+    form_class = UploadDocument
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())
 
-    def get_rel_model(self):
-        if hasattr(self, 'related_model'):
-            return self.related_model
-        try:
-            ct = ContentType.objects.get_for_id(self.kwargs['ct'])
-        except ContentType.DoesNotExist:
-            raise Http404
-
-        self.related_model = ct.model_class()
-        if not hasattr(self.related_model, '_bmfmeta'):
-            raise Http404
-
-        return self.related_model
+    def post(self, request, *args, **kwargs):
+        return super(DocumentCreateView, self).post(request, *args, **kwargs)
 
     def form_invalid(self, form):
         return HttpResponseRedirect(self.get_success_url())
@@ -117,9 +103,14 @@ class FileAddView(BaseMixin, CreateView):
     def get_rel_object(self):
         if hasattr(self, 'related_object'):
             return self.related_object
+
         try:
-            self.related_object = self.get_rel_model().objects.get(pk=self.kwargs['pk'])
-        except self.get_rel_model().DoesNotExist:
+            ct = ContentType.objects.get_for_id(self.kwargs['ct'])
+            model = ct.model_class()
+
+            self.related_object = model.objects.get(pk=self.kwargs['pk'])
+
+        except model.DoesNotExist:
             raise Http404
 
         return self.related_object

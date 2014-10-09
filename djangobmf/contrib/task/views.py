@@ -44,6 +44,7 @@ class MyGoalView(ModuleListView):
 class ArchiveTaskView(ModuleArchiveView):
     slug = "archive"
     name = _("Archive")
+    date_resolution = "month"
     filterset_class = TaskFilter
 
 

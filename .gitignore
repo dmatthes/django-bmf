@@ -4,7 +4,7 @@
 *-journal
 
 /\.tox
-/\.coverage
+/\.coverage*
 /coverage\.xml
 /junit\.xml
 /reports

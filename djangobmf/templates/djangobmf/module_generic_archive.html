@@ -1,0 +1,34 @@
+{% extends "djangobmf/module_generic.html" %}
+
+{% load i18n %}
+
+{% block filter %}
+<h2>{{ current_period_start|date:"DATE_FORMAT" }} - {{ current_period_end|date:"DATE_FORMAT" }}</h2>
+<p>{% trans "Goto" %}: 
+{% if current_period == "year" %}
+{% if previous_period %}<a href="?year={{ previous_period|date:'Y' }}">{{ previous_period|date:'Y' }}</a>{% endif %}
+{% if next_period %}<a href="?year={{ next_period|date:'Y' }}">{{ next_period|date:'Y' }}</a>{% endif %}
+{% endif %}
+{% if current_period == "month" %}
+{% if previous_period %}<a href="?year={{ previous_period|date:'Y' }}&amp;month={{ previous_period|date:'m' }}">{{ previous_period|date:'N Y' }}</a>{% endif %}
+{% if next_period %}<a href="?year={{ next_period|date:'Y' }}&amp;month={{ next_period|date:'m' }}">{{ next_period|date:'N Y' }}</a>{% endif %}
+{% endif %}
+{% if current_period == "day" %}
+{% if previous_period %}<a href="?year={{ previous_period|date:'Y' }}&amp;month={{ previous_period|date:'m' }}&amp;day={{ previous_period|date:'d' }}">{{ previous_period|date:"DATE_FORMAT" }}</a>{% endif %}
+{% if next_period %}<a href="?year={{ next_period|date:'Y' }}&amp;month={{ next_period|date:'m' }}&amp;day={{ next_period|date:'d' }}">{{ next_period|date:"DATE_FORMAT" }}</a>{% endif %}
+{% endif %}
+{% if current_period == "week" %}
+{% if previous_period %}<a href="?year={{ previous_period|date:'Y' }}&amp;week={{ previous_period|date:dateformat.week }}">{% trans "Week" %}{{ previous_period|date:dateformat.week }} {{ previous_period|date:'Y' }}</a>{% endif %}
+{% if next_period %}<a href="?year={{ next_period|date:'Y' }}&amp;month={{ next_period|date:'m' }}&amp;day={{ next_period|date:'d' }}">{{ next_period|date:"DATE_FORMAT" }}</a>{% endif %}
+{% endif %}
+</p>
+
+<div>
+{{ current_period }}
+{{ current_period_start }}
+{{ current_period_end }}
+{{ next_period }}
+{{ previous_period }}
+{{ dateformat }}
+</div>
+{% endblock %}

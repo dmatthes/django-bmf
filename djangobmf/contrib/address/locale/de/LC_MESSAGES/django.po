@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-09-21 04:28+0200\n"
+"PO-Revision-Date: 2014-09-22 12:14+0000\n"
+"Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: contrib/address/models.py:21
@@ -40,7 +40,7 @@ msgstr ""
 
 #: contrib/address/models.py:33
 msgid "Address"
-msgstr "Adresse"
+msgstr "Adress"
 
 #: contrib/address/models.py:34
 msgid "Addresses"
@@ -48,11 +48,11 @@ msgstr "Adressen"
 
 #: contrib/address/models.py:50
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: contrib/address/models.py:51
 msgid "Name2"
-msgstr ""
+msgstr "Name2"
 
 #: contrib/address/models.py:52
 msgid "Street"
@@ -81,7 +81,3 @@ msgid ""
 "%(street)s\n"
 "%(city)s, %(state)s, %(zip)s, %(country)s"
 msgstr ""
-"%(name)s %(name2)s\n"
-"%(street)s\n"
-"%(zip)s %(city)s\n"
-"%(country)s"

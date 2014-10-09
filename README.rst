@@ -69,10 +69,10 @@ Credits
 .. |Build status| image:: https://api.travis-ci.org/django-bmf/django-bmf.svg?branch=develop
    :target: http://travis-ci.org/django-bmf/django-bmf
 .. |PyPi version| image:: https://pypip.in/v/django-bmf/badge.svg
-   :target: https://pypi.python.org/pypi/django-cms/
+   :target: https://pypi.python.org/pypi/django-bmf/
 .. |PyPi downloads| image:: https://pypip.in/d/django-bmf/badge.svg
-   :target: https://pypi.python.org/pypi/django-cms/
+   :target: https://pypi.python.org/pypi/django-bmf/
 .. |PyPi wheel| image:: https://pypip.in/wheel/django-bmf/badge.svg
-   :target: https://pypi.python.org/pypi/django-cms/
+   :target: https://pypi.python.org/pypi/django-bmf/
 .. |Project license| image:: https://pypip.in/license/django-bmf/badge.svg
-   :target: https://pypi.python.org/pypi/django-cms/
+   :target: https://pypi.python.org/pypi/django-bmf/

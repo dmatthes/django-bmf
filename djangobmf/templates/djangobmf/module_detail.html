@@ -32,7 +32,7 @@
          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ bmfworkflow.state }} <span class="caret"></span></button>
          <ul class="dropdown-menu" role="menu">
            {% for transition in bmfworkflow.transitions %}
-           <li><a href="{% get_bmf_url object "workflow" transition=transition.0 %}">{{ transition.1 }}</a></li>
+           <li><a href="{% get_bmf_url object "workflow" transition=transition.0 %}?next={{ request.path_info }}">{{ transition.1 }}</a></li>
            {% endfor %}
          </ul>
        </div>
@@ -66,11 +66,11 @@
     <div class="btn-group">
         {% if bmfactivity.notification %}
             {% if bmfactivity.watch %}
-                <a href="{% url "djangobmf:notification-edit" pk=bmfactivity.notification.pk %}" class="btn {% if bmfactivity.notification.unread %}btn-info{% else %}btn-default{% endif %} bmfedit">
+                <a href="{% url "djangobmf:notification-update" pk=bmfactivity.notification.pk %}" class="btn {% if bmfactivity.notification.unread %}btn-info{% else %}btn-default{% endif %} bmfedit">
                     <span class="glyphicon glyphicon-star"></span>
                 </a>
             {% else %}
-                <a href="{% url "djangobmf:notification-edit" pk=bmfactivity.notification.pk %}" class="btn btn-default bmfedit">
+                <a href="{% url "djangobmf:notification-update" pk=bmfactivity.notification.pk %}" class="btn btn-default bmfedit">
                     <span class="glyphicon glyphicon-star-empty"></span>
                 </a>
             {% endif %}

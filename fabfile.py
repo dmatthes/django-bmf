@@ -28,6 +28,22 @@ FIXTURES = (
     'fixtures/admin_dashboard.json',
 )
 
+APPS = [
+    'accounting',
+    'address',
+    'customer',
+    'employee',
+    'invoice',
+    'position',
+    'product',
+    'project',
+    'quotation',
+    'task',
+    'taxing',
+    'team',
+    'timesheet',
+]
+
 
 @task
 def static():
@@ -46,7 +62,7 @@ def css():
     recreate css files - with lessc and yui-compressor
     """
     with lcd(BASEDIR):
-        local('lessc less/custom.less > bootstrap.css')
+        local('lessc less/djangobmf.less > bootstrap.css')
         local('yui-compressor --type css -o djangobmf/static/djangobmf/css/djangobmf.min.css bootstrap.css')
         local('rm bootstrap.css')
 
@@ -88,8 +104,7 @@ def test():
     """
     with lcd(BASEDIR):
         local('virtenv/bin/coverage run runtests.py -v2')
-        local('virtenv/bin/coverage report -m --include="djangobmf/*"')
-        local('virtenv/bin/coverage html --include="djangobmf/*"')
+        local('virtenv/bin/coverage report -m')
 
 
 @task
@@ -103,16 +118,40 @@ def test_mod(app):
 def test_core(module=""):
     with lcd(BASEDIR):
         local('virtenv/bin/coverage run runtests.py %s -v2 --nocontrib' % module)
-        local('virtenv/bin/coverage report -m --include="djangobmf/*" --omit="djangobmf/contrib/*"')
+        local('virtenv/bin/coverage report -m --omit="djangobmf/contrib/*"')
 
 
 @task
 def locale():
-  with lcd(BASEDIR + '/djangobmf'):
-    for lang in LANGUAGES:
-      local('%s makemessages -l %s --domain django' % (DJANGO, lang))
-      local('%s makemessages -l %s --domain djangojs' % (DJANGO, lang))
+    with lcd(BASEDIR + '/djangobmf'):
+        local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
+        local('%s makemessages -l %s --domain djangojs' % (DJANGO, 'en'))
+        check_locale()
 
+    for app in APPS:
+        with lcd(BASEDIR + '/djangobmf/contrib/' + app):
+            local('%s makemessages -l %s --domain django' % (DJANGO, 'en'))
+            check_locale()
+
+    with lcd(BASEDIR):
+        local('tx pull')
+
+    with lcd(BASEDIR + '/djangobmf'):
+        local('%s compilemessages' % DJANGO)
+
+    for app in APPS:
+        with lcd(BASEDIR + '/djangobmf/contrib/' + app):
+            local('%s compilemessages' % DJANGO)
+
+    puts("Dont forget to run 'tx push -s' to push new source files")
+
+def check_locale():
+    numstat = local('git diff --numstat locale', quiet)
+    for stats in numstat.split('\n'):
+        insertions, deletions, file = stats.split('\t')
+        if insertions == '1' and deletions == '1' and file[-3:] == '.po':
+            with lcd(BASEDIR):
+                local('git checkout -- %s' % file)
 
 @task
 def make(data=''):

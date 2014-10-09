@@ -16,13 +16,15 @@
   <tbody>
     {% recursetree object_list %}
     <tr class="treegrid-{{ node.pk }} {% if not node.is_root_node %}treegrid-parent-{{ node.parent_id }}{% else %}warning{% endif %}">
-      <td>{{ node.name }}</td>
+      <td>{{ node.name }}
+        {% if node.description %}<br><small class="text-muted">{{ node.description }}</small>{% endif %}
+      </td>
       <td>
         {{ node.number }}
         {% if node.read_only %} <small><span class="glyphicon text-muted glyphicon-lock"></span></small>{% endif %}
         {% if node.is_root_node %}<br><small class="text-muted">{{ node.get_type_display }}</small>{% endif %}
       </td>
-      <td class="text-right">{{ node.balance }} {{ node.balance_currency }}</td>
+      <td class="text-right">{{ node.balance }}</td>
       <td class="text-right">
         <a class="btn btn-xs btn-primary" href="{{ node.bmfmodule_detail }}">
           <span class="glyphicon glyphicon-list"></span>

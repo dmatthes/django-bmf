@@ -1,4 +1,5 @@
 [run]
+source=djangobmf
 branch=True
 
 [report]

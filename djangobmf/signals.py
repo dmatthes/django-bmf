@@ -10,5 +10,3 @@ activity_update = Signal(providing_args=['instance'])
 activity_comment = Signal(providing_args=['instance'])
 activity_addfile = Signal(providing_args=['instance', 'file'])
 activity_workflow = Signal(providing_args=['instance'])
-
-djangobmf_post_save = Signal(providing_args=['instance', 'new'])  # TODO look if i am used

@@ -1,128 +1,139 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Sebastian Braun <sebastian@elmnt.de>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-bmf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 01:12+0200\n"
-"PO-Revision-Date: 2014-01-26 06:24+0100\n"
-"Last-Translator: Admin User <admin@demo.django-bmf.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-09-27 14:10+0200\n"
+"PO-Revision-Date: 2014-09-27 14:06+0000\n"
+"Last-Translator: Sebastian Braun <sebastian@elmnt.de>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/django-bmf/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Translated-Using: django-rosetta 0.7.3\n"
 
-#: contrib/accounting/bmf_module.py:48 contrib/accounting/models.py:91
-msgid "Accounts"
-msgstr "Konten"
+#: bmf_module.py:40
+msgid "Between two Accounts"
+msgstr ""
 
-#: contrib/accounting/bmf_module.py:53 contrib/accounting/models.py:178
+#: bmf_module.py:41
+msgid "Split Transaction"
+msgstr ""
+
+#: bmf_module.py:64 models.py:178
 msgid "Transactions"
 msgstr "Buchungen"
 
-#: contrib/accounting/models.py:38
+#: models.py:38
 msgid "Income"
 msgstr "Erträge"
 
-#: contrib/accounting/models.py:39
+#: models.py:39
 msgid "Expense"
 msgstr "Aufwände"
 
-#: contrib/accounting/models.py:40
+#: models.py:40
 msgid "Asset"
 msgstr "Aktiva"
 
-#: contrib/accounting/models.py:41
+#: models.py:41
 msgid "Liability"
 msgstr "Passiva"
 
-#: contrib/accounting/models.py:42
+#: models.py:42
 msgid "Equity"
 msgstr "Eigenkapital"
 
-#: contrib/accounting/models.py:63
+#: models.py:74
 msgid "Number"
 msgstr "Nummer"
 
-#: contrib/accounting/models.py:64
+#: models.py:75
 msgid "Name"
 msgstr "Name"
 
-#: contrib/accounting/models.py:66
+#: models.py:77
 msgid "Type"
 msgstr "Typ"
 
-#: contrib/accounting/models.py:68
+#: models.py:79
 msgid "Read-only"
 msgstr "Schreibgeschützt"
 
-#: contrib/accounting/models.py:90
+#: models.py:101
 msgid "Account"
 msgstr "Konto"
 
-#: contrib/accounting/models.py:121
+#: models.py:102
+msgid "Accounts"
+msgstr "Konten"
+
+#: models.py:132
 msgid "The type does not match the model parents type"
-msgstr "Der Typ stimmt nicht mit dem Elternelement überein"
+msgstr ""
 
-#: contrib/accounting/models.py:123
+#: models.py:134
 msgid "Root accounts must define a type"
-msgstr "Wurzel-Konten müssen einen Typ definieren"
+msgstr ""
 
-#: contrib/accounting/models.py:132
+#: models.py:143
 msgid "Comment"
 msgstr "Kommentar"
 
-#: contrib/accounting/models.py:169
+#: models.py:170
 msgid "Posting text"
 msgstr "Verwendungszweck"
 
-#: contrib/accounting/models.py:172
+#: models.py:172 models.py:226
 msgid "Draft"
 msgstr "Entwurf"
 
-#: contrib/accounting/models.py:177
+#: models.py:177
 msgid "Transaction"
 msgstr "Buchung"
 
-#: contrib/accounting/models.py:221
+#: models.py:223
 msgid "Credit"
 msgstr ""
 
-#: contrib/accounting/models.py:221
+#: models.py:223
 msgid "Debit"
 msgstr ""
 
-#: contrib/accounting/models.py:226
-msgid "Modified"
-msgstr "Modifiziert"
-
-#: contrib/accounting/views.py:20
+#: views.py:22
 msgid "All Accounts"
 msgstr "Alle Konten"
 
-#: contrib/accounting/workflows.py:13
-msgid "Open"
-msgstr "Offem"
+#: views.py:27
+msgid "All Transactions"
+msgstr ""
 
-#: contrib/accounting/workflows.py:14
+#: views.py:32
+msgid "Open Transactions"
+msgstr "Offene Transaktionen"
+
+#: workflows.py:13
+msgid "Open"
+msgstr "Offen"
+
+#: workflows.py:14
 msgid "Balanced"
 msgstr "Bilanziert"
 
-#: contrib/accounting/workflows.py:15
+#: workflows.py:15
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
-#: contrib/accounting/workflows.py:18
+#: workflows.py:18
 msgid "Balance"
 msgstr "Bilanz"
 
-#: contrib/accounting/workflows.py:19
+#: workflows.py:19
 msgid "Cancel"
 msgstr "Abbrechen"

@@ -1,0 +1,92 @@
+[main]
+host = https://www.transifex.com
+
+[django-bmf.base]
+file_filter = djangobmf/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.basejs]
+file_filter = djangobmf/locale/<lang>/LC_MESSAGES/djangojs.po
+source_file = djangobmf/locale/en/LC_MESSAGES/djangojs.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-accounting]
+file_filter = djangobmf/contrib/accounting/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/accounting/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-address]
+file_filter = djangobmf/contrib/address/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/address/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-customer]
+file_filter = djangobmf/contrib/customer/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/customer/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-employee]
+file_filter = djangobmf/contrib/employee/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/employee/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-invoice]
+file_filter = djangobmf/contrib/invoice/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/invoice/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-position]
+file_filter = djangobmf/contrib/position/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/position/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-product]
+file_filter = djangobmf/contrib/product/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/product/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-project]
+file_filter = djangobmf/contrib/project/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/project/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-quotation]
+file_filter = djangobmf/contrib/quotation/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/quotation/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-task]
+file_filter = djangobmf/contrib/task/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/task/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-taxing]
+file_filter = djangobmf/contrib/taxing/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/taxing/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-team]
+file_filter = djangobmf/contrib/team/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/team/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[django-bmf.contrib-timesheet]
+file_filter = djangobmf/contrib/timesheet/locale/<lang>/LC_MESSAGES/django.po
+source_file = djangobmf/contrib/timesheet/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO

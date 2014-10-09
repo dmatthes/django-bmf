@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,98 +17,122 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contrib/accounting/models.py:35
-msgid "Income"
+#: bmf_module.py:40
+msgid "Between two Accounts"
 msgstr ""
 
-#: contrib/accounting/models.py:36
-msgid "Expense"
+#: bmf_module.py:41
+msgid "Split Transaction"
 msgstr ""
 
-#: contrib/accounting/models.py:37
-msgid "Asset"
-msgstr ""
-
-#: contrib/accounting/models.py:38
-msgid "Liability"
-msgstr ""
-
-#: contrib/accounting/models.py:39
-msgid "Equity"
-msgstr ""
-
-#: contrib/accounting/models.py:57
-msgid "Number"
-msgstr ""
-
-#: contrib/accounting/models.py:58
-msgid "Name"
-msgstr ""
-
-#: contrib/accounting/models.py:59
-msgid "Type"
-msgstr ""
-
-#: contrib/accounting/models.py:60
-msgid "Read-only"
-msgstr ""
-
-#: contrib/accounting/models.py:87
-msgid "Account"
-msgstr ""
-
-#: contrib/accounting/models.py:88
-msgid "Accounts"
-msgstr ""
-
-#: contrib/accounting/models.py:103
-msgid "Comment"
-msgstr ""
-
-#: contrib/accounting/models.py:137
-msgid "Posting text"
-msgstr ""
-
-#: contrib/accounting/models.py:139
-msgid "Draft"
-msgstr ""
-
-#: contrib/accounting/models.py:144
-msgid "Transaction"
-msgstr ""
-
-#: contrib/accounting/models.py:145
+#: bmf_module.py:64 models.py:178
 msgid "Transactions"
 msgstr ""
 
-#: contrib/accounting/models.py:179
+#: models.py:38
+msgid "Income"
+msgstr ""
+
+#: models.py:39
+msgid "Expense"
+msgstr ""
+
+#: models.py:40
+msgid "Asset"
+msgstr ""
+
+#: models.py:41
+msgid "Liability"
+msgstr ""
+
+#: models.py:42
+msgid "Equity"
+msgstr ""
+
+#: models.py:74
+msgid "Number"
+msgstr ""
+
+#: models.py:75
+msgid "Name"
+msgstr ""
+
+#: models.py:77
+msgid "Type"
+msgstr ""
+
+#: models.py:79
+msgid "Read-only"
+msgstr ""
+
+#: models.py:101
+msgid "Account"
+msgstr ""
+
+#: models.py:102
+msgid "Accounts"
+msgstr ""
+
+#: models.py:132
+msgid "The type does not match the model parents type"
+msgstr ""
+
+#: models.py:134
+msgid "Root accounts must define a type"
+msgstr ""
+
+#: models.py:143
+msgid "Comment"
+msgstr ""
+
+#: models.py:170
+msgid "Posting text"
+msgstr ""
+
+#: models.py:172 models.py:226
+msgid "Draft"
+msgstr ""
+
+#: models.py:177
+msgid "Transaction"
+msgstr ""
+
+#: models.py:223
 msgid "Credit"
 msgstr ""
 
-#: contrib/accounting/models.py:179
+#: models.py:223
 msgid "Debit"
 msgstr ""
 
-#: contrib/accounting/models.py:181
-msgid "Modified"
+#: views.py:22
+msgid "All Accounts"
 msgstr ""
 
-#: contrib/accounting/workflows.py:14
+#: views.py:27
+msgid "All Transactions"
+msgstr ""
+
+#: views.py:33
+msgid "Open Transactions"
+msgstr ""
+
+#: workflows.py:13
 msgid "Open"
 msgstr ""
 
-#: contrib/accounting/workflows.py:15
+#: workflows.py:14
 msgid "Balanced"
 msgstr ""
 
-#: contrib/accounting/workflows.py:16
+#: workflows.py:15
 msgid "Cancelled"
 msgstr ""
 
-#: contrib/accounting/workflows.py:19
+#: workflows.py:18
 msgid "Balance"
 msgstr ""
 
-#: contrib/accounting/workflows.py:20
+#: workflows.py:19
 msgid "Cancel"
 msgstr ""

@@ -38,7 +38,7 @@
                 {% if has_files %}
                     <button class="btn {% if glob_settings.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
                 {% endif %}
-                <a class="btn btn-warning bmfedit" href="{% url 'djangobmf:notification-edit' pk=glob_settings.pk %}">
+                <a class="btn btn-warning bmfedit" href="{% url 'djangobmf:notification-update' pk=glob_settings.pk %}">
                     <span class="glyphicon glyphicon-wrench"></span> {% trans "Edit" %}
                 </a>
             {% else %}
@@ -78,7 +78,7 @@
                         <button class="btn btn btn-xs {% if item.file %}btn-info{% else %}btn-default{% endif %} disabled"><span class="glyphicon {{ symbols.file }}"></span></button>
                         {% endif %}
                         {% endif %}
-                        <a class="btn btn-xs btn-warning bmfedit" href="{% url "djangobmf:notification-edit" pk=item.pk %}">
+                        <a class="btn btn-xs btn-warning bmfedit" href="{% url "djangobmf:notification-update" pk=item.pk %}">
                             <span class="glyphicon glyphicon-wrench"></span>
                         </a>
                         <a class="btn btn-xs btn-primary" href="{{ item.watch_object.bmfmodule_detail }}">

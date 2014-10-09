@@ -15,5 +15,4 @@ Developing Applications
     models
     modeloptions
     settings
-
-
+    signals

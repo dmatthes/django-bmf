@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from celery.task import task
 
-from djangobmf.activity.tasks import djangobmf_user_watch as _djangobmf_user_watch
+from djangobmf.notification.tasks import djangobmf_user_watch as _djangobmf_user_watch
 
 
 @task

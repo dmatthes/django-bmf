@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-12 20:21+0200\n"
+"POT-Creation-Date: 2014-10-06 23:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contrib/project/models.py:22
+#: bmf_module.py:23 templates/djangobmf_project/project_bmfgeneric.html:5
+#: templates/djangobmf_project/project_bmfgeneric.html:8
+#: templates/djangobmf_project/project_bmfrelated_customer.html:7
+msgid "Projects"
+msgstr ""
+
+#: models.py:30 templates/djangobmf_project/project_bmfgeneric.html:13
 msgid "Name"
 msgstr ""
 
-#: contrib/project/models.py:24
+#: models.py:32
 msgid "Is active"
 msgstr ""
 
-#: contrib/project/models.py:27 contrib/project/models.py:28
+#: models.py:35 models.py:36
+#: templates/djangobmf_project/project_bmfdetail.html:5
+#: templates/djangobmf_project/project_bmfdetail.html:8
 msgid "Project"
+msgstr ""
+
+#: templates/djangobmf_project/project_bmfdetail.html:10
+msgid "Active"
+msgstr ""
+
+#: templates/djangobmf_project/project_bmfdetail.html:10
+msgid "Inactive"
+msgstr ""
+
+#: templates/djangobmf_project/project_bmfdetail.html:11
+#: templates/djangobmf_project/project_bmfgeneric.html:14
+msgid "Customer"
+msgstr ""
+
+#: templates/djangobmf_project/project_bmfdetail.html:12
+#: templates/djangobmf_project/project_bmfgeneric.html:15
+msgid "Employee"
+msgstr ""
+
+#: views.py:14
+msgid "Active Projects"
+msgstr ""
+
+#: views.py:22
+msgid "All Projects"
 msgstr ""

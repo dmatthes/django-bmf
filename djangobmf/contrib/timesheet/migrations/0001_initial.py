@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('task', models.ForeignKey(null=True, to=settings.BMF_CONTRIB_TASK, blank=True, on_delete=django.db.models.deletion.SET_NULL)),
             ],
             options={
-                'ordering': ['start'],
+                'ordering': ['-end'],
                 'verbose_name_plural': 'Timesheets',
                 'verbose_name': 'Timesheet',
                 'abstract': False,

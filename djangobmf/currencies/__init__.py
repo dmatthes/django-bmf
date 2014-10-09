@@ -9,7 +9,7 @@ from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.formats import number_format
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from decimal import Decimal
 from copy import deepcopy
@@ -48,15 +48,15 @@ class CurrencyMetaclass(type):
 
 @python_2_unicode_compatible
 class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
-    formatstr = _('%(val)s %(sym)s')
+    formatstr = pgettext_lazy("currency formatting", '%(val)s %(sym)s')
     base_precision = 2
 
     def __init__(self, value=None, precision=0):
-        if value:
-            self.set(value)
-        else:
-            self.value = None
         self.precision = self.base_precision + precision
+        if value is None:
+            self.value = None
+        else:
+            self.set(value)
 
     def __str__(self):
         if self.value is None:
@@ -158,6 +158,10 @@ class BaseCurrency(six.with_metaclass(CurrencyMetaclass, object)):
 
         if self.value.as_tuple().exponent > -self.base_precision:
             self.value = self.value.quantize(Decimal('1E-%s' % self.base_precision))
+
+        # TODO: move this to validation
+        if self.value.as_tuple().exponent < -self.precision:
+            self.value = self.value.quantize(Decimal('1E-%s' % self.precision))
 
 
 class Wallet(object):
